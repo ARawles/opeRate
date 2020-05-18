@@ -177,7 +177,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="data-analysis" class="section level1">
 <h1><span class="header-section-number">3</span> Data Analysis</h1>
 <p>In Chapter 8, we’ll look more specifically at how one might do some simple data analysis in R. For a more in-depth view, I would highly recommend Hadley’s <a href="https://r4ds.had.co.nz/">R4DS</a>.</p>
-<p>The xaringan presentation for this module can be found <a href="teacher.arawles/presentations/3_Data_analysis/r_training_data_analysis_presentation.html">here</a>.</p>
+<p>The xaringan presentation for this module can be found <a href="/presentations/3_Data_analysis/r_training_data_analysis_presentation.html">here</a>.</p>
 <div id="loading-data" class="section level2">
 <h2><span class="header-section-number">3.1</span> Loading data</h2>
 <p>The first step in any data analysis project you’ll undertake is getting at least one dataset. Oftentimes, we have less control over the data we use than we would like; receiving odd Excel spreadsheets or text files or proprietary files or whatever. In this chapter, we’ll focus on the more typical data formats (csv and Excel), but we’ll also look at how we might extract data from a web API, which is an increasingly common method for data loading.</p>
@@ -251,7 +251,7 @@ Patricia,75</code></pre>
 <p>As previously mentioned, to extract something from the API, you’ll be using the <code>GET</code> method. The <code>httr</code> package makes this super easy by providing a <code>GET</code> function. To this function, we’ll need to provide a URL. The <code>GET</code> function will then send a GET request to that address and return the response. A really simple GET request could be:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">httr<span class="op">::</span><span class="kw">GET</span>(<span class="dt">url =</span> <span class="st">&quot;http://google.com&quot;</span>)</a></code></pre></div>
 <pre><code>## Response [http://www.google.com/]
-##   Date: 2020-05-18 09:20
+##   Date: 2020-05-18 10:14
 ##   Status: 200
 ##   Content-Type: text/html; charset=ISO-8859-1
 ##   Size: 12.2 kB
@@ -293,7 +293,7 @@ Patricia,75</code></pre>
 <p>The first step in accessing an API is to understand that commands the API is expecting. Looking at the website, we can see that we can access lots of different types of data: posts, comments, albums, photos, todos and users. We can also see that to list each one, we just need to add /whatever to the end of our URL. So let’s try getting a list of users:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">httr<span class="op">::</span><span class="kw">GET</span>(<span class="dt">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</a></code></pre></div>
 <pre><code>## Response [https://jsonplaceholder.typicode.com/users]
-##   Date: 2020-05-18 09:20
+##   Date: 2020-05-18 10:14
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 5.64 kB
