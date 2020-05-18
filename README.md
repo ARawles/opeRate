@@ -14,4 +14,4 @@ For those at a more beginner level, I am also working on a separate book called 
 
 This book is a work in progress, so any feedback is greatly appreciated. If you do see anything off, please raise a [GitHub issue](https://github.com/arawles/operate/issues).
 
-The book is currently hosted [here](operate.arawles.co.uk). There is also a PDF and EBook version available through that link.
+The book is currently hosted [here](http://operate.arawles.co.uk). There is also a PDF and EBook version available through that link.
