@@ -18,6 +18,8 @@ cover-image: "cover.png"
 
 # opeRate
 
+<img src="cover.png" width="250" height="375" alt="Cover image" align="right" style="margin: 0 1em 0 1em" />
+
 ## Overview
 
 This book is a collection of materials to help users apply their fundamental R knowledge to real programming and analysis. This book is ideally meant as a follow on from my introductory book [teacheR](teacher.arawles.co.uk), but anyone with a simple understanding of the fundamentals of R such as the basic data structures and functions should be able to benefit.
