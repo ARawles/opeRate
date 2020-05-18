@@ -1,0 +1,21 @@
+# Programming in R
+
+In this chapter, we'll look at some of the programming concepts and syntax in R.
+
+The xaringan presentation for this module can be found [here](teacher.arawles/presentations/4_Programming/r_training_programming_presentation.html).
+
+## User-defined functions
+
+filler
+
+## For loops
+
+filler
+
+## If/else statements
+
+filler
+
+## Applying functions
+
+filler

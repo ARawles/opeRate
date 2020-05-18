@@ -7,7 +7,7 @@ output:
   bookdown::gitbook:
     config:
       toc:
-        collapse: section
+        collapse: subsection
       download:
         - ["_main.pdf", "PDF"]  
     
@@ -17,7 +17,15 @@ output:
 
 ## Overview
 
+This book is a collection of materials to help users apply their fundamental R knowledge to real programming and analysis. This book is ideally meant as a follow on from my introductory book [teacheR](teacher.arawles.co.uk), but anyone with a simple understanding of the fundamentals of R such as the basic data structures and functions should be able to benefit.
 
+As with the [teacheR](teacher.arawles.co.uk) book, this is a work in progress, so please feel free to make any suggestions or corrections via this book's [GitHub repository](www.github.com/arawles/operate/issues).
+
+## About Me
+
+I've been using R for roughly 4 years now, and it's essentially the language I do the vast majority of my work in. I say the vast majority, because data analysis work usually requires some crossover work with things like SQL servers or APIs or similar, but we'll cover those in time.
+
+In my primary years, analysis in R took me longer than it would take to do the same analysis in something like Excel. And that's okay. R is a complicated and flexible system, and so your first analysis piece will never be particularly efficient. As you stick with it however, and you get used to the methods of automation and a pipeline of execution, you'll find yourself working much more efficiently, performing analyses in half the time. And that's what I hope I can impart with this book; it'll be slow at first, but you'll notice a turning point when you complete your first analysis project in a decent timescale and you'll never look back. Then, before long, you'll have a repertoire of analysis tools at your disposal that make you a crucial member of any data analysis team.
 
 
 
