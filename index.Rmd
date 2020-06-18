@@ -1,5 +1,6 @@
 ---
-title: "Learn to Apply R"
+title: "opeRate"
+subtitle: "Learn to apply R"
 author: "Adam Rawles"
 site: bookdown::bookdown_site
 documentclass: book
