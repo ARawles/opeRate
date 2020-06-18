@@ -4,9 +4,10 @@
 [![Travis build
 status](https://travis-ci.org/ARawles/opeRate.svg?branch=master)](https://travis-ci.org/ARawles/opeRate)
 
+<img src="cover.png" width="250" height="375" alt="Cover image" align="left" style="margin: 0 1em 0 1em" />
+
 This package holds the training materials for the opeRate book.
 
-<img src="cover.png" width="250" height="375" alt="Cover image" align="left" style="margin: 0 1em 0 1em" />
 
 The opeRate book is aimed at those with an understanding of the fundamentals of R, who want to apply their knowledge to data analysis and programming.
 
