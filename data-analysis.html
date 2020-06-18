@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Data Analysis | Learn to Apply R</title>
-  <meta name="description" content="4 Data Analysis | Learn to Apply R" />
+  <title>4 Data Analysis | opeRate</title>
+  <meta name="description" content="4 Data Analysis | opeRate" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Data Analysis | Learn to Apply R" />
+  <meta property="og:title" content="4 Data Analysis | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Data Analysis | Learn to Apply R" />
+  <meta name="twitter:title" content="4 Data Analysis | opeRate" />
   
   
   <meta name="twitter:image" content="cover.png" />
@@ -153,7 +153,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Learn to Apply R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">opeRate</a>
           </h1>
         </div>
 
@@ -238,7 +238,7 @@ Patricia,75</code></pre>
 <p>As previously mentioned, to extract something from the API, you'll be using the <code>GET</code> method. The <code>httr</code> package makes this super easy by providing a <code>GET</code> function. To this function, we'll need to provide a URL. The <code>GET</code> function will then send a GET request to that address and return the response. A really simple GET request could be:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">httr<span class="op">::</span><span class="kw">GET</span>(<span class="dt">url =</span> <span class="st">&quot;http://google.com&quot;</span>)</code></pre></div>
 <pre><code>## Response [http://www.google.com/]
-##   Date: 2020-06-18 16:16
+##   Date: 2020-06-18 16:41
 ##   Status: 200
 ##   Content-Type: text/html; charset=ISO-8859-1
 ##   Size: 12.8 kB
@@ -249,7 +249,7 @@ Patricia,75</code></pre>
 ## if (!iesg){document.f&amp;&amp;document.f.q.focus();document.gbqf&amp;&amp;document.gbqf.q.fo...
 ## }
 ## })();&lt;/script&gt;&lt;div id=&quot;mngb&quot;&gt; &lt;div id=gbar&gt;&lt;nobr&gt;&lt;b class=gb1&gt;Search&lt;/b&gt; &lt;a c...
-## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;AINFCbYAAAAAXuuhh...
+## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;AINFCbYAAAAAXuunY...
 ## setTimeout(function(){var b=document;var a=&quot;SCRIPT&quot;;&quot;application/xhtml+xml&quot;==...
 ## function _F_installCss(c){}</code></pre>
 <p>That seems like a really complicated response at first, but when we look at each part, it's quite simple.</p>
@@ -270,7 +270,7 @@ Patricia,75</code></pre>
 <p>The first step in accessing an API is to understand that commands the API is expecting. Looking at the website, we can see that we can access lots of different types of data: posts, comments, albums, photos, todos and users. We can also see that to list each one, we just need to add /whatever to the end of our URL. So let's try getting a list of users:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">httr<span class="op">::</span><span class="kw">GET</span>(<span class="dt">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</code></pre></div>
 <pre><code>## Response [https://jsonplaceholder.typicode.com/users]
-##   Date: 2020-06-18 16:16
+##   Date: 2020-06-18 16:41
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 5.64 kB
