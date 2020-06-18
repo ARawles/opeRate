@@ -25,5 +25,6 @@ Imports:
     shiny,
     learnr,
     httr,
-    BMRSr
+    BMRSr,
+    webshot
 RoxygenNote: 6.1.1
