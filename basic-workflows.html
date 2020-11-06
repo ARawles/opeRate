@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.2 For loops | opeRate</title>
-  <meta name="description" content="5.2 For loops | opeRate" />
+  <title>2.1 Basic Workflows | opeRate</title>
+  <meta name="description" content="2.1 Basic Workflows | opeRate" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.2 For loops | opeRate" />
+  <meta property="og:title" content="2.1 Basic Workflows | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.2 For loops | opeRate" />
+  <meta name="twitter:title" content="2.1 Basic Workflows | opeRate" />
   
   
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="user-defined-functions.html"/>
-<link rel="next" href="ifelse-statements.html"/>
+<link rel="prev" href="workflow.html"/>
+<link rel="next" href="tidyverse.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -214,17 +214,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="for-loops" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> For loops</h2>
-<p>filler</p>
+<div id="basic-workflows" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Basic Workflows</h2>
+<p>For now, let’s look at a basic workflow and some likely additions or changes you might make depending on your goals.</p>
+<div id="example-1-reporting" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Example 1: Reporting</h3>
+<p>In this example, imagine someone has come to you and they want a bit more insight into the data they have. It’s currently in a messy spreadsheet, and they want you to load it into R and produce some nice looking graphics to help them understand trends and correlations in their data. They’re not bothered about any modelling for now, they just want some pretty graphs.</p>
+<p>If we mapped out an appropriate workflow for this project, it might look something like this:</p>
+<div id="htmlwidget-a0d5186ab8257c112cb2" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a0d5186ab8257c112cb2">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Import; Clean; Summarise; Plot; Evaluate; \n\n  # several \"edge\" statements\n  Import->Clean Clean->Summarise Summarise->Plot\n  Plot->Evaluate Evaluate->Summarise Evaluate->Plot\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>We import the data and clean it, then we summarise it and create our plots. We can then use feedback from</p>
+
 </div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="user-defined-functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ifelse-statements.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="workflow.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tidyverse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

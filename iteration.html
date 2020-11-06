@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.3 Iteration | opeRate</title>
-  <meta name="description" content="6.3 Iteration | opeRate" />
+  <title>7.3 Iteration | opeRate</title>
+  <meta name="description" content="7.3 Iteration | opeRate" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.3 Iteration | opeRate" />
+  <meta property="og:title" content="7.3 Iteration | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.3 Iteration | opeRate" />
+  <meta name="twitter:title" content="7.3 Iteration | opeRate" />
   
   
   <meta name="twitter:image" content="cover.png" />
@@ -52,6 +52,10 @@
 
 <link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
 
 
 <style type="text/css">
@@ -138,52 +142,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="about-me.html"><a href="about-me.html"><i class="fa fa-check"></i><b>1.2</b> About Me</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>2</b> Tidyverse</a>
+<li class="chapter" data-level="2" data-path="workflow.html"><a href="workflow.html"><i class="fa fa-check"></i><b>2</b> Workflow</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="tidyr.html"><a href="tidyr.html"><i class="fa fa-check"></i><b>2.1</b> tidyr</a></li>
-<li class="chapter" data-level="2.2" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>2.2</b> dplyr</a></li>
-<li class="chapter" data-level="2.3" data-path="stringr.html"><a href="stringr.html"><i class="fa fa-check"></i><b>2.3</b> stringr</a></li>
-<li class="chapter" data-level="2.4" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>2.4</b> ggplot2</a></li>
+<li class="chapter" data-level="2.1" data-path="basic-workflows.html"><a href="basic-workflows.html"><i class="fa fa-check"></i><b>2.1</b> Basic Workflows</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="basic-workflows.html"><a href="basic-workflows.html#example-1-reporting"><i class="fa fa-check"></i><b>2.1.1</b> Example 1: Reporting</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>3</b> Data Analysis</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="loading-data.html"><a href="loading-data.html"><i class="fa fa-check"></i><b>3.1</b> Loading data</a>
-<ul>
-<li class="chapter" data-level="3.1.1" data-path="loading-data.html"><a href="loading-data.html#csv"><i class="fa fa-check"></i><b>3.1.1</b> csv</a></li>
-<li class="chapter" data-level="3.1.2" data-path="loading-data.html"><a href="loading-data.html#excel-files"><i class="fa fa-check"></i><b>3.1.2</b> Excel files</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="apis-advanced.html"><a href="apis-advanced.html"><i class="fa fa-check"></i><b>3.2</b> APIs (Advanced)</a>
+<li class="chapter" data-level="3" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3</b> Tidyverse</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="apis-advanced.html"><a href="apis-advanced.html#what-are-apis"><i class="fa fa-check"></i><b>3.2.1</b> What are APIs?</a></li>
-<li class="chapter" data-level="3.2.2" data-path="apis-advanced.html"><a href="apis-advanced.html#accessing-apis-in-r"><i class="fa fa-check"></i><b>3.2.2</b> Accessing APIs in R</a></li>
-<li class="chapter" data-level="3.2.3" data-path="apis-advanced.html"><a href="apis-advanced.html#bmrsr"><i class="fa fa-check"></i><b>3.2.3</b> BMRSr</a></li>
+<li class="chapter" data-level="3.1" data-path="tidyr.html"><a href="tidyr.html"><i class="fa fa-check"></i><b>3.1</b> tidyr</a></li>
+<li class="chapter" data-level="3.2" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>3.2</b> dplyr</a></li>
+<li class="chapter" data-level="3.3" data-path="stringr.html"><a href="stringr.html"><i class="fa fa-check"></i><b>3.3</b> stringr</a></li>
+<li class="chapter" data-level="3.4" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>3.4</b> ggplot2</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>3.3</b> Cleaning data</a></li>
-<li class="chapter" data-level="3.4" data-path="summary-statistics.html"><a href="summary-statistics.html"><i class="fa fa-check"></i><b>3.4</b> Summary statistics</a></li>
-<li class="chapter" data-level="3.5" data-path="plots.html"><a href="plots.html"><i class="fa fa-check"></i><b>3.5</b> Plots</a></li>
+<li class="chapter" data-level="4" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>4</b> Data Analysis</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="loading-data.html"><a href="loading-data.html"><i class="fa fa-check"></i><b>4.1</b> Loading data</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="loading-data.html"><a href="loading-data.html#csv"><i class="fa fa-check"></i><b>4.1.1</b> csv</a></li>
+<li class="chapter" data-level="4.1.2" data-path="loading-data.html"><a href="loading-data.html#excel-files"><i class="fa fa-check"></i><b>4.1.2</b> Excel files</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="programming-in-r.html"><a href="programming-in-r.html"><i class="fa fa-check"></i><b>4</b> Programming in R</a>
+<li class="chapter" data-level="4.2" data-path="apis-advanced.html"><a href="apis-advanced.html"><i class="fa fa-check"></i><b>4.2</b> APIs (Advanced)</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="user-defined-functions.html"><a href="user-defined-functions.html"><i class="fa fa-check"></i><b>4.1</b> User-defined functions</a></li>
-<li class="chapter" data-level="4.2" data-path="for-loops.html"><a href="for-loops.html"><i class="fa fa-check"></i><b>4.2</b> For loops</a></li>
-<li class="chapter" data-level="4.3" data-path="ifelse-statements.html"><a href="ifelse-statements.html"><i class="fa fa-check"></i><b>4.3</b> If/else statements</a></li>
-<li class="chapter" data-level="4.4" data-path="applying-functions.html"><a href="applying-functions.html"><i class="fa fa-check"></i><b>4.4</b> Applying functions</a></li>
+<li class="chapter" data-level="4.2.1" data-path="apis-advanced.html"><a href="apis-advanced.html#what-are-apis"><i class="fa fa-check"></i><b>4.2.1</b> What are APIs?</a></li>
+<li class="chapter" data-level="4.2.2" data-path="apis-advanced.html"><a href="apis-advanced.html#accessing-apis-in-r"><i class="fa fa-check"></i><b>4.2.2</b> Accessing APIs in R</a></li>
+<li class="chapter" data-level="4.2.3" data-path="apis-advanced.html"><a href="apis-advanced.html#bmrsr"><i class="fa fa-check"></i><b>4.2.3</b> BMRSr</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="advanced-data-analysis.html"><a href="advanced-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Advanced data analysis</a></li>
-<li class="chapter" data-level="6" data-path="theory.html"><a href="theory.html"><i class="fa fa-check"></i><b>6</b> Theory</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="abstraction.html"><a href="abstraction.html"><i class="fa fa-check"></i><b>6.1</b> Abstraction</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="abstraction.html"><a href="abstraction.html#definition"><i class="fa fa-check"></i><b>6.1.1</b> Definition</a></li>
-<li class="chapter" data-level="6.1.2" data-path="abstraction.html"><a href="abstraction.html#abstraction-in-r"><i class="fa fa-check"></i><b>6.1.2</b> Abstraction in R</a></li>
+<li class="chapter" data-level="4.3" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>4.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="4.4" data-path="summary-statistics.html"><a href="summary-statistics.html"><i class="fa fa-check"></i><b>4.4</b> Summary statistics</a></li>
+<li class="chapter" data-level="4.5" data-path="plots.html"><a href="plots.html"><i class="fa fa-check"></i><b>4.5</b> Plots</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="organisation.html"><a href="organisation.html"><i class="fa fa-check"></i><b>6.2</b> Organisation</a>
+<li class="chapter" data-level="5" data-path="programming-in-r.html"><a href="programming-in-r.html"><i class="fa fa-check"></i><b>5</b> Programming in R</a>
 <ul>
-<li class="chapter" data-level="6.2.1" data-path="organisation.html"><a href="organisation.html#packages-as-projects"><i class="fa fa-check"></i><b>6.2.1</b> Packages as projects</a></li>
+<li class="chapter" data-level="5.1" data-path="user-defined-functions.html"><a href="user-defined-functions.html"><i class="fa fa-check"></i><b>5.1</b> User-defined functions</a></li>
+<li class="chapter" data-level="5.2" data-path="for-loops.html"><a href="for-loops.html"><i class="fa fa-check"></i><b>5.2</b> For loops</a></li>
+<li class="chapter" data-level="5.3" data-path="ifelse-statements.html"><a href="ifelse-statements.html"><i class="fa fa-check"></i><b>5.3</b> If/else statements</a></li>
+<li class="chapter" data-level="5.4" data-path="applying-functions.html"><a href="applying-functions.html"><i class="fa fa-check"></i><b>5.4</b> Applying functions</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="iteration.html"><a href="iteration.html"><i class="fa fa-check"></i><b>6.3</b> Iteration</a>
+<li class="chapter" data-level="6" data-path="advanced-data-analysis.html"><a href="advanced-data-analysis.html"><i class="fa fa-check"></i><b>6</b> Advanced data analysis</a></li>
+<li class="chapter" data-level="7" data-path="theory.html"><a href="theory.html"><i class="fa fa-check"></i><b>7</b> Theory</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="iteration.html"><a href="iteration.html#for-loops-and-lists"><i class="fa fa-check"></i><b>6.3.1</b> For loops and lists</a></li>
+<li class="chapter" data-level="7.1" data-path="abstraction.html"><a href="abstraction.html"><i class="fa fa-check"></i><b>7.1</b> Abstraction</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="abstraction.html"><a href="abstraction.html#definition"><i class="fa fa-check"></i><b>7.1.1</b> Definition</a></li>
+<li class="chapter" data-level="7.1.2" data-path="abstraction.html"><a href="abstraction.html#abstraction-in-r"><i class="fa fa-check"></i><b>7.1.2</b> Abstraction in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="organisation.html"><a href="organisation.html"><i class="fa fa-check"></i><b>7.2</b> Organisation</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="organisation.html"><a href="organisation.html#packages-as-projects"><i class="fa fa-check"></i><b>7.2.1</b> Packages as projects</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="iteration.html"><a href="iteration.html"><i class="fa fa-check"></i><b>7.3</b> Iteration</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="iteration.html"><a href="iteration.html#for-loops-and-lists"><i class="fa fa-check"></i><b>7.3.1</b> For loops and lists</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -203,11 +214,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="iteration" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Iteration</h2>
+<div id="iteration" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Iteration</h2>
 <p>TO DO</p>
-<div id="for-loops-and-lists" class="section level3" number="6.3.1">
-<h3><span class="header-section-number">6.3.1</span> For loops and lists</h3>
+<div id="for-loops-and-lists" class="section level3" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> For loops and lists</h3>
 <p>TO DO</p>
 
 </div>

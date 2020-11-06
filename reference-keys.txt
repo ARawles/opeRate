@@ -2,6 +2,9 @@ operate
 overview
 acknowledgements
 about-me
+workflow
+basic-workflows
+example-1-reporting
 tidyverse
 tidyr
 dplyr
