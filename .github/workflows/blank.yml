@@ -1,0 +1,73 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Rebuild and deploy
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  RENV_PATHS_ROOT: ~/.local/share/renv
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v1
+
+      - name: Install libcurl
+        run: sudo apt-get install libcurl4-openssl-dev     
+        
+      - name: Install pandoc and pandoc citeproc
+        run: |
+          brew install pandoc
+          brew install pandoc-citeproc
+          brew install curl
+          
+      - name: Cache Renv packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
+      - name: Cache bookdown results
+        uses: actions/cache@v2
+        with:
+          path: _bookdown_files
+          key: bookdown-${{ hashFiles('**/*Rmd') }}
+          restore-keys: bookdown-
+
+      - name: Install packages
+        run: |
+          R -e 'install.packages("renv")'
+          R -e 'renv::restore()'
+        
+      - name: Install tinytex
+        run: |
+          R -e 'install.packages("tinytex")'
+          R -e 'tinytex::install_tinytex()'
+       
+      - name: Build the book
+        run: |
+          R -e "source('contribs.R')"
+          R -e "bookdown::render_book('index.Rmd', bookdown::gitbook(split_by = 'section'))"
+          R -e "bookdown::render_book('index.Rmd', 'bookdown::pdf_book')"
+          R -e "bookdown::render_book(input = 'index.Rmd', output_format = bookdown::epub_book(cover_image = 'cover.png'))"
+      # Deploys the files to GitHubPages
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: docs # The folder the action should deploy.
+          CLEAN: FALSE # Automatically remove deleted files from the deploy branch
