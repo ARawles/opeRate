@@ -27,6 +27,22 @@ This book is a collection of materials to help users apply their fundamental R k
 
 As with the [teacheR](teacher.arawles.co.uk) book, this is a work in progress, so please feel free to make any suggestions or corrections via this book's [GitHub repository](www.github.com/arawles/operate/issues).
 
+### Acknowledgements
+
+This book was made possible with the help of those who raised issues and proposed pull requests. With thanks to:
+```{r, results = "asis", echo = FALSE, message = FALSE}
+library(dplyr)
+contributors <- read.csv("contribs.csv", stringsAsFactors = FALSE)
+contributors <- contributors %>% 
+  mutate(
+    link = glue::glue("[\\@{login}](https://github.com/{login})"),
+    desc = ifelse(is.na(name), link, glue::glue("{name} ({link})"))
+  )
+  
+ cat(paste0(contributors$desc, collapse = ", "))
+```
+
+
 ## About Me
 
 I've been using R for roughly 4 years now, and it's essentially the language I do the vast majority of my work in. I say the vast majority, because data analysis work usually requires some crossover work with things like SQL servers or APIs or similar, but we'll cover those in time.
