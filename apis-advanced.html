@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.2 APIs (Advanced) | opeRate</title>
+  <meta name="description" content="3.2 APIs (Advanced) | opeRate" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.2 APIs (Advanced) | opeRate" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="cover.png" />
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.2 APIs (Advanced) | opeRate" />
+  
+  
+  <meta name="twitter:image" content="cover.png" />
+
+<meta name="author" content="Adam Rawles" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link rel="prev" href="loading-data.html"/>
+<link rel="next" href="cleaning-data.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> opeRate</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>1.1</b> Overview</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="overview.html"><a href="overview.html#acknowledgements"><i class="fa fa-check"></i><b>1.1.1</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="about-me.html"><a href="about-me.html"><i class="fa fa-check"></i><b>1.2</b> About Me</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>2</b> Tidyverse</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tidyr.html"><a href="tidyr.html"><i class="fa fa-check"></i><b>2.1</b> tidyr</a></li>
+<li class="chapter" data-level="2.2" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>2.2</b> dplyr</a></li>
+<li class="chapter" data-level="2.3" data-path="stringr.html"><a href="stringr.html"><i class="fa fa-check"></i><b>2.3</b> stringr</a></li>
+<li class="chapter" data-level="2.4" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>2.4</b> ggplot2</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>3</b> Data Analysis</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="loading-data.html"><a href="loading-data.html"><i class="fa fa-check"></i><b>3.1</b> Loading data</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="loading-data.html"><a href="loading-data.html#csv"><i class="fa fa-check"></i><b>3.1.1</b> csv</a></li>
+<li class="chapter" data-level="3.1.2" data-path="loading-data.html"><a href="loading-data.html#excel-files"><i class="fa fa-check"></i><b>3.1.2</b> Excel files</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="apis-advanced.html"><a href="apis-advanced.html"><i class="fa fa-check"></i><b>3.2</b> APIs (Advanced)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="apis-advanced.html"><a href="apis-advanced.html#what-are-apis"><i class="fa fa-check"></i><b>3.2.1</b> What are APIs?</a></li>
+<li class="chapter" data-level="3.2.2" data-path="apis-advanced.html"><a href="apis-advanced.html#accessing-apis-in-r"><i class="fa fa-check"></i><b>3.2.2</b> Accessing APIs in R</a></li>
+<li class="chapter" data-level="3.2.3" data-path="apis-advanced.html"><a href="apis-advanced.html#bmrsr"><i class="fa fa-check"></i><b>3.2.3</b> BMRSr</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>3.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="3.4" data-path="summary-statistics.html"><a href="summary-statistics.html"><i class="fa fa-check"></i><b>3.4</b> Summary statistics</a></li>
+<li class="chapter" data-level="3.5" data-path="plots.html"><a href="plots.html"><i class="fa fa-check"></i><b>3.5</b> Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="programming-in-r.html"><a href="programming-in-r.html"><i class="fa fa-check"></i><b>4</b> Programming in R</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="user-defined-functions.html"><a href="user-defined-functions.html"><i class="fa fa-check"></i><b>4.1</b> User-defined functions</a></li>
+<li class="chapter" data-level="4.2" data-path="for-loops.html"><a href="for-loops.html"><i class="fa fa-check"></i><b>4.2</b> For loops</a></li>
+<li class="chapter" data-level="4.3" data-path="ifelse-statements.html"><a href="ifelse-statements.html"><i class="fa fa-check"></i><b>4.3</b> If/else statements</a></li>
+<li class="chapter" data-level="4.4" data-path="applying-functions.html"><a href="applying-functions.html"><i class="fa fa-check"></i><b>4.4</b> Applying functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="advanced-data-analysis.html"><a href="advanced-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Advanced data analysis</a></li>
+<li class="chapter" data-level="6" data-path="theory.html"><a href="theory.html"><i class="fa fa-check"></i><b>6</b> Theory</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="abstraction.html"><a href="abstraction.html"><i class="fa fa-check"></i><b>6.1</b> Abstraction</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="abstraction.html"><a href="abstraction.html#definition"><i class="fa fa-check"></i><b>6.1.1</b> Definition</a></li>
+<li class="chapter" data-level="6.1.2" data-path="abstraction.html"><a href="abstraction.html#abstraction-in-r"><i class="fa fa-check"></i><b>6.1.2</b> Abstraction in R</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="organisation.html"><a href="organisation.html"><i class="fa fa-check"></i><b>6.2</b> Organisation</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="organisation.html"><a href="organisation.html#packages-as-projects"><i class="fa fa-check"></i><b>6.2.1</b> Packages as projects</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="iteration.html"><a href="iteration.html"><i class="fa fa-check"></i><b>6.3</b> Iteration</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="iteration.html"><a href="iteration.html#for-loops-and-lists"><i class="fa fa-check"></i><b>6.3.1</b> For loops and lists</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">opeRate</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="apis-advanced" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> APIs (Advanced)</h2>
+<p>Loading static data from text and Excel files is very common. However, an emerging method of data extraction is via web-based APIs. These web-based APIs allow a user to extract datasets from larger repositories using just an internet connection. This allows for access to larger and more dynamic datasets.</p>
+<div id="what-are-apis" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> What are APIs?</h3>
+<p>API stands for application programming interface. APIs are essentially just a set of functions for interacting with an application or service. For instance, many of the packages that you’ll use will essentially just be forms of API; they provide you with functions to interact with an underlying system or service.</p>
+<p>For data extraction, we’re going to focus more specifically on web-based APIs. These APIs use URL strings to accept function calls and parameters and then return the data requested. Whilst there are multiple <em>methods</em> that can be implemented in an API to perform different actions, we’re going to focus on <code>GET</code> functions. That is, we’re purely <em>getting</em> something from the API rather than trying to change anything that’s stored on the server. You can think of the <code>GET</code> method as being read-only.</p>
+<p>To start with, we’re going to look at exactly how you would interact with an API, but then we’ll look at the BMRSr package, which I wrote to make interacting with the Balancing Mechanism and Reporting Service easier.</p>
+</div>
+<div id="accessing-apis-in-r" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Accessing APIs in R</h3>
+<p>To access a web-based API in R, we’re going to need a connection to the internet, the <code>httr</code> package and potentially some log in credentials for the API. In this case, we’re going to just use a test API, but in reality, most APIs require that you use some kind of authentication so that they know who’s accessing their data.</p>
+<p>As previously mentioned, to extract something from the API, you’ll be using the <code>GET</code> method. The <code>httr</code> package makes this super easy by providing a <code>GET</code> function. To this function, we’ll need to provide a URL. The <code>GET</code> function will then send a GET request to that address and return the response. A really simple GET request could be:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="apis-advanced.html#cb7-1" aria-hidden="true"></a>httr<span class="op">::</span><span class="kw">GET</span>(<span class="dt">url =</span> <span class="st">&quot;http://google.com&quot;</span>)</span></code></pre></div>
+<pre><code>## Response [http://www.google.com/]
+##   Date: 2020-11-06 15:36
+##   Status: 200
+##   Content-Type: text/html; charset=ISO-8859-1
+##   Size: 12.9 kB
+## &lt;!doctype html&gt;&lt;html itemscope=&quot;&quot; itemtype=&quot;http://schema.org/WebPage&quot; lang=&quot;...
+## document.documentElement.addEventListener(&quot;submit&quot;,function(b){var a;if(a=b.t...
+## var a=window.location,b=a.href.indexOf(&quot;#&quot;);if(0&lt;=b){var c=a.href.substring(b...
+## &lt;/style&gt;&lt;style&gt;body,td,a,p,.h{font-family:arial,sans-serif}body{margin:0;over...
+## if (!iesg){document.f&amp;&amp;document.f.q.focus();document.gbqf&amp;&amp;document.gbqf.q.fo...
+## }
+## })();&lt;/script&gt;&lt;div id=&quot;mngb&quot;&gt;&lt;div id=gbar&gt;&lt;nobr&gt;&lt;b class=gb1&gt;Search&lt;/b&gt; &lt;a cl...
+## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;AINFCbYAAAAAX6V7d...
+## var c=this||self,e=/^[\w+/_-]+[=]{0,2}$/,f=null,g=function(a){return(a=a.quer...
+## a!=c?a=g(a.document):(null===f&amp;&amp;(f=g(c.document)),a=f);a&amp;&amp;b.setAttribute(&quot;non...
+## ...</code></pre>
+<p>That seems like a really complicated response at first, but when we look at each part, it’s quite simple.</p>
+<ul>
+<li>Response
+<ul>
+<li>This is telling us where we got our response from. In this case, we sent a request to Google, so we got a response from Google.</li>
+</ul></li>
+<li>Date
+<ul>
+<li>Fairly self-explanatory - the date and time of the response.</li>
+</ul></li>
+<li>Content-Type
+<ul>
+<li>This is telling us what type the response is. In this case, the response is just a HTML page, which is exactly what we expect as that’s what you get when you type “google.com” into your browser.</li>
+</ul></li>
+<li>Size
+<ul>
+<li>This is the size of the response</li>
+</ul></li>
+<li>Content
+<ul>
+<li>Below the Size, we see the actually response body. In this case, we’ve been given the html for the Google.com page.</li>
+</ul></li>
+</ul>
+<p>As simple as this example was, it didn’t really give us anything interesting back, just the Google homepage. So let’s use the GET request to get something more interesting.</p>
+<p>We’re going to access the [<a href="https://jsonplaceholder.typicode.com/" class="uri">https://jsonplaceholder.typicode.com/</a>] website, which provides fake APIs for testing. But for now, imagine that this is something like an Instagram database, holding users and their posts and comments.</p>
+<p>The first step in accessing an API is to understand that commands the API is expecting. Looking at the website, we can see that we can access lots of different types of data: posts, comments, albums, photos, todos and users. We can also see that to list each one, we just need to add /whatever to the end of our URL. So let’s try getting a list of users:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="apis-advanced.html#cb9-1" aria-hidden="true"></a>httr<span class="op">::</span><span class="kw">GET</span>(<span class="dt">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</span></code></pre></div>
+<pre><code>## Response [https://jsonplaceholder.typicode.com/users]
+##   Date: 2020-11-06 15:36
+##   Status: 200
+##   Content-Type: application/json; charset=utf-8
+##   Size: 5.64 kB
+## [
+##   {
+##     &quot;id&quot;: 1,
+##     &quot;name&quot;: &quot;Leanne Graham&quot;,
+##     &quot;username&quot;: &quot;Bret&quot;,
+##     &quot;email&quot;: &quot;Sincere@april.biz&quot;,
+##     &quot;address&quot;: {
+##       &quot;street&quot;: &quot;Kulas Light&quot;,
+##       &quot;suite&quot;: &quot;Apt. 556&quot;,
+##       &quot;city&quot;: &quot;Gwenborough&quot;,
+## ...</code></pre>
+<p>Looking at the content type, we can see that unlike when we sent a request to Google.com, we’ve got a Content-Type of application/json. JSON is a data structure often used to send data across APIs. We won’t go into the structure of it now because R does most of the conversion for us, but if you’re interested, there’s more info on the JSON structure <a href="https://www.json.org/json-en.html">here</a>.</p>
+<p>Trying to read raw JSON is hard, but <code>httr</code> includes functions to help us get it into a better structure for R. Using the <code>httr::content()</code> function, <code>httr</code> will automatically read the response content and convert it into the format we ask for. For now, we’re going to leave it at ‘NULL’ which guesses the best format for us.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="apis-advanced.html#cb11-1" aria-hidden="true"></a>response &lt;-<span class="st"> </span>httr<span class="op">::</span><span class="kw">GET</span>(<span class="dt">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</span>
+<span id="cb11-2"><a href="apis-advanced.html#cb11-2" aria-hidden="true"></a>content &lt;-<span class="st"> </span>httr<span class="op">::</span><span class="kw">content</span>(response)</span>
+<span id="cb11-3"><a href="apis-advanced.html#cb11-3" aria-hidden="true"></a><span class="kw">head</span>(content, <span class="dv">1</span>) <span class="co"># we&#39;ll just look at the first entry for presentation sake</span></span></code></pre></div>
+<pre><code>## [[1]]
+## [[1]]$id
+## [1] 1
+## 
+## [[1]]$name
+## [1] &quot;Leanne Graham&quot;
+## 
+## [[1]]$username
+## [1] &quot;Bret&quot;
+## 
+## [[1]]$email
+## [1] &quot;Sincere@april.biz&quot;
+## 
+## [[1]]$address
+## [[1]]$address$street
+## [1] &quot;Kulas Light&quot;
+## 
+## [[1]]$address$suite
+## [1] &quot;Apt. 556&quot;
+## 
+## [[1]]$address$city
+## [1] &quot;Gwenborough&quot;
+## 
+## [[1]]$address$zipcode
+## [1] &quot;92998-3874&quot;
+## 
+## [[1]]$address$geo
+## [[1]]$address$geo$lat
+## [1] &quot;-37.3159&quot;
+## 
+## [[1]]$address$geo$lng
+## [1] &quot;81.1496&quot;
+## 
+## 
+## 
+## [[1]]$phone
+## [1] &quot;1-770-736-8031 x56442&quot;
+## 
+## [[1]]$website
+## [1] &quot;hildegard.org&quot;
+## 
+## [[1]]$company
+## [[1]]$company$name
+## [1] &quot;Romaguera-Crona&quot;
+## 
+## [[1]]$company$catchPhrase
+## [1] &quot;Multi-layered client-server neural-net&quot;
+## 
+## [[1]]$company$bs
+## [1] &quot;harness real-time e-markets&quot;</code></pre>
+<p>We can see that R has taken the response and turned it into a list for us. From here, we can then start our analysis.</p>
+<p>In many cases however, you won’t want a complete list. Instead, you’ll want to provide some parameters to limit the data you get back. Most APIs will have a way of doing this. For example, reading the jsonplaceholder website, we can see that we can get all the posts for a specific user by appending the url with “?userId=x”. So let’s try getting all of the posts for the user with ID 1:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="apis-advanced.html#cb13-1" aria-hidden="true"></a>response &lt;-<span class="st"> </span>httr<span class="op">::</span><span class="kw">GET</span>(<span class="dt">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/posts?userId=1&quot;</span>)</span>
+<span id="cb13-2"><a href="apis-advanced.html#cb13-2" aria-hidden="true"></a>content &lt;-<span class="st"> </span>httr<span class="op">::</span><span class="kw">content</span>(response)</span>
+<span id="cb13-3"><a href="apis-advanced.html#cb13-3" aria-hidden="true"></a><span class="kw">head</span>(content, <span class="dv">1</span>) <span class="co"># we&#39;ll just look at the first entry for presentation sake</span></span></code></pre></div>
+<pre><code>## [[1]]
+## [[1]]$userId
+## [1] 1
+## 
+## [[1]]$id
+## [1] 1
+## 
+## [[1]]$title
+## [1] &quot;sunt aut facere repellat provident occaecati excepturi optio reprehenderit&quot;
+## 
+## [[1]]$body
+## [1] &quot;quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto&quot;</code></pre>
+<p>Whilst the parameters here are pretty simple, you will come across APIs that accept multiple parameters, making data extraction from an API a very powerful tool.</p>
+</div>
+<div id="bmrsr" class="section level3" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> BMRSr</h3>
+<p>As easy as the above was, interacting with APIs that have several parameters and complicated URLs can get confusing. To this end, many people create packages in R that act as wrappers for various APIs. These packages will then provide you with functions that will automatically create the request, send it and receive and parse the content. You can kind of think about it as an API for an API!</p>
+<p>This is what I did for the Balancing Mechanism Reporting Service (BMRS) API. BMRS provides a massive amount of energy-related data, but creating the correct URLs and dealing with the response can be tricky. The BMRSr package that I wrote was designed to help with that.</p>
+<p>We’ll now go through a quick demo of the BMRSr package. If you’re not too bothered about this part, feel free to skip to the next section.</p>
+<p>If you’re interested, there are a couple of things you’ll need:</p>
+<ul>
+<li>The BMRSr package installed</li>
+<li>A free BMRS API key that can be retrieved <a href="https://www.elexonportal.co.uk/">here</a>.</li>
+</ul>
+<p>Once you’ve got those two prerequisites, using BMRSr should be quite easy. The main function in the BMRSr package is the <code>full_request()</code> function, which will create your URL, send the request, and parse the response depending on your parameters. To do this however, the <code>full_request()</code> function needs some parameters:</p>
+<ul>
+<li><code>data_item</code>
+<ul>
+<li>A data item to retrieve. The BMRS platform holds lots of datasets, and so we need to specify which one we want to retrieve.</li>
+</ul></li>
+<li><code>api_key</code>
+<ul>
+<li>Our API_key that we got from the Elexon portal</li>
+</ul></li>
+<li>parameters
+<ul>
+<li>Depending on which data_item you chose, you’ll need to provide some parameters to filter the data</li>
+</ul></li>
+<li><code>service_type</code>
+<ul>
+<li>What format you want the data returned in: values are XML or csv.</li>
+</ul></li>
+</ul>
+<p>So what parameters do I need? Well, the easiest way to find out is to use the <code>get_parameters()</code> function. This will return all of the parameters that can be provided to the <code>full_request()</code>.</p>
+<p>Let’s do an example. Say I want to return data for the B1610 data item, which shows us generation output per generation unit. So, the first step is to know what parameters I can provide using the <code>get_parameters()</code> function:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="apis-advanced.html#cb15-1" aria-hidden="true"></a>BMRSr<span class="op">::</span><span class="kw">get_parameters</span>(<span class="st">&quot;B1610&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;settlement_date&quot; &quot;period&quot;</code></pre>
+<p>This tells me that I can provide two parameters in my request - the date and the settlement period. Using this information in my <code>full_request()</code> function…</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="apis-advanced.html#cb17-1" aria-hidden="true"></a>BMRSr<span class="op">::</span><span class="kw">full_request</span>(<span class="dt">data_item =</span> <span class="st">&quot;B1610&quot;</span>,</span>
+<span id="cb17-2"><a href="apis-advanced.html#cb17-2" aria-hidden="true"></a>                    <span class="dt">api_key =</span> <span class="st">&quot;put_your_API_key_here&quot;</span>,</span>
+<span id="cb17-3"><a href="apis-advanced.html#cb17-3" aria-hidden="true"></a>                    <span class="dt">service_type =</span> <span class="st">&quot;csv&quot;</span>,</span>
+<span id="cb17-4"><a href="apis-advanced.html#cb17-4" aria-hidden="true"></a>                    <span class="dt">settlement_date =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2019/06/01&quot;</span>),</span>
+<span id="cb17-5"><a href="apis-advanced.html#cb17-5" aria-hidden="true"></a>                    <span class="dt">period =</span> <span class="st">&quot;*&quot;</span>) <span class="co"># From reading the API manual,</span></span>
+<span id="cb17-6"><a href="apis-advanced.html#cb17-6" aria-hidden="true"></a>                                  <span class="co"># I know that this returns all periods</span></span></code></pre></div>
+<p>And there we have it, we’ve retrieved a energy-related dataset from an API using the BMRSr package. There are roughly 101 data items available on BMRS so there’s a massive amount of data there for those who want to access it.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="loading-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cleaning-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

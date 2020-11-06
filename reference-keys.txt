@@ -1,5 +1,6 @@
 operate
 overview
+acknowledgements
 about-me
 tidyverse
 tidyr

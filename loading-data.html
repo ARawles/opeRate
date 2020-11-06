@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6 Theory | opeRate</title>
-  <meta name="description" content="6 Theory | opeRate" />
+  <title>3.1 Loading data | opeRate</title>
+  <meta name="description" content="3.1 Loading data | opeRate" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6 Theory | opeRate" />
+  <meta property="og:title" content="3.1 Loading data | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6 Theory | opeRate" />
+  <meta name="twitter:title" content="3.1 Loading data | opeRate" />
   
   
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="advanced-data-analysis.html"/>
-<link rel="next" href="abstraction.html"/>
+<link rel="prev" href="data-analysis.html"/>
+<link rel="next" href="apis-advanced.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -203,19 +203,71 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="theory" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Theory</h1>
-<p>When you’re first learning R, getting on R and planning little projects and writing code is definitely the best way to learn. Reading to understand <em>why</em> you’re getting the output that you are or why you’re doing something the way you are doing is definitely important, but it’s always better to get hands on.</p>
-<p>Having said that, one thing that I craved when I was learning R was to understand why people coded the way they did, or why one thing was always recommended over another in StackOverflow answers. I picked it up along the way, but there were many times where I was doing something completely unneccessary or inefficiently because I hadn’t been exposed to a discussion about why I shouldn’t be doing what I was doing. Similarly, when I eventually did come across an article outlining some of the philosophy or theory underpinning an approach, a little light switch would go and so many more things would click into place.</p>
-<p>So this chapter is dedicated purely to some of the simple theory underpinning certain actions in R. This is an <em>opionated</em> piece as I hold a personal opinion on how certain things should be done in R, but that doesn’t mean that I’m right. Instead, I hope this section helps you think more deeply about what you’re trying to achieve and the best way to get there before you start your next project.</p>
+<div id="loading-data" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Loading data</h2>
+<p>The first step in any data analysis project you’ll undertake is getting at least one dataset. Oftentimes, we have less control over the data we use than we would like; receiving odd Excel spreadsheets or text files or proprietary files or whatever. In this chapter, we’ll focus on the more typical data formats (csv and Excel), but we’ll also look at how we might extract data from a web API, which is an increasingly common method for data loading.</p>
+<div id="csv" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> csv</h3>
+<p>If I have any say in the data format of the files I need to load in, I usually ask for them to be in csv format. CSV stands for “comma-separated values” and essentially means that the data is stored as one long text string, with each different value or cell separated by a comma. So for example, a really simple csv file may look, in its most base format, like this:</p>
+<pre><code>name,age,
+Dave,35,
+Simon,60,
+Anna,24,
+Patricia,75</code></pre>
+<p>Benefits of the csv file over something like an Excel file are largely based around simplicity. csv files are typically smaller and can only have one sheet, meaning that you won’t get confused with multiple spreadsheets. Furthermore, values in csv files are essentially what you see is what you get. With Excel files, sometimes the value that you see in Excel isn’t the value that ends up in R. For these reasons, I would suggest using a separated-value file over an Excel file when you can.</p>
+<div id="loading-.csv-files" class="section level4" number="3.1.1.1">
+<h4><span class="header-section-number">3.1.1.1</span> Loading .csv files</h4>
+<p>Loading csv files in R is relatively simple. There are base* functions that come with R to load csv files but there’s also a popular package called <code>readr</code> which can be used so I’ll cover both.</p>
+<p>* They are technically from the <code>utils</code> package which comes bundled with R so we’ll call it base R.</p>
+<div id="base" class="section level5" number="3.1.1.1.1">
+<h5><span class="header-section-number">3.1.1.1.1</span> Base</h5>
+<p>To load a csv file using base R, we’ll use the <code>read.csv()</code> function:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="loading-data.html#cb2-1" aria-hidden="true"></a><span class="kw">read.csv</span>(<span class="dt">file =</span> <span class="st">&quot;path/to/your/file&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, ...)</span></code></pre></div>
+<p>The <code>file</code> parameters needs the path to your file as a character string. The <code>header</code> parameter is used to tell R whether or not your file has column headers.</p>
+<p>There are lots of other parameters that can be tweaked for the <code>read.csv()</code> function, but we won’t go through them here.</p>
+</div>
+<div id="readr" class="section level5" number="3.1.1.1.2">
+<h5><span class="header-section-number">3.1.1.1.2</span> readr</h5>
+<p>The <code>readr</code> package comes with a similar function: <code>read_csv()</code>. With the exception of a couple of extra parameters in the <code>read_csv()</code> function and potentially some better efficiency, there isn’t a massive difference between the two.</p>
+<p>Using the <code>read_csv()</code> function is simple:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="loading-data.html#cb3-1" aria-hidden="true"></a>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;path/to/your/file&quot;</span>, <span class="dt">col_names =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>In this function, the <code>header</code> parameter is replaced with the <code>col_names</code> parameter. The <code>col_names</code> parameter is very similar, you can say whether your dataset has column headings, or you can provide a character vector of names to be used as column headers.</p>
+<p>There are also some extra parameters in the <code>read_csv()</code> function that can be useful. The <code>col_types</code> parameter lets you specify what datatype each column should be treated as. This can either be provided using the <code>cols()</code> helper function like this:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="loading-data.html#cb4-1" aria-hidden="true"></a>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;path/to/file&quot;</span>,</span>
+<span id="cb4-2"><a href="loading-data.html#cb4-2" aria-hidden="true"></a>                <span class="dt">col_names =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb4-3"><a href="loading-data.html#cb4-3" aria-hidden="true"></a>                <span class="dt">col_types =</span> readr<span class="op">::</span><span class="kw">cols</span>(</span>
+<span id="cb4-4"><a href="loading-data.html#cb4-4" aria-hidden="true"></a>                  readr<span class="op">::</span><span class="kw">col_character</span>(), readr<span class="op">::</span><span class="kw">col_double</span>()</span>
+<span id="cb4-5"><a href="loading-data.html#cb4-5" aria-hidden="true"></a>                ),</span>
+<span id="cb4-6"><a href="loading-data.html#cb4-6" aria-hidden="true"></a>                ...</span>
+<span id="cb4-7"><a href="loading-data.html#cb4-7" aria-hidden="true"></a>)</span></code></pre></div>
+<p>Or, you can provide a compact string with different letters representing different datatypes:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="loading-data.html#cb5-1" aria-hidden="true"></a>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;path/to/file&quot;</span>,</span>
+<span id="cb5-2"><a href="loading-data.html#cb5-2" aria-hidden="true"></a>                <span class="dt">col_names =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb5-3"><a href="loading-data.html#cb5-3" aria-hidden="true"></a>                <span class="dt">col_types =</span> <span class="st">&quot;cd&quot;</span>,</span>
+<span id="cb5-4"><a href="loading-data.html#cb5-4" aria-hidden="true"></a>                ...</span>
+<span id="cb5-5"><a href="loading-data.html#cb5-5" aria-hidden="true"></a>)</span></code></pre></div>
+<p>The codes for the different datatypes can be found on the documentation page for the <code>read_csv()</code> function (type <code>?read_csv()</code>).</p>
+<p>The <code>trim_ws</code> parameter can also be helpful if you have a dataset with lots of trailing whitespace around your values. When set to true, the <code>read_csv()</code> function will automatically trim each field before loading it in.</p>
+<p>Overall, both functions will give you the same result, so just choose whichever function makes most sense to you and has the parameters you need.</p>
+</div>
+</div>
+</div>
+<div id="excel-files" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Excel files</h3>
+<p>R doesn’t have any built-in functions to load Excel files. Instead, you’ll need to use a package. One of the more popular packages used to read Excel files is the <code>readxl</code> package.</p>
+<p>Once you’ve installed and loaded the <code>readxl</code> package. You can use the <code>read_excel()</code> function:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="loading-data.html#cb6-1" aria-hidden="true"></a>readxl<span class="op">::</span><span class="kw">read_excel</span>(<span class="dt">path =</span> <span class="st">&quot;path/to/file&quot;</span>, <span class="dt">sheet =</span> <span class="ot">NULL</span>, <span class="dt">range =</span> <span class="ot">NULL</span>, ...)</span></code></pre></div>
+<p>Because Excel files are a little bit more complicated than csv files, you’ll notice that there are some extra parameters. Most notably, the sheet and range parameters can be used to define a subset of the entire Excel file to be loaded. By default, both are set to NULL, which will mean that R will load the entirety of the first sheet.</p>
+<p>Like the <code>readr::read_csv()</code> function, you can specify column names and types using the <code>col_names</code> and <code>col_types</code> parameters respectively, and also trim your values using <code>trim_ws</code>.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="advanced-data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="abstraction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="apis-advanced.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
