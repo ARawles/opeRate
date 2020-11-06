@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Data Analysis | opeRate</title>
   <meta name="description" content="3 Data Analysis | opeRate" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 Data Analysis | opeRate" />
   <meta property="og:type" content="book" />
@@ -49,6 +49,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -238,10 +240,10 @@ Patricia,75</code></pre>
 <p>As previously mentioned, to extract something from the API, you'll be using the <code>GET</code> method. The <code>httr</code> package makes this super easy by providing a <code>GET</code> function. To this function, we'll need to provide a URL. The <code>GET</code> function will then send a GET request to that address and return the response. A really simple GET request could be:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">httr<span class="op">::</span><span class="kw">GET</span>(<span class="dt">url =</span> <span class="st">&quot;http://google.com&quot;</span>)</code></pre></div>
 <pre><code>## Response [http://www.google.com/]
-##   Date: 2020-08-27 10:12
+##   Date: 2020-11-06 14:55
 ##   Status: 200
 ##   Content-Type: text/html; charset=ISO-8859-1
-##   Size: 12.8 kB
+##   Size: 13 kB
 ## &lt;!doctype html&gt;&lt;html itemscope=&quot;&quot; itemtype=&quot;http://schema.org/WebPage&quot; lang=&quot;...
 ## document.documentElement.addEventListener(&quot;submit&quot;,function(b){var a;if(a=b.t...
 ## var a=window.location,b=a.href.indexOf(&quot;#&quot;);if(0&lt;=b){var c=a.href.substring(b...
@@ -249,9 +251,10 @@ Patricia,75</code></pre>
 ## if (!iesg){document.f&amp;&amp;document.f.q.focus();document.gbqf&amp;&amp;document.gbqf.q.fo...
 ## }
 ## })();&lt;/script&gt;&lt;div id=&quot;mngb&quot;&gt;&lt;div id=gbar&gt;&lt;nobr&gt;&lt;b class=gb1&gt;Search&lt;/b&gt; &lt;a cl...
-## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;AINFCbYAAAAAX0eVG...
-## setTimeout(function(){var b=document;var a=&quot;SCRIPT&quot;;&quot;application/xhtml+xml&quot;==...
-## function _F_installCss(c){}</code></pre>
+## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;AINFCbYAAAAAX6Vx6...
+## var c=this||self,e=/^[\w+/_-]+[=]{0,2}$/,f=null,g=function(a){return(a=a.quer...
+## a!=c?a=g(a.document):(null===f&amp;&amp;(f=g(c.document)),a=f);a&amp;&amp;b.setAttribute(&quot;non...
+## ...</code></pre>
 <p>That seems like a really complicated response at first, but when we look at each part, it's quite simple.</p>
 <ul>
 <li>Response</li>
@@ -270,7 +273,7 @@ Patricia,75</code></pre>
 <p>The first step in accessing an API is to understand that commands the API is expecting. Looking at the website, we can see that we can access lots of different types of data: posts, comments, albums, photos, todos and users. We can also see that to list each one, we just need to add /whatever to the end of our URL. So let's try getting a list of users:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">httr<span class="op">::</span><span class="kw">GET</span>(<span class="dt">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</code></pre></div>
 <pre><code>## Response [https://jsonplaceholder.typicode.com/users]
-##   Date: 2020-08-27 10:12
+##   Date: 2020-11-06 14:55
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 5.64 kB
