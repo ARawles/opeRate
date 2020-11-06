@@ -27,5 +27,6 @@ Imports:
     httr,
     BMRSr,
     webshot,
-    gh
+    gh,
+    DiagrammeR
 RoxygenNote: 6.1.1

@@ -1,0 +1,36 @@
+# Workflow
+
+Often the best way to start a data analysis project is to decide what you're workflow should be and roughly how long each bit is going to take.
+
+For instance, if you know that the data you're going to be working on is likely to be littered with mistakes and errors, then you should preemptively allocate a decent amount of your time to the "importing" and "cleaning" steps of your workflow. Similarly, if you're end goal is to produce a predictive model at the end, then work in a feedback loop where you inspect and evaluate your model before improving it in the next iteration.
+
+## Basic Workflows
+
+For now, let's look at a basic workflow and some likely additions or changes you might make depending on your goals.
+
+### Example 1: Reporting
+
+In this example, imagine someone has come to you and they want a bit more insight into the data they have. It's currently in a messy spreadsheet, and they want you to load it into R and produce some nice looking graphics to help them understand trends and correlations in their data. They're not bothered about any modelling for now, they just want some pretty graphs.
+
+If we mapped out an appropriate workflow for this project, it might look something like this:
+
+```{r,echo=FALSE}
+DiagrammeR::grViz("
+  digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  Import; Clean; Summarise; Plot; Evaluate; 
+
+  # several 'edge' statements
+  Import->Clean Clean->Summarise Summarise->Plot
+  Plot->Evaluate Evaluate->Summarise Evaluate->Plot
+}
+")
+```
+
+We import the data and clean it, then we summarise it and create our plots. We can then use feedback from 

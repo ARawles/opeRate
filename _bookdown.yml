@@ -2,6 +2,7 @@ output_dir: "docs"
 
 rmd_files: [
   "index.Rmd",
+  "workflow.Rmd",
   "tidyverse.Rmd",
   "data-analysis.Rmd",
   "programming.Rmd",
