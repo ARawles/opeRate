@@ -8,6 +8,18 @@ For instance, if you know that the data you're going to be working on is likely 
 
 For now, let's look at a basic workflow and some likely additions or changes you might make depending on your goals.
 
+For these basic workflows, we're only going to look at a subset of all of the stages of analysis that you might identify. They are going to be:
+
+* Importing
+* Cleaning\*
+* Tidying\*
+* Summarising
+* Plotting
+* Modelling
+* Evalution
+
+\* The difference between data cleaning and data tidying to me is that cleaning refers more to data type conversion, removing NAs and the like. Basically, without cleaning, your analysis isn't going to happen because there's too much noise. When I say 'tidying', that's more getting the data in a format that is amenable to your analysis. You could get by without changing it but it would likely take you much longer or be much less efficient.
+
 ### Example 1: Reporting
 
 In this example, imagine someone has come to you and they want a bit more insight into the data they have. It's currently in a messy spreadsheet, and they want you to load it into R and produce some nice looking graphics to help them understand trends and correlations in their data. They're not bothered about any modelling for now, they just want some pretty graphs.
@@ -33,4 +45,85 @@ DiagrammeR::grViz("
 ")
 ```
 
-We import the data and clean it, then we summarise it and create our plots. We can then use feedback from 
+We import the data and clean it, then we summarise it and create our plots. We can then use feedback from our colleague to change how we're summarising or how we're plotting the data to improve our plots until we're happy.
+
+### Example 2: Modelling
+
+For this example, imagine a colleague has come to you about a modelling project. They have a number of relatively clean datasets that they want to combine and use to produce a predictive model. They're not too worried about plots or graphics, they're more interested in the model itself. Our workflow here would be similar to Example 1 but there would be some crucial differences. First, we know that we're going to combine multiple datasets into one which we will then use for our model. This is likely going to involve some data manipulation or 'tidying'. I don't really like using the 'tidying' description because that would suggest that it's the same as 'cleaning' but there's a very useful package for data manipulation and resizing called `tidyr` so we'll stick to 'tidying' for now.
+
+Back to Example 2, if we mapped out a workflow for this project, it might look a bit more like this:
+
+```{r,echo=FALSE}
+DiagrammeR::grViz("
+  digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  Collate; (Clean); Tidy; Summarise; Plot; Evaluate; 
+
+  # several 'edge' statements
+  Collate->(Clean) (Clean)->Tidy Tidy->Model
+  Model->Evaluate Evaluate->Model
+}
+")
+```
+
+As you can see, we still end with the loop of modelling and then evaluating our model and using the output to update the model, but the steps we take to get there ar e a bit different.
+
+### Summary
+
+Hopefully this section has given you an idea of what a typical project workflow could look like. The benefit of splitting your project into these distinct steps is that it can often help you compartmentalise your functions and scripts into distinct stages. We'll look later at structuring your project like an R package, and so splitting your analysis into separate stages can help you construct your project in a portable and replicable way.
+
+## Replicability
+
+The key to a good, robust analysis is replicability. When we say 'replicability', we mean two things:
+
+* That your results can be replicated in other populations and in other settings (i.e. typical 'scientific' replicability)
+* That you can easily share your code and method with others who can verify your outputs
+
+If your project is replicable, then it's likely to have fewer issues, make fewer dodgy assumptions, and rely less on the idiosyncracies of your environment or coding practice. That doesn't mean that everything that you do that can be replicated is immediately correct, but it's a useful credential to have.
+
+For now, we're going to focus on how you can make your *code* more replicable. By that I mean, how you can share your results and your code with others either in your business or instution or even in the open source community in general.
+
+### Good practice
+
+There are a few things you can do to make your work immediately more readable for others:
+
+#### Use a consistent naming convention
+
+Take your pick. Everyone has their preference and that's okay. If you like camelCase then go with camelCase. If you like the `_` approach, then go for that. The most important part of your naming convention however is that it's stable. Don't name some of your functions `like_this` and the rest `likeThis`. Not only does it make it harder to read, but every time you do it, a kitten dies. So be consistent.
+
+#### Name your variables as nouns and your functions as verbs
+
+Functions do and variables and objects are. Almost all languages share this distinction with verbs and nouns, so utilise that natural divide to improve how you name your functions and variables. Aim to give your functions names that suggest that they `do` something; and bonus points if you can give it a name that's a verb and also gives a decent description of what the function does. When you name your variables, give them meaningful noun-like names. Say you're doing some climate analysis, a good name for the variable that holds the average rainfall in a year might be `avg_yearly_rainfall` whilst a function that converts a temperatue in Celsius to Farenheit might be `convert_degrees()`.
+
+#### Use functions where you can
+
+R is a functional language and so using and creating functions is at the very heart of programming in R. Rather than relying on R scripts that need to be run in their entirety to produce your output, by creating functions and using them in your analysis, you can more easily scale your project. For example, imagine your scope is initially to produce a report for the year. Then, after your done, your manager is so impressed with your report, they want you to do the same thing for the last 10 years. If you've used a couple of R scripts and you haven't written any functions, then this is likely going to involve copying and pasting a whole lot of code and changing the years. Instead, if you use functions to perform your analysis, then creating reports for multiple years can be as simple as changing your dataset.
+
+Later on we'll look at the concept of [**abstraction**](#Abstraction) - removing levels of complexity to focus on the core operation - and this tip is heavily related to that concept. For now though, keep this thought in mind: If you find yourself copying and pasting your R code more than twice to do very similar things, you should probably be using a function.
+
+#### State your dependencies
+
+One of the great things about R is the number of packages that are available that let you do all sorts of weird and wonderful things. Unfortunately, because there are so many great packages, it's unlikely that the person you're sharing your code with will have them all installed. If you're sending someone a script, then best practice is to include all the packages you use at the top of your script like this:
+
+```{r, eval = FALSE}
+library(ggplot2)
+library(dplyr)
+```
+
+An extra step which few people do but can be very helpful is to still prepend your functions with which package they came from like this `dplyr::mutate()`. Not only does this avoid any namespace conflicts where two packages might have functions with the same name and you don't end up using the one you think you are because of the order of your `library()` calls, but it also makes it infinitely easier for anyone reading your code to find the package that a function comes from.
+Admittedly, this is overkill in a sense because we've already told R which packages we're using with our `library()` calls, but this practice can really improve the readability of your code.
+
+Later we'll look at designing our project as a package and packages have a different way of stating dependencies for the user, so this is primarily for the case where you're just sending a script or two to someone.
+
+
+### RMarkdown
+
+### Shiny
+
+### Projects as packages

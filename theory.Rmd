@@ -15,9 +15,58 @@ Abstraction is the idea of removing levels of complexity. For example, when you 
 
 Another example is a calculator. You type in the numbers and decide what you want to do, and your general goal (say, adding two numbers together) is translated into the practicality of performing that action. Your general goal is translated into lots of little more specific ones.
 
+The idea of abstraction is a very prevalent one in computer science. R itself is an abstraction; it lets you interface with the CPU without having to know everything about it. Understanding abstraction and particularly how it relates to functional programming and R can greatly improve the efficiency of your code. Understanding and applying abstraction is more of an art than a science. By abstracting away complexity, you make things easier for the user but you will take away some of the flexability, and so applying the concept of abstraction to your projects will always be a balancing act.
+
 ### Abstraction in R
 
-The idea of abstraction is a very prevalent one in computer science. R itself is an abstraction; it lets you interface with the CPU without having to know everything about it. And because R is a functional programming language, abstraction is an important thing to understand to write the best possible code.
+The best way to demonstrate how powerful abstraction can be in R is probably through an example. Let's imagine you want to create a full suite of graphics for a reporting project you're working on. You're going to want to create 10 different line charts and 5 different bar charts using different variables from different datasets. Let's look at some different ways we could go about doing this, applying different levels of abstraction:
+
+#### Approach 1
+
+Create a different function for each plot. The function would take the dataset and spit out the graphic, a bit like this:
+
+```{r, eval = FALSE}
+library(ggplot2)
+create_first_linechart <- function(data) {
+    ggplot(data, aes(x = column1, y = column2, colour = column3)) +
+    geom_line()
+}
+```
+
+We would eventually have 15 different functions - one for each plot - that we could call to produce all of our graphics. Like this:
+
+```{r, eval = FALSE}
+library(ggplot2)
+dataset1 <- read.csv("my_dataset1.csv")
+dataset2 <- read.csv("my_dataset2.csv")
+
+create_first_linechart(dataset1)
+create_second_linechart(dataset2)
+.
+.
+.
+
+```
+
+#### Approach 2
+
+We could create a function that will create all of the line charts and then a separate function that will create all of our bar charts. Our function to create our line charts might look like this:
+
+```{r}
+library(ggplot2)
+create_linechart <- function(data, x, y, colour) {
+    ggplot(data, aes(x = {{ x }}, y = {{ y }}, colour = {{ colour }})) +
+    geom_line()
+}
+```
+
+The `{{ }}` brackets let us pass column names from our function to the `aes()` function in `ggplot2`.
+
+Then we'd still have to make 15 separate calls to create our graphics, but we'd have much less code to debug if something went wrong because we're only relying on two functions, not the 15 we were before.
+
+#### Approach 3
+
+We've reduced the amount of code we have to write to define all the functions we're going to need, but we're still repeating ourselves by calling the same functions 10 and 5 times with slightly different parameters. Instead, we could create a list that holds 
 
 ## Organisation
 
