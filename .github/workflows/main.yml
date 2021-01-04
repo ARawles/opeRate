@@ -54,7 +54,7 @@ jobs:
           
       - name: Install phantomjs
         run: |
-          R -e 'install.packages("webshot")
+          R -e 'install.packages("webshot")'
           R -e 'webshot::install_phantomjs()'
       
         
