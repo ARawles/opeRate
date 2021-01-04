@@ -240,10 +240,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>As previously mentioned, to extract something from the API, you’ll be using the <code>GET</code> method. The <code>httr</code> package makes this super easy by providing a <code>GET</code> function. To this function, we’ll need to provide a URL. The <code>GET</code> function will then send a GET request to that address and return the response. A really simple GET request could be:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="apis-advanced.html#cb8-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;http://google.com&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [http://www.google.com/]
-##   Date: 2021-01-04 09:03
+##   Date: 2021-01-04 09:34
 ##   Status: 200
 ##   Content-Type: text/html; charset=ISO-8859-1
-##   Size: 12.9 kB
+##   Size: 12.8 kB
 ## &lt;!doctype html&gt;&lt;html itemscope=&quot;&quot; itemtype=&quot;http://schema.org/WebPage&quot; lang=&quot;...
 ## google.lc=[];google.li=0;google.getEI=function(a){for(var b;a&amp;&amp;(!a.getAttribu...
 ## document.documentElement.addEventListener(&quot;submit&quot;,function(b){var a;if(a=b.t...
@@ -252,7 +252,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## if (!iesg){document.f&amp;&amp;document.f.q.focus();document.gbqf&amp;&amp;document.gbqf.q.fo...
 ## }
 ## })();&lt;/script&gt;&lt;div id=&quot;mngb&quot;&gt;&lt;div id=gbar&gt;&lt;nobr&gt;&lt;b class=gb1&gt;Search&lt;/b&gt; &lt;a cl...
-## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;AINFCbYAAAAAX_Ln-...
+## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;AINFCbYAAAAAX_LvG...
 ## var c=this||self,e=/^[\w+/_-]+[=]{0,2}$/,f=null,g=function(a){return(a=a.quer...
 ## ...</code></pre>
 <p>That seems like a really complicated response at first, but when we look at each part, it’s quite simple.</p>
@@ -283,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The first step in accessing an API is to understand that commands the API is expecting. Looking at the website, we can see that we can access lots of different types of data: posts, comments, albums, photos, todos and users. We can also see that to list each one, we just need to add /whatever to the end of our URL. So let’s try getting a list of users:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="apis-advanced.html#cb10-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [https://jsonplaceholder.typicode.com/users]
-##   Date: 2021-01-04 09:03
+##   Date: 2021-01-04 09:34
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 5.64 kB
