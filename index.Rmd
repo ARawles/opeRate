@@ -29,7 +29,7 @@ links-as-notes: true
 
 ## Overview
 
-This book is a collection of materials to help users apply their fundamental R knowledge to real programming and analysis. This book is ideally meant as a follow on from my introductory book [teacheR](teacher.arawles.co.uk), but anyone with a simple understanding of the fundamentals of R such as the basic data structures and functions should be able to benefit.
+This book is a collection of materials to help users apply their fundamental R knowledge to real programming and analysis. This book is the second in a series of R books I've been working on. The first in the series ([teacheR](https://teacher.arawles.co.uk)) focuses on the fundamentals of the R language. I would recommend reading teacheR first if you're brand new to the language. It's split into two parts ("For Students" and "For Teachers"). To get the most out of this book, I would suggest that you are at least comfortable with the entirety of the "For Students" section, but it wouldn't hurt to go through the "For Teachers" section while you're at it.
 
 As with the [teacheR](teacher.arawles.co.uk) book, this is a work in progress, so please feel free to make any suggestions or corrections via this book's [GitHub repository](www.github.com/arawles/operate/issues).
 
@@ -47,10 +47,6 @@ contributors <- contributors %>%
   
  cat(paste0(contributors$desc, collapse = ", "))
 ```
-
-## teacheR
-
-This book is the second in a series of R books I've been working on. The first in the series ([teacheR](https://teacher.arawles.co.uk)) focuses on the fundamentals of the R language. I would recommend reading teacheR first if you're brand new to the language. It's split into two parts ("For Students" and "For Teachers"). To get the most out of this book, I would suggest that you are at least comfortable with the entirety of the "For Students" section, but it wouldn't hurt to go through the "For Teachers" section while you're at it.
 
 ## About Me
 
