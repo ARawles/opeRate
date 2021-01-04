@@ -63,16 +63,16 @@ DiagrammeR::grViz("
   # several 'node' statements
   node [shape = box,
         fontname = Helvetica]
-  Collate; (Clean); Tidy; Summarise; Plot; Evaluate; 
+  Collate; Clean; Tidy; Summarise; Plot; Evaluate; 
 
   # several 'edge' statements
-  Collate->(Clean) (Clean)->Tidy Tidy->Model
+  Collate->Clean Clean->Tidy Tidy->Model
   Model->Evaluate Evaluate->Model
 }
 ")
 ```
 
-As you can see, we still end with the loop of modelling and then evaluating our model and using the output to update the model, but the steps we take to get there ar e a bit different.
+As you can see, we still end with the loop of modelling and then evaluating our model and using the output to update the model, but the steps we take to get there are a bit different.
 
 ### Summary
 
