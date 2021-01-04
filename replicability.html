@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.3 Cleaning data | opeRate</title>
+  <title>2.2 Replicability | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.3 Cleaning data | opeRate" />
+  <meta property="og:title" content="2.2 Replicability | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.3 Cleaning data | opeRate" />
+  <meta name="twitter:title" content="2.2 Replicability | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="apis-advanced.html"/>
-<link rel="next" href="summary-statistics.html"/>
+<link rel="prev" href="basic-workflows.html"/>
+<link rel="next" href="tidyverse.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -225,17 +225,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="cleaning-data" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Cleaning data</h2>
-<p>filler</p>
+<div id="replicability" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Replicability</h2>
+<p>The key to a good, robust analysis is replicability. When we say ‘replicability’, we mean two things:</p>
+<ul>
+<li>That your results can be replicated in other populations and in other settings (i.e. typical ‘scientific’ replicability)</li>
+<li>That you can easily share your code and method with others who can verify your outputs</li>
+</ul>
+<p>If your project is replicable, then it’s likely to have fewer issues, make fewer dodgy assumptions, and rely less on the idiosyncracies of your environment or coding practice. That doesn’t mean that everything that you do that can be replicated is immediately correct, but it’s a useful credential to have.</p>
+<p>For now, we’re going to focus on how you can make your <em>code</em> more replicable. By that I mean, how you can share your results and your code with others either in your business or instution or even in the open source community in general.</p>
+<div id="good-practice" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Good practice</h3>
+<p>There are a few things you can do to make your work immediately more readable for others:</p>
+<div id="use-a-consistent-naming-convention" class="section level4" number="2.2.1.1">
+<h4><span class="header-section-number">2.2.1.1</span> Use a consistent naming convention</h4>
+<p>Take your pick. Everyone has their preference and that’s okay. If you like camelCase then go with camelCase. If you like the <code>_</code> approach, then go for that. The most important part of your naming convention however is that it’s stable. Don’t name some of your functions <code>like_this</code> and the rest <code>likeThis</code>. Not only does it make it harder to read, but every time you do it, a kitten dies. So be consistent.</p>
 </div>
+<div id="name-your-variables-as-nouns-and-your-functions-as-verbs" class="section level4" number="2.2.1.2">
+<h4><span class="header-section-number">2.2.1.2</span> Name your variables as nouns and your functions as verbs</h4>
+<p>Functions do and variables and objects are. Almost all languages share this distinction with verbs and nouns, so utilise that natural divide to improve how you name your functions and variables. Aim to give your functions names that suggest that they <code>do</code> something; and bonus points if you can give it a name that’s a verb and also gives a decent description of what the function does. When you name your variables, give them meaningful noun-like names. Say you’re doing some climate analysis, a good name for the variable that holds the average rainfall in a year might be <code>avg_yearly_rainfall</code> whilst a function that converts a temperatue in Celsius to Farenheit might be <code>convert_degrees()</code>.</p>
+</div>
+<div id="use-functions-where-you-can" class="section level4" number="2.2.1.3">
+<h4><span class="header-section-number">2.2.1.3</span> Use functions where you can</h4>
+<p>R is a functional language and so using and creating functions is at the very heart of programming in R. Rather than relying on R scripts that need to be run in their entirety to produce your output, by creating functions and using them in your analysis, you can more easily scale your project. For example, imagine your scope is initially to produce a report for the year. Then, after your done, your manager is so impressed with your report, they want you to do the same thing for the last 10 years. If you’ve used a couple of R scripts and you haven’t written any functions, then this is likely going to involve copying and pasting a whole lot of code and changing the years. Instead, if you use functions to perform your analysis, then creating reports for multiple years can be as simple as changing your dataset.</p>
+<p>Later on we’ll look at the concept of <a href="#Abstraction"><strong>abstraction</strong></a> - removing levels of complexity to focus on the core operation - and this tip is heavily related to that concept. For now though, keep this thought in mind: If you find yourself copying and pasting your R code more than twice to do very similar things, you should probably be using a function.</p>
+</div>
+<div id="state-your-dependencies" class="section level4" number="2.2.1.4">
+<h4><span class="header-section-number">2.2.1.4</span> State your dependencies</h4>
+<p>One of the great things about R is the number of packages that are available that let you do all sorts of weird and wonderful things. Unfortunately, because there are so many great packages, it’s unlikely that the person you’re sharing your code with will have them all installed. If you’re sending someone a script, then best practice is to include all the packages you use at the top of your script like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="replicability.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="replicability.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<p>An extra step which few people do but can be very helpful is to still prepend your functions with which package they came from like this <code>dplyr::mutate()</code>. Not only does this avoid any namespace conflicts where two packages might have functions with the same name and you don’t end up using the one you think you are because of the order of your <code>library()</code> calls, but it also makes it infinitely easier for anyone reading your code to find the package that a function comes from.
+Admittedly, this is overkill in a sense because we’ve already told R which packages we’re using with our <code>library()</code> calls, but this practice can really improve the readability of your code.</p>
+<p>Later we’ll look at designing our project as a package and packages have a different way of stating dependencies for the user, so this is primarily for the case where you’re just sending a script or two to someone.</p>
+</div>
+</div>
+<div id="rmarkdown" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> RMarkdown</h3>
+</div>
+<div id="shiny" class="section level3" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Shiny</h3>
+</div>
+<div id="projects-as-packages" class="section level3" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> Projects as packages</h3>
+
+</div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="apis-advanced.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="summary-statistics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="basic-workflows.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tidyverse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

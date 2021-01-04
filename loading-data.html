@@ -5,20 +5,20 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.1 Loading data | opeRate</title>
-  <meta name="description" content="4.1 Loading data | opeRate" />
+  <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.1 Loading data | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
-  
-  
+  <meta property="og:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
+  <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="4.1 Loading data | opeRate" />
   
-  
+  <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
 
 <meta name="author" content="Adam Rawles" />
@@ -62,6 +62,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -141,12 +142,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.1.1" data-path="overview.html"><a href="overview.html#acknowledgements"><i class="fa fa-check"></i><b>1.1.1</b> Acknowledgements</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="about-me.html"><a href="about-me.html"><i class="fa fa-check"></i><b>1.2</b> About Me</a></li>
+<li class="chapter" data-level="1.3" data-path="using-r.html"><a href="using-r.html"><i class="fa fa-check"></i><b>1.3</b> Using R</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="workflow.html"><a href="workflow.html"><i class="fa fa-check"></i><b>2</b> Workflow</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="basic-workflows.html"><a href="basic-workflows.html"><i class="fa fa-check"></i><b>2.1</b> Basic Workflows</a>
 <ul>
 <li class="chapter" data-level="2.1.1" data-path="basic-workflows.html"><a href="basic-workflows.html#example-1-reporting"><i class="fa fa-check"></i><b>2.1.1</b> Example 1: Reporting</a></li>
+<li class="chapter" data-level="2.1.2" data-path="basic-workflows.html"><a href="basic-workflows.html#example-2-modelling"><i class="fa fa-check"></i><b>2.1.2</b> Example 2: Modelling</a></li>
+<li class="chapter" data-level="2.1.3" data-path="basic-workflows.html"><a href="basic-workflows.html#summary"><i class="fa fa-check"></i><b>2.1.3</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>2.2</b> Replicability</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="replicability.html"><a href="replicability.html#good-practice"><i class="fa fa-check"></i><b>2.2.1</b> Good practice</a></li>
+<li class="chapter" data-level="2.2.2" data-path="replicability.html"><a href="replicability.html#rmarkdown"><i class="fa fa-check"></i><b>2.2.2</b> RMarkdown</a></li>
+<li class="chapter" data-level="2.2.3" data-path="replicability.html"><a href="replicability.html#shiny"><i class="fa fa-check"></i><b>2.2.3</b> Shiny</a></li>
+<li class="chapter" data-level="2.2.4" data-path="replicability.html"><a href="replicability.html#projects-as-packages"><i class="fa fa-check"></i><b>2.2.4</b> Projects as packages</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3</b> Tidyverse</a>
@@ -233,7 +244,7 @@ Patricia,75</code></pre>
 <div id="base" class="section level5" number="4.1.1.1.1">
 <h5><span class="header-section-number">4.1.1.1.1</span> Base</h5>
 <p>To load a csv file using base R, we’ll use the <code>read.csv()</code> function:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="loading-data.html#cb2-1" aria-hidden="true"></a><span class="kw">read.csv</span>(<span class="dt">file =</span> <span class="st">&quot;path/to/your/file&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, ...)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="loading-data.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;path/to/your/file&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, ...)</span></code></pre></div>
 <p>The <code>file</code> parameters needs the path to your file as a character string. The <code>header</code> parameter is used to tell R whether or not your file has column headers.</p>
 <p>There are lots of other parameters that can be tweaked for the <code>read.csv()</code> function, but we won’t go through them here.</p>
 </div>
@@ -241,22 +252,22 @@ Patricia,75</code></pre>
 <h5><span class="header-section-number">4.1.1.1.2</span> readr</h5>
 <p>The <code>readr</code> package comes with a similar function: <code>read_csv()</code>. With the exception of a couple of extra parameters in the <code>read_csv()</code> function and potentially some better efficiency, there isn’t a massive difference between the two.</p>
 <p>Using the <code>read_csv()</code> function is simple:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="loading-data.html#cb3-1" aria-hidden="true"></a>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;path/to/your/file&quot;</span>, <span class="dt">col_names =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="loading-data.html#cb4-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;path/to/your/file&quot;</span>, <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>In this function, the <code>header</code> parameter is replaced with the <code>col_names</code> parameter. The <code>col_names</code> parameter is very similar, you can say whether your dataset has column headings, or you can provide a character vector of names to be used as column headers.</p>
 <p>There are also some extra parameters in the <code>read_csv()</code> function that can be useful. The <code>col_types</code> parameter lets you specify what datatype each column should be treated as. This can either be provided using the <code>cols()</code> helper function like this:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="loading-data.html#cb4-1" aria-hidden="true"></a>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;path/to/file&quot;</span>,</span>
-<span id="cb4-2"><a href="loading-data.html#cb4-2" aria-hidden="true"></a>                <span class="dt">col_names =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb4-3"><a href="loading-data.html#cb4-3" aria-hidden="true"></a>                <span class="dt">col_types =</span> readr<span class="op">::</span><span class="kw">cols</span>(</span>
-<span id="cb4-4"><a href="loading-data.html#cb4-4" aria-hidden="true"></a>                  readr<span class="op">::</span><span class="kw">col_character</span>(), readr<span class="op">::</span><span class="kw">col_double</span>()</span>
-<span id="cb4-5"><a href="loading-data.html#cb4-5" aria-hidden="true"></a>                ),</span>
-<span id="cb4-6"><a href="loading-data.html#cb4-6" aria-hidden="true"></a>                ...</span>
-<span id="cb4-7"><a href="loading-data.html#cb4-7" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="loading-data.html#cb5-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;path/to/file&quot;</span>,</span>
+<span id="cb5-2"><a href="loading-data.html#cb5-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-3"><a href="loading-data.html#cb5-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(</span>
+<span id="cb5-4"><a href="loading-data.html#cb5-4" aria-hidden="true" tabindex="-1"></a>                  readr<span class="sc">::</span><span class="fu">col_character</span>(), readr<span class="sc">::</span><span class="fu">col_double</span>()</span>
+<span id="cb5-5"><a href="loading-data.html#cb5-5" aria-hidden="true" tabindex="-1"></a>                ),</span>
+<span id="cb5-6"><a href="loading-data.html#cb5-6" aria-hidden="true" tabindex="-1"></a>                ...</span>
+<span id="cb5-7"><a href="loading-data.html#cb5-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Or, you can provide a compact string with different letters representing different datatypes:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="loading-data.html#cb5-1" aria-hidden="true"></a>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;path/to/file&quot;</span>,</span>
-<span id="cb5-2"><a href="loading-data.html#cb5-2" aria-hidden="true"></a>                <span class="dt">col_names =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb5-3"><a href="loading-data.html#cb5-3" aria-hidden="true"></a>                <span class="dt">col_types =</span> <span class="st">&quot;cd&quot;</span>,</span>
-<span id="cb5-4"><a href="loading-data.html#cb5-4" aria-hidden="true"></a>                ...</span>
-<span id="cb5-5"><a href="loading-data.html#cb5-5" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="loading-data.html#cb6-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;path/to/file&quot;</span>,</span>
+<span id="cb6-2"><a href="loading-data.html#cb6-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-3"><a href="loading-data.html#cb6-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">col_types =</span> <span class="st">&quot;cd&quot;</span>,</span>
+<span id="cb6-4"><a href="loading-data.html#cb6-4" aria-hidden="true" tabindex="-1"></a>                ...</span>
+<span id="cb6-5"><a href="loading-data.html#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>The codes for the different datatypes can be found on the documentation page for the <code>read_csv()</code> function (type <code>?read_csv()</code>).</p>
 <p>The <code>trim_ws</code> parameter can also be helpful if you have a dataset with lots of trailing whitespace around your values. When set to true, the <code>read_csv()</code> function will automatically trim each field before loading it in.</p>
 <p>Overall, both functions will give you the same result, so just choose whichever function makes most sense to you and has the parameters you need.</p>
@@ -267,7 +278,7 @@ Patricia,75</code></pre>
 <h3><span class="header-section-number">4.1.2</span> Excel files</h3>
 <p>R doesn’t have any built-in functions to load Excel files. Instead, you’ll need to use a package. One of the more popular packages used to read Excel files is the <code>readxl</code> package.</p>
 <p>Once you’ve installed and loaded the <code>readxl</code> package. You can use the <code>read_excel()</code> function:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="loading-data.html#cb6-1" aria-hidden="true"></a>readxl<span class="op">::</span><span class="kw">read_excel</span>(<span class="dt">path =</span> <span class="st">&quot;path/to/file&quot;</span>, <span class="dt">sheet =</span> <span class="ot">NULL</span>, <span class="dt">range =</span> <span class="ot">NULL</span>, ...)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="loading-data.html#cb7-1" aria-hidden="true" tabindex="-1"></a>readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="at">path =</span> <span class="st">&quot;path/to/file&quot;</span>, <span class="at">sheet =</span> <span class="cn">NULL</span>, <span class="at">range =</span> <span class="cn">NULL</span>, ...)</span></code></pre></div>
 <p>Because Excel files are a little bit more complicated than csv files, you’ll notice that there are some extra parameters. Most notably, the sheet and range parameters can be used to define a subset of the entire Excel file to be loaded. By default, both are set to NULL, which will mean that R will load the entirety of the first sheet.</p>
 <p>Like the <code>readr::read_csv()</code> function, you can specify column names and types using the <code>col_names</code> and <code>col_types</code> parameters respectively, and also trim your values using <code>trim_ws</code>.</p>
 </div>
