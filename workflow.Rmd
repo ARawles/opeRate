@@ -16,7 +16,7 @@ For these basic workflows, we're only going to look at a subset of all of the st
 * Summarising
 * Plotting
 * Modelling
-* Evalution
+* Evaluation
 
 \* The difference between data cleaning and data tidying to me is that cleaning refers more to data type conversion, removing NAs and the like. Basically, without cleaning, your analysis isn't going to happen because there's too much noise. When I say 'tidying', that's more getting the data in a format that is amenable to your analysis. You could get by without changing it but it would likely take you much longer or be much less efficient.
 
