@@ -234,10 +234,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>As previously mentioned, to extract something from the API, you’ll be using the <code>GET</code> method. The <code>httr</code> package makes this super easy by providing a <code>GET</code> function. To this function, we’ll need to provide a URL. The <code>GET</code> function will then send a GET request to that address and return the response. A really simple GET request could be:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="using-apis.html#cb8-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;http://google.com&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [http://www.google.com/]
-##   Date: 2021-01-08 14:44
+##   Date: 2021-01-08 14:58
 ##   Status: 200
 ##   Content-Type: text/html; charset=ISO-8859-1
-##   Size: 12.8 kB
+##   Size: 12.9 kB
 ## &lt;!doctype html&gt;&lt;html itemscope=&quot;&quot; itemtype=&quot;http://schema.org/WebPage&quot; lang=&quot;...
 ## google.lc=[];google.li=0;google.getEI=function(a){for(var b;a&amp;&amp;(!a.getAttribu...
 ## document.documentElement.addEventListener(&quot;submit&quot;,function(b){var a;if(a=b.t...
@@ -246,7 +246,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## if (!iesg){document.f&amp;&amp;document.f.q.focus();document.gbqf&amp;&amp;document.gbqf.q.fo...
 ## }
 ## })();&lt;/script&gt;&lt;div id=&quot;mngb&quot;&gt;&lt;div id=gbar&gt;&lt;nobr&gt;&lt;b class=gb1&gt;Search&lt;/b&gt; &lt;a cl...
-## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;AINFCbYAAAAAX_h96...
+## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;AINFCbYAAAAAX_iBP...
 ## var c=this||self,e=/^[\w+/_-]+[=]{0,2}$/,f=null,g=function(a){return(a=a.quer...
 ## ...</code></pre>
 <p>That seems like a really complicated response at first, but when we look at each part, it’s quite simple.</p>
@@ -263,11 +263,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Below the size, we see the actual response body. In this case, we’ve been given the html for the google.com page.</li>
 </ul>
 <p>As simple as this example was, it didn’t really give us anything interesting back, just the Google homepage. So let’s use the GET request to get something more interesting.</p>
-<p>We’re going to access the [<a href="https://jsonplaceholder.typicode.com/" class="uri">https://jsonplaceholder.typicode.com/</a>] website, which provides fake APIs for testing. But for now, imagine that this is something like an Instagram database, holding users and their posts and comments.</p>
-<p>The first step in accessing an API is to understand that commands the API is expecting. Looking at the website, we can see that we can access lots of different types of data: posts, comments, albums, photos, todos and users. We can also see that to list each one, we just need to add /whatever to the end of our URL. So let’s try getting a list of users:</p>
+<p>We’re going to access the <a href="https://jsonplaceholder.typicode.com/">jsonplaceholder</a> website, which provides fake APIs for testing. But for now, imagine that this is something like an Instagram database, holding users and their posts and comments.</p>
+<p>The first step in accessing an API is to understand that commands the API is expecting. APIs will have what we call <strong>endpoints</strong>. These are paths that we can use to access a certain dataset. For instance, looking at the website, we can see that there are endpoints for lots of different types of data: posts, comments, albums, photos, todos and users. To access an endpoint, we just need to make sure we’re using the correct path. So let’s try getting a list of users:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="using-apis.html#cb10-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [https://jsonplaceholder.typicode.com/users]
-##   Date: 2021-01-08 14:44
+##   Date: 2021-01-08 14:58
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 5.64 kB
@@ -282,8 +282,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       &quot;suite&quot;: &quot;Apt. 556&quot;,
 ##       &quot;city&quot;: &quot;Gwenborough&quot;,
 ## ...</code></pre>
-<p>Looking at the content type, we can see that unlike when we sent a request to Google.com, we’ve got a Content-Type of application/json. JSON is a data structure often used to send data across APIs. We won’t go into the structure of it now because R does most of the conversion for us, but if you’re interested, there’s more info on the JSON structure <a href="https://www.json.org/json-en.html">here</a>.</p>
-<p>Trying to read raw JSON is hard, but <code>httr</code> includes functions to help us get it into a better structure for R. Using the <code>httr::content()</code> function, <code>httr</code> will automatically read the response content and convert it into the format we ask for. For now, we’re going to leave it at ‘NULL’ which guesses the best format for us.</p>
+<p>Looking at the content type, we can see that unlike when we sent a request to Google.com, we’ve got a Content-Type of application/json. JSON is a data structure often used to send data across APIs. We won’t go into the structure of it now because R does most of the conversion for us, but if you’re interested, there’s more info on the JSON structure at <a href="https://www.json.org/json-en.html">www.json.org</a>.</p>
+<p>Trying to read raw JSON is hard, but <code>httr</code> includes functions to help us get it into a better structure for R. Using the <code>httr::content()</code> function, <code>httr</code> will automatically read the response content and convert it into the format we ask for (via the <code>as</code> parameter). For now, we’re going to leave the <code>at</code> parameter as ‘NULL’ which guesses the best format for us.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="using-apis.html#cb12-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</span>
 <span id="cb12-2"><a href="using-apis.html#cb12-2" aria-hidden="true" tabindex="-1"></a>content <span class="ot">&lt;-</span> httr<span class="sc">::</span><span class="fu">content</span>(response)</span>
 <span id="cb12-3"><a href="using-apis.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(content, <span class="dv">1</span>) <span class="co"># we&#39;ll just look at the first entry for presentation sake</span></span></code></pre></div>
@@ -338,7 +338,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [[1]]$company$bs
 ## [1] &quot;harness real-time e-markets&quot;</code></pre>
 <p>We can see that R has taken the response and turned it into a list for us. From here, we can then start our analysis.</p>
-<p>In many cases however, you won’t want a complete list. Instead, you’ll want to provide some parameters to limit the data you get back. Most APIs will have a way of doing this. For example, reading the jsonplaceholder website, we can see that we can get all the posts for a specific user by appending the url with “?userId=x”. So let’s try getting all of the posts for the user with ID 1:</p>
+<p>In many cases however, you won’t want a complete list. Instead, you’ll want to provide some parameters to limit the data you get back from your endpoint. Most APIs will have a way of doing this. For example, reading the jsonplaceholder website, we can see that we can get all the posts for a specific user by appending the url with “?userId=x”. This section of the URL (things after a ?) are called the query part of the URL. So let’s try getting all of the posts for the user with ID 1:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="using-apis.html#cb14-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/posts?userId=1&quot;</span>)</span>
 <span id="cb14-2"><a href="using-apis.html#cb14-2" aria-hidden="true" tabindex="-1"></a>content <span class="ot">&lt;-</span> httr<span class="sc">::</span><span class="fu">content</span>(response)</span>
 <span id="cb14-3"><a href="using-apis.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(content, <span class="dv">1</span>) <span class="co"># we&#39;ll just look at the first entry for presentation sake</span></span></code></pre></div>
@@ -364,7 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If you’re interested, there are a couple of things you’ll need:</p>
 <ul>
 <li>The BMRSr package installed</li>
-<li>A free BMRS API key that can be retrieved <a href="https://www.elexonportal.co.uk/">here</a>.</li>
+<li>A free BMRS API key that can be retrieved from the <a href="https://www.elexonportal.co.uk/">ELEXON portal</a>.</li>
 </ul>
 <p>Once you’ve got those two prerequisites, using BMRSr should be quite easy. The main function in the BMRSr package is the <code>full_request()</code> function, which will create your URL, send the request, and parse the response depending on your parameters. To do this however, the <code>full_request()</code> function needs some parameters:</p>
 <ul>
