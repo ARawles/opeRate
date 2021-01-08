@@ -234,7 +234,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>As previously mentioned, to extract something from the API, you’ll be using the <code>GET</code> method. The <code>httr</code> package makes this super easy by providing a <code>GET</code> function. To this function, we’ll need to provide a URL. The <code>GET</code> function will then send a GET request to that address and return the response. A really simple GET request could be:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="using-apis.html#cb8-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;http://google.com&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [http://www.google.com/]
-##   Date: 2021-01-08 12:58
+##   Date: 2021-01-08 14:44
 ##   Status: 200
 ##   Content-Type: text/html; charset=ISO-8859-1
 ##   Size: 12.8 kB
@@ -246,38 +246,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## if (!iesg){document.f&amp;&amp;document.f.q.focus();document.gbqf&amp;&amp;document.gbqf.q.fo...
 ## }
 ## })();&lt;/script&gt;&lt;div id=&quot;mngb&quot;&gt;&lt;div id=gbar&gt;&lt;nobr&gt;&lt;b class=gb1&gt;Search&lt;/b&gt; &lt;a cl...
-## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;AINFCbYAAAAAX_hlD...
+## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;AINFCbYAAAAAX_h96...
 ## var c=this||self,e=/^[\w+/_-]+[=]{0,2}$/,f=null,g=function(a){return(a=a.quer...
 ## ...</code></pre>
 <p>That seems like a really complicated response at first, but when we look at each part, it’s quite simple.</p>
 <ul>
-<li>Response
-<ul>
+<li>Response</li>
 <li>This is telling us where we got our response from. In this case, we sent a request to Google, so we got a response from Google.</li>
-</ul></li>
-<li>Date
-<ul>
+<li>Date</li>
 <li>Fairly self-explanatory - the date and time of the response.</li>
-</ul></li>
-<li>Content-Type
-<ul>
+<li>Content-Type</li>
 <li>This is telling us what type the response is. In this case, the response is just a HTML page, which is exactly what we expect as that’s what you get when you type “google.com” into your browser.</li>
-</ul></li>
-<li>Size
-<ul>
+<li>Size</li>
 <li>This is the size of the response</li>
-</ul></li>
-<li>Content
-<ul>
-<li>Below the Size, we see the actually response body. In this case, we’ve been given the html for the Google.com page.</li>
-</ul></li>
+<li>Content</li>
+<li>Below the size, we see the actual response body. In this case, we’ve been given the html for the google.com page.</li>
 </ul>
 <p>As simple as this example was, it didn’t really give us anything interesting back, just the Google homepage. So let’s use the GET request to get something more interesting.</p>
 <p>We’re going to access the [<a href="https://jsonplaceholder.typicode.com/" class="uri">https://jsonplaceholder.typicode.com/</a>] website, which provides fake APIs for testing. But for now, imagine that this is something like an Instagram database, holding users and their posts and comments.</p>
 <p>The first step in accessing an API is to understand that commands the API is expecting. Looking at the website, we can see that we can access lots of different types of data: posts, comments, albums, photos, todos and users. We can also see that to list each one, we just need to add /whatever to the end of our URL. So let’s try getting a list of users:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="using-apis.html#cb10-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [https://jsonplaceholder.typicode.com/users]
-##   Date: 2021-01-08 12:58
+##   Date: 2021-01-08 14:44
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 5.64 kB
@@ -378,34 +368,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Once you’ve got those two prerequisites, using BMRSr should be quite easy. The main function in the BMRSr package is the <code>full_request()</code> function, which will create your URL, send the request, and parse the response depending on your parameters. To do this however, the <code>full_request()</code> function needs some parameters:</p>
 <ul>
-<li><code>data_item</code>
-<ul>
+<li><code>data_item</code></li>
 <li>A data item to retrieve. The BMRS platform holds lots of datasets, and so we need to specify which one we want to retrieve.</li>
-</ul></li>
-<li><code>api_key</code>
-<ul>
+<li><code>api_key</code></li>
 <li>Our API_key that we got from the Elexon portal</li>
-</ul></li>
-<li>parameters
-<ul>
+<li>parameters</li>
 <li>Depending on which data_item you chose, you’ll need to provide some parameters to filter the data</li>
-</ul></li>
-<li><code>service_type</code>
-<ul>
+<li><code>service_type</code></li>
 <li>What format you want the data returned in: values are XML or csv.</li>
-</ul></li>
 </ul>
 <p>So what parameters do I need? Well, the easiest way to find out is to use the <code>get_parameters()</code> function. This will return all of the parameters that can be provided to the <code>full_request()</code>.</p>
-<p>Let’s do an example. Say I want to return data for the B1610 data item, which shows us generation output per generation unit. So, the first step is to know what parameters I can provide using the <code>get_parameters()</code> function:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="using-apis.html#cb16-1" aria-hidden="true" tabindex="-1"></a>BMRSr<span class="sc">::</span><span class="fu">get_parameters</span>(<span class="st">&quot;B1610&quot;</span>)</span></code></pre></div>
+<p>Let’s do an example. Say I want to return data for the B1620 data item, which shows us aggregated generation output per type. So, the first step is to know what parameters I can provide using the <code>get_parameters()</code> function:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="using-apis.html#cb16-1" aria-hidden="true" tabindex="-1"></a>BMRSr<span class="sc">::</span><span class="fu">get_parameters</span>(<span class="st">&quot;B1620&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;settlement_date&quot; &quot;period&quot;</code></pre>
 <p>This tells me that I can provide two parameters in my request - the date and the settlement period. Using this information in my <code>full_request()</code> function…</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="using-apis.html#cb18-1" aria-hidden="true" tabindex="-1"></a>BMRSr<span class="sc">::</span><span class="fu">full_request</span>(<span class="at">data_item =</span> <span class="st">&quot;B1610&quot;</span>,</span>
-<span id="cb18-2"><a href="using-apis.html#cb18-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">api_key =</span> <span class="st">&quot;put_your_API_key_here&quot;</span>,</span>
-<span id="cb18-3"><a href="using-apis.html#cb18-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">service_type =</span> <span class="st">&quot;csv&quot;</span>,</span>
-<span id="cb18-4"><a href="using-apis.html#cb18-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">settlement_date =</span> <span class="fu">as.Date</span>(<span class="st">&quot;2019/06/01&quot;</span>),</span>
-<span id="cb18-5"><a href="using-apis.html#cb18-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">period =</span> <span class="st">&quot;*&quot;</span>) <span class="co"># From reading the API manual,</span></span>
-<span id="cb18-6"><a href="using-apis.html#cb18-6" aria-hidden="true" tabindex="-1"></a>                                  <span class="co"># I know that this returns all periods</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="using-apis.html#cb18-1" aria-hidden="true" tabindex="-1"></a>bmrs_data <span class="ot">&lt;-</span> BMRSr<span class="sc">::</span><span class="fu">full_request</span>(<span class="at">data_item =</span> <span class="st">&quot;B1620&quot;</span>,</span>
+<span id="cb18-2"><a href="using-apis.html#cb18-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">api_key =</span> <span class="st">&quot;put_your_API_key_here&quot;</span>,</span>
+<span id="cb18-3"><a href="using-apis.html#cb18-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">service_type =</span> <span class="st">&quot;csv&quot;</span>,</span>
+<span id="cb18-4"><a href="using-apis.html#cb18-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">settlement_date =</span> <span class="st">&quot;01/11/2019&quot;</span>,</span>
+<span id="cb18-5"><a href="using-apis.html#cb18-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">period =</span> <span class="st">&quot;*&quot;</span>) <span class="co"># From reading the API manual,</span></span>
+<span id="cb18-6"><a href="using-apis.html#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># I know that this returns all periods</span></span>
+<span id="cb18-7"><a href="using-apis.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bmrs_data, <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 13
+##   `*Document Type` `Business Type` `Process Type` `Time Series ID` Quantity
+##   &lt;chr&gt;            &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;               &lt;dbl&gt;
+## 1 Actual generati… Production      Realised       NGET-EMFIP-AGPT…     1636
+## 2 Actual generati… Production      Realised       NGET-EMFIP-AGPT…        0
+## # … with 8 more variables: `Curve Type` &lt;chr&gt;, Resolution &lt;chr&gt;, `Settlement
+## #   Date` &lt;date&gt;, `Settlement Period` &lt;dbl&gt;, `Power System Resource
+## #   Type` &lt;chr&gt;, `Active Flag` &lt;chr&gt;, `Document ID` &lt;chr&gt;, `Document
+## #   RevNum` &lt;dbl&gt;</code></pre>
 <p>And there we have it, we’ve retrieved a energy-related dataset from an API using the BMRSr package. There are roughly 101 data items available on BMRS so there’s a massive amount of data there for those who want to access it.</p>
 </div>
 </div>
