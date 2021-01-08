@@ -2,7 +2,7 @@
 
 When you're first learning R, getting on R and planning little projects and writing code is definitely the best way to learn. Reading to understand *why* you're getting the output that you are or why you're doing something the way you are doing is definitely important, but it's always better to get hands on.
 
-Having said that, one thing that I craved when I was learning R was to understand why people coded the way they did, or why one thing was always recommended over another in StackOverflow answers. I picked it up along the way, but there were many times where I was doing something completely unneccessary or inefficiently because I hadn't been exposed to a discussion about why I shouldn't be doing what I was doing. Similarly, when I eventually did come across an article outlining some of the philosophy or theory underpinning an approach, a little light switch would go and so many more things would click into place.
+Having said that, one thing that I craved when I was learning R was to understand why people coded the way they did, or why one thing was always recommended over another in StackOverflow answers. I picked it up along the way, but there were many times where I was doing something completely unnecessary or inefficiently because I hadn't been exposed to a discussion about why I shouldn't be doing what I was doing. Similarly, when I eventually did come across an article outlining some of the philosophy or theory underpinning an approach, a little light switch would go and so many more things would click into place.
 
 So this chapter is dedicated purely to some of the simple theory underpinning certain actions in R. This is an *opinionated* piece as I hold a personal opinion on how certain things should be done in R, but that doesn't mean that I'm right. Instead, I hope this section helps you think more deeply about what you're trying to achieve and the best way to get there before you start your next project.
 
@@ -24,11 +24,48 @@ The idea of abstraction is a very prevalent one in computer science. R itself is
 
 Finding examples of abstraction in existing R code is easy. For instance, in the [teacheR](https://teacher.arawles.co.uk) book, we looked at how R used method dispatch to find the appropriate method for a particular type of object. If you print a dataframe, for instance, then R will find the appropriate method to print that type of object (a dataframe), and will eventually call the `print.data.frame()` function to do so. But that's not what you have to type in. You just type `print(my_dataframe)` and R takes care of the rest. And that's a good example of how R has abstracted away that complexity, instead focusing on the core goal - printing something.
 
-Applying abstraction to your own R code can greatly improve your code cleanliness and efficiency. The best way to demonstrate how powerful abstraction can be in R is probably through a couple of examples. First we'll look at a simple example and then get a bit more complicated with second. 
+Applying abstraction to your own R code can greatly improve your code cleanliness and efficiency. One of our main tools for implementing abstraction into our projects are functions. We want to break down our steps into their smallest constituent parts, and aim to create functions that are as simple as possible. We can then use these functions together to solve the overarching issue. The best way to demonstrate how powerful abstraction can be in R is probably through an example. First we'll look at a simple example and then we'll move onto something more complex.
 
-#### Example 1 (Creating graphs)
+#### Example 1 - `plotly` labels
 
-For our first example, let's imagine you want to create a full suite of graphics for a reporting project you're working on. You're going to want to create 10 different line charts and 5 different bar charts using different variables from different datasets. Let's look at some different ways we could go about doing this, applying different levels of abstraction:
+This is a real example of abstraction that I used very recently. The `plotly` package is a great library for producing interactive graphs for Shiny applications and RMarkdown documents. I often use the `ggplotly()` function, which takes a `ggplot` object and converts it to a plotly one. 
+
+One of the features of the package is that you can create a tooltip, such that the individual looking at the graph can hover their cursor over the line or bar or whatever and a little box will pop up showing them the value that they're hovering over.
+
+The tooltips are generated automatically from the aesthetics you define in your `ggplot2` call. So if you create a graph with an `x` called `x_val`, then the tooltip will say something like "x_val: 100" when you hover over it. This is fine, but it can look a bit messy when you don't have very nice variable names, which I often don't. Instead, you can create a new aesthetic (like `text`) and provide your values to that aesthetic with nicer names. For example:
+
+```{r, eval = FALSE}
+gplot <- ggplot(data, aes(x = x_val, y = y_val, text = paste0("Better X Label:" = x)))...
+plotly_plot <- ggplotly(gplot, tooltip = "text")
+```
+
+Now, the tooltip will show "Better X Label: 100" instead of "x: 100". Much better.
+
+But what about when you want to have more than one variable in the label? You could try adding more aesthetics and including them to the `tooltip` parameter (`tooltip = c("text", "label", etc.)`), but that could be tough if you've got more than a couple of values.
+
+So let's think less about the here and now and try and break this into the simplest possible terms. We want a function that will need to accept a new name for our variable, the variable values, and it will need to be able to accept any number of variables. After a bit of trial and error, this is the function I created:
+
+```{r}
+plotly_label <- function(labels) {
+  raw_lists <- purrr::map2(names(labels), labels, function(name, values) {
+    purrr::map(values, ~paste0(name, ": ", .x))
+  })
+  purrr::pmap(raw_lists, function(...) paste(..., sep = "<br>"))
+}
+```
+
+This function accepts a list of name-value pairs, with the name representing the new name of the variable. This function then returns new labels (separated by a break) that can be used by `plotly`. So for instance, if I wanted to have labels for both my `x` and `y` variables, I could just do this:
+
+```{r, eval = FALSE}
+gplot <- ggplot(data, aes(x = x_val, y = y_val, text = plotly_label(list("Better X Label:" = x, "Better Y Label:" = y))))...
+plotly_plot <- ggplotly(gplot, tooltip = "text")
+```
+
+We haven't changed the world here, but we have created a function that can be used in multiple situations. We haven't hard-coded anything in, meaning that theoretically we could create a tooltip with thousands of variables.
+
+#### Example 2 - Plotting
+
+For our first example, let's imagine you want to create a full suite of graphics for a reporting project you're working on. You're going to want to create 10 different line charts and 5 different bar charts using different variables from 3 different datasets. Let's look at some different ways we could go about doing this, applying different levels of abstraction:
 
 ##### Approach 1 
 
@@ -45,7 +82,7 @@ linechart2 <- ggplot(dataset2, aes(x = x, y = y, colour = second_grouping)) +
 .
 ```
 
-After writing our all our code, we'd have 15 different graphs, but a lot of code and a lot of repitition.
+After writing our all our code, we'd have 15 different graphs, but a lot of code and a lot of repitition. There's lots of code here that's being shared and every time the same call or section is duplicated, that's twice the code that we might potentially have to debug.
 
 ##### Approach 2
 
@@ -65,26 +102,21 @@ create_first_linechart <- function(data) {
 We would eventually have 15 different functions - one for each plot - that we could call to produce all of our graphics. Like this:
 
 ```{r, eval = FALSE}
-library(ggplot2)
-dataset1 <- read.csv("my_dataset1.csv")
-dataset2 <- read.csv("my_dataset2.csv")
-
 create_first_linechart(dataset1)
 create_second_linechart(dataset2)
-.
+create_third_linechart(dataset3)
 .
 .
 
 ```
 
-This is perhaps a bit cleaner than our first approach because we've separated out our graph-generation logic, but there's still just as much repetition. Similarly, if there's an error, we're still going to have to debug each function separately.
+This is a bit cleaner than our first approach because we've separated out our graph-generation logic and it's certainly a step in the right direction, but there's still just as much repetition. Similarly, if there's an error, we're still going to have to debug each function separately.
 
 ##### Approach 3
 
 Building on the use of functions, we could create a function that will create all of the line charts and then a separate function that will create all of our bar charts. Our function to create our line charts might look like this:
 
 ```{r}
-library(ggplot2)
 create_linechart <- function(data, x, y, colour) {
   ggplot(data, aes(x = {{ x }}, y = {{ y }}, colour = {{ colour }})) +
     geom_line()
@@ -129,12 +161,10 @@ create_chart <- function(data, x, y, colour, fill, geom, ...) {
 }
 ```
 
-But I'd say that this is much more confusing and error-prone than our third approach, and now we've restricted ourselves to providing a character string of the variable instead of a function. We may have more code using Approach 3, but making changes and understanding what's going on is much easier.
+But I'd say that this is much more confusing and error-prone than our third approach, and now we've restricted ourselves to providing a character string of the `geom` function instead of being able to provide a function object. We may have more code using Approach 3, but making changes and understanding what's going on is much easier.
 
 Ultimately, although we've reduced the amount of code we have, we've attempted to abstract away too much of the complexity. And now we've ended up hamstrung with our new function. Hopefully this example has highlighted that striking the right balance when applying abstraction can be tricky; you want to remove duplication and complexity as much as possible, but without inadvertently more complexity further down the line.
 
-
-#### Example 2 ()
 
 ## Organisation
 

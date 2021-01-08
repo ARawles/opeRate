@@ -178,7 +178,6 @@ If you're interested, there are a couple of things you'll need:
 * The BMRSr package installed
 * A free BMRS API key that can be retrieved from the [ELEXON portal](https://www.elexonportal.co.uk/).
 
-
 Once you've got those two prerequisites, using BMRSr should be quite easy. The main function in the BMRSr package is the `full_request()` function, which will create your URL, send the request, and parse the response depending on your parameters. To do this however, the `full_request()` function needs some parameters:
 
 * `data_item`
