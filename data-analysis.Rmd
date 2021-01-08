@@ -121,15 +121,15 @@ httr::GET(url = "http://google.com")
 That seems like a really complicated response at first, but when we look at each part, it's quite simple.
 
 * Response
-  + This is telling us where we got our response from. In this case, we sent a request to Google, so we got a response from Google.
++ This is telling us where we got our response from. In this case, we sent a request to Google, so we got a response from Google.
 * Date
-  + Fairly self-explanatory - the date and time of the response.
++ Fairly self-explanatory - the date and time of the response.
 * Content-Type
-  + This is telling us what type the response is. In this case, the response is just a HTML page, which is exactly what we expect as that's what you get when you type "google.com" into your browser.
++ This is telling us what type the response is. In this case, the response is just a HTML page, which is exactly what we expect as that's what you get when you type "google.com" into your browser.
 * Size
-  + This is the size of the response
++ This is the size of the response
 * Content
-  + Below the Size, we see the actually response body. In this case, we've been given the html for the Google.com page.
++ Below the Size, we see the actually response body. In this case, we've been given the html for the Google.com page.
 
 
 As simple as this example was, it didn't really give us anything interesting back, just the Google homepage. So let's use the GET request to get something more interesting.
@@ -183,33 +183,40 @@ If you're interested, there are a couple of things you'll need:
 Once you've got those two prerequisites, using BMRSr should be quite easy. The main function in the BMRSr package is the `full_request()` function, which will create your URL, send the request, and parse the response depending on your parameters. To do this however, the `full_request()` function needs some parameters:
 
 * `data_item`
-  + A data item to retrieve. The BMRS platform holds lots of datasets, and so we need to specify which one we want to retrieve.
++ A data item to retrieve. The BMRS platform holds lots of datasets, and so we need to specify which one we want to retrieve.
 * `api_key`
-  + Our API_key that we got from the Elexon portal
++ Our API_key that we got from the Elexon portal
 * parameters
-  + Depending on which data_item you chose, you'll need to provide some parameters to filter the data
++ Depending on which data_item you chose, you'll need to provide some parameters to filter the data
 * `service_type`
-  + What format you want the data returned in: values are XML or csv.
-  
++ What format you want the data returned in: values are XML or csv.
+
 So what parameters do I need? Well, the easiest way to find out is to use the `get_parameters()` function. This will return all of the parameters that can be provided to the `full_request()`.
 
-Let's do an example. Say I want to return data for the B1610 data item, which shows us generation output per generation unit. So, the first step is to know what parameters I can provide using the `get_parameters()` function:
+Let's do an example. Say I want to return data for the B1620 data item, which shows us aggregated generation output per type. So, the first step is to know what parameters I can provide using the `get_parameters()` function:
 
 ```{r}
-BMRSr::get_parameters("B1610")
+BMRSr::get_parameters("B1620")
 ```
 
 This tells me that I can provide two parameters in my request - the date and the settlement period. Using this information in my `full_request()` function...
 
 ```{r, eval = FALSE}
-BMRSr::full_request(data_item = "B1610",
-                    api_key = "put_your_API_key_here",
-                    service_type = "csv",
-                    settlement_date = as.Date("2019/06/01"),
-                    period = "*") # From reading the API manual,
-                                  # I know that this returns all periods
+bmrs_data <- BMRSr::full_request(data_item = "B1620",
+                                 api_key = "put_your_API_key_here",
+                                 service_type = "csv",
+                                 settlement_date = "01/11/2019",
+                                 period = "*") # From reading the API manual,
+# I know that this returns all periods
+head(bmrs_data, 2)
 ```
 
+
+```{r, echo = FALSE}
+head(
+  readRDS("data/example_BMRSr.rds"),
+  2)
+```
 
 And there we have it, we've retrieved a energy-related dataset from an API using the BMRSr package. There are roughly 101 data items available on BMRS so there's a massive amount of data there for those who want to access it.
 
