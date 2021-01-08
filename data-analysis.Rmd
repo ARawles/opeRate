@@ -96,7 +96,7 @@ Because Excel files are a little bit more complicated than csv files, you'll not
 
 Like the `readr::read_csv()` function, you can specify column names and types using the `col_names` and `col_types` parameters respectively, and also trim your values using `trim_ws`.
 
-## APIs (Advanced)
+## Using APIs
 
 Loading static data from text and Excel files is very common. However, an emerging method of data extraction is via web-based APIs. These web-based APIs allow a user to extract datasets from larger repositories using just an internet connection. This allows for access to larger and more dynamic datasets.
 
@@ -216,11 +216,8 @@ And there we have it, we've retrieved a energy-related dataset from an API using
 
 ## Cleaning data
 
-filler
 
-## Summary statistics
+## Summarisation
 
-filler
-
-## Plots
+## Plotting
 

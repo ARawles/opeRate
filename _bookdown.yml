@@ -4,10 +4,10 @@ output_dir: "docs"
 
 rmd_files: [
   "index.Rmd",
-  "workflow.Rmd",
+  "projects.Rmd",
   "tidyverse.Rmd",
   "data-analysis.Rmd",
-  "programming.Rmd",
   "advanced-data-analysis.Rmd",
+  "shiny.rmd",
   "theory.Rmd"
   ]

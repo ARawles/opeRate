@@ -1,10 +1,14 @@
-# Workflow
+# Projects
+
+In this section, we're going to look at the best way to plan and structure your project. Not all of your analyses will be of sufficient size to warrant a big planning stage, but learning to use a common, separate structure for all of your different projects can really help keep your work clean. This becomes even more important when you begin to combine multiple projects and you want to make sure that they don't slowly start to creep into one. For example, imagine you've previously worked on a project that relied heavily on API data. Then, in your next project, you need to use much of the same data but to a very different end. By utilising this project structure (and more specifically, the idea of ["Projects as packages"](#projects-as-packages)), you'll be able to easily utilise work from previous projects without duplicating or merging code. This idea also links in with some of the theoretical programming concepts we're going to discuss a bit [later](#Theory).
+
+## Workflows
 
 Often the best way to start a data analysis project is to decide what you're workflow should be and roughly how long each bit is going to take.
 
 For instance, if you know that the data you're going to be working on is likely to be littered with mistakes and errors, then you should preemptively allocate a decent amount of your time to the "importing" and "cleaning" steps of your workflow. Similarly, if you're end goal is to produce a predictive model at the end, then work in a feedback loop where you inspect and evaluate your model before improving it in the next iteration.
 
-## Basic Workflows
+### Basic Workflows
 
 For now, let's look at a basic workflow and some likely additions or changes you might make depending on your goals.
 
@@ -20,7 +24,7 @@ For these basic workflows, we're only going to look at a subset of all of the st
 
 \* The difference between data cleaning and data tidying to me is that cleaning refers more to data type conversion, removing NAs and the like. Basically, without cleaning, your analysis isn't going to happen because there's too much noise. When I say 'tidying', that's more getting the data in a format that is amenable to your analysis. You could get by without changing it but it would likely take you much longer or be much less efficient.
 
-### Example 1: Reporting
+#### Example 1: Reporting
 
 In this example, imagine someone has come to you and they want a bit more insight into the data they have. It's currently in a messy spreadsheet, and they want you to load it into R and produce some nice looking graphics to help them understand trends and correlations in their data. They're not bothered about any modelling for now, they just want some pretty graphs.
 
@@ -47,7 +51,7 @@ DiagrammeR::grViz("
 
 We import the data and clean it, then we summarise it and create our plots. We can then use feedback from our colleague to change how we're summarising or how we're plotting the data to improve our plots until we're happy.
 
-### Example 2: Modelling
+#### Example 2: Modelling
 
 For this example, imagine a colleague has come to you about a modelling project. They have a number of relatively clean datasets that they want to combine and use to produce a predictive model. They're not too worried about plots or graphics, they're more interested in the model itself. Our workflow here would be similar to Example 1 but there would be some crucial differences. First, we know that we're going to combine multiple datasets into one which we will then use for our model. This is likely going to involve some data manipulation or 'tidying'. I don't really like using the 'tidying' description because that would suggest that it's the same as 'cleaning' but there's a very useful package for data manipulation and resizing called `tidyr` so we'll stick to 'tidying' for now.
 
@@ -74,7 +78,7 @@ DiagrammeR::grViz("
 
 As you can see, we still end with the loop of modelling and then evaluating our model and using the output to update the model, but the steps we take to get there are a bit different.
 
-### Summary
+#### Summary
 
 Hopefully this section has given you an idea of what a typical project workflow could look like. The benefit of splitting your project into these distinct steps is that it can often help you compartmentalise your functions and scripts into distinct stages. We'll look later at structuring your project like an R package, and so splitting your analysis into separate stages can help you construct your project in a portable and replicable way.
 
@@ -105,7 +109,7 @@ Functions do and variables and objects are. Almost all languages share this dist
 
 R is a functional language and so using and creating functions is at the very heart of programming in R. Rather than relying on R scripts that need to be run in their entirety to produce your output, by creating functions and using them in your analysis, you can more easily scale your project. For example, imagine your scope is initially to produce a report for the year. Then, after your done, your manager is so impressed with your report, they want you to do the same thing for the last 10 years. If you've used a couple of R scripts and you haven't written any functions, then this is likely going to involve copying and pasting a whole lot of code and changing the years. Instead, if you use functions to perform your analysis, then creating reports for multiple years can be as simple as changing your dataset.
 
-Later on we'll look at the concept of [**abstraction**](#Abstraction) - removing levels of complexity to focus on the core operation - and this tip is heavily related to that concept. For now though, keep this thought in mind: If you find yourself copying and pasting your R code more than twice to do very similar things, you should probably be using a function.
+Later on we'll look at the concept of [**abstraction**](#definition) - removing levels of complexity to focus on the core operation - and this tip is heavily related to that concept. For now though, keep this thought in mind: If you find yourself copying and pasting your R code more than twice to do very similar things, you should probably be using a function.
 
 #### State your dependencies
 
@@ -121,9 +125,8 @@ Admittedly, this is overkill in a sense because we've already told R which packa
 
 Later we'll look at designing our project as a package and packages have a different way of stating dependencies for the user, so this is primarily for the case where you're just sending a script or two to someone.
 
-
 ### RMarkdown
 
 ### Shiny
 
-### Projects as packages
+## Projects as packages

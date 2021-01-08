@@ -4,10 +4,13 @@ When you're first learning R, getting on R and planning little projects and writ
 
 Having said that, one thing that I craved when I was learning R was to understand why people coded the way they did, or why one thing was always recommended over another in StackOverflow answers. I picked it up along the way, but there were many times where I was doing something completely unneccessary or inefficiently because I hadn't been exposed to a discussion about why I shouldn't be doing what I was doing. Similarly, when I eventually did come across an article outlining some of the philosophy or theory underpinning an approach, a little light switch would go and so many more things would click into place.
 
-So this chapter is dedicated purely to some of the simple theory underpinning certain actions in R. This is an *opionated* piece as I hold a personal opinion on how certain things should be done in R, but that doesn't mean that I'm right. Instead, I hope this section helps you think more deeply about what you're trying to achieve and the best way to get there before you start your next project.
+So this chapter is dedicated purely to some of the simple theory underpinning certain actions in R. This is an *opinionated* piece as I hold a personal opinion on how certain things should be done in R, but that doesn't mean that I'm right. Instead, I hope this section helps you think more deeply about what you're trying to achieve and the best way to get there before you start your next project.
 
 ## Abstraction
 
+For me, the biggest change in the quality and efficiency of my code was when I began learning about the concept of abstraction. Abstraction is essentially the process of breaking down complex processes and objects into their base function or quality. From here, we can abstract away levels of complexity, thus creating cleaner looking code.
+
+Abstraction is relevant to every aspect of your projects, from how they are structured to your functions and code and so we're going to spend some time understanding abstraction and how it can be applied.
 
 ### Definition
 
@@ -19,18 +22,44 @@ The idea of abstraction is a very prevalent one in computer science. R itself is
 
 ### Abstraction in R
 
-The best way to demonstrate how powerful abstraction can be in R is probably through an example. Let's imagine you want to create a full suite of graphics for a reporting project you're working on. You're going to want to create 10 different line charts and 5 different bar charts using different variables from different datasets. Let's look at some different ways we could go about doing this, applying different levels of abstraction:
+Finding examples of abstraction in existing R code is easy. For instance, in the [teacheR](https://teacher.arawles.co.uk) book, we looked at how R used method dispatch to find the appropriate method for a particular type of object. If you print a dataframe, for instance, then R will find the appropriate method to print that type of object (a dataframe), and will eventually call the `print.data.frame()` function to do so. But that's not what you have to type in. You just type `print(my_dataframe)` and R takes care of the rest. And that's a good example of how R has abstracted away that complexity, instead focusing on the core goal - printing something.
 
-#### Approach 1
+Applying abstraction to your own R code can greatly improve your code cleanliness and efficiency. The best way to demonstrate how powerful abstraction can be in R is probably through a couple of examples. First we'll look at a simple example and then get a bit more complicated with second. 
 
-Create a different function for each plot. The function would take the dataset and spit out the graphic, a bit like this:
+#### Example 1 (Creating graphs)
+
+For our first example, let's imagine you want to create a full suite of graphics for a reporting project you're working on. You're going to want to create 10 different line charts and 5 different bar charts using different variables from different datasets. Let's look at some different ways we could go about doing this, applying different levels of abstraction:
+
+##### Approach 1 
+
+You could just write out the code needed for each plot. For example:
+
+```{r, eval = FALSE}
+library(ggplot2)
+linechart1 <- ggplot(dataset1, aes(x = x, y = y, colour = groups)) +
+  geom_line()
+linechart2 <- ggplot(dataset2, aes(x = x, y = y, colour = second_grouping)) +
+  geom_line()
+.
+.
+.
+```
+
+After writing our all our code, we'd have 15 different graphs, but a lot of code and a lot of repitition.
+
+##### Approach 2
+
+A different approach may be to create a different function for each plot. The function would take the dataset and spit out the graphic, a bit like this:
 
 ```{r, eval = FALSE}
 library(ggplot2)
 create_first_linechart <- function(data) {
-    ggplot(data, aes(x = column1, y = column2, colour = column3)) +
+  ggplot(data, aes(x = column1, y = column2, colour = column3)) +
     geom_line()
 }
+.
+.
+.
 ```
 
 We would eventually have 15 different functions - one for each plot - that we could call to produce all of our graphics. Like this:
@@ -48,25 +77,64 @@ create_second_linechart(dataset2)
 
 ```
 
-#### Approach 2
+This is perhaps a bit cleaner than our first approach because we've separated out our graph-generation logic, but there's still just as much repetition. Similarly, if there's an error, we're still going to have to debug each function separately.
 
-We could create a function that will create all of the line charts and then a separate function that will create all of our bar charts. Our function to create our line charts might look like this:
+##### Approach 3
+
+Building on the use of functions, we could create a function that will create all of the line charts and then a separate function that will create all of our bar charts. Our function to create our line charts might look like this:
 
 ```{r}
 library(ggplot2)
 create_linechart <- function(data, x, y, colour) {
-    ggplot(data, aes(x = {{ x }}, y = {{ y }}, colour = {{ colour }})) +
+  ggplot(data, aes(x = {{ x }}, y = {{ y }}, colour = {{ colour }})) +
     geom_line()
+}
+create_barchart <- function(data, x, y, colour) {
+  ggplot(data, aes(x = {{ x }}, y = {{ y }}, fill = {{ colour }})) +
+    geom_col()
 }
 ```
 
 The `{{ }}` brackets let us pass column names from our function to the `aes()` function in `ggplot2`.
 
-Then we'd still have to make 15 separate calls to create our graphics, but we'd have much less code to debug if something went wrong because we're only relying on two functions, not the 15 we were before.
+Then we'd still have to make 15 separate calls to create our graphics, but we'd have much less code to debug if something went wrong because we're only relying on two functions, not the 15 we were before. Similarly, if we wanted to change something, we'd just have to change the two functions we created and that change would be propogated to all the 15 graphics.
 
-#### Approach 3
+#### Approach 3.5
 
-We've reduced the amount of code we have to write to define all the functions we're going to need, but we're still repeating ourselves by calling the same functions 10 and 5 times with slightly different parameters. Instead, we could create a list that holds 
+The eagle-eyed amongst you may have noticed that we still have some repetition. Basically, everything other than our `geom` and one of our `aes` mappings is exactly the same between the two functions. So should we not modify our functions so that we can define the type of graph we want as an input parameter and then we'll only need one function?
+
+Perhaps, but I would say that this shows a good example of how abstraction is more of an art than a science. If we did combine our two functions in attempt to create a single function that create multiple types of graphs, we'd run into issues if we then wanted to make changes to our graphs that are specific to a single type of graphic.
+
+Let's look at this through an example. Here's what a combined function could look like:
+
+```{r, eval = FALSE}
+create_chart <- function(data, x, y, colour, fill, geom) {
+  ggplot(data, aes(x = {{ x }}, y = {{ y }}, colour = {{ colour }}, fill = {{ fill }})) +
+    do.call(geom, args = list())
+}
+```
+
+Using this function, we can provide our `geom_...()` function via the `geom` parameter, allowing us to create multiple types of graph using the same function. But say now I want to change the bars from being side by side to being stacked. To do that, I just need to set the `position` parameter in the `geom_col()` call to `stack`. But currently I don't have a way of passing that value to the `geom_col()` function. I could add ellipses (`...`) to my function and pass parameters that way, but then what would happen if I wanted to only add a theme to my line graphs and not to the bar charts? Well, our function would end up looking something like this:
+
+```{r, eval = FALSE}
+create_chart <- function(data, x, y, colour, fill, geom, ...) {
+  plot <- ggplot(data, aes(x = {{ x }}, y = {{ y }}, colour = {{ colour }}, fill = {{ fill }})) +
+    do.call(geom, args = list(...))
+  if (geom == "geom_line") {
+    plot +
+      theme_classic()
+  } else {
+    plot
+  }
+}
+```
+
+But I'd say that this is much more confusing and error-prone than our third approach, and now we've restricted ourselves to providing a character string of the variable instead of a function. We may have more code using Approach 3, but making changes and understanding what's going on is much easier.
+
+Ultimately, although we've reduced the amount of code we have, we've attempted to abstract away too much of the complexity. And now we've ended up hamstrung with our new function. Hopefully this example has highlighted that striking the right balance when applying abstraction can be tricky; you want to remove duplication and complexity as much as possible, but without inadvertently more complexity further down the line.
+
+
+#### Example 2 ()
 
 ## Organisation
 
