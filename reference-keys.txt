@@ -45,12 +45,12 @@ theory
 abstraction
 definition
 abstraction-in-r
-example-1-creating-graphs
+example-1---plotly-labels
+example-2---plotting
 approach-1
 approach-2
 approach-3
 approach-3.5
-example-2
 organisation
 packages-as-projects
 iteration
