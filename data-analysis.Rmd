@@ -181,13 +181,13 @@ If you're interested, there are a couple of things you'll need:
 Once you've got those two prerequisites, using BMRSr should be quite easy. The main function in the BMRSr package is the `full_request()` function, which will create your URL, send the request, and parse the response depending on your parameters. To do this however, the `full_request()` function needs some parameters:
 
 * `data_item`
-+ A data item to retrieve. The BMRS platform holds lots of datasets, and so we need to specify which one we want to retrieve.
+    + A data item to retrieve. The BMRS platform holds lots of datasets, and so we need to specify which one we want to retrieve.
 * `api_key`
-+ Our API_key that we got from the Elexon portal
+    + Our API_key that we got from the Elexon portal
 * parameters
-+ Depending on which data_item you chose, you'll need to provide some parameters to filter the data
+    + Depending on which data_item you chose, you'll need to provide some parameters to filter the data
 * `service_type`
-+ What format you want the data returned in: values are XML or csv.
+    + What format you want the data returned in: values are XML or csv.
 
 So what parameters do I need? Well, the easiest way to find out is to use the `get_parameters()` function. This will return all of the parameters that can be provided to the `full_request()`.
 

@@ -41,7 +41,7 @@ plotly_plot <- ggplotly(gplot, tooltip = "text")
 
 Now, the tooltip will show "Better X Label: 100" instead of "x: 100". Much better.
 
-But what about when you want to have more than one variable in the label? You could try adding more aesthetics and including them to the `tooltip` parameter (`tooltip = c("text", "label", etc.)`), but that could be tough if you've got more than a couple of values.
+But what about when you want to have more than one variable in the label? You could try adding more aesthetics and including them to the `tooltip` parameter (`tooltip = c("text", "label", etc.)`), but that could be tough if you've got more than a couple of aesthetics.
 
 So let's think less about the here and now and try and break this into the simplest possible terms. We want a function that will need to accept a new name for our variable, the variable values, and it will need to be able to accept any number of variables. After a bit of trial and error, this is the function I created:
 
@@ -163,7 +163,7 @@ create_chart <- function(data, x, y, colour, fill, geom, ...) {
 
 But I'd say that this is much more confusing and error-prone than our third approach, and now we've restricted ourselves to providing a character string of the `geom` function instead of being able to provide a function object. We may have more code using Approach 3, but making changes and understanding what's going on is much easier.
 
-Ultimately, although we've reduced the amount of code we have, we've attempted to abstract away too much of the complexity. And now we've ended up hamstrung with our new function. Hopefully this example has highlighted that striking the right balance when applying abstraction can be tricky; you want to remove duplication and complexity as much as possible, but without inadvertently more complexity further down the line.
+Ultimately, although we've reduced the amount of code we have, we've attempted to abstract away too much of the complexity. And now we've ended up hamstrung with our new function. Hopefully this example has highlighted that striking the right balance when applying abstraction can be tricky; you want to remove duplication and complexity as much as possible, but without inadvertently adding more complexity further down the line. Essentially, you don't want to deviate from the core issue that you're trying to solve with your function.
 
 
 ## Organisation
