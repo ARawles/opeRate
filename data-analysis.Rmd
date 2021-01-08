@@ -129,7 +129,7 @@ That seems like a really complicated response at first, but when we look at each
 * Size
 + This is the size of the response
 * Content
-+ Below the Size, we see the actually response body. In this case, we've been given the html for the Google.com page.
++ Below the size, we see the actual response body. In this case, we've been given the html for the google.com page.
 
 
 As simple as this example was, it didn't really give us anything interesting back, just the Google homepage. So let's use the GET request to get something more interesting.
