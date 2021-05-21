@@ -67,7 +67,7 @@ DiagrammeR::grViz("
   # several 'node' statements
   node [shape = box,
         fontname = Helvetica]
-  Collate; Clean; Tidy; Summarise; Plot; Evaluate; 
+  Collate; Clean; Tidy; Evaluate; 
 
   # several 'edge' statements
   Collate->Clean Clean->Tidy Tidy->Model
@@ -103,7 +103,7 @@ Take your pick. Everyone has their preference and that's okay. If you like camel
 
 #### Name your variables as nouns and your functions as verbs
 
-Functions do and variables and objects are. Almost all languages share this distinction with verbs and nouns, so utilise that natural divide to improve how you name your functions and variables. Aim to give your functions names that suggest that they `do` something; and bonus points if you can give it a name that's a verb and also gives a decent description of what the function does. When you name your variables, give them meaningful noun-like names. Say you're doing some climate analysis, a good name for the variable that holds the average rainfall in a year might be `avg_yearly_rainfall` whilst a function that converts a temperatue in Celsius to Farenheit might be `convert_degrees()`.
+Functions do and variables and objects are. Almost all languages share this distinction with verbs and nouns, so utilise that natural divide to improve how you name your functions and variables. Aim to give your functions names that suggest that they `do` something; and bonus points if you can give it a name that's a verb and also gives a decent description of what the function does. When you name your variables, give them meaningful noun-like names. Say you're doing some climate analysis, a good name for the variable that holds the average rainfall in a year might be `avg_yearly_rainfall` whilst a function that converts a temperature in Celsius to Fahrenheit might be `convert_degrees()`.
 
 #### Use functions where you can
 
