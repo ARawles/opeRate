@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.3 Projects as packages | opeRate</title>
+  <title>4.3 Cleaning and tidying data | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.3 Projects as packages | opeRate" />
+  <meta property="og:title" content="4.3 Cleaning and tidying data | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.3 Projects as packages | opeRate" />
+  <meta name="twitter:title" content="4.3 Cleaning and tidying data | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="replicability.html"/>
-<link rel="next" href="tidyverse.html"/>
+<link rel="prev" href="using-apis.html"/>
+<link rel="next" href="section.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -216,18 +216,123 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="projects-as-packages" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Projects as packages</h2>
-
+<div id="cleaning-and-tidying-data" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Cleaning and tidying data</h2>
+<p>Loading data is often just the first step in your project. Most of the time, you’ll have messy datasets with odd columns and missing data points that you’ll need to deal with before you can actually do any meaningful analysis: you’ll need to <strong>clean</strong> your data.</p>
+<p>You’ll also need to get it into a format that is amenable to your analysis. This is the <strong>tidying</strong> stage, and because cleaning and tidying data are so tightly related, we’ll do these steps at the same time.</p>
+<div id="cleaning" class="section level3" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Cleaning</h3>
+<p>Here are some of the more common operations that you’ll be doing when it comes to data cleaning:</p>
+<ul>
+<li>Removing/replacing missing values</li>
+<li>Changing column types</li>
+<li>Combining columns</li>
+<li>Renaming columns</li>
+<li>Checking for anomalies</li>
+</ul>
+<p>Let’s look at how we might do these tasks in R using the <code>datasets::airquality</code> dataset as an example.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="cleaning-and-tidying-data.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datasets<span class="sc">::</span>airquality, <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##    Ozone Solar.R Wind Temp Month Day
+## 1     41     190  7.4   67     5   1
+## 2     36     118  8.0   72     5   2
+## 3     12     149 12.6   74     5   3
+## 4     18     313 11.5   62     5   4
+## 5     NA      NA 14.3   56     5   5
+## 6     28      NA 14.9   66     5   6
+## 7     23     299  8.6   65     5   7
+## 8     19      99 13.8   59     5   8
+## 9      8      19 20.1   61     5   9
+## 10    NA     194  8.6   69     5  10</code></pre>
+<div id="missing-values" class="section level4" number="4.3.1.1">
+<h4><span class="header-section-number">4.3.1.1</span> Missing values</h4>
+<p>Missing values are common in data science - data collection is often imperfect and so you’ll end up with observations or data-points missing. Firstly, you need to decide what you’re going to do with those.</p>
+<p>The easiest approach to just to remove them, and we can do that with the <code>dplyr::filter()</code> function:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="cleaning-and-tidying-data.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To remove rows with NA in one column</span></span>
+<span id="cb22-2"><a href="cleaning-and-tidying-data.html#cb22-2" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="cleaning-and-tidying-data.html#cb22-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Ozone)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="cleaning-and-tidying-data.html#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##   Ozone Solar.R Wind Temp Month Day
+## 1    41     190  7.4   67     5   1
+## 2    36     118  8.0   72     5   2
+## 3    12     149 12.6   74     5   3
+## 4    18     313 11.5   62     5   4
+## 5    28      NA 14.9   66     5   6</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="cleaning-and-tidying-data.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To remove rows with NA in any column</span></span>
+<span id="cb24-2"><a href="cleaning-and-tidying-data.html#cb24-2" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="cleaning-and-tidying-data.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="sc">~!</span><span class="fu">is.na</span>(.x))) <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="cleaning-and-tidying-data.html#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##   Ozone Solar.R Wind Temp Month Day
+## 1    41     190  7.4   67     5   1
+## 2    36     118  8.0   72     5   2
+## 3    12     149 12.6   74     5   3
+## 4    18     313 11.5   62     5   4
+## 5    23     299  8.6   65     5   7</code></pre>
+<p>Another approach to replace them with either the average for that column or with the closest neighbour value (this works better with time series data).</p>
+<p>To replace with the nearest value, we can use the <code>tidyr::fill()</code> function:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="cleaning-and-tidying-data.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fill a single column</span></span>
+<span id="cb26-2"><a href="cleaning-and-tidying-data.html#cb26-2" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="cleaning-and-tidying-data.html#cb26-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">fill</span>(Ozone, <span class="at">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-4"><a href="cleaning-and-tidying-data.html#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##   Ozone Solar.R Wind Temp Month Day
+## 1    41     190  7.4   67     5   1
+## 2    36     118  8.0   72     5   2
+## 3    12     149 12.6   74     5   3
+## 4    18     313 11.5   62     5   4
+## 5    18      NA 14.3   56     5   5</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="cleaning-and-tidying-data.html#cb28-1" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="cleaning-and-tidying-data.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">fill</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="at">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="cleaning-and-tidying-data.html#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##   Ozone Solar.R Wind Temp Month Day
+## 1    41     190  7.4   67     5   1
+## 2    36     118  8.0   72     5   2
+## 3    12     149 12.6   74     5   3
+## 4    18     313 11.5   62     5   4
+## 5    18     313 14.3   56     5   5</code></pre>
+<p>To replace them with the mean, we can either use a package like <code>zoo</code>, or we can use the <code>tidyverse</code> packages and our own function:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="cleaning-and-tidying-data.html#cb30-1" aria-hidden="true" tabindex="-1"></a>replace_with_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb30-2"><a href="cleaning-and-tidying-data.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(x, <span class="fu">is.na</span>(x), <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb30-3"><a href="cleaning-and-tidying-data.html#cb30-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-4"><a href="cleaning-and-tidying-data.html#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="cleaning-and-tidying-data.html#cb30-5" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb30-6"><a href="cleaning-and-tidying-data.html#cb30-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), replace_with_mean)) <span class="sc">%&gt;%</span></span>
+<span id="cb30-7"><a href="cleaning-and-tidying-data.html#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##      Ozone  Solar.R Wind Temp Month Day
+## 1 41.00000 190.0000  7.4   67     5   1
+## 2 36.00000 118.0000  8.0   72     5   2
+## 3 12.00000 149.0000 12.6   74     5   3
+## 4 18.00000 313.0000 11.5   62     5   4
+## 5 42.12931 185.9315 14.3   56     5   5</code></pre>
+<p>A word of warning here, however. If you’re doing complex modelling or very sensitive analyses, filling values like this can be misleading at best. Always think about the best approach for your specific project and what the repercussions of filling empty values might be.</p>
 </div>
-<!-- </div> -->
+<div id="changing-column-types" class="section level4" number="4.3.1.2">
+<h4><span class="header-section-number">4.3.1.2</span> Changing column types</h4>
+<p>When you import data into R, sometimes the type of the column doesn’t match what you want it to be. One way of tackling this is to define your column types when you import the data (as we looked at before), but it’s also perfectly acceptable to change the column type after the import.</p>
+<p>Probably the most common conversion is from a character string to a date. For this example, we’re just going to use some test data:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="cleaning-and-tidying-data.html#cb32-1" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(<span class="sc">~</span>bad_date, <span class="sc">~</span>value,</span>
+<span id="cb32-2"><a href="cleaning-and-tidying-data.html#cb32-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2012/01/01&quot;</span>, <span class="dv">100</span>,</span>
+<span id="cb32-3"><a href="cleaning-and-tidying-data.html#cb32-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2014/06/01&quot;</span>, <span class="dv">200</span>)</span>
+<span id="cb32-4"><a href="cleaning-and-tidying-data.html#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="cleaning-and-tidying-data.html#cb32-5" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="sc">%&gt;%</span></span>
+<span id="cb32-6"><a href="cleaning-and-tidying-data.html#cb32-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">good_date =</span> <span class="fu">as.Date</span>(bad_date, <span class="at">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+##   bad_date   value good_date 
+##   &lt;chr&gt;      &lt;dbl&gt; &lt;date&gt;    
+## 1 2012/01/01   100 2012-01-01
+## 2 2014/06/01   200 2014-06-01</code></pre>
+<p>Essentially, all you need to do is wrap your conversion function (e.g. <code>as.Date()</code>, <code>as.character()</code>) in a <code>dplyr::mutate()</code> call and you should be able to change your columns to whatever you need.</p>
+</div>
+<div id="combining-columns" class="section level4" number="4.3.1.3">
+<h4><span class="header-section-number">4.3.1.3</span> Combining columns</h4>
+</div>
+</div>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="replicability.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tidyverse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="using-apis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="section.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

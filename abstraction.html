@@ -31,7 +31,7 @@
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link rel="prev" href="theory.html"/>
-<link rel="next" href="organisation.html"/>
+<link rel="next" href="returns.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -176,9 +176,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.2" data-path="using-apis.html"><a href="using-apis.html#accessing-apis-in-r"><i class="fa fa-check"></i><b>4.2.2</b> Accessing APIs in R</a></li>
 <li class="chapter" data-level="4.2.3" data-path="using-apis.html"><a href="using-apis.html#bmrsr"><i class="fa fa-check"></i><b>4.2.3</b> BMRSr</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>4.3</b> Cleaning data</a></li>
-<li class="chapter" data-level="4.4" data-path="summarisation.html"><a href="summarisation.html"><i class="fa fa-check"></i><b>4.4</b> Summarisation</a></li>
-<li class="chapter" data-level="4.5" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>4.5</b> Plotting</a></li>
+<li class="chapter" data-level="4.3" data-path="cleaning-and-tidying-data.html"><a href="cleaning-and-tidying-data.html"><i class="fa fa-check"></i><b>4.3</b> Cleaning and tidying data</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="cleaning-and-tidying-data.html"><a href="cleaning-and-tidying-data.html#cleaning"><i class="fa fa-check"></i><b>4.3.1</b> Cleaning</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="section.html"><a href="section.html"><i class="fa fa-check"></i><b>4.4</b> </a></li>
+<li class="chapter" data-level="4.5" data-path="summarisation.html"><a href="summarisation.html"><i class="fa fa-check"></i><b>4.5</b> Summarisation</a></li>
+<li class="chapter" data-level="4.6" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>4.6</b> Plotting</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="advanced-data-analysis.html"><a href="advanced-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Advanced data analysis</a>
 <ul>
@@ -193,14 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.1.1" data-path="abstraction.html"><a href="abstraction.html#definition"><i class="fa fa-check"></i><b>7.1.1</b> Definition</a></li>
 <li class="chapter" data-level="7.1.2" data-path="abstraction.html"><a href="abstraction.html#abstraction-in-r"><i class="fa fa-check"></i><b>7.1.2</b> Abstraction in R</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="organisation.html"><a href="organisation.html"><i class="fa fa-check"></i><b>7.2</b> Organisation</a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="organisation.html"><a href="organisation.html#packages-as-projects"><i class="fa fa-check"></i><b>7.2.1</b> Packages as projects</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="iteration.html"><a href="iteration.html"><i class="fa fa-check"></i><b>7.3</b> Iteration</a>
-<ul>
-<li class="chapter" data-level="7.3.1" data-path="iteration.html"><a href="iteration.html#for-loops-and-lists"><i class="fa fa-check"></i><b>7.3.1</b> For loops and lists</a></li>
-</ul></li>
+<li class="chapter" data-level="7.2" data-path="returns.html"><a href="returns.html"><i class="fa fa-check"></i><b>7.2</b> Returns</a></li>
 </ul></li>
 </ul>
 
@@ -238,20 +235,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This is a real example of abstraction that I used very recently. The <code>plotly</code> package is a great library for producing interactive graphs for Shiny applications and RMarkdown documents. I often use the <code>ggplotly()</code> function, which takes a <code>ggplot</code> object and converts it to a plotly one.</p>
 <p>One of the features of the package is that you can create a tooltip, such that the individual looking at the graph can hover their cursor over the line or bar or whatever and a little box will pop up showing them the value that they’re hovering over.</p>
 <p>The tooltips are generated automatically from the aesthetics you define in your <code>ggplot2</code> call. So if you create a graph with an <code>x</code> called <code>x_val</code>, then the tooltip will say something like “x_val: 100” when you hover over it. This is fine, but it can look a bit messy when you don’t have very nice variable names, which I often don’t. Instead, you can create a new aesthetic (like <code>text</code>) and provide your values to that aesthetic with nicer names. For example:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="abstraction.html#cb20-1" aria-hidden="true" tabindex="-1"></a>gplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> x_val, <span class="at">y =</span> y_val, <span class="at">text =</span> <span class="fu">paste0</span>(<span class="st">&quot;Better X Label:&quot;</span> <span class="ot">=</span> x)))...</span>
-<span id="cb20-2"><a href="abstraction.html#cb20-2" aria-hidden="true" tabindex="-1"></a>plotly_plot <span class="ot">&lt;-</span> <span class="fu">ggplotly</span>(gplot, <span class="at">tooltip =</span> <span class="st">&quot;text&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="abstraction.html#cb34-1" aria-hidden="true" tabindex="-1"></a>gplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> x_val, <span class="at">y =</span> y_val, <span class="at">text =</span> <span class="fu">paste0</span>(<span class="st">&quot;Better X Label:&quot;</span> <span class="ot">=</span> x)))...</span>
+<span id="cb34-2"><a href="abstraction.html#cb34-2" aria-hidden="true" tabindex="-1"></a>plotly_plot <span class="ot">&lt;-</span> <span class="fu">ggplotly</span>(gplot, <span class="at">tooltip =</span> <span class="st">&quot;text&quot;</span>)</span></code></pre></div>
 <p>Now, the tooltip will show “Better X Label: 100” instead of “x: 100”. Much better.</p>
 <p>But what about when you want to have more than one variable in the label? You could try adding more aesthetics and including them to the <code>tooltip</code> parameter (<code>tooltip = c("text", "label", etc.)</code>), but that could be tough if you’ve got more than a couple of aesthetics.</p>
 <p>So let’s think less about the here and now and try and break this into the simplest possible terms. We want a function that will need to accept a new name for our variable, the variable values, and it will need to be able to accept any number of variables. After a bit of trial and error, this is the function I created:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="abstraction.html#cb21-1" aria-hidden="true" tabindex="-1"></a>plotly_label <span class="ot">&lt;-</span> <span class="cf">function</span>(labels) {</span>
-<span id="cb21-2"><a href="abstraction.html#cb21-2" aria-hidden="true" tabindex="-1"></a>  raw_lists <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map2</span>(<span class="fu">names</span>(labels), labels, <span class="cf">function</span>(name, values) {</span>
-<span id="cb21-3"><a href="abstraction.html#cb21-3" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map</span>(values, <span class="sc">~</span><span class="fu">paste0</span>(name, <span class="st">&quot;: &quot;</span>, .x))</span>
-<span id="cb21-4"><a href="abstraction.html#cb21-4" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb21-5"><a href="abstraction.html#cb21-5" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">pmap</span>(raw_lists, <span class="cf">function</span>(...) <span class="fu">paste</span>(..., <span class="at">sep =</span> <span class="st">&quot;&lt;br&gt;&quot;</span>))</span>
-<span id="cb21-6"><a href="abstraction.html#cb21-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="abstraction.html#cb35-1" aria-hidden="true" tabindex="-1"></a>plotly_label <span class="ot">&lt;-</span> <span class="cf">function</span>(labels) {</span>
+<span id="cb35-2"><a href="abstraction.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  raw_lists <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map2</span>(<span class="fu">names</span>(labels), labels, <span class="cf">function</span>(name, values) {</span>
+<span id="cb35-3"><a href="abstraction.html#cb35-3" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map</span>(values, <span class="sc">~</span><span class="fu">paste0</span>(name, <span class="st">&quot;: &quot;</span>, .x))</span>
+<span id="cb35-4"><a href="abstraction.html#cb35-4" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb35-5"><a href="abstraction.html#cb35-5" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">pmap</span>(raw_lists, <span class="cf">function</span>(...) <span class="fu">paste</span>(..., <span class="at">sep =</span> <span class="st">&quot;&lt;br&gt;&quot;</span>))</span>
+<span id="cb35-6"><a href="abstraction.html#cb35-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>This function accepts a list of name-value pairs, with the name representing the new name of the variable. This function then returns new labels (separated by a break) that can be used by <code>plotly</code>. So for instance, if I wanted to have labels for both my <code>x</code> and <code>y</code> variables, I could just do this:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="abstraction.html#cb22-1" aria-hidden="true" tabindex="-1"></a>gplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> x_val, <span class="at">y =</span> y_val, <span class="at">text =</span> <span class="fu">plotly_label</span>(<span class="fu">list</span>(<span class="st">&quot;Better X Label:&quot;</span> <span class="ot">=</span> x, <span class="st">&quot;Better Y Label:&quot;</span> <span class="ot">=</span> y))))...</span>
-<span id="cb22-2"><a href="abstraction.html#cb22-2" aria-hidden="true" tabindex="-1"></a>plotly_plot <span class="ot">&lt;-</span> <span class="fu">ggplotly</span>(gplot, <span class="at">tooltip =</span> <span class="st">&quot;text&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="abstraction.html#cb36-1" aria-hidden="true" tabindex="-1"></a>gplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> x_val, <span class="at">y =</span> y_val, <span class="at">text =</span> <span class="fu">plotly_label</span>(<span class="fu">list</span>(<span class="st">&quot;Better X Label:&quot;</span> <span class="ot">=</span> x, <span class="st">&quot;Better Y Label:&quot;</span> <span class="ot">=</span> y))))...</span>
+<span id="cb36-2"><a href="abstraction.html#cb36-2" aria-hidden="true" tabindex="-1"></a>plotly_plot <span class="ot">&lt;-</span> <span class="fu">ggplotly</span>(gplot, <span class="at">tooltip =</span> <span class="st">&quot;text&quot;</span>)</span></code></pre></div>
 <p>We haven’t changed the world here, but we have created a function that can be used in multiple situations. We haven’t hard-coded anything in, meaning that theoretically we could create a tooltip with thousands of variables.</p>
 </div>
 <div id="example-2---plotting" class="section level4" number="7.1.2.2">
@@ -260,72 +257,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="approach-1" class="section level5" number="7.1.2.2.1">
 <h5><span class="header-section-number">7.1.2.2.1</span> Approach 1</h5>
 <p>You could just write out the code needed for each plot. For example:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="abstraction.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb23-2"><a href="abstraction.html#cb23-2" aria-hidden="true" tabindex="-1"></a>linechart1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dataset1, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">colour =</span> groups)) <span class="sc">+</span></span>
-<span id="cb23-3"><a href="abstraction.html#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span>
-<span id="cb23-4"><a href="abstraction.html#cb23-4" aria-hidden="true" tabindex="-1"></a>linechart2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dataset2, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">colour =</span> second_grouping)) <span class="sc">+</span></span>
-<span id="cb23-5"><a href="abstraction.html#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span>
-<span id="cb23-6"><a href="abstraction.html#cb23-6" aria-hidden="true" tabindex="-1"></a>.</span>
-<span id="cb23-7"><a href="abstraction.html#cb23-7" aria-hidden="true" tabindex="-1"></a>.</span>
-<span id="cb23-8"><a href="abstraction.html#cb23-8" aria-hidden="true" tabindex="-1"></a>.</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="abstraction.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb37-2"><a href="abstraction.html#cb37-2" aria-hidden="true" tabindex="-1"></a>linechart1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dataset1, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">colour =</span> groups)) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="abstraction.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span>
+<span id="cb37-4"><a href="abstraction.html#cb37-4" aria-hidden="true" tabindex="-1"></a>linechart2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dataset2, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">colour =</span> second_grouping)) <span class="sc">+</span></span>
+<span id="cb37-5"><a href="abstraction.html#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span>
+<span id="cb37-6"><a href="abstraction.html#cb37-6" aria-hidden="true" tabindex="-1"></a>.</span>
+<span id="cb37-7"><a href="abstraction.html#cb37-7" aria-hidden="true" tabindex="-1"></a>.</span>
+<span id="cb37-8"><a href="abstraction.html#cb37-8" aria-hidden="true" tabindex="-1"></a>.</span></code></pre></div>
 <p>After writing our all our code, we’d have 15 different graphs, but a lot of code and a lot of repitition. There’s lots of code here that’s being shared and every time the same call or section is duplicated, that’s twice the code that we might potentially have to debug.</p>
 </div>
 <div id="approach-2" class="section level5" number="7.1.2.2.2">
 <h5><span class="header-section-number">7.1.2.2.2</span> Approach 2</h5>
 <p>A different approach may be to create a different function for each plot. The function would take the dataset and spit out the graphic, a bit like this:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="abstraction.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb24-2"><a href="abstraction.html#cb24-2" aria-hidden="true" tabindex="-1"></a>create_first_linechart <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
-<span id="cb24-3"><a href="abstraction.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> column1, <span class="at">y =</span> column2, <span class="at">colour =</span> column3)) <span class="sc">+</span></span>
-<span id="cb24-4"><a href="abstraction.html#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()</span>
-<span id="cb24-5"><a href="abstraction.html#cb24-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb24-6"><a href="abstraction.html#cb24-6" aria-hidden="true" tabindex="-1"></a>.</span>
-<span id="cb24-7"><a href="abstraction.html#cb24-7" aria-hidden="true" tabindex="-1"></a>.</span>
-<span id="cb24-8"><a href="abstraction.html#cb24-8" aria-hidden="true" tabindex="-1"></a>.</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="abstraction.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb38-2"><a href="abstraction.html#cb38-2" aria-hidden="true" tabindex="-1"></a>create_first_linechart <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb38-3"><a href="abstraction.html#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> column1, <span class="at">y =</span> column2, <span class="at">colour =</span> column3)) <span class="sc">+</span></span>
+<span id="cb38-4"><a href="abstraction.html#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()</span>
+<span id="cb38-5"><a href="abstraction.html#cb38-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-6"><a href="abstraction.html#cb38-6" aria-hidden="true" tabindex="-1"></a>.</span>
+<span id="cb38-7"><a href="abstraction.html#cb38-7" aria-hidden="true" tabindex="-1"></a>.</span>
+<span id="cb38-8"><a href="abstraction.html#cb38-8" aria-hidden="true" tabindex="-1"></a>.</span></code></pre></div>
 <p>We would eventually have 15 different functions - one for each plot - that we could call to produce all of our graphics. Like this:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="abstraction.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_first_linechart</span>(dataset1)</span>
-<span id="cb25-2"><a href="abstraction.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">create_second_linechart</span>(dataset2)</span>
-<span id="cb25-3"><a href="abstraction.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">create_third_linechart</span>(dataset3)</span>
-<span id="cb25-4"><a href="abstraction.html#cb25-4" aria-hidden="true" tabindex="-1"></a>.</span>
-<span id="cb25-5"><a href="abstraction.html#cb25-5" aria-hidden="true" tabindex="-1"></a>.</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="abstraction.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_first_linechart</span>(dataset1)</span>
+<span id="cb39-2"><a href="abstraction.html#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">create_second_linechart</span>(dataset2)</span>
+<span id="cb39-3"><a href="abstraction.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">create_third_linechart</span>(dataset3)</span>
+<span id="cb39-4"><a href="abstraction.html#cb39-4" aria-hidden="true" tabindex="-1"></a>.</span>
+<span id="cb39-5"><a href="abstraction.html#cb39-5" aria-hidden="true" tabindex="-1"></a>.</span></code></pre></div>
 <p>This is a bit cleaner than our first approach because we’ve separated out our graph-generation logic and it’s certainly a step in the right direction, but there’s still just as much repetition. Similarly, if there’s an error, we’re still going to have to debug each function separately.</p>
 </div>
 <div id="approach-3" class="section level5" number="7.1.2.2.3">
 <h5><span class="header-section-number">7.1.2.2.3</span> Approach 3</h5>
 <p>Building on the use of functions, we could create a function that will create all of the line charts and then a separate function that will create all of our bar charts. Our function to create our line charts might look like this:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="abstraction.html#cb26-1" aria-hidden="true" tabindex="-1"></a>create_linechart <span class="ot">&lt;-</span> <span class="cf">function</span>(data, x, y, colour) {</span>
-<span id="cb26-2"><a href="abstraction.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> {{ x }}, <span class="at">y =</span> {{ y }}, <span class="at">colour =</span> {{ colour }})) <span class="sc">+</span></span>
-<span id="cb26-3"><a href="abstraction.html#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()</span>
-<span id="cb26-4"><a href="abstraction.html#cb26-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb26-5"><a href="abstraction.html#cb26-5" aria-hidden="true" tabindex="-1"></a>create_barchart <span class="ot">&lt;-</span> <span class="cf">function</span>(data, x, y, colour) {</span>
-<span id="cb26-6"><a href="abstraction.html#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> {{ x }}, <span class="at">y =</span> {{ y }}, <span class="at">fill =</span> {{ colour }})) <span class="sc">+</span></span>
-<span id="cb26-7"><a href="abstraction.html#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>()</span>
-<span id="cb26-8"><a href="abstraction.html#cb26-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="abstraction.html#cb40-1" aria-hidden="true" tabindex="-1"></a>create_linechart <span class="ot">&lt;-</span> <span class="cf">function</span>(data, x, y, colour) {</span>
+<span id="cb40-2"><a href="abstraction.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> {{ x }}, <span class="at">y =</span> {{ y }}, <span class="at">colour =</span> {{ colour }})) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="abstraction.html#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()</span>
+<span id="cb40-4"><a href="abstraction.html#cb40-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb40-5"><a href="abstraction.html#cb40-5" aria-hidden="true" tabindex="-1"></a>create_barchart <span class="ot">&lt;-</span> <span class="cf">function</span>(data, x, y, colour) {</span>
+<span id="cb40-6"><a href="abstraction.html#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> {{ x }}, <span class="at">y =</span> {{ y }}, <span class="at">fill =</span> {{ colour }})) <span class="sc">+</span></span>
+<span id="cb40-7"><a href="abstraction.html#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>()</span>
+<span id="cb40-8"><a href="abstraction.html#cb40-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>The <code>{{ }}</code> brackets let us pass column names from our function to the <code>aes()</code> function in <code>ggplot2</code>.</p>
 <p>Then we’d still have to make 15 separate calls to create our graphics, but we’d have much less code to debug if something went wrong because we’re only relying on two functions, not the 15 we were before. Similarly, if we wanted to change something, we’d just have to change the two functions we created and that change would be propogated to all the 15 graphics.</p>
 </div>
 </div>
-<div id="approach-3.5" class="section level4" number="7.1.2.3">
-<h4><span class="header-section-number">7.1.2.3</span> Approach 3.5</h4>
-<p>The eagle-eyed amongst you may have noticed that we still have some repetition. Basically, everything other than our <code>geom</code> and one of our <code>aes</code> mappings is exactly the same between the two functions. So should we not modify our functions so that we can define the type of graph we want as an input parameter and then we’ll only need one function?</p>
-<p>Perhaps, but I would say that this shows a good example of how abstraction is more of an art than a science. If we did combine our two functions in attempt to create a single function that create multiple types of graphs, we’d run into issues if we then wanted to make changes to our graphs that are specific to a single type of graphic.</p>
-<p>Let’s look at this through an example. Here’s what a combined function could look like:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="abstraction.html#cb27-1" aria-hidden="true" tabindex="-1"></a>create_chart <span class="ot">&lt;-</span> <span class="cf">function</span>(data, x, y, colour, fill, geom) {</span>
-<span id="cb27-2"><a href="abstraction.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> {{ x }}, <span class="at">y =</span> {{ y }}, <span class="at">colour =</span> {{ colour }}, <span class="at">fill =</span> {{ fill }})) <span class="sc">+</span></span>
-<span id="cb27-3"><a href="abstraction.html#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">do.call</span>(geom, <span class="at">args =</span> <span class="fu">list</span>())</span>
-<span id="cb27-4"><a href="abstraction.html#cb27-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Using this function, we can provide our <code>geom_...()</code> function via the <code>geom</code> parameter, allowing us to create multiple types of graph using the same function. But say now I want to change the bars from being side by side to being stacked. To do that, I just need to set the <code>position</code> parameter in the <code>geom_col()</code> call to <code>stack</code>. But currently I don’t have a way of passing that value to the <code>geom_col()</code> function. I could add ellipses (<code>...</code>) to my function and pass parameters that way, but then what would happen if I wanted to only add a theme to my line graphs and not to the bar charts? Well, our function would end up looking something like this:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="abstraction.html#cb28-1" aria-hidden="true" tabindex="-1"></a>create_chart <span class="ot">&lt;-</span> <span class="cf">function</span>(data, x, y, colour, fill, geom, ...) {</span>
-<span id="cb28-2"><a href="abstraction.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> {{ x }}, <span class="at">y =</span> {{ y }}, <span class="at">colour =</span> {{ colour }}, <span class="at">fill =</span> {{ fill }})) <span class="sc">+</span></span>
-<span id="cb28-3"><a href="abstraction.html#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">do.call</span>(geom, <span class="at">args =</span> <span class="fu">list</span>(...))</span>
-<span id="cb28-4"><a href="abstraction.html#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (geom <span class="sc">==</span> <span class="st">&quot;geom_line&quot;</span>) {</span>
-<span id="cb28-5"><a href="abstraction.html#cb28-5" aria-hidden="true" tabindex="-1"></a>    plot <span class="sc">+</span></span>
-<span id="cb28-6"><a href="abstraction.html#cb28-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_classic</span>()</span>
-<span id="cb28-7"><a href="abstraction.html#cb28-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb28-8"><a href="abstraction.html#cb28-8" aria-hidden="true" tabindex="-1"></a>    plot</span>
-<span id="cb28-9"><a href="abstraction.html#cb28-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb28-10"><a href="abstraction.html#cb28-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>But I’d say that this is much more confusing and error-prone than our third approach, and now we’ve restricted ourselves to providing a character string of the <code>geom</code> function instead of being able to provide a function object. We may have more code using Approach 3, but making changes and understanding what’s going on is much easier.</p>
-<p>Ultimately, although we’ve reduced the amount of code we have, we’ve attempted to abstract away too much of the complexity. And now we’ve ended up hamstrung with our new function. Hopefully this example has highlighted that striking the right balance when applying abstraction can be tricky; you want to remove duplication and complexity as much as possible, but without inadvertently adding more complexity further down the line. Essentially, you don’t want to deviate from the core issue that you’re trying to solve with your function.</p>
+<div id="conclusion" class="section level4" number="7.1.2.3">
+<h4><span class="header-section-number">7.1.2.3</span> Conclusion</h4>
+<p>Ultimately, we’ve utilised the concept of abstraction to simplify our code and make debugging easier. The goal when writing code isn’t to write it perfectly first time round - in fact, aiming for perfection off the bat can often be detrimental to your work in the long run - but to strike a good balance of simplicity and functionality. There isn’t often a ‘perfect’ amount of abstraction - it just doesn’t really work that way, but the more you program and write code in R and the more you think about your problem and what the core goal you’re trying to acheive is, the better your code will become.</p>
 </div>
 </div>
 </div>
@@ -335,7 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="theory.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="organisation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="returns.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

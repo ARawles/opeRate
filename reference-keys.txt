@@ -34,7 +34,12 @@ using-apis
 what-are-apis
 accessing-apis-in-r
 bmrsr
-cleaning-data
+cleaning-and-tidying-data
+cleaning
+missing-values
+changing-column-types
+combining-columns
+section
 summarisation
 plotting
 advanced-data-analysis
@@ -50,8 +55,5 @@ example-2---plotting
 approach-1
 approach-2
 approach-3
-approach-3.5
-organisation
-packages-as-projects
-iteration
-for-loops-and-lists
+conclusion
+returns

@@ -31,7 +31,7 @@
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link rel="prev" href="loading-data.html"/>
-<link rel="next" href="cleaning-data.html"/>
+<link rel="next" href="cleaning-and-tidying-data.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -176,9 +176,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.2" data-path="using-apis.html"><a href="using-apis.html#accessing-apis-in-r"><i class="fa fa-check"></i><b>4.2.2</b> Accessing APIs in R</a></li>
 <li class="chapter" data-level="4.2.3" data-path="using-apis.html"><a href="using-apis.html#bmrsr"><i class="fa fa-check"></i><b>4.2.3</b> BMRSr</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>4.3</b> Cleaning data</a></li>
-<li class="chapter" data-level="4.4" data-path="summarisation.html"><a href="summarisation.html"><i class="fa fa-check"></i><b>4.4</b> Summarisation</a></li>
-<li class="chapter" data-level="4.5" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>4.5</b> Plotting</a></li>
+<li class="chapter" data-level="4.3" data-path="cleaning-and-tidying-data.html"><a href="cleaning-and-tidying-data.html"><i class="fa fa-check"></i><b>4.3</b> Cleaning and tidying data</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="cleaning-and-tidying-data.html"><a href="cleaning-and-tidying-data.html#cleaning"><i class="fa fa-check"></i><b>4.3.1</b> Cleaning</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="section.html"><a href="section.html"><i class="fa fa-check"></i><b>4.4</b> </a></li>
+<li class="chapter" data-level="4.5" data-path="summarisation.html"><a href="summarisation.html"><i class="fa fa-check"></i><b>4.5</b> Summarisation</a></li>
+<li class="chapter" data-level="4.6" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>4.6</b> Plotting</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="advanced-data-analysis.html"><a href="advanced-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Advanced data analysis</a>
 <ul>
@@ -193,14 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.1.1" data-path="abstraction.html"><a href="abstraction.html#definition"><i class="fa fa-check"></i><b>7.1.1</b> Definition</a></li>
 <li class="chapter" data-level="7.1.2" data-path="abstraction.html"><a href="abstraction.html#abstraction-in-r"><i class="fa fa-check"></i><b>7.1.2</b> Abstraction in R</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="organisation.html"><a href="organisation.html"><i class="fa fa-check"></i><b>7.2</b> Organisation</a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="organisation.html"><a href="organisation.html#packages-as-projects"><i class="fa fa-check"></i><b>7.2.1</b> Packages as projects</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="iteration.html"><a href="iteration.html"><i class="fa fa-check"></i><b>7.3</b> Iteration</a>
-<ul>
-<li class="chapter" data-level="7.3.1" data-path="iteration.html"><a href="iteration.html#for-loops-and-lists"><i class="fa fa-check"></i><b>7.3.1</b> For loops and lists</a></li>
-</ul></li>
+<li class="chapter" data-level="7.2" data-path="returns.html"><a href="returns.html"><i class="fa fa-check"></i><b>7.2</b> Returns</a></li>
 </ul></li>
 </ul>
 
@@ -234,20 +231,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>As previously mentioned, to extract something from the API, you’ll be using the <code>GET</code> method. The <code>httr</code> package makes this super easy by providing a <code>GET</code> function. To this function, we’ll need to provide a URL. The <code>GET</code> function will then send a GET request to that address and return the response. A really simple GET request could be:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="using-apis.html#cb8-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;http://google.com&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [http://www.google.com/]
-##   Date: 2021-01-08 16:01
+##   Date: 2021-05-21 15:23
 ##   Status: 200
 ##   Content-Type: text/html; charset=ISO-8859-1
-##   Size: 12.8 kB
+##   Size: 12.9 kB
 ## &lt;!doctype html&gt;&lt;html itemscope=&quot;&quot; itemtype=&quot;http://schema.org/WebPage&quot; lang=&quot;...
-## google.lc=[];google.li=0;google.getEI=function(a){for(var b;a&amp;&amp;(!a.getAttribu...
+## var f,h=[];function k(a){for(var b;a&amp;&amp;(!a.getAttribute||!(b=a.getAttribute(&quot;e...
+## function m(a,b,c,d,g){var e=&quot;&quot;;c||-1!=b.search(&quot;&amp;ei=&quot;)||(e=&quot;&amp;ei=&quot;+k(d),-1==b....
+## google.y={};google.sy=[];google.x=function(a,b){if(a)var c=a.id;else{do c=Mat...
 ## document.documentElement.addEventListener(&quot;submit&quot;,function(b){var a;if(a=b.t...
-## var a=window.location,b=a.href.indexOf(&quot;#&quot;);if(0&lt;=b){var c=a.href.substring(b...
 ## &lt;/style&gt;&lt;style&gt;body,td,a,p,.h{font-family:arial,sans-serif}body{margin:0;over...
 ## if (!iesg){document.f&amp;&amp;document.f.q.focus();document.gbqf&amp;&amp;document.gbqf.q.fo...
 ## }
 ## })();&lt;/script&gt;&lt;div id=&quot;mngb&quot;&gt;&lt;div id=gbar&gt;&lt;nobr&gt;&lt;b class=gb1&gt;Search&lt;/b&gt; &lt;a cl...
-## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;AINFCbYAAAAAX_iP1...
-## var c=this||self,e=/^[\w+/_-]+[=]{0,2}$/,f=null,g=function(a){return(a=a.quer...
+## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;AINFCbYAAAAAYKfen...
 ## ...</code></pre>
 <p>That seems like a really complicated response at first, but when we look at each part, it’s quite simple.</p>
 <ul>
@@ -267,7 +264,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The first step in accessing an API is to understand that commands the API is expecting. APIs will have what we call <strong>endpoints</strong>. These are paths that we can use to access a certain dataset. For instance, looking at the website, we can see that there are endpoints for lots of different types of data: posts, comments, albums, photos, todos and users. To access an endpoint, we just need to make sure we’re using the correct path. So let’s try getting a list of users:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="using-apis.html#cb10-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [https://jsonplaceholder.typicode.com/users]
-##   Date: 2021-01-08 16:01
+##   Date: 2021-05-21 15:23
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 5.64 kB
@@ -415,7 +412,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="loading-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="cleaning-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="cleaning-and-tidying-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

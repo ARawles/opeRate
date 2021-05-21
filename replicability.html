@@ -176,9 +176,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.2" data-path="using-apis.html"><a href="using-apis.html#accessing-apis-in-r"><i class="fa fa-check"></i><b>4.2.2</b> Accessing APIs in R</a></li>
 <li class="chapter" data-level="4.2.3" data-path="using-apis.html"><a href="using-apis.html#bmrsr"><i class="fa fa-check"></i><b>4.2.3</b> BMRSr</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>4.3</b> Cleaning data</a></li>
-<li class="chapter" data-level="4.4" data-path="summarisation.html"><a href="summarisation.html"><i class="fa fa-check"></i><b>4.4</b> Summarisation</a></li>
-<li class="chapter" data-level="4.5" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>4.5</b> Plotting</a></li>
+<li class="chapter" data-level="4.3" data-path="cleaning-and-tidying-data.html"><a href="cleaning-and-tidying-data.html"><i class="fa fa-check"></i><b>4.3</b> Cleaning and tidying data</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="cleaning-and-tidying-data.html"><a href="cleaning-and-tidying-data.html#cleaning"><i class="fa fa-check"></i><b>4.3.1</b> Cleaning</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="section.html"><a href="section.html"><i class="fa fa-check"></i><b>4.4</b> </a></li>
+<li class="chapter" data-level="4.5" data-path="summarisation.html"><a href="summarisation.html"><i class="fa fa-check"></i><b>4.5</b> Summarisation</a></li>
+<li class="chapter" data-level="4.6" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>4.6</b> Plotting</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="advanced-data-analysis.html"><a href="advanced-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Advanced data analysis</a>
 <ul>
@@ -193,14 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.1.1" data-path="abstraction.html"><a href="abstraction.html#definition"><i class="fa fa-check"></i><b>7.1.1</b> Definition</a></li>
 <li class="chapter" data-level="7.1.2" data-path="abstraction.html"><a href="abstraction.html#abstraction-in-r"><i class="fa fa-check"></i><b>7.1.2</b> Abstraction in R</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="organisation.html"><a href="organisation.html"><i class="fa fa-check"></i><b>7.2</b> Organisation</a>
-<ul>
-<li class="chapter" data-level="7.2.1" data-path="organisation.html"><a href="organisation.html#packages-as-projects"><i class="fa fa-check"></i><b>7.2.1</b> Packages as projects</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="iteration.html"><a href="iteration.html"><i class="fa fa-check"></i><b>7.3</b> Iteration</a>
-<ul>
-<li class="chapter" data-level="7.3.1" data-path="iteration.html"><a href="iteration.html#for-loops-and-lists"><i class="fa fa-check"></i><b>7.3.1</b> For loops and lists</a></li>
-</ul></li>
+<li class="chapter" data-level="7.2" data-path="returns.html"><a href="returns.html"><i class="fa fa-check"></i><b>7.2</b> Returns</a></li>
 </ul></li>
 </ul>
 
@@ -237,7 +234,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="name-your-variables-as-nouns-and-your-functions-as-verbs" class="section level4" number="2.2.1.2">
 <h4><span class="header-section-number">2.2.1.2</span> Name your variables as nouns and your functions as verbs</h4>
-<p>Functions do and variables and objects are. Almost all languages share this distinction with verbs and nouns, so utilise that natural divide to improve how you name your functions and variables. Aim to give your functions names that suggest that they <code>do</code> something; and bonus points if you can give it a name that’s a verb and also gives a decent description of what the function does. When you name your variables, give them meaningful noun-like names. Say you’re doing some climate analysis, a good name for the variable that holds the average rainfall in a year might be <code>avg_yearly_rainfall</code> whilst a function that converts a temperatue in Celsius to Farenheit might be <code>convert_degrees()</code>.</p>
+<p>Functions do and variables and objects are. Almost all languages share this distinction with verbs and nouns, so utilise that natural divide to improve how you name your functions and variables. Aim to give your functions names that suggest that they <code>do</code> something; and bonus points if you can give it a name that’s a verb and also gives a decent description of what the function does. When you name your variables, give them meaningful noun-like names. Say you’re doing some climate analysis, a good name for the variable that holds the average rainfall in a year might be <code>avg_yearly_rainfall</code> whilst a function that converts a temperature in Celsius to Fahrenheit might be <code>convert_degrees()</code>.</p>
 </div>
 <div id="use-functions-where-you-can" class="section level4" number="2.2.1.3">
 <h4><span class="header-section-number">2.2.1.3</span> Use functions where you can</h4>

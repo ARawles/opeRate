@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.3 Projects as packages | opeRate</title>
+  <title>7.2 Returns | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.3 Projects as packages | opeRate" />
+  <meta property="og:title" content="7.2 Returns | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.3 Projects as packages | opeRate" />
+  <meta name="twitter:title" content="7.2 Returns | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="replicability.html"/>
-<link rel="next" href="tidyverse.html"/>
+<link rel="prev" href="abstraction.html"/>
+
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -216,8 +216,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="projects-as-packages" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Projects as packages</h2>
+<div id="returns" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Returns</h2>
+<p>As R is a functional language, functions (and therefore the values that they return) are an important thing to understand as a user. As we learned in the <a href="http://arawles.co.uk/teacher">teacheR</a> book, when you write a function, the return value will be whatever was last evaluated in that function definition, unless you specified a <code>return()</code> call. This “early return” strategy, however, is often a point of contention. Let’s have a look at the different points of view:</p>
+<ol style="list-style-type: decimal">
+<li><strong>There shouldn’t be any early returns</strong></li>
+</ol>
+<p>At one extreme, there are people who teach that you shouldn’t return something early from a function (unless there’s an error). In practice, this might look something like this:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="returns.html#cb41-1" aria-hidden="true" tabindex="-1"></a>late_bird <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, w, <span class="at">add_w =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb41-2"><a href="returns.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  ret <span class="ot">&lt;-</span> x <span class="sc">+</span> y</span>
+<span id="cb41-3"><a href="returns.html#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (add_w) {</span>
+<span id="cb41-4"><a href="returns.html#cb41-4" aria-hidden="true" tabindex="-1"></a>    ret <span class="ot">&lt;-</span> ret <span class="sc">+</span> w</span>
+<span id="cb41-5"><a href="returns.html#cb41-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb41-6"><a href="returns.html#cb41-6" aria-hidden="true" tabindex="-1"></a>  ret</span>
+<span id="cb41-7"><a href="returns.html#cb41-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>So what’s going on here? Well, we’re creating a variable (called <code>ret</code>) and always returning that at the end of our function. The value of <code>ret</code> changes depending on our parameters, but we always return the value of that <code>ret</code> variable.</p>
+<p>On the one hand, this makes it clear <em>which</em> variable is being returned. But on the other, it’s not always clear <em>what</em> the value of that variable is. We have to scan down the whole body of the function to see what happens to ret, even though if we set <code>add_w</code> to FALSE, nothing happens after the original call.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Never use a common return variable</strong></li>
+</ol>
+<p>At the other end, we could completely avoid return placeholder variables:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="returns.html#cb42-1" aria-hidden="true" tabindex="-1"></a>early_bird <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, w, <span class="at">add_w =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb42-2"><a href="returns.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (add_w) {</span>
+<span id="cb42-3"><a href="returns.html#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(x <span class="sc">+</span> y <span class="sc">+</span> w)</span>
+<span id="cb42-4"><a href="returns.html#cb42-4" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb42-5"><a href="returns.html#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(x <span class="sc">+</span> y) </span>
+<span id="cb42-6"><a href="returns.html#cb42-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb42-7"><a href="returns.html#cb42-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Unlike the first example, we only have to read down until the path that we’ve chosen is finished. For example, if <code>add_w</code> is TRUE, then we only need to read down until the first <code>return()</code> call and we know what we’re going to get. However, this approach would probably be more complicated if we had more than 2 paths or if we’re doing complicated actions. Plus, we’re duplicating our code here a bit by specifying the <code>x + y</code> part in both <code>return()</code> calls.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Return early when possible</strong></li>
+</ol>
+<p>And finally, we reach a more middle-of-the-road approach:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="returns.html#cb43-1" aria-hidden="true" tabindex="-1"></a>middle_bird <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, w, <span class="at">add_w =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb43-2"><a href="returns.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  ret <span class="ot">&lt;-</span> x <span class="sc">+</span> y</span>
+<span id="cb43-3"><a href="returns.html#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (add_w) {</span>
+<span id="cb43-4"><a href="returns.html#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(ret <span class="sc">+</span> w)</span>
+<span id="cb43-5"><a href="returns.html#cb43-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb43-6"><a href="returns.html#cb43-6" aria-hidden="true" tabindex="-1"></a>  ret </span>
+<span id="cb43-7"><a href="returns.html#cb43-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Here we use an intermediate variable to avoid duplicating our <code>x + y</code> operation, but then we return when we’re ready, meaning that someone doesn’t have to read to the bottom of the function if they’ve chosen the <code>add_w</code> path.</p>
+<p>And herein lies the crux of the issue. Early returns have been a hot topic since the inception of computer programming, and people will continue to have their opinions on what the correct approach should be, so here’s mine:</p>
+<p>The final return value should follow the “happy” path. That is, if you used the function with its default parameters, it should reach the end and return the final evaluation. Otherwise, you should probably be returning early. This way, when people first glance at the function, they can easily understand the logic and the “default” return value. From there, they can then monitor the edge cases to understand how the return value changes.</p>
+<p>So what does this look like exactly? Well, Example 3 is close, but it doesn’t return via the final evaluation for the “happy” path. Let’s fix that:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="returns.html#cb44-1" aria-hidden="true" tabindex="-1"></a>adams_bird <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, w, <span class="at">add_w =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb44-2"><a href="returns.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  ret <span class="ot">&lt;-</span> x <span class="sc">+</span> y</span>
+<span id="cb44-3"><a href="returns.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>add_w) {</span>
+<span id="cb44-4"><a href="returns.html#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(ret)</span>
+<span id="cb44-5"><a href="returns.html#cb44-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb44-6"><a href="returns.html#cb44-6" aria-hidden="true" tabindex="-1"></a>  ret <span class="sc">+</span> w</span>
+<span id="cb44-7"><a href="returns.html#cb44-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb44-8"><a href="returns.html#cb44-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Now, the “happy” path works its way all the way down to the final expression <code>ret + w</code>. But when we change the default value for <code>add_w</code> and then deviate from the strict “happy” path, we see an early return call when we’re ready.</p>
+<p>Of course, this approach won’t always be the easiest to understand - for example, if you have a parameter that changes the path at multiple points, then you won’t be able to return until later in the function anyway, but to me this approach is the most conducive to readable code.</p>
 
 </div>
 <!-- </div> -->
@@ -226,8 +277,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="replicability.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tidyverse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="abstraction.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
