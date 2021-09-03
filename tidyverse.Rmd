@@ -1,22 +1,31 @@
-# Tidyverse
+# tidyverse
 
-In this module, we'll take a quick look over some of the packages in the [tidyverse](https://www.tidyverse.org/).
+As we learnt in the [teacheR](teacher.arawles.co.uk) book, R is supported by thousands of packages that provide extra functionality to the base R experience. One of the most popular sets of packages developed by Hadley Wickham and the RStudio Team is called the [tidyverse](https://www.tidyverse.org/). The tidyverse is made up of packages designed for data science work that are all underpinned by a common philosophy and a common syntax. At the core of this philosophy is the concept of "tidiness" in data.
 
-The xaringan presentation for this module can be found [here](/presentations/6_Tidyverse/r_training_tidyverse.html).
+The tidyverse is a set of **opinionated** packages. That means that there's (usually) a right way to do things with the package, and there's a wrong way. There's much debate in the R community as to whether relying heavily on opinionated external packages such as those included in the tidyverse is a good thing. Personally, I think that the packages included in the tidyverse are fantastic, and are a large reason why R is thriving today.
+
+So in this book, we're a tidyverse family, and we'll be using the tidyverse packages throughout.
+
+## "Tidy" data
+
+The concept of "tidy" data is something that's important throughout the set of tidyverse packages. There is an [in-depth paper](https://vita.had.co.nz/papers/tidy-data.html) published in the Journal of Statistical Software, authored by Hadley Wickham, that describes the concept and requirements of tidy data in full. But for now we're just going to look at the basics.
+
+In order for a dataset to be tidy, it needs to abide by three rules:
+1. Every column is a variable
+2. Every row is an observation
+3. Every cell is a single value
+
+If a dataset doesn't abide by all three of these rules, then it's a "messy" dataset.
+
+The benefit of having your data in a tidy format is fairly simple; it provides a standard for structuring a dataset. This means that tools can be developed with the assumption that the data will be in a specific format, making the development of these data science tools easier. And this is essentially what underpins the entire tidyverse: get your data in a tidy format and you'll have access to everything the tidyverse provides.
+
+### Exceptions
+
+Whilst I would wholeheartedly recommend that you coerce your data to a tidy structure whenever possible, there are some instances where this won't be the easiest solution for the analysis that you're doing. For instance, the base functions in R weren't designed specifically to work with "tidy" data, meaning you might find yourself tidying your data for use in the tidyverse, then untidying it again to use a base R package. And although there are tidyverse implementations of almost every single base R function and more than are designed specifically for tidy datasets, there will always be times where tidy != easy.
+
+My advice in these situations is to prioritise the pragmatic over the philosophical - if you find yourself reshaping your data 20 times because it keeps becoming untidy and Adam told you that tidy is best and so you think you need to tidy it up again, stop and think whether this is really the best way of doing things.
+
+## The pipe (`%>%`)
 
 
-## tidyr
-
-filler
-
-## dplyr
-
-filler
-
-## stringr
-
-filler
-
-## ggplot2
-
-filler
+## Quasiquotation
