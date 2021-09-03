@@ -146,7 +146,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.1" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>2.1</b> Workflows</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="workflows.html"><a href="workflows.html#basic-workflows"><i class="fa fa-check"></i><b>2.1.1</b> Basic Workflows</a></li>
+<li class="chapter" data-level="2.1.1" data-path="workflows.html"><a href="workflows.html#basic-workflow"><i class="fa fa-check"></i><b>2.1.1</b> Basic Workflow</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>2.2</b> Replicability</a>
 <ul>
@@ -163,22 +163,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>3</b> Data Analysis</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="loading-data.html"><a href="loading-data.html"><i class="fa fa-check"></i><b>3.1</b> Loading data</a>
+<li class="chapter" data-level="3.1" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3.1</b> tidyverse</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="loading-data.html"><a href="loading-data.html#csv"><i class="fa fa-check"></i><b>3.1.1</b> csv</a></li>
-<li class="chapter" data-level="3.1.2" data-path="loading-data.html"><a href="loading-data.html#excel-files"><i class="fa fa-check"></i><b>3.1.2</b> Excel files</a></li>
+<li class="chapter" data-level="3.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-data"><i class="fa fa-check"></i><b>3.1.1</b> “Tidy” data</a></li>
+<li class="chapter" data-level="3.1.2" data-path="tidyverse.html"><a href="tidyverse.html#exceptions"><i class="fa fa-check"></i><b>3.1.2</b> Exceptions</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="using-apis.html"><a href="using-apis.html"><i class="fa fa-check"></i><b>3.2</b> Using APIs</a>
+<li class="chapter" data-level="3.2" data-path="loading-data.html"><a href="loading-data.html"><i class="fa fa-check"></i><b>3.2</b> Loading data</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="using-apis.html"><a href="using-apis.html#what-are-apis"><i class="fa fa-check"></i><b>3.2.1</b> What are APIs?</a></li>
-<li class="chapter" data-level="3.2.2" data-path="using-apis.html"><a href="using-apis.html#accessing-apis-in-r"><i class="fa fa-check"></i><b>3.2.2</b> Accessing APIs in R</a></li>
-<li class="chapter" data-level="3.2.3" data-path="using-apis.html"><a href="using-apis.html#bmrsr"><i class="fa fa-check"></i><b>3.2.3</b> BMRSr</a></li>
+<li class="chapter" data-level="3.2.1" data-path="loading-data.html"><a href="loading-data.html#csv"><i class="fa fa-check"></i><b>3.2.1</b> csv</a></li>
+<li class="chapter" data-level="3.2.2" data-path="loading-data.html"><a href="loading-data.html#excel-files"><i class="fa fa-check"></i><b>3.2.2</b> Excel files</a></li>
+<li class="chapter" data-level="3.2.3" data-path="loading-data.html"><a href="loading-data.html#using-apis"><i class="fa fa-check"></i><b>3.2.3</b> Using APIs</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="cleaning-and-tidying-data.html"><a href="cleaning-and-tidying-data.html"><i class="fa fa-check"></i><b>3.3</b> Cleaning and tidying data</a>
+<li class="chapter" data-level="3.3" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>3.3</b> Cleaning data</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="cleaning-and-tidying-data.html"><a href="cleaning-and-tidying-data.html#cleaning"><i class="fa fa-check"></i><b>3.3.1</b> Cleaning</a></li>
+<li class="chapter" data-level="3.3.1" data-path="cleaning-data.html"><a href="cleaning-data.html#missing-values"><i class="fa fa-check"></i><b>3.3.1</b> Missing values</a></li>
+<li class="chapter" data-level="3.3.2" data-path="cleaning-data.html"><a href="cleaning-data.html#changing-column-types"><i class="fa fa-check"></i><b>3.3.2</b> Changing column types</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="section.html"><a href="section.html"><i class="fa fa-check"></i><b>3.4</b> </a></li>
+<li class="chapter" data-level="3.4" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>3.4</b> Tidying</a></li>
 <li class="chapter" data-level="3.5" data-path="summarisation.html"><a href="summarisation.html"><i class="fa fa-check"></i><b>3.5</b> Summarisation</a></li>
 <li class="chapter" data-level="3.6" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>3.6</b> Plotting</a></li>
 </ul></li>
@@ -208,34 +209,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">2.1</span> Workflows</h2>
 <p>Often the best way to start a data analysis project is to decide what you’re workflow should be and roughly how long each bit is going to take.</p>
 <p>For instance, if you know that the data you’re going to be working on is likely to be littered with mistakes and errors, then you should preemptively allocate a decent amount of your time to the “importing” and “cleaning” steps of your workflow. Similarly, if you’re end goal is to produce a predictive model at the end, then work in a feedback loop where you inspect and evaluate your model before improving it in the next iteration.</p>
-<div id="basic-workflows" class="section level3" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> Basic Workflows</h3>
+<p>Later on we’re going to look at a set of packages called the tidyverse. These packages are designed to make data science easier, and the workflows we’ll look at fit into this philosophy quite nicely. Each stage of these workflows is usually handled by a different package but with a common syntax and data structure underpinning them all. If you want to better understand the tidyverse before we look at the workflows, then skip ahead to the tidyverse <a href="tidyverse.html#tidyverse">section</a>.</p>
+<div id="basic-workflow" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Basic Workflow</h3>
 <p>For now, let’s look at a basic workflow and some likely additions or changes you might make depending on your goals.</p>
 <p>For these basic workflows, we’re only going to look at a subset of all of the stages of analysis that you might identify. They are going to be:</p>
 <ul>
 <li>Importing</li>
-<li>Cleaning*</li>
-<li>Tidying*</li>
+<li>Cleaning</li>
+<li>Tidying</li>
 <li>Summarising</li>
 <li>Plotting</li>
 <li>Modelling</li>
 <li>Evaluation</li>
 </ul>
-<p>* The difference between data cleaning and data tidying to me is that cleaning refers more to data type conversion, removing NAs and the like. Basically, without cleaning, your analysis isn’t going to happen because there’s too much noise. When I say ‘tidying’, that’s more getting the data in a format that is amenable to your analysis. You could get by without changing it but it would likely take you much longer or be much less efficient.</p>
 <div id="example-1-reporting" class="section level4" number="2.1.1.1">
 <h4><span class="header-section-number">2.1.1.1</span> Example 1: Reporting</h4>
 <p>In this example, imagine someone has come to you and they want a bit more insight into the data they have. It’s currently in a messy spreadsheet, and they want you to load it into R and produce some nice looking graphics to help them understand trends and correlations in their data. They’re not bothered about any modelling for now, they just want some pretty graphs.</p>
 <p>If we mapped out an appropriate workflow for this project, it might look something like this:</p>
-<div id="htmlwidget-f94ff842bab7a4f25d48" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f94ff842bab7a4f25d48">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Import; Clean; Summarise; Plot; Evaluate; \n\n  # several \"edge\" statements\n  Import->Clean Clean->Summarise Summarise->Plot\n  Plot->Evaluate Evaluate->Summarise Evaluate->Plot\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-97cebeacf5fc650fcf43" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-97cebeacf5fc650fcf43">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Import; Clean; Summarise; Plot; Evaluate; \n\n  # several \"edge\" statements\n  Import->Clean Clean->Summarise Summarise->Plot\n  Plot->Evaluate Evaluate->Summarise Evaluate->Plot\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>We import the data and clean it, then we summarise it and create our plots. We can then use feedback from our colleague to change how we’re summarising or how we’re plotting the data to improve our plots until we’re happy.</p>
 </div>
 <div id="example-2-modelling" class="section level4" number="2.1.1.2">
 <h4><span class="header-section-number">2.1.1.2</span> Example 2: Modelling</h4>
-<p>For this example, imagine a colleague has come to you about a modelling project. They have a number of relatively clean datasets that they want to combine and use to produce a predictive model. They’re not too worried about plots or graphics, they’re more interested in the model itself. Our workflow here would be similar to Example 1 but there would be some crucial differences. First, we know that we’re going to combine multiple datasets into one which we will then use for our model. This is likely going to involve some data manipulation or ‘tidying’. I don’t really like using the ‘tidying’ description because that would suggest that it’s the same as ‘cleaning’ but there’s a very useful package for data manipulation and resizing called <code>tidyr</code> so we’ll stick to ‘tidying’ for now.</p>
+<p>For this example, imagine a colleague has come to you about a modelling project. They have a number of relatively clean datasets that they want to combine and use to produce a predictive model. They’re not too worried about plots or graphics, they’re more interested in the model itself. Our workflow here would be similar to Example 1 but there would be some crucial differences. First, we know that we’re going to combine multiple datasets into one which we will then use for our model. This is likely going to involve some data manipulation or ‘tidying’.</p>
 <p>Back to Example 2, if we mapped out a workflow for this project, it might look a bit more like this:</p>
-<div id="htmlwidget-67bd02742ab988f4b9ad" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-67bd02742ab988f4b9ad">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Collate; Clean; Tidy; Evaluate; \n\n  # several \"edge\" statements\n  Collate->Clean Clean->Tidy Tidy->Model\n  Model->Evaluate Evaluate->Model\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-12f0e29971fdeeaa7bed" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-12f0e29971fdeeaa7bed">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Collate; Clean; Tidy; Evaluate; \n\n  # several \"edge\" statements\n  Collate->Clean Clean->Tidy Tidy->Model\n  Model->Evaluate Evaluate->Model\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>As you can see, we still end with the loop of modelling and then evaluating our model and using the output to update the model, but the steps we take to get there are a bit different.</p>
 </div>
 <div id="summary" class="section level4" number="2.1.1.3">

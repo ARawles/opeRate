@@ -5,7 +5,7 @@ about-me
 using-r
 projects
 workflows
-basic-workflows
+basic-workflow
 example-1-reporting
 example-2-modelling
 summary
@@ -31,6 +31,9 @@ description
 dependencies
 abstraction
 data-analysis
+tidyverse
+tidy-data
+exceptions
 loading-data
 csv
 loading-.csv-files
@@ -41,12 +44,10 @@ using-apis
 what-are-apis
 accessing-apis-in-r
 bmrsr
-cleaning-and-tidying-data
-cleaning
+cleaning-data
 missing-values
 changing-column-types
-combining-columns
-section
+tidying
 summarisation
 plotting
 advanced-data-analysis
