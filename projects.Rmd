@@ -8,21 +8,22 @@ Often the best way to start a data analysis project is to decide what you're wor
 
 For instance, if you know that the data you're going to be working on is likely to be littered with mistakes and errors, then you should preemptively allocate a decent amount of your time to the "importing" and "cleaning" steps of your workflow. Similarly, if you're end goal is to produce a predictive model at the end, then work in a feedback loop where you inspect and evaluate your model before improving it in the next iteration.
 
-### Basic Workflows
+Later on we're going to look at a set of packages called the tidyverse. These packages are designed to make data science easier, and the workflows we'll look at fit into this philosophy quite nicely. Each stage of these workflows is usually handled by a different package but with a common syntax and data structure underpinning them all. If you want to better understand the tidyverse before we look at the workflows, then skip ahead to the tidyverse [section](#tidyverse).
+
+### Basic Workflow
 
 For now, let's look at a basic workflow and some likely additions or changes you might make depending on your goals.
 
 For these basic workflows, we're only going to look at a subset of all of the stages of analysis that you might identify. They are going to be:
 
 * Importing
-* Cleaning\*
-* Tidying\*
+* Cleaning
+* Tidying
 * Summarising
 * Plotting
 * Modelling
 * Evaluation
 
-\* The difference between data cleaning and data tidying to me is that cleaning refers more to data type conversion, removing NAs and the like. Basically, without cleaning, your analysis isn't going to happen because there's too much noise. When I say 'tidying', that's more getting the data in a format that is amenable to your analysis. You could get by without changing it but it would likely take you much longer or be much less efficient.
 
 #### Example 1: Reporting
 
@@ -53,7 +54,7 @@ We import the data and clean it, then we summarise it and create our plots. We c
 
 #### Example 2: Modelling
 
-For this example, imagine a colleague has come to you about a modelling project. They have a number of relatively clean datasets that they want to combine and use to produce a predictive model. They're not too worried about plots or graphics, they're more interested in the model itself. Our workflow here would be similar to Example 1 but there would be some crucial differences. First, we know that we're going to combine multiple datasets into one which we will then use for our model. This is likely going to involve some data manipulation or 'tidying'. I don't really like using the 'tidying' description because that would suggest that it's the same as 'cleaning' but there's a very useful package for data manipulation and resizing called `tidyr` so we'll stick to 'tidying' for now.
+For this example, imagine a colleague has come to you about a modelling project. They have a number of relatively clean datasets that they want to combine and use to produce a predictive model. They're not too worried about plots or graphics, they're more interested in the model itself. Our workflow here would be similar to Example 1 but there would be some crucial differences. First, we know that we're going to combine multiple datasets into one which we will then use for our model. This is likely going to involve some data manipulation or 'tidying'.
 
 Back to Example 2, if we mapped out a workflow for this project, it might look a bit more like this:
 
