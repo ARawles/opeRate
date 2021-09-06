@@ -317,29 +317,56 @@ Now that you know your dataset is clean, you'll want to get it into a format tha
 
 ## Pivoting columns
 
-### Pivoting columns to rows (longer)
+There two different forms of data:
+  * Long
+  * Wide
+  
+Tidy data takes this long form - as you add more observations, you'll add more rows.
+Untidy data often takes the wide form - as you add more observations, you'll add more columns.
 
-The main culprit for untidy data is that you will often see data where the first rule of tidy data have been violated. In other words, there is not one column for each variable. Let's take a look at some examples:
-
+Let's look at an example. Imagine the following dataset showing the average temperature each year and in each month:
 
 ```{r, echo = FALSE}
 column_example <- data.frame(Year = c("2012", "2013", "2014"),
                              Month1 = c(10, 20, 30),
                              Month2 = c(20, 30, 40),
                              Month3 = c(30, 40, 50))
+column_example_long <- tidyr::pivot_longer(column_example,
+                                           cols = tidyselect::starts_with("Month"),
+                                           names_to = "Month",
+                                           values_to = "Temperature",
+                                           names_transform = list(Month = readr::parse_number))
 ```
 
-
-Imagine the following dataset showing the average temperature each year and in each month:
 
 ```{r}
-head(column_example, 3)
+print(column_example, n = 3)
 ```
 
+As you can see, the more months we add, the wider the data is going to get. How would the same data look in the long (tidy) format?
 
-In this example dataset, we've clearly broken the first rule of tidy data: each column is not a unique variable. Instead, we've got the same variable (temperature) in different columns for each month. Another name for data in this format is wide data. It's called wide data because as you add more months, the data is going to get wider (there's going to be more columns). This is in contract to tidy data which we would call long data; the more months you add the longer (more rows) it's going to have.
+```{r}
+print(column_example_long, n = 3)
+```
 
-How can we convert this example dataset to the tidy format? Well, we can utilise the concept of pivoting to transform those month columns into two columns; one with the value (the temperature) and the other with the month. In this case, we need to use the `pivot_longer()` function from the `{tidyr}` package, because we want to pivot from the wide format to the long format.
+Now we've got the month as a variable, the more data we add, the longer the dataset is going to get.
+
+**Note:**
+One thing to keep in mind is that long data does not always mean tidy, but wide data cann never be tidy. It's a subtle distinction but it's important to remember.
+
+Wide data is very common, usually because it's slightly easier to read or to enter (particularly if you're using Excel), but it's much harder to work with in R. Let's look at how we might convert wide data to tidy-er long data.
+
+### Pivoting columns to rows (longer)
+
+Wide data will always be untidy because it breaks the first rule of tidy data: each column should be a separate variable. Let's revisit our wide example:
+
+```{r}
+print(column_example, n = 3)
+```
+
+In this example dataset, we've clearly broken the first rule of tidy data: each column is not a unique variable. Instead, we've got the same variable (temperature) in different columns for each month.
+
+How can we convert this example dataset to the tidy, long format? Well, we can utilise the concept of pivoting to transform those month columns into two columns; one with the value (the temperature) and the other with the month. In this case, we need to use the `pivot_longer()` function from the `{tidyr}` package, because we want to pivot from the wide format to the long format.
 
 To do this in the simplest way, we just need to tell the function which columns we want to pivot:
 
@@ -347,7 +374,7 @@ To do this in the simplest way, we just need to tell the function which columns 
 tidyr::pivot_longer(column_example, cols = c(Month1, Month2, Month3))
 ```
 
-This is a good start. We're now in the tidy format! But there's definitely some improvements to be done. Firstly, "name" and "value" aren't the best names we could come up with for these columns, so we should probably use some new ones. To do this, we just need to provide new names to the `names_to` and `values_to` parameters:
+This is a good start. Now we've converted to long format, we're abiding by the three rules and so we've got a tidy dataset! But there's definitely some improvements to be done. Firstly, "name" and "value" aren't the best names we could come up with for these columns, so we should probably use some new ones. To do this, we just need to provide new names to the `names_to` and `values_to` parameters:
 
 ```{r}
 tidyr::pivot_longer(column_example,
@@ -377,6 +404,7 @@ tidyr::pivot_longer(column_example,
                     names_transform = list(Month = readr::parse_number))
 
 ```
+
 That's better. But what happens now if we get sent the same dataset but with all 12 months worth of data? We'd have to add those extra columns to our `cols` vector. Instead, we can use some `tidyselect` syntax to choose columns based on their features, like how they start:
 
 
@@ -386,11 +414,12 @@ tidy_column_example <- tidyr::pivot_longer(column_example,
                                            names_to = "Month",
                                            values_to = "Temperature",
                                            names_transform = list(Month = readr::parse_number))
-head(tidy_column_example, 2)
+print(tidy_column_example, n = 3)
 ```
+
 Now our code will work regardless of how many months there are.
 
-#### Pivoting rows to columns (wider)
+### Pivoting rows to columns (wider)
 
 Most of the time you should be going from wide to long, but we'll go through how to do the reverse for the occasions where it's required. To transform the data to the wide format, we use the `pivot_wider()` function. At the simplest level, we just need to provide where the name comes from and where the values come from with the `names_from` and `values_from` parameters respectively:
 
@@ -404,7 +433,48 @@ To get our data more like we started, we can use the `names_prefix` argument to 
 tidyr::pivot_wider(tidy_column_example, names_from = Month, values_from = Temperature, names_prefix = "Month")
 ```
 
-## Mutation (new columns)
+## Grouping
+
+Before we look at adding new columns and summarising our data, we need to understand the concept of grouping our data.
+
+When a data frame has one or more groups, any function that's applied (by `dplyr::mutate()` or `dplyr::summarise()`) is applied for each combination of those groups. So say we have a dataset like this:
+
+```{r, echo = FALSE}
+ungrped <- data.frame(Year = c("2012", "2012", "2012", "2012", "2012", "2012", "2013", "2013", "2013", "2013", "2013", "2013"),
+                      Month = c(1,1,2,2,3,3,1,1,2,2,3,3),
+                      Group = c("A", "B", "A", "B", "A", "B", "A", "B", "A", "B", "A", "B"),
+                      Value = c(10,20,30,15,25,35,12,22,32,40,50, 60))
+```
+
+```{r}
+head(ungrped, 5)
+```
+If we grouped by Year or by Month, then any function we applied would be applied separately to each value of those groups. So say we wanted get the total values for each Year, we could group by the `Year` column and then just sum the `Value` column. The same logic applies for if we wanted to get the total for each year *and* month; we could group by the `Year` and `Month` and sum the `Value` column and we'd then get a value for each distinct year and month.
+
+To group a dataset, we use the `dplyr::group_by()` function:
+
+```{r}
+grpd <- dplyr::group_by(ungrped, Year)
+```
+
+The `dplyr::group_by()` function returns the same dataset but now grouped by the variables you provided. At first, it might not seem as though anything happened - if we print the dataset we still get basically the same output...
+
+```{r}
+print(grpd, n = 5)
+```
+
+Except now we have a new entry `Groups:`. This tells us that the dataset has been grouped and by what variables. This means that any subsequent summarisation or mutation we do will be done relative those groups.
+
+To test whether a dataset has been grouped, you can use the `dplyr::is_grouped_df()`, and to ungroup a dataset, just use `dplyr::ungroup()`:
+
+```{r}
+dplyr::is_grouped_df(grpd)
+dplyr::is_grouped_df(ungrpd)
+print(dplyr::ungroup(grpd), n = 5)
+```
+
+
+## Mutation
 
 Sometimes you'll want to add new columns to your data. Most of the time, these will be calculated columns that can be created based on one or more of the other columns in the dataset. To create new columns, we use the `dplyr::mutate()` function.
 
@@ -420,42 +490,17 @@ First off, let's add something simple; a column that calculates the proportion o
 ```{r}
 vg_sales %>%
   dplyr::mutate(EU_Proportion = EU_Sales/Global_Sales) %>%
+  dplyr::select(Rank, Name, Platform, Year, Genre, Publisher, EU_Proportion) %>%
   print(n = 5)
 ```
 
 As you can see, we've created a new column called `EU_Proportion` and we've calculated by dividing the number of EU sales by the total number of sales.
 
-While this is certainly a powerful tool, we're not really changing the world here. However, we can create more complicated columns by leveraging the concept of applying our function to groups.
+While this is certainly a powerful tool, we're not really changing the world here. However, we can create more complicated columns by leveraging the concept of applying our function to [groups](#grouping).
 
-### Grouping
+When our dataset is grouped, our `mutate()` call will be evaluated for each permutation of the provided groups. Let's look at an example of creating a cumulative sum for each Publisher:
 
-When a data frame has one or more groups, the function that's applied (by `dplyr::mutate()` here but the logic is the same for `dplyr::summarise()` which we'll look at next) is applied for each combination of those groups. So for example with our videa game sales dataset, if we grouped by Publisher, then the calculation in our `mutate()` function would be done within the scope of each publisher. If we grouped by Publisher and Genre, then the calculation would be done within the scope of each Publisher **and** genre.
-
-To group a dataset, we use the `dplyr::group_by()` function:
-
-```{r}
-grpd_vg_sales <- dplyr::group_by(vg_sales, Platform)
-```
-
-The `dplyr::group_by()` function returns the same dataset but now grouped by the variables you provided. At first, it might not seem as though anything happened - if we print the dataset we still get basically the same output...
-
-```{r}
-print(grpd_vg_sales, 5)
-```
-
-Except now we have a new entry `Groups:`. This tells us that the dataset has been grouped and by what variables. This means that any subsequent summarisation we do will be done against those groups.
-
-To test whether a dataset has been grouped, you can use the `dplyr::is_grouped_df()`, and to ungroup a dataset, just use `dplyr::ungroup()`:
-
-```{r}
-dplyr::is_grouped_df(grpd_vg_sales)
-dplyr::is_grouped_df(vg_sales)
-print(dplyr::ungroup(grpd_vg_sales), n = 5)
-```
-
-Now that our dataset is grouped, our `mutate()` call will be evaluated for each permutation of the provided groups. Let's look at an example of creating a cumulative sum for each Publisher:
-
-```{r}
+```{r, warning = FALSE}
 vg_sales %>%
   dplyr::group_by(Publisher) %>%
   dplyr::arrange(as.numeric(Year)) %>% # We need to order from earliest date to latest
@@ -470,7 +515,7 @@ Now we've got a new column showing the total number of sales for each Publisher 
 
 As we saw previously, the base videa game sales dataset has nearly 17,000 entries! That's a lot of data, and we're not really going to able to extract or show any real insights from this data without summarising it to some degree. What we want to do is summarise the data to some degree. We lose some of the granularity of the data but it allows is to understand the data a bit better and identify patterns.
 
-Summarisation uses exactly the same grouping concept as mutatation does; by grouping the data we change the scope of each application of the function to be limited to that group. 
+Summarisation uses exactly the same [grouping](#grouping) concept as mutatation does; by grouping the data we change the scope of each application of the function to be limited to that group. 
 
 Let's go through an example. Let's say that we want to get the total sales for each publisher in each year. For now, we don't care about genre or platform. To do this, we'll need to group by Publisher and by Year:
 
@@ -501,7 +546,6 @@ vg_sales %>%
 
 
 Because `dplyr::mutate()` and `dplyr::summarise()` both use a similar syntax and both function on grouped datasets, using the correct function when starting out can be tough. The best way to remember which one to use is to ask "How many rows am I expecting back from this?". If the answer is fewer than you've got now, you'll want the `summarise()` function. Otherwise you're looking at `mutate()`.
-
 
 ## Plotting
 
