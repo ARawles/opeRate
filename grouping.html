@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.1 “Tidy” data | opeRate</title>
+  <title>4.4 Grouping | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.1 “Tidy” data | opeRate" />
+  <meta property="og:title" content="4.4 Grouping | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.1 “Tidy” data | opeRate" />
+  <meta name="twitter:title" content="4.4 Grouping | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="tidyverse.html"/>
-<link rel="next" href="the-pipe.html"/>
+<link rel="prev" href="tidying.html"/>
+<link rel="next" href="mutating.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -211,25 +211,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tidy-data" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> “Tidy” data</h2>
-<p>The concept of “tidy” data is something that’s important throughout the set of tidyverse packages. There is an <a href="https://vita.had.co.nz/papers/tidy-data.html">in-depth paper</a> published in the Journal of Statistical Software, authored by Hadley Wickham, that describes the concept and requirements of tidy data in full. But for now we’re just going to look at the basics.</p>
-<p>In order for a dataset to be tidy, it needs to abide by three rules:</p>
-<ol style="list-style-type: decimal">
-<li>Every column is a variable</li>
-<li>Every row is an observation</li>
-<li>Every cell is a single value</li>
-</ol>
-<p>If a dataset doesn’t abide by all three of these rules, then it’s a “messy” dataset.</p>
-<p>The benefit of having your data in a tidy format is fairly simple; it provides a standard for structuring a dataset. This means that tools can be developed with the assumption that the data will be in a specific format, making the development of these data science tools easier. And this is essentially what underpins the entire tidyverse: get your data in a tidy format and you’ll have access to everything the tidyverse provides.</p>
+<div id="grouping" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Grouping</h2>
+<p>Before we look at adding new columns and summarising our data, we need to understand the concept of grouping our data.</p>
+<p>When a data frame has one or more groups, any function that’s applied (by <code>dplyr::mutate()</code> or <code>dplyr::summarise()</code>) is applied for each combination of those groups. So say we have a dataset like this:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="grouping.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ungrpd, <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##   Year Month Group Value
+## 1 2012     1     A    10
+## 2 2012     1     B    20
+## 3 2012     2     A    30
+## 4 2012     2     B    15
+## 5 2012     3     A    25</code></pre>
+<p>If we grouped by Year or by Month, then any function we applied would be applied separately to each value of those groups. So say we wanted get the total values for each Year, we could group by the <code>Year</code> column and then just sum the <code>Value</code> column. The same logic applies for if we wanted to get the total for each year <em>and</em> month; we could group by the <code>Year</code> and <code>Month</code> and sum the <code>Value</code> column and we’d then get a value for each distinct year and month.</p>
+<p>To group a dataset, we use the <code>dplyr::group_by()</code> function:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="grouping.html#cb65-1" aria-hidden="true" tabindex="-1"></a>grpd <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(ungrpd, Year)</span></code></pre></div>
+<p>The <code>dplyr::group_by()</code> function returns the same dataset but now grouped by the variables you provided. At first, it might not seem as though anything happened - if we print the dataset we still get basically the same output…</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="grouping.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(grpd, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 12 x 4
+## # Groups:   Year [2]
+##   Year  Month Group Value
+##   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+## 1 2012      1 A        10
+## 2 2012      1 B        20
+## 3 2012      2 A        30
+## 4 2012      2 B        15
+## 5 2012      3 A        25
+## # … with 7 more rows</code></pre>
+<p>Except now we have a new entry <code>Groups:</code>. This tells us that the dataset has been grouped and by what variables. This means that any subsequent summarisation or mutation we do will be done relative those groups.</p>
+<p>To test whether a dataset has been grouped, you can use the <code>dplyr::is_grouped_df()</code>, and to ungroup a dataset, just use <code>dplyr::ungroup()</code>:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="grouping.html#cb68-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">is_grouped_df</span>(grpd)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="grouping.html#cb70-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">is_grouped_df</span>(ungrpd)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="grouping.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dplyr<span class="sc">::</span><span class="fu">ungroup</span>(grpd), <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 12 x 4
+##   Year  Month Group Value
+##   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+## 1 2012      1 A        10
+## 2 2012      1 B        20
+## 3 2012      2 A        30
+## 4 2012      2 B        15
+## 5 2012      3 A        25
+## # … with 7 more rows</code></pre>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="tidyverse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-pipe.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tidying.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="mutating.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

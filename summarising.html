@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.1 “Tidy” data | opeRate</title>
+  <title>4.6 Summarising | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.1 “Tidy” data | opeRate" />
+  <meta property="og:title" content="4.6 Summarising | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.1 “Tidy” data | opeRate" />
+  <meta name="twitter:title" content="4.6 Summarising | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="tidyverse.html"/>
-<link rel="next" href="the-pipe.html"/>
+<link rel="prev" href="mutating.html"/>
+<link rel="next" href="plotting.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -211,25 +211,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tidy-data" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> “Tidy” data</h2>
-<p>The concept of “tidy” data is something that’s important throughout the set of tidyverse packages. There is an <a href="https://vita.had.co.nz/papers/tidy-data.html">in-depth paper</a> published in the Journal of Statistical Software, authored by Hadley Wickham, that describes the concept and requirements of tidy data in full. But for now we’re just going to look at the basics.</p>
-<p>In order for a dataset to be tidy, it needs to abide by three rules:</p>
-<ol style="list-style-type: decimal">
-<li>Every column is a variable</li>
-<li>Every row is an observation</li>
-<li>Every cell is a single value</li>
-</ol>
-<p>If a dataset doesn’t abide by all three of these rules, then it’s a “messy” dataset.</p>
-<p>The benefit of having your data in a tidy format is fairly simple; it provides a standard for structuring a dataset. This means that tools can be developed with the assumption that the data will be in a specific format, making the development of these data science tools easier. And this is essentially what underpins the entire tidyverse: get your data in a tidy format and you’ll have access to everything the tidyverse provides.</p>
+<div id="summarising" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Summarising</h2>
+<p>As we saw previously, the base videa game sales dataset has nearly 17,000 entries! That’s a lot of data, and we’re not really going to able to extract or show any real insights from this data without summarising it to some degree. What we want to do is summarise the data to some degree. We lose some of the granularity of the data but it allows is to understand the data a bit better and identify patterns.</p>
+<p>Summarisation uses exactly the same <a href="grouping.html#grouping">grouping</a> concept as mutatation does; by grouping the data we change the scope of each application of the function to be limited to that group.</p>
+<p>Let’s go through an example. Let’s say that we want to get the total sales for each publisher in each year. For now, we don’t care about genre or platform. To do this, we’ll need to group by Publisher and by Year:</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="summarising.html#cb82-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb82-2"><a href="summarising.html#cb82-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year)</span></code></pre></div>
+<p>And then we’ll want to sum up the <code>Global_Sales</code> column to get our totals:</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="summarising.html#cb83-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb83-2"><a href="summarising.html#cb83-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb83-3"><a href="summarising.html#cb83-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Global_Sales =</span> <span class="fu">sum</span>(Global_Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 2,379 x 3
+##    Publisher                    Year  Total_Global_Sales
+##    &lt;chr&gt;                        &lt;chr&gt;              &lt;dbl&gt;
+##  1 10TACLE Studios              2006                0.02
+##  2 10TACLE Studios              2007                0.09
+##  3 1C Company                   2009                0.01
+##  4 1C Company                   2011                0.09
+##  5 20th Century Fox Video Games 1981                1.35
+##  6 20th Century Fox Video Games 1982                0.59
+##  7 2D Boy                       2008                0.04
+##  8 3DO                          1998                0.4 
+##  9 3DO                          1999                4.14
+## 10 3DO                          2000                3.08
+## # … with 2,369 more rows</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="summarising.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The .groups = &#39;drop&#39; parameter will automatically remove the groups</span></span></code></pre></div>
+<p>Now we can see that the number of rows has reduced down to just under 2,000, and we’ve got the total global sales for each of our publishers, and for each year. <code>{dplyr}</code> has looked through each publisher and each year that publisher has at least 1 game, and added up the total number of sales, then moved onto the next Publisher/Year combination.</p>
+<p>In this case we’ve used the <code>sum()</code> function, but any kind of summary function can be used:</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="summarising.html#cb86-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb86-2"><a href="summarising.html#cb86-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb86-3"><a href="summarising.html#cb86-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Global_Sales =</span> <span class="fu">sum</span>(Global_Sales),</span>
+<span id="cb86-4"><a href="summarising.html#cb86-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Average_Global_Sales =</span> <span class="fu">mean</span>(Global_Sales),</span>
+<span id="cb86-5"><a href="summarising.html#cb86-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 2,379 x 4
+##    Publisher                    Year  Total_Global_Sales Average_Global_Sales
+##    &lt;chr&gt;                        &lt;chr&gt;              &lt;dbl&gt;                &lt;dbl&gt;
+##  1 10TACLE Studios              2006                0.02                0.02 
+##  2 10TACLE Studios              2007                0.09                0.045
+##  3 1C Company                   2009                0.01                0.01 
+##  4 1C Company                   2011                0.09                0.045
+##  5 20th Century Fox Video Games 1981                1.35                0.45 
+##  6 20th Century Fox Video Games 1982                0.59                0.295
+##  7 2D Boy                       2008                0.04                0.04 
+##  8 3DO                          1998                0.4                 0.2  
+##  9 3DO                          1999                4.14                0.69 
+## 10 3DO                          2000                3.08                0.308
+## # … with 2,369 more rows</code></pre>
+<p>Because <code>dplyr::mutate()</code> and <code>dplyr::summarise()</code> both use a similar syntax and both function on grouped datasets, using the correct function when starting out can be tough. The best way to remember which one to use is to ask “How many rows am I expecting back from this?”. If the answer is fewer than you’ve got now, you’ll want the <code>summarise()</code> function. Otherwise you’re looking at <code>mutate()</code>.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="tidyverse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-pipe.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="mutating.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="plotting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

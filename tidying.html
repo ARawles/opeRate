@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="cleaning-data.html"/>
-<link rel="next" href="pivoting-columns.html"/>
+<link rel="prev" href="cleaning.html"/>
+<link rel="next" href="grouping.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -144,12 +144,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>2</b> tidyverse</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>2.1</b> “Tidy” data</a>
+<li class="chapter" data-level="2.1" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>2.1</b> “Tidy” data</a></li>
+<li class="chapter" data-level="2.2" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>2.2</b> The pipe <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="2.3" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>2.3</b> Quasiquotation</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="tidy-data.html"><a href="tidy-data.html#exceptions"><i class="fa fa-check"></i><b>2.1.1</b> Exceptions</a></li>
+<li class="chapter" data-level="2.3.1" data-path="quasiquotation.html"><a href="quasiquotation.html#tidyselect"><i class="fa fa-check"></i><b>2.3.1</b> tidyselect</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>2.2</b> The pipe (<code>%&gt;%</code>)</a></li>
-<li class="chapter" data-level="2.3" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>2.3</b> Quasiquotation</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>3</b> Projects</a>
 <ul>
@@ -172,33 +172,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>4</b> Data Analysis</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="loading-data.html"><a href="loading-data.html"><i class="fa fa-check"></i><b>4.1</b> Loading data</a>
+<li class="chapter" data-level="4.1" data-path="loading.html"><a href="loading.html"><i class="fa fa-check"></i><b>4.1</b> Loading</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="loading-data.html"><a href="loading-data.html#csv"><i class="fa fa-check"></i><b>4.1.1</b> csv</a></li>
-<li class="chapter" data-level="4.1.2" data-path="loading-data.html"><a href="loading-data.html#excel-files"><i class="fa fa-check"></i><b>4.1.2</b> Excel files</a></li>
-<li class="chapter" data-level="4.1.3" data-path="loading-data.html"><a href="loading-data.html#using-apis"><i class="fa fa-check"></i><b>4.1.3</b> Using APIs</a></li>
+<li class="chapter" data-level="4.1.1" data-path="loading.html"><a href="loading.html#csv"><i class="fa fa-check"></i><b>4.1.1</b> csv</a></li>
+<li class="chapter" data-level="4.1.2" data-path="loading.html"><a href="loading.html#excel-files"><i class="fa fa-check"></i><b>4.1.2</b> Excel files</a></li>
+<li class="chapter" data-level="4.1.3" data-path="loading.html"><a href="loading.html#using-apis"><i class="fa fa-check"></i><b>4.1.3</b> Using APIs</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>4.2</b> Cleaning data</a>
+<li class="chapter" data-level="4.2" data-path="cleaning.html"><a href="cleaning.html"><i class="fa fa-check"></i><b>4.2</b> Cleaning</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="cleaning-data.html"><a href="cleaning-data.html#missing-values"><i class="fa fa-check"></i><b>4.2.1</b> Missing values</a></li>
-<li class="chapter" data-level="4.2.2" data-path="cleaning-data.html"><a href="cleaning-data.html#changing-column-types"><i class="fa fa-check"></i><b>4.2.2</b> Changing column types</a></li>
+<li class="chapter" data-level="4.2.1" data-path="cleaning.html"><a href="cleaning.html#missing-values"><i class="fa fa-check"></i><b>4.2.1</b> Missing values</a></li>
+<li class="chapter" data-level="4.2.2" data-path="cleaning.html"><a href="cleaning.html#changing-column-types"><i class="fa fa-check"></i><b>4.2.2</b> Changing column types</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>4.3</b> Tidying</a></li>
-<li class="chapter" data-level="4.4" data-path="pivoting-columns.html"><a href="pivoting-columns.html"><i class="fa fa-check"></i><b>4.4</b> Pivoting columns</a>
+<li class="chapter" data-level="4.3" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>4.3</b> Tidying</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="pivoting-columns.html"><a href="pivoting-columns.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>4.4.1</b> Pivoting columns to rows (longer)</a></li>
+<li class="chapter" data-level="4.3.1" data-path="tidying.html"><a href="tidying.html#pivoting-columns"><i class="fa fa-check"></i><b>4.3.1</b> Pivoting columns</a></li>
+<li class="chapter" data-level="4.3.2" data-path="tidying.html"><a href="tidying.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>4.3.2</b> Pivoting columns to rows (longer)</a></li>
+<li class="chapter" data-level="4.3.3" data-path="tidying.html"><a href="tidying.html#pivoting-rows-to-columns-wider"><i class="fa fa-check"></i><b>4.3.3</b> Pivoting rows to columns (wider)</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="mutation-new-columns.html"><a href="mutation-new-columns.html"><i class="fa fa-check"></i><b>4.5</b> Mutation (new columns)</a>
-<ul>
-<li class="chapter" data-level="4.5.1" data-path="mutation-new-columns.html"><a href="mutation-new-columns.html#grouping"><i class="fa fa-check"></i><b>4.5.1</b> Grouping</a></li>
-</ul></li>
-<li class="chapter" data-level="4.6" data-path="summarisation.html"><a href="summarisation.html"><i class="fa fa-check"></i><b>4.6</b> Summarisation</a></li>
+<li class="chapter" data-level="4.4" data-path="grouping.html"><a href="grouping.html"><i class="fa fa-check"></i><b>4.4</b> Grouping</a></li>
+<li class="chapter" data-level="4.5" data-path="mutating.html"><a href="mutating.html"><i class="fa fa-check"></i><b>4.5</b> Mutating</a></li>
+<li class="chapter" data-level="4.6" data-path="summarising.html"><a href="summarising.html"><i class="fa fa-check"></i><b>4.6</b> Summarising</a></li>
 <li class="chapter" data-level="4.7" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>4.7</b> Plotting</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="advanced-data-analysis.html"><a href="advanced-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Advanced data analysis</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="plotting-1.html"><a href="plotting-1.html"><i class="fa fa-check"></i><b>5.1</b> Plotting</a></li>
-<li class="chapter" data-level="5.2" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>5.2</b> Modelling</a></li>
 </ul></li>
 </ul>
 
@@ -220,14 +214,152 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="tidying" class="section level2" number="4.3">
 <h2><span class="header-section-number">4.3</span> Tidying</h2>
 <p>Now that you know your dataset is clean, you’ll want to get it into a format that is amenable to your analysis. This is the <strong>tidying</strong> stage. To better understand what “tidy” data is and why we’re trying to get our data into this format, go back to the <a href="tidyverse.html#tidyverse">tidyverse</a> chapter.</p>
+<div id="pivoting-columns" class="section level3" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Pivoting columns</h3>
+<p>There two different forms of data:
+* Long
+* Wide</p>
+<p>Tidy data takes this long form - as you add more observations, you’ll add more rows.
+Untidy data often takes the wide form - as you add more observations, you’ll add more columns.</p>
+<p>Let’s look at an example. Imagine the following dataset showing the average temperature each year and in each month:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="tidying.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(column_example, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##   Year Month1 Month2 Month3
+## 1 2012     10     20     30
+## 2 2013     20     30     40
+## 3 2014     30     40     50</code></pre>
+<p>As you can see, the more months we add, the wider the data is going to get. How would the same data look in the long (tidy) format?</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="tidying.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(column_example_long, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 3
+##   Year  Month Temperature
+##   &lt;chr&gt; &lt;dbl&gt;       &lt;dbl&gt;
+## 1 2012      1          10
+## 2 2012      2          20
+## 3 2012      3          30</code></pre>
+<p>Now we’ve got the month as a variable, the more data we add, the longer the dataset is going to get.</p>
+<p><strong>Note:</strong>
+One thing to keep in mind is that long data does not always mean tidy, but wide data cann never be tidy. It’s a subtle distinction but it’s important to remember.</p>
+<p>Wide data is very common, usually because it’s slightly easier to read or to enter (particularly if you’re using Excel), but it’s much harder to work with in R. Let’s look at how we might convert wide data to tidy-er long data.</p>
+</div>
+<div id="pivoting-columns-to-rows-longer" class="section level3" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Pivoting columns to rows (longer)</h3>
+<p>Wide data will always be untidy because it breaks the first rule of tidy data: each column should be a separate variable. Let’s revisit our wide example:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="tidying.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(column_example, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##   Year Month1 Month2 Month3
+## 1 2012     10     20     30
+## 2 2013     20     30     40
+## 3 2014     30     40     50</code></pre>
+<p>In this example dataset, we’ve clearly broken the first rule of tidy data: each column is not a unique variable. Instead, we’ve got the same variable (temperature) in different columns for each month.</p>
+<p>How can we convert this example dataset to the tidy, long format? Well, we can utilise the concept of pivoting to transform those month columns into two columns; one with the value (the temperature) and the other with the month. In this case, we need to use the <code>pivot_longer()</code> function from the <code>{tidyr}</code> package, because we want to pivot from the wide format to the long format.</p>
+<p>To do this in the simplest way, we just need to tell the function which columns we want to pivot:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="tidying.html#cb49-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(column_example, <span class="at">cols =</span> <span class="fu">c</span>(Month1, Month2, Month3))</span></code></pre></div>
+<pre><code>## # A tibble: 9 x 3
+##   Year  name   value
+##   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;
+## 1 2012  Month1    10
+## 2 2012  Month2    20
+## 3 2012  Month3    30
+## 4 2013  Month1    20
+## 5 2013  Month2    30
+## 6 2013  Month3    40
+## 7 2014  Month1    30
+## 8 2014  Month2    40
+## 9 2014  Month3    50</code></pre>
+<p>This is a good start. Now we’ve converted to long format, we’re abiding by the three rules and so we’ve got a tidy dataset! But there’s definitely some improvements to be done. Firstly, “name” and “value” aren’t the best names we could come up with for these columns, so we should probably use some new ones. To do this, we just need to provide new names to the <code>names_to</code> and <code>values_to</code> parameters:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="tidying.html#cb51-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(column_example,</span>
+<span id="cb51-2"><a href="tidying.html#cb51-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cols =</span> <span class="fu">c</span>(Month1, Month2, Month3),</span>
+<span id="cb51-3"><a href="tidying.html#cb51-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_to =</span> <span class="st">&quot;Month&quot;</span>,</span>
+<span id="cb51-4"><a href="tidying.html#cb51-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values_to =</span> <span class="st">&quot;Temperature&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 9 x 3
+##   Year  Month  Temperature
+##   &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;
+## 1 2012  Month1          10
+## 2 2012  Month2          20
+## 3 2012  Month3          30
+## 4 2013  Month1          20
+## 5 2013  Month2          30
+## 6 2013  Month3          40
+## 7 2014  Month1          30
+## 8 2014  Month2          40
+## 9 2014  Month3          50</code></pre>
+<p>Secondly, our Month column has the months as character string and prepended with “Month”. Instead, we should store just the month number as a number (or maybe as a factor but we’ll go with number). To do that, we can utilise the <code>names_prefix</code> parameter to remove matching text from the start of each variable name:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="tidying.html#cb53-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(column_example,</span>
+<span id="cb53-2"><a href="tidying.html#cb53-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cols =</span> <span class="fu">c</span>(Month1, Month2, Month3),</span>
+<span id="cb53-3"><a href="tidying.html#cb53-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_to =</span> <span class="st">&quot;Month&quot;</span>,</span>
+<span id="cb53-4"><a href="tidying.html#cb53-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values_to =</span> <span class="st">&quot;Temperature&quot;</span>,</span>
+<span id="cb53-5"><a href="tidying.html#cb53-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_prefix =</span> <span class="st">&quot;(Month)&quot;</span>) <span class="co"># Remove text matching &quot;Month&quot; exactly</span></span></code></pre></div>
+<pre><code>## # A tibble: 9 x 3
+##   Year  Month Temperature
+##   &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt;
+## 1 2012  1              10
+## 2 2012  2              20
+## 3 2012  3              30
+## 4 2013  1              20
+## 5 2013  2              30
+## 6 2013  3              40
+## 7 2014  1              30
+## 8 2014  2              40
+## 9 2014  3              50</code></pre>
+<p>That’s pretty good, but that column is still a character column. We can fix that by using the <code>names_transform</code> parameter with a function that we want to use to transform the column:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="tidying.html#cb55-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(column_example,</span>
+<span id="cb55-2"><a href="tidying.html#cb55-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cols =</span> <span class="fu">c</span>(Month1, Month2, Month3),</span>
+<span id="cb55-3"><a href="tidying.html#cb55-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_to =</span> <span class="st">&quot;Month&quot;</span>,</span>
+<span id="cb55-4"><a href="tidying.html#cb55-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values_to =</span> <span class="st">&quot;Temperature&quot;</span>,</span>
+<span id="cb55-5"><a href="tidying.html#cb55-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">Month =</span> readr<span class="sc">::</span>parse_number))</span></code></pre></div>
+<pre><code>## # A tibble: 9 x 3
+##   Year  Month Temperature
+##   &lt;chr&gt; &lt;dbl&gt;       &lt;dbl&gt;
+## 1 2012      1          10
+## 2 2012      2          20
+## 3 2012      3          30
+## 4 2013      1          20
+## 5 2013      2          30
+## 6 2013      3          40
+## 7 2014      1          30
+## 8 2014      2          40
+## 9 2014      3          50</code></pre>
+<p>That’s better. But what happens now if we get sent the same dataset but with all 12 months worth of data? We’d have to add those extra columns to our <code>cols</code> vector. Instead, we can use some <code>tidyselect</code> syntax to choose columns based on their features, like how they start:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="tidying.html#cb57-1" aria-hidden="true" tabindex="-1"></a>tidy_column_example <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(column_example,</span>
+<span id="cb57-2"><a href="tidying.html#cb57-2" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">cols =</span> tidyselect<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">&quot;Month&quot;</span>),</span>
+<span id="cb57-3"><a href="tidying.html#cb57-3" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">names_to =</span> <span class="st">&quot;Month&quot;</span>,</span>
+<span id="cb57-4"><a href="tidying.html#cb57-4" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">values_to =</span> <span class="st">&quot;Temperature&quot;</span>,</span>
+<span id="cb57-5"><a href="tidying.html#cb57-5" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">Month =</span> readr<span class="sc">::</span>parse_number))</span>
+<span id="cb57-6"><a href="tidying.html#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tidy_column_example, <span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 9 x 3
+##   Year  Month Temperature
+##   &lt;chr&gt; &lt;dbl&gt;       &lt;dbl&gt;
+## 1 2012      1          10
+## 2 2012      2          20
+## 3 2012      3          30
+## # … with 6 more rows</code></pre>
+<p>Now our code will work regardless of how many months there are.</p>
+</div>
+<div id="pivoting-rows-to-columns-wider" class="section level3" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> Pivoting rows to columns (wider)</h3>
+<p>Most of the time you should be going from wide to long, but we’ll go through how to do the reverse for the occasions where it’s required. To transform the data to the wide format, we use the <code>pivot_wider()</code> function. At the simplest level, we just need to provide where the name comes from and where the values come from with the <code>names_from</code> and <code>values_from</code> parameters respectively:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="tidying.html#cb59-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(tidy_column_example, <span class="at">names_from =</span> Month, <span class="at">values_from =</span> Temperature)</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 4
+##   Year    `1`   `2`   `3`
+##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 2012     10    20    30
+## 2 2013     20    30    40
+## 3 2014     30    40    50</code></pre>
+<p>To get our data more like we started, we can use the <code>names_prefix</code> argument to prepend the column names with a string:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="tidying.html#cb61-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(tidy_column_example, <span class="at">names_from =</span> Month, <span class="at">values_from =</span> Temperature, <span class="at">names_prefix =</span> <span class="st">&quot;Month&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 4
+##   Year  Month1 Month2 Month3
+##   &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 2012      10     20     30
+## 2 2013      20     30     40
+## 3 2014      30     40     50</code></pre>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="cleaning-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pivoting-columns.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="cleaning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="grouping.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
