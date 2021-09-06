@@ -340,13 +340,13 @@ column_example_long <- tidyr::pivot_longer(column_example,
 
 
 ```{r}
-print(column_example, n = 3)
+head(column_example, 3)
 ```
 
 As you can see, the more months we add, the wider the data is going to get. How would the same data look in the long (tidy) format?
 
 ```{r}
-print(column_example_long, n = 3)
+head(column_example_long, 3)
 ```
 
 Now we've got the month as a variable, the more data we add, the longer the dataset is going to get.
@@ -361,7 +361,7 @@ Wide data is very common, usually because it's slightly easier to read or to ent
 Wide data will always be untidy because it breaks the first rule of tidy data: each column should be a separate variable. Let's revisit our wide example:
 
 ```{r}
-print(column_example, n = 3)
+head(column_example, 3)
 ```
 
 In this example dataset, we've clearly broken the first rule of tidy data: each column is not a unique variable. Instead, we've got the same variable (temperature) in different columns for each month.
