@@ -406,25 +406,102 @@ tidyr::pivot_wider(tidy_column_example, names_from = Month, values_from = Temper
 
 ## Mutation (new columns)
 
-Now that you've got your data in the tidy format, you might want to create some new calculated columns. As we've seen before, we create new columns using the `dplyr::mutate()` function. We're going to use the `datasets::UKgas` dataset for this, which shows quarterly gas consumption in the UK between 1960 and 1986:
+Sometimes you'll want to add new columns to your data. Most of the time, these will be calculated columns that can be created based on one or more of the other columns in the dataset. To create new columns, we use the `dplyr::mutate()` function.
+
+Let's look at how you might mutate your dataset using an example [Kaggle dataset](https://www.kaggle.com/gregorut/videogamesales) that holds information on video game sales:
 
 ```{r}
-head(datasets::UKgas)
+vg_sales <- readr::read_csv("./data/vgsales.csv")
+print(vg_sales, n = 5)
 ```
 
-First we need to do some quick tidying to get the dataset in the right format:
+First off, let's add something simple; a column that calculates the proportion of EU sales compared to global sales. All we need to do is provide the name of our new column to the `dplyr::mutate()` function and how our new column should be calculated:
 
 ```{r}
-tidy_gas <- tsibble::as_tsibble(
-  datasets::UKgas
-) %>%
-  tidyr::pivot_longer(cols = tidyselect::starts_with("Qtr"),
-                      names_to = "Quarter",
-                      names_prefix = "(Qtr)",
-                      names_transform = list(Quarter = readr::parse_number))
+vg_sales %>%
+  dplyr::mutate(EU_Proportion = EU_Sales/Global_Sales) %>%
+  print(n = 5)
 ```
+
+As you can see, we've created a new column called `EU_Proportion` and we've calculated by dividing the number of EU sales by the total number of sales.
+
+While this is certainly a powerful tool, we're not really changing the world here. However, we can create more complicated columns by leveraging the concept of applying our function to groups.
+
+### Grouping
+
+When a data frame has one or more groups, the function that's applied (by `dplyr::mutate()` here but the logic is the same for `dplyr::summarise()` which we'll look at next) is applied for each combination of those groups. So for example with our videa game sales dataset, if we grouped by Publisher, then the calculation in our `mutate()` function would be done within the scope of each publisher. If we grouped by Publisher and Genre, then the calculation would be done within the scope of each Publisher **and** genre.
+
+To group a dataset, we use the `dplyr::group_by()` function:
+
+```{r}
+grpd_vg_sales <- dplyr::group_by(vg_sales, Platform)
+```
+
+The `dplyr::group_by()` function returns the same dataset but now grouped by the variables you provided. At first, it might not seem as though anything happened - if we print the dataset we still get basically the same output...
+
+```{r}
+print(grpd_vg_sales, 5)
+```
+
+Except now we have a new entry `Groups:`. This tells us that the dataset has been grouped and by what variables. This means that any subsequent summarisation we do will be done against those groups.
+
+To test whether a dataset has been grouped, you can use the `dplyr::is_grouped_df()`, and to ungroup a dataset, just use `dplyr::ungroup()`:
+
+```{r}
+dplyr::is_grouped_df(grpd_vg_sales)
+dplyr::is_grouped_df(vg_sales)
+print(dplyr::ungroup(grpd_vg_sales), n = 5)
+```
+
+Now that our dataset is grouped, our `mutate()` call will be evaluated for each permutation of the provided groups. Let's look at an example of creating a cumulative sum for each Publisher:
+
+```{r}
+vg_sales %>%
+  dplyr::group_by(Publisher) %>%
+  dplyr::arrange(as.numeric(Year)) %>% # We need to order from earliest date to latest
+  dplyr::mutate(Cumulative_Sales = cumsum(Global_Sales)) %>%
+  dplyr::filter(Publisher %in% c("Atari", "Activision")) %>% # Let's just look at Atari & Activision
+  print(n = 5)
+```
+
+Now we've got a new column showing the total number of sales for each Publisher up to each year. What `{dplyr}` has done is essentially filtered the data down a specific publisher, created a cumulative sum of the `Global_Sales` column, and then done that for each publisher and stitched it back together.
 
 ## Summarisation
+
+As we saw previously, the base videa game sales dataset has nearly 17,000 entries! That's a lot of data, and we're not really going to able to extract or show any real insights from this data without summarising it to some degree. What we want to do is summarise the data to some degree. We lose some of the granularity of the data but it allows is to understand the data a bit better and identify patterns.
+
+Summarisation uses exactly the same grouping concept as mutatation does; by grouping the data we change the scope of each application of the function to be limited to that group. 
+
+Let's go through an example. Let's say that we want to get the total sales for each publisher in each year. For now, we don't care about genre or platform. To do this, we'll need to group by Publisher and by Year:
+
+```{r, eval = FALSE}
+vg_sales %>%
+  dplyr::group_by(Publisher, Year)
+```
+
+And then we'll want to sum up the `Global_Sales` column to get our totals:
+
+```{r}
+vg_sales %>%
+  dplyr::group_by(Publisher, Year) %>%
+  dplyr::summarise(Total_Global_Sales = sum(Global_Sales), .groups = "drop")
+# The .groups = 'drop' parameter will automatically remove the groups
+```
+
+Now we can see that the number of rows has reduced down to just under 2,000, and we've got the total global sales for each of our publishers, and for each year. `{dplyr}` has looked through each publisher and each year that publisher has at least 1 game, and added up the total number of sales, then moved onto the next Publisher/Year combination.
+
+In this case we've used the `sum()` function, but any kind of summary function can be used:
+
+```{r}
+vg_sales %>%
+  dplyr::group_by(Publisher, Year) %>%
+  dplyr::summarise(Total_Global_Sales = sum(Global_Sales),
+                   Average_Global_Sales = mean(Global_Sales))
+```
+
+
+Because `dplyr::mutate()` and `dplyr::summarise()` both use a similar syntax and both function on grouped datasets, using the correct function when starting out can be tough. The best way to remember which one to use is to ask "How many rows am I expecting back from this?". If the answer is fewer than you've got now, you'll want the `summarise()` function. Otherwise you're looking at `mutate()`.
+
 
 ## Plotting
 
