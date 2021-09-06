@@ -7,7 +7,7 @@ library(dplyr)
 In Chapter 8, we'll look more specifically at how one might do some simple data analysis in R. For a more in-depth view, I would highly recommend Hadley's [R4DS](https://r4ds.had.co.nz/).
 
 
-## Loading data
+## Loading
 
 The first step in any data analysis project you'll undertake is getting at least one dataset. Oftentimes, we have less control over the data we use than we would like; receiving odd Excel spreadsheets or text files or proprietary files or whatever. In this chapter, we'll focus on the more typical data formats (csv and Excel), but we'll also look at how we might extract data from a web API, which is an increasingly common method for data loading.
 
@@ -31,7 +31,7 @@ Loading csv files in R is relatively simple. There are base* functions that come
 
 \* They are technically from the `utils` package which comes bundled with R so we'll call it base R.
 
-##### Base
+##### Base R
 
 To load a csv file using base R, we'll use the `read.csv()` function:
 
@@ -221,7 +221,7 @@ head(
 And there we have it, we've retrieved a energy-related dataset from an API using the BMRSr package. There are roughly 101 data items available on BMRS so there's a massive amount of data there for those who want to access it.
 
 
-## Cleaning data
+## Cleaning
 
 Loading data is often just the first step in your project. Most of the time, you'll have messy datasets with odd columns and missing data points that you'll need to deal with before you can actually do any meaningful analysis: you'll need to **clean** your data.
 
@@ -315,7 +315,7 @@ Essentially, all you need to do is wrap your conversion function (e.g. `as.Date(
 Now that you know your dataset is clean, you'll want to get it into a format that is amenable to your analysis. This is the **tidying** stage. To better understand what "tidy" data is and why we're trying to get our data into this format, go back to the [tidyverse](#tidyverse) chapter.
 
 
-## Pivoting columns
+### Pivoting columns
 
 There two different forms of data:
   * Long
@@ -474,7 +474,7 @@ print(dplyr::ungroup(grpd), n = 5)
 ```
 
 
-## Mutation
+## Mutating
 
 Sometimes you'll want to add new columns to your data. Most of the time, these will be calculated columns that can be created based on one or more of the other columns in the dataset. To create new columns, we use the `dplyr::mutate()` function.
 
@@ -511,7 +511,7 @@ vg_sales %>%
 
 Now we've got a new column showing the total number of sales for each Publisher up to each year. What `{dplyr}` has done is essentially filtered the data down a specific publisher, created a cumulative sum of the `Global_Sales` column, and then done that for each publisher and stitched it back together.
 
-## Summarisation
+## Summarising
 
 As we saw previously, the base videa game sales dataset has nearly 17,000 entries! That's a lot of data, and we're not really going to able to extract or show any real insights from this data without summarising it to some degree. What we want to do is summarise the data to some degree. We lose some of the granularity of the data but it allows is to understand the data a bit better and identify patterns.
 
@@ -541,7 +541,8 @@ In this case we've used the `sum()` function, but any kind of summary function c
 vg_sales %>%
   dplyr::group_by(Publisher, Year) %>%
   dplyr::summarise(Total_Global_Sales = sum(Global_Sales),
-                   Average_Global_Sales = mean(Global_Sales))
+                   Average_Global_Sales = mean(Global_Sales),
+                   .groups = "drop")
 ```
 
 
@@ -549,3 +550,6 @@ Because `dplyr::mutate()` and `dplyr::summarise()` both use a similar syntax and
 
 ## Plotting
 
+* `{ggplot2}` & Grammar of Graphics intro
+* Basic plots
+* Customisation

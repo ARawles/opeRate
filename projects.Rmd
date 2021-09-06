@@ -161,15 +161,13 @@ If you also use a repository system like GitHub, your README will act as the hom
 Vignettes are less defined that READMEs. Vignettes should be an in-depth form of documentation for a concept in your project. For example, say that your project is looking at the level of data quality of various open source APIs. You might have a few different vignettes covering different important concepts in your project:
 
 1. Background
-  + This would cover why the how the project came to be, and what the ultimate goal is.
+    + This would cover why the how the project came to be, and what the ultimate goal is.
 2. Selection of APIs
-  + Why were certain APIs chosen and others excluded? That would be explained here.
+    + Why were certain APIs chosen and others excluded? That would be explained here.
 3. Methodology
-  + How are you assessing data quality? Here you would explain your different tests and standards.
+    + How are you assessing data quality? Here you would explain your different tests and standards.
 
-Whilst a README serves as a general introduction to the project, vignettes more often serve as in-depth descriptions of certain aspects of the project.
-
-Like READMEs, vignettes should be written in markdown (or more likely RMarkdown).
+Whilst a README serves as a general introduction to the project, vignettes more often serve as in-depth descriptions of certain aspects of the project. Like READMEs, vignettes should be written in markdown (or more likely RMarkdown).
 
 ## Projects as Packages
 
@@ -192,7 +190,7 @@ To better understand what a package is and how they are developed and maintained
 
 The structure of R files in a package is pretty simple. Everything goes in the root of the R folder. That means no subfolders. There are also some filenames that should be avoided for normal packages, but we won't worry too much about that for now.
 
-When you then run the `devtools::load_all()` command, all of the files in this folder and then loaded (as if you've loaded any other package via `library()`). This means you can make quick changes to your code and then run `devtools::load_all()` to bring those changes into your current environment. This helps prevent working on data or functions that are out of date (which often happens when you're manually sourcing R files).
+When you then run the `devtools::load_all()` command, `{devtools}` checks that you've got the dependencies listed in the DESCRIPTION file loaded and then loads all of the files in the R folder are then loaded. This means you can make quick changes to your code and then run `devtools::load_all()` to bring those changes into your current environment. This helps prevent working on data or functions that are out of date (which often happens when you're manually sourcing R files).
 
 
 #### Data
