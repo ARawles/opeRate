@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.1 Plotting | opeRate</title>
+  <title>4.4 Pivoting columns | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.1 Plotting | opeRate" />
+  <meta property="og:title" content="4.4 Pivoting columns | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.1 Plotting | opeRate" />
+  <meta name="twitter:title" content="4.4 Pivoting columns | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="advanced-data-analysis.html"/>
-<link rel="next" href="modelling.html"/>
+<link rel="prev" href="tidying.html"/>
+<link rel="next" href="mutation-new-columns.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -217,16 +217,127 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="plotting-1" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Plotting</h2>
+<div id="pivoting-columns" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Pivoting columns</h2>
+<div id="pivoting-columns-to-rows-longer" class="section level3" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Pivoting columns to rows (longer)</h3>
+<p>The main culprit for untidy data is that you will often see data where the first rule of tidy data have been violated. In other words, there is not one column for each variable. Let’s take a look at some examples:</p>
+<p>Imagine the following dataset showing the average temperature each year and in each month:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="pivoting-columns.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(column_example, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##   Year Month1 Month2 Month3
+## 1 2012     10     20     30
+## 2 2013     20     30     40
+## 3 2014     30     40     50</code></pre>
+<p>In this example dataset, we’ve clearly broken the first rule of tidy data: each column is not a unique variable. Instead, we’ve got the same variable (temperature) in different columns for each month. Another name for data in this format is wide data. It’s called wide data because as you add more months, the data is going to get wider (there’s going to be more columns). This is in contract to tidy data which we would call long data; the more months you add the longer (more rows) it’s going to have.</p>
+<p>How can we convert this example dataset to the tidy format? Well, we can utilise the concept of pivoting to transform those month columns into two columns; one with the value (the temperature) and the other with the month. In this case, we need to use the <code>pivot_longer()</code> function from the <code>{tidyr}</code> package, because we want to pivot from the wide format to the long format.</p>
+<p>To do this in the simplest way, we just need to tell the function which columns we want to pivot:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="pivoting-columns.html#cb36-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(column_example, <span class="at">cols =</span> <span class="fu">c</span>(Month1, Month2, Month3))</span></code></pre></div>
+<pre><code>## # A tibble: 9 x 3
+##   Year  name   value
+##   &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;
+## 1 2012  Month1    10
+## 2 2012  Month2    20
+## 3 2012  Month3    30
+## 4 2013  Month1    20
+## 5 2013  Month2    30
+## 6 2013  Month3    40
+## 7 2014  Month1    30
+## 8 2014  Month2    40
+## 9 2014  Month3    50</code></pre>
+<p>This is a good start. We’re now in the tidy format! But there’s definitely some improvements to be done. Firstly, “name” and “value” aren’t the best names we could come up with for these columns, so we should probably use some new ones. To do this, we just need to provide new names to the <code>names_to</code> and <code>values_to</code> parameters:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="pivoting-columns.html#cb38-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(column_example,</span>
+<span id="cb38-2"><a href="pivoting-columns.html#cb38-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cols =</span> <span class="fu">c</span>(Month1, Month2, Month3),</span>
+<span id="cb38-3"><a href="pivoting-columns.html#cb38-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_to =</span> <span class="st">&quot;Month&quot;</span>,</span>
+<span id="cb38-4"><a href="pivoting-columns.html#cb38-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values_to =</span> <span class="st">&quot;Temperature&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 9 x 3
+##   Year  Month  Temperature
+##   &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;
+## 1 2012  Month1          10
+## 2 2012  Month2          20
+## 3 2012  Month3          30
+## 4 2013  Month1          20
+## 5 2013  Month2          30
+## 6 2013  Month3          40
+## 7 2014  Month1          30
+## 8 2014  Month2          40
+## 9 2014  Month3          50</code></pre>
+<p>Secondly, our Month column has the months as character string and prepended with “Month”. Instead, we should store just the month number as a number (or maybe as a factor but we’ll go with number). To do that, we can utilise the <code>names_prefix</code> parameter to remove matching text from the start of each variable name:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="pivoting-columns.html#cb40-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(column_example,</span>
+<span id="cb40-2"><a href="pivoting-columns.html#cb40-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cols =</span> <span class="fu">c</span>(Month1, Month2, Month3),</span>
+<span id="cb40-3"><a href="pivoting-columns.html#cb40-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_to =</span> <span class="st">&quot;Month&quot;</span>,</span>
+<span id="cb40-4"><a href="pivoting-columns.html#cb40-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values_to =</span> <span class="st">&quot;Temperature&quot;</span>,</span>
+<span id="cb40-5"><a href="pivoting-columns.html#cb40-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_prefix =</span> <span class="st">&quot;(Month)&quot;</span>) <span class="co"># Remove text matching &quot;Month&quot; exactly</span></span></code></pre></div>
+<pre><code>## # A tibble: 9 x 3
+##   Year  Month Temperature
+##   &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt;
+## 1 2012  1              10
+## 2 2012  2              20
+## 3 2012  3              30
+## 4 2013  1              20
+## 5 2013  2              30
+## 6 2013  3              40
+## 7 2014  1              30
+## 8 2014  2              40
+## 9 2014  3              50</code></pre>
+<p>That’s pretty good, but that column is still a character column. We can fix that by using the <code>names_transform</code> parameter with a function that we want to use to transform the column:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="pivoting-columns.html#cb42-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(column_example,</span>
+<span id="cb42-2"><a href="pivoting-columns.html#cb42-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cols =</span> <span class="fu">c</span>(Month1, Month2, Month3),</span>
+<span id="cb42-3"><a href="pivoting-columns.html#cb42-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_to =</span> <span class="st">&quot;Month&quot;</span>,</span>
+<span id="cb42-4"><a href="pivoting-columns.html#cb42-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values_to =</span> <span class="st">&quot;Temperature&quot;</span>,</span>
+<span id="cb42-5"><a href="pivoting-columns.html#cb42-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">Month =</span> readr<span class="sc">::</span>parse_number))</span></code></pre></div>
+<pre><code>## # A tibble: 9 x 3
+##   Year  Month Temperature
+##   &lt;chr&gt; &lt;dbl&gt;       &lt;dbl&gt;
+## 1 2012      1          10
+## 2 2012      2          20
+## 3 2012      3          30
+## 4 2013      1          20
+## 5 2013      2          30
+## 6 2013      3          40
+## 7 2014      1          30
+## 8 2014      2          40
+## 9 2014      3          50</code></pre>
+<p>That’s better. But what happens now if we get sent the same dataset but with all 12 months worth of data? We’d have to add those extra columns to our <code>cols</code> vector. Instead, we can use some <code>tidyselect</code> syntax to choose columns based on their features, like how they start:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="pivoting-columns.html#cb44-1" aria-hidden="true" tabindex="-1"></a>tidy_column_example <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(column_example,</span>
+<span id="cb44-2"><a href="pivoting-columns.html#cb44-2" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">cols =</span> tidyselect<span class="sc">::</span><span class="fu">starts_with</span>(<span class="st">&quot;Month&quot;</span>),</span>
+<span id="cb44-3"><a href="pivoting-columns.html#cb44-3" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">names_to =</span> <span class="st">&quot;Month&quot;</span>,</span>
+<span id="cb44-4"><a href="pivoting-columns.html#cb44-4" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">values_to =</span> <span class="st">&quot;Temperature&quot;</span>,</span>
+<span id="cb44-5"><a href="pivoting-columns.html#cb44-5" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">Month =</span> readr<span class="sc">::</span>parse_number))</span>
+<span id="cb44-6"><a href="pivoting-columns.html#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tidy_column_example, <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+##   Year  Month Temperature
+##   &lt;chr&gt; &lt;dbl&gt;       &lt;dbl&gt;
+## 1 2012      1          10
+## 2 2012      2          20</code></pre>
+<p>Now our code will work regardless of how many months there are.</p>
+<div id="pivoting-rows-to-columns-wider" class="section level4" number="4.4.1.1">
+<h4><span class="header-section-number">4.4.1.1</span> Pivoting rows to columns (wider)</h4>
+<p>Most of the time you should be going from wide to long, but we’ll go through how to do the reverse for the occasions where it’s required. To transform the data to the wide format, we use the <code>pivot_wider()</code> function. At the simplest level, we just need to provide where the name comes from and where the values come from with the <code>names_from</code> and <code>values_from</code> parameters respectively:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="pivoting-columns.html#cb46-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(tidy_column_example, <span class="at">names_from =</span> Month, <span class="at">values_from =</span> Temperature)</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 4
+##   Year    `1`   `2`   `3`
+##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 2012     10    20    30
+## 2 2013     20    30    40
+## 3 2014     30    40    50</code></pre>
+<p>To get our data more like we started, we can use the <code>names_prefix</code> argument to prepend the column names with a string:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="pivoting-columns.html#cb48-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(tidy_column_example, <span class="at">names_from =</span> Month, <span class="at">values_from =</span> Temperature, <span class="at">names_prefix =</span> <span class="st">&quot;Month&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 4
+##   Year  Month1 Month2 Month3
+##   &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 2012      10     20     30
+## 2 2013      20     30     40
+## 3 2014      30     40     50</code></pre>
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="advanced-data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="modelling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tidying.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="mutation-new-columns.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

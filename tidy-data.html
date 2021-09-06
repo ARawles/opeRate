@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.1 Plotting | opeRate</title>
+  <title>2.1 “Tidy” data | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.1 Plotting | opeRate" />
+  <meta property="og:title" content="2.1 “Tidy” data | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.1 Plotting | opeRate" />
+  <meta name="twitter:title" content="2.1 “Tidy” data | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="advanced-data-analysis.html"/>
-<link rel="next" href="modelling.html"/>
+<link rel="prev" href="tidyverse.html"/>
+<link rel="next" href="the-pipe.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -217,16 +217,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="plotting-1" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Plotting</h2>
+<div id="tidy-data" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> “Tidy” data</h2>
+<p>The concept of “tidy” data is something that’s important throughout the set of tidyverse packages. There is an <a href="https://vita.had.co.nz/papers/tidy-data.html">in-depth paper</a> published in the Journal of Statistical Software, authored by Hadley Wickham, that describes the concept and requirements of tidy data in full. But for now we’re just going to look at the basics.</p>
+<p>In order for a dataset to be tidy, it needs to abide by three rules:
+1. Every column is a variable
+2. Every row is an observation
+3. Every cell is a single value</p>
+<p>If a dataset doesn’t abide by all three of these rules, then it’s a “messy” dataset.</p>
+<p>The benefit of having your data in a tidy format is fairly simple; it provides a standard for structuring a dataset. This means that tools can be developed with the assumption that the data will be in a specific format, making the development of these data science tools easier. And this is essentially what underpins the entire tidyverse: get your data in a tidy format and you’ll have access to everything the tidyverse provides.</p>
+<div id="exceptions" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Exceptions</h3>
+<p>Whilst I would wholeheartedly recommend that you coerce your data to a tidy structure whenever possible, there are some instances where this won’t be the easiest solution for the analysis that you’re doing. For instance, the base functions in R weren’t designed specifically to work with “tidy” data, meaning you might find yourself tidying your data for use in the tidyverse, then untidying it again to use a base R package. And although there are tidyverse implementations of almost every single base R function and more than are designed specifically for tidy datasets, there will always be times where tidy != easy.</p>
+<p>My advice in these situations is to prioritise the pragmatic over the philosophical - if you find yourself reshaping your data 20 times because it keeps becoming untidy and Adam told you that tidy is best and so you think you need to tidy it up again, stop and think whether this is really the best way of doing things.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="advanced-data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="modelling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tidyverse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="the-pipe.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

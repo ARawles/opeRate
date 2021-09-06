@@ -3,6 +3,11 @@ overview
 acknowledgements
 about-me
 using-r
+tidyverse
+tidy-data
+exceptions
+the-pipe
+quasiquotation
 projects
 workflows
 basic-workflow
@@ -31,9 +36,6 @@ description
 dependencies
 abstraction
 data-analysis
-tidyverse
-tidy-data
-exceptions
 loading-data
 csv
 loading-.csv-files
@@ -48,6 +50,11 @@ cleaning-data
 missing-values
 changing-column-types
 tidying
+pivoting-columns
+pivoting-columns-to-rows-longer
+pivoting-rows-to-columns-wider
+mutation-new-columns
+grouping
 summarisation
 plotting
 advanced-data-analysis

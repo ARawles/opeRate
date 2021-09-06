@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.2 Loading data | opeRate</title>
+  <title>4.1 Loading data | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.2 Loading data | opeRate" />
+  <meta property="og:title" content="4.1 Loading data | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.2 Loading data | opeRate" />
+  <meta name="twitter:title" content="4.1 Loading data | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="tidyverse.html"/>
+<link rel="prev" href="data-analysis.html"/>
 <link rel="next" href="cleaning-data.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -142,51 +142,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="about-me.html"><a href="about-me.html"><i class="fa fa-check"></i><b>1.2</b> About Me</a></li>
 <li class="chapter" data-level="1.3" data-path="using-r.html"><a href="using-r.html"><i class="fa fa-check"></i><b>1.3</b> Using R</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>2</b> Projects</a>
+<li class="chapter" data-level="2" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>2</b> tidyverse</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>2.1</b> Workflows</a>
+<li class="chapter" data-level="2.1" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>2.1</b> “Tidy” data</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="workflows.html"><a href="workflows.html#basic-workflow"><i class="fa fa-check"></i><b>2.1.1</b> Basic Workflow</a></li>
+<li class="chapter" data-level="2.1.1" data-path="tidy-data.html"><a href="tidy-data.html#exceptions"><i class="fa fa-check"></i><b>2.1.1</b> Exceptions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>2.2</b> Replicability</a>
-<ul>
-<li class="chapter" data-level="2.2.1" data-path="replicability.html"><a href="replicability.html#good-practice"><i class="fa fa-check"></i><b>2.2.1</b> Good practice</a></li>
-<li class="chapter" data-level="2.2.2" data-path="replicability.html"><a href="replicability.html#documentation"><i class="fa fa-check"></i><b>2.2.2</b> Documentation</a></li>
+<li class="chapter" data-level="2.2" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>2.2</b> The pipe (<code>%&gt;%</code>)</a></li>
+<li class="chapter" data-level="2.3" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>2.3</b> Quasiquotation</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html"><i class="fa fa-check"></i><b>2.3</b> Projects as Packages</a>
+<li class="chapter" data-level="3" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>3</b> Projects</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#structure"><i class="fa fa-check"></i><b>2.3.1</b> Structure</a></li>
-<li class="chapter" data-level="2.3.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#documentation-1"><i class="fa fa-check"></i><b>2.3.2</b> Documentation</a></li>
-<li class="chapter" data-level="2.3.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html#description"><i class="fa fa-check"></i><b>2.3.3</b> DESCRIPTION</a></li>
-<li class="chapter" data-level="2.3.4" data-path="projects-as-packages.html"><a href="projects-as-packages.html#abstraction"><i class="fa fa-check"></i><b>2.3.4</b> Abstraction</a></li>
+<li class="chapter" data-level="3.1" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>3.1</b> Workflows</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="workflows.html"><a href="workflows.html#basic-workflow"><i class="fa fa-check"></i><b>3.1.1</b> Basic Workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>3.2</b> Replicability</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="replicability.html"><a href="replicability.html#good-practice"><i class="fa fa-check"></i><b>3.2.1</b> Good practice</a></li>
+<li class="chapter" data-level="3.2.2" data-path="replicability.html"><a href="replicability.html#documentation"><i class="fa fa-check"></i><b>3.2.2</b> Documentation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html"><i class="fa fa-check"></i><b>3.3</b> Projects as Packages</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#structure"><i class="fa fa-check"></i><b>3.3.1</b> Structure</a></li>
+<li class="chapter" data-level="3.3.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#documentation-1"><i class="fa fa-check"></i><b>3.3.2</b> Documentation</a></li>
+<li class="chapter" data-level="3.3.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html#description"><i class="fa fa-check"></i><b>3.3.3</b> DESCRIPTION</a></li>
+<li class="chapter" data-level="3.3.4" data-path="projects-as-packages.html"><a href="projects-as-packages.html#abstraction"><i class="fa fa-check"></i><b>3.3.4</b> Abstraction</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>3</b> Data Analysis</a>
+<li class="chapter" data-level="4" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>4</b> Data Analysis</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3.1</b> tidyverse</a>
+<li class="chapter" data-level="4.1" data-path="loading-data.html"><a href="loading-data.html"><i class="fa fa-check"></i><b>4.1</b> Loading data</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-data"><i class="fa fa-check"></i><b>3.1.1</b> “Tidy” data</a></li>
-<li class="chapter" data-level="3.1.2" data-path="tidyverse.html"><a href="tidyverse.html#exceptions"><i class="fa fa-check"></i><b>3.1.2</b> Exceptions</a></li>
+<li class="chapter" data-level="4.1.1" data-path="loading-data.html"><a href="loading-data.html#csv"><i class="fa fa-check"></i><b>4.1.1</b> csv</a></li>
+<li class="chapter" data-level="4.1.2" data-path="loading-data.html"><a href="loading-data.html#excel-files"><i class="fa fa-check"></i><b>4.1.2</b> Excel files</a></li>
+<li class="chapter" data-level="4.1.3" data-path="loading-data.html"><a href="loading-data.html#using-apis"><i class="fa fa-check"></i><b>4.1.3</b> Using APIs</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="loading-data.html"><a href="loading-data.html"><i class="fa fa-check"></i><b>3.2</b> Loading data</a>
+<li class="chapter" data-level="4.2" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>4.2</b> Cleaning data</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="loading-data.html"><a href="loading-data.html#csv"><i class="fa fa-check"></i><b>3.2.1</b> csv</a></li>
-<li class="chapter" data-level="3.2.2" data-path="loading-data.html"><a href="loading-data.html#excel-files"><i class="fa fa-check"></i><b>3.2.2</b> Excel files</a></li>
-<li class="chapter" data-level="3.2.3" data-path="loading-data.html"><a href="loading-data.html#using-apis"><i class="fa fa-check"></i><b>3.2.3</b> Using APIs</a></li>
+<li class="chapter" data-level="4.2.1" data-path="cleaning-data.html"><a href="cleaning-data.html#missing-values"><i class="fa fa-check"></i><b>4.2.1</b> Missing values</a></li>
+<li class="chapter" data-level="4.2.2" data-path="cleaning-data.html"><a href="cleaning-data.html#changing-column-types"><i class="fa fa-check"></i><b>4.2.2</b> Changing column types</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>3.3</b> Cleaning data</a>
+<li class="chapter" data-level="4.3" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>4.3</b> Tidying</a></li>
+<li class="chapter" data-level="4.4" data-path="pivoting-columns.html"><a href="pivoting-columns.html"><i class="fa fa-check"></i><b>4.4</b> Pivoting columns</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="cleaning-data.html"><a href="cleaning-data.html#missing-values"><i class="fa fa-check"></i><b>3.3.1</b> Missing values</a></li>
-<li class="chapter" data-level="3.3.2" data-path="cleaning-data.html"><a href="cleaning-data.html#changing-column-types"><i class="fa fa-check"></i><b>3.3.2</b> Changing column types</a></li>
+<li class="chapter" data-level="4.4.1" data-path="pivoting-columns.html"><a href="pivoting-columns.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>4.4.1</b> Pivoting columns to rows (longer)</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>3.4</b> Tidying</a></li>
-<li class="chapter" data-level="3.5" data-path="summarisation.html"><a href="summarisation.html"><i class="fa fa-check"></i><b>3.5</b> Summarisation</a></li>
-<li class="chapter" data-level="3.6" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>3.6</b> Plotting</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="advanced-data-analysis.html"><a href="advanced-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Advanced data analysis</a>
+<li class="chapter" data-level="4.5" data-path="mutation-new-columns.html"><a href="mutation-new-columns.html"><i class="fa fa-check"></i><b>4.5</b> Mutation (new columns)</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="plotting-1.html"><a href="plotting-1.html"><i class="fa fa-check"></i><b>4.1</b> Plotting</a></li>
-<li class="chapter" data-level="4.2" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>4.2</b> Modelling</a></li>
+<li class="chapter" data-level="4.5.1" data-path="mutation-new-columns.html"><a href="mutation-new-columns.html#grouping"><i class="fa fa-check"></i><b>4.5.1</b> Grouping</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="summarisation.html"><a href="summarisation.html"><i class="fa fa-check"></i><b>4.6</b> Summarisation</a></li>
+<li class="chapter" data-level="4.7" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>4.7</b> Plotting</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="advanced-data-analysis.html"><a href="advanced-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Advanced data analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="plotting-1.html"><a href="plotting-1.html"><i class="fa fa-check"></i><b>5.1</b> Plotting</a></li>
+<li class="chapter" data-level="5.2" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>5.2</b> Modelling</a></li>
 </ul></li>
 </ul>
 
@@ -205,11 +217,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="loading-data" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Loading data</h2>
+<div id="loading-data" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Loading data</h2>
 <p>The first step in any data analysis project you’ll undertake is getting at least one dataset. Oftentimes, we have less control over the data we use than we would like; receiving odd Excel spreadsheets or text files or proprietary files or whatever. In this chapter, we’ll focus on the more typical data formats (csv and Excel), but we’ll also look at how we might extract data from a web API, which is an increasingly common method for data loading.</p>
-<div id="csv" class="section level3" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> csv</h3>
+<div id="csv" class="section level3" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> csv</h3>
 <p>If I have any say in the data format of the files I need to load in, I usually ask for them to be in csv format. CSV stands for “comma-separated values” and essentially means that the data is stored as one long text string, with each different value or cell separated by a comma. So for example, a really simple csv file may look, in its most base format, like this:</p>
 <pre><code>name,age,
 Dave,35,
@@ -217,19 +229,19 @@ Simon,60,
 Anna,24,
 Patricia,75</code></pre>
 <p>Benefits of the csv file over something like an Excel file are largely based around simplicity. csv files are typically smaller and can only have one sheet, meaning that you won’t get confused with multiple spreadsheets. Furthermore, values in csv files are essentially what you see is what you get. With Excel files, sometimes the value that you see in Excel isn’t the value that ends up in R (looking at you dates and datetimes). For these reasons, I would suggest using a separated-value file over an Excel file when you can.</p>
-<div id="loading-.csv-files" class="section level4" number="3.2.1.1">
-<h4><span class="header-section-number">3.2.1.1</span> Loading .csv files</h4>
+<div id="loading-.csv-files" class="section level4" number="4.1.1.1">
+<h4><span class="header-section-number">4.1.1.1</span> Loading .csv files</h4>
 <p>Loading csv files in R is relatively simple. There are base* functions that come with R to load csv files but there’s also a popular package called <code>readr</code> which can be used so I’ll cover both.</p>
 <p>* They are technically from the <code>utils</code> package which comes bundled with R so we’ll call it base R.</p>
-<div id="base" class="section level5" number="3.2.1.1.1">
-<h5><span class="header-section-number">3.2.1.1.1</span> Base</h5>
+<div id="base" class="section level5" number="4.1.1.1.1">
+<h5><span class="header-section-number">4.1.1.1.1</span> Base</h5>
 <p>To load a csv file using base R, we’ll use the <code>read.csv()</code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="loading-data.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;path/to/your/file&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, ...)</span></code></pre></div>
 <p>The <code>file</code> parameters needs the path to your file as a character string. The <code>header</code> parameter is used to tell R whether or not your file has column headers.</p>
 <p>There are lots of other parameters that can be tweaked for the <code>read.csv()</code> function, but we won’t go through them here.</p>
 </div>
-<div id="readr" class="section level5" number="3.2.1.1.2">
-<h5><span class="header-section-number">3.2.1.1.2</span> readr</h5>
+<div id="readr" class="section level5" number="4.1.1.1.2">
+<h5><span class="header-section-number">4.1.1.1.2</span> readr</h5>
 <p>The <code>readr</code> package comes with a similar function: <code>read_csv()</code>. With the exception of a couple of extra parameters in the <code>read_csv()</code> function and potentially some better efficiency, there isn’t a massive difference between the two.</p>
 <p>Using the <code>read_csv()</code> function is simple:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="loading-data.html#cb4-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;path/to/your/file&quot;</span>, <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
@@ -254,33 +266,33 @@ Patricia,75</code></pre>
 </div>
 </div>
 </div>
-<div id="excel-files" class="section level3" number="3.2.2">
-<h3><span class="header-section-number">3.2.2</span> Excel files</h3>
+<div id="excel-files" class="section level3" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Excel files</h3>
 <p>R doesn’t have any built-in functions to load Excel files. Instead, you’ll need to use a package. One of the more popular packages used to read Excel files is the <code>readxl</code> package.</p>
 <p>Once you’ve installed and loaded the <code>readxl</code> package. You can use the <code>read_excel()</code> function:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="loading-data.html#cb7-1" aria-hidden="true" tabindex="-1"></a>readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="at">path =</span> <span class="st">&quot;path/to/file&quot;</span>, <span class="at">sheet =</span> <span class="cn">NULL</span>, <span class="at">range =</span> <span class="cn">NULL</span>, ...)</span></code></pre></div>
 <p>Because Excel files are a little bit more complicated than csv files, you’ll notice that there are some extra parameters. Most notably, the sheet and range parameters can be used to define a subset of the entire Excel file to be loaded. By default, both are set to NULL, which will mean that R will load the entirety of the first sheet.</p>
 <p>Like the <code>readr::read_csv()</code> function, you can specify column names and types using the <code>col_names</code> and <code>col_types</code> parameters respectively, and also trim your values using <code>trim_ws</code>.</p>
 </div>
-<div id="using-apis" class="section level3" number="3.2.3">
-<h3><span class="header-section-number">3.2.3</span> Using APIs</h3>
+<div id="using-apis" class="section level3" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> Using APIs</h3>
 <p>Loading static data from text and Excel files is very common. However, an emerging method of data extraction is via web-based APIs. These web-based APIs allow a user to extract datasets from larger repositories using just an internet connection. This allows for access to larger and more dynamic datasets.</p>
-<div id="what-are-apis" class="section level4" number="3.2.3.1">
-<h4><span class="header-section-number">3.2.3.1</span> What are APIs?</h4>
+<div id="what-are-apis" class="section level4" number="4.1.3.1">
+<h4><span class="header-section-number">4.1.3.1</span> What are APIs?</h4>
 <p>API stands for application programming interface. APIs are essentially just a set of functions for interacting with an application or service. For instance, many of the packages that you’ll use will essentially just be forms of API; they provide you with functions to interact with an underlying system or service.</p>
 <p>For data extraction, we’re going to focus more specifically on web-based APIs. These APIs use URL strings to accept function calls and parameters and then return the data requested. Whilst there are multiple <em>methods</em> that can be implemented in an API to perform different actions, we’re going to focus on <code>GET</code> functions. That is, we’re purely <em>getting</em> something from the API rather than trying to change anything that’s stored on the server. You can think of the <code>GET</code> method as being read-only.</p>
 <p>To start with, we’re going to look at exactly how you would interact with an API, but then we’ll look at the BMRSr package, which I wrote to make interacting with the Balancing Mechanism and Reporting Service easier.</p>
 </div>
-<div id="accessing-apis-in-r" class="section level4" number="3.2.3.2">
-<h4><span class="header-section-number">3.2.3.2</span> Accessing APIs in R</h4>
+<div id="accessing-apis-in-r" class="section level4" number="4.1.3.2">
+<h4><span class="header-section-number">4.1.3.2</span> Accessing APIs in R</h4>
 <p>To access a web-based API in R, we’re going to need a connection to the internet, the <code>httr</code> package and potentially some log in credentials for the API. In this case, we’re going to just use a test API, but in reality, most APIs require that you use some kind of authentication so that they know who’s accessing their data.</p>
 <p>As previously mentioned, to extract something from the API, you’ll be using the <code>GET</code> method. The <code>httr</code> package makes this super easy by providing a <code>GET</code> function. To this function, we’ll need to provide a URL. The <code>GET</code> function will then send a GET request to that address and return the response. A really simple GET request could be:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="loading-data.html#cb8-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;http://google.com&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [http://www.google.com/]
-##   Date: 2021-09-03 12:33
+##   Date: 2021-09-06 13:11
 ##   Status: 200
 ##   Content-Type: text/html; charset=ISO-8859-1
-##   Size: 12.9 kB
+##   Size: 13.7 kB
 ## &lt;!doctype html&gt;&lt;html itemscope=&quot;&quot; itemtype=&quot;http://schema.org/WebPage&quot; lang=&quot;...
 ## var f=this||self;var h,k=[];function l(a){for(var b;a&amp;&amp;(!a.getAttribute||!(b=...
 ## function n(a,b,c,d,g){var e=&quot;&quot;;c||-1!==b.search(&quot;&amp;ei=&quot;)||(e=&quot;&amp;ei=&quot;+l(d),-1===...
@@ -290,37 +302,27 @@ Patricia,75</code></pre>
 ## if (!iesg){document.f&amp;&amp;document.f.q.focus();document.gbqf&amp;&amp;document.gbqf.q.fo...
 ## }
 ## })();&lt;/script&gt;&lt;div id=&quot;mngb&quot;&gt;&lt;div id=gbar&gt;&lt;nobr&gt;&lt;b class=gb1&gt;Search&lt;/b&gt; &lt;a cl...
-## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;ALs-wAMAAAAAYTIkG...
+## else top.location=&#39;/doodles/&#39;;};})();&lt;/script&gt;&lt;input value=&quot;ALs-wAMAAAAAYTYhh...
 ## ...</code></pre>
 <p>That seems like a really complicated response at first, but when we look at each part, it’s quite simple.</p>
 <ul>
-<li>Response
-<ul>
+<li>Response</li>
 <li>This is telling us where we got our response from. In this case, we sent a request to Google, so we got a response from Google.</li>
-</ul></li>
-<li>Date
-<ul>
+<li>Date</li>
 <li>Fairly self-explanatory - the date and time of the response.</li>
-</ul></li>
-<li>Content-Type
-<ul>
+<li>Content-Type</li>
 <li>This is telling us what type the response is. In this case, the response is just a HTML page, which is exactly what we expect as that’s what you get when you type “google.com” into your browser.</li>
-</ul></li>
-<li>Size
-<ul>
+<li>Size</li>
 <li>This is the size of the response</li>
-</ul></li>
-<li>Content
-<ul>
+<li>Content</li>
 <li>Below the size, we see the actual response body. In this case, we’ve been given the html for the google.com page.</li>
-</ul></li>
 </ul>
 <p>As simple as this example was, it didn’t really give us anything interesting back, just the Google homepage. So let’s use the GET request to get something more interesting.</p>
 <p>We’re going to access the <a href="https://jsonplaceholder.typicode.com/">jsonplaceholder</a> website, which provides fake APIs for testing. But for now, imagine that this is something like an Instagram database, holding users and their posts and comments.</p>
 <p>The first step in accessing an API is to understand that commands the API is expecting. APIs will have what we call <strong>endpoints</strong>. These are paths that we can use to access a certain dataset. For instance, looking at the website, we can see that there are endpoints for lots of different types of data: posts, comments, albums, photos, todos and users. To access an endpoint, we just need to make sure we’re using the correct path. So let’s try getting a list of users:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="loading-data.html#cb10-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [https://jsonplaceholder.typicode.com/users]
-##   Date: 2021-09-03 12:33
+##   Date: 2021-09-06 13:11
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 5.64 kB
@@ -409,8 +411,8 @@ Patricia,75</code></pre>
 ## [1] &quot;quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto&quot;</code></pre>
 <p>Whilst the parameters here are pretty simple, you will come across APIs that accept multiple parameters, making data extraction from an API a very powerful tool.</p>
 </div>
-<div id="bmrsr" class="section level4" number="3.2.3.3">
-<h4><span class="header-section-number">3.2.3.3</span> BMRSr</h4>
+<div id="bmrsr" class="section level4" number="4.1.3.3">
+<h4><span class="header-section-number">4.1.3.3</span> BMRSr</h4>
 <p>As easy as the above was, interacting with APIs that have several parameters and complicated URLs can get confusing. To this end, many people create packages in R that act as wrappers for various APIs. These packages will then provide you with functions that will automatically create the request, send it and receive and parse the content. You can kind of think about it as an API for an API!</p>
 <p>This is what I did for the Balancing Mechanism Reporting Service (BMRS) API. BMRS provides a massive amount of energy-related data, but creating the correct URLs and dealing with the response can be tricky. The BMRSr package that I wrote was designed to help with that.</p>
 <p>We’ll now go through a quick demo of the BMRSr package. If you’re not too bothered about this part, feel free to skip to the next section.</p>
@@ -421,22 +423,14 @@ Patricia,75</code></pre>
 </ul>
 <p>Once you’ve got those two prerequisites, using BMRSr should be quite easy. The main function in the BMRSr package is the <code>full_request()</code> function, which will create your URL, send the request, and parse the response depending on your parameters. To do this however, the <code>full_request()</code> function needs some parameters:</p>
 <ul>
-<li><code>data_item</code>
-<ul>
+<li><code>data_item</code></li>
 <li>A data item to retrieve. The BMRS platform holds lots of datasets, and so we need to specify which one we want to retrieve.</li>
-</ul></li>
-<li><code>api_key</code>
-<ul>
+<li><code>api_key</code></li>
 <li>Our API_key that we got from the Elexon portal</li>
-</ul></li>
-<li>parameters
-<ul>
+<li>parameters</li>
 <li>Depending on which data_item you chose, you’ll need to provide some parameters to filter the data</li>
-</ul></li>
-<li><code>service_type</code>
-<ul>
+<li><code>service_type</code></li>
 <li>What format you want the data returned in: values are XML or csv.</li>
-</ul></li>
 </ul>
 <p>So what parameters do I need? Well, the easiest way to find out is to use the <code>get_parameters()</code> function. This will return all of the parameters that can be provided to the <code>full_request()</code>.</p>
 <p>Let’s do an example. Say I want to return data for the B1620 data item, which shows us aggregated generation output per type. So, the first step is to know what parameters I can provide using the <code>get_parameters()</code> function:</p>
@@ -468,7 +462,7 @@ Patricia,75</code></pre>
           </div>
         </div>
       </div>
-<a href="tidyverse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="cleaning-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

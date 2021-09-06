@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.5 Summarisation | opeRate</title>
+  <title>4.6 Summarisation | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.5 Summarisation | opeRate" />
+  <meta property="og:title" content="4.6 Summarisation | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.5 Summarisation | opeRate" />
+  <meta name="twitter:title" content="4.6 Summarisation | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="tidying.html"/>
+<link rel="prev" href="mutation-new-columns.html"/>
 <link rel="next" href="plotting.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -142,51 +142,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="about-me.html"><a href="about-me.html"><i class="fa fa-check"></i><b>1.2</b> About Me</a></li>
 <li class="chapter" data-level="1.3" data-path="using-r.html"><a href="using-r.html"><i class="fa fa-check"></i><b>1.3</b> Using R</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>2</b> Projects</a>
+<li class="chapter" data-level="2" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>2</b> tidyverse</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>2.1</b> Workflows</a>
+<li class="chapter" data-level="2.1" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>2.1</b> “Tidy” data</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="workflows.html"><a href="workflows.html#basic-workflow"><i class="fa fa-check"></i><b>2.1.1</b> Basic Workflow</a></li>
+<li class="chapter" data-level="2.1.1" data-path="tidy-data.html"><a href="tidy-data.html#exceptions"><i class="fa fa-check"></i><b>2.1.1</b> Exceptions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>2.2</b> Replicability</a>
-<ul>
-<li class="chapter" data-level="2.2.1" data-path="replicability.html"><a href="replicability.html#good-practice"><i class="fa fa-check"></i><b>2.2.1</b> Good practice</a></li>
-<li class="chapter" data-level="2.2.2" data-path="replicability.html"><a href="replicability.html#documentation"><i class="fa fa-check"></i><b>2.2.2</b> Documentation</a></li>
+<li class="chapter" data-level="2.2" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>2.2</b> The pipe (<code>%&gt;%</code>)</a></li>
+<li class="chapter" data-level="2.3" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>2.3</b> Quasiquotation</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html"><i class="fa fa-check"></i><b>2.3</b> Projects as Packages</a>
+<li class="chapter" data-level="3" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>3</b> Projects</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#structure"><i class="fa fa-check"></i><b>2.3.1</b> Structure</a></li>
-<li class="chapter" data-level="2.3.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#documentation-1"><i class="fa fa-check"></i><b>2.3.2</b> Documentation</a></li>
-<li class="chapter" data-level="2.3.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html#description"><i class="fa fa-check"></i><b>2.3.3</b> DESCRIPTION</a></li>
-<li class="chapter" data-level="2.3.4" data-path="projects-as-packages.html"><a href="projects-as-packages.html#abstraction"><i class="fa fa-check"></i><b>2.3.4</b> Abstraction</a></li>
+<li class="chapter" data-level="3.1" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>3.1</b> Workflows</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="workflows.html"><a href="workflows.html#basic-workflow"><i class="fa fa-check"></i><b>3.1.1</b> Basic Workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>3.2</b> Replicability</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="replicability.html"><a href="replicability.html#good-practice"><i class="fa fa-check"></i><b>3.2.1</b> Good practice</a></li>
+<li class="chapter" data-level="3.2.2" data-path="replicability.html"><a href="replicability.html#documentation"><i class="fa fa-check"></i><b>3.2.2</b> Documentation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html"><i class="fa fa-check"></i><b>3.3</b> Projects as Packages</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#structure"><i class="fa fa-check"></i><b>3.3.1</b> Structure</a></li>
+<li class="chapter" data-level="3.3.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#documentation-1"><i class="fa fa-check"></i><b>3.3.2</b> Documentation</a></li>
+<li class="chapter" data-level="3.3.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html#description"><i class="fa fa-check"></i><b>3.3.3</b> DESCRIPTION</a></li>
+<li class="chapter" data-level="3.3.4" data-path="projects-as-packages.html"><a href="projects-as-packages.html#abstraction"><i class="fa fa-check"></i><b>3.3.4</b> Abstraction</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>3</b> Data Analysis</a>
+<li class="chapter" data-level="4" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>4</b> Data Analysis</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3.1</b> tidyverse</a>
+<li class="chapter" data-level="4.1" data-path="loading-data.html"><a href="loading-data.html"><i class="fa fa-check"></i><b>4.1</b> Loading data</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="tidyverse.html"><a href="tidyverse.html#tidy-data"><i class="fa fa-check"></i><b>3.1.1</b> “Tidy” data</a></li>
-<li class="chapter" data-level="3.1.2" data-path="tidyverse.html"><a href="tidyverse.html#exceptions"><i class="fa fa-check"></i><b>3.1.2</b> Exceptions</a></li>
+<li class="chapter" data-level="4.1.1" data-path="loading-data.html"><a href="loading-data.html#csv"><i class="fa fa-check"></i><b>4.1.1</b> csv</a></li>
+<li class="chapter" data-level="4.1.2" data-path="loading-data.html"><a href="loading-data.html#excel-files"><i class="fa fa-check"></i><b>4.1.2</b> Excel files</a></li>
+<li class="chapter" data-level="4.1.3" data-path="loading-data.html"><a href="loading-data.html#using-apis"><i class="fa fa-check"></i><b>4.1.3</b> Using APIs</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="loading-data.html"><a href="loading-data.html"><i class="fa fa-check"></i><b>3.2</b> Loading data</a>
+<li class="chapter" data-level="4.2" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>4.2</b> Cleaning data</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="loading-data.html"><a href="loading-data.html#csv"><i class="fa fa-check"></i><b>3.2.1</b> csv</a></li>
-<li class="chapter" data-level="3.2.2" data-path="loading-data.html"><a href="loading-data.html#excel-files"><i class="fa fa-check"></i><b>3.2.2</b> Excel files</a></li>
-<li class="chapter" data-level="3.2.3" data-path="loading-data.html"><a href="loading-data.html#using-apis"><i class="fa fa-check"></i><b>3.2.3</b> Using APIs</a></li>
+<li class="chapter" data-level="4.2.1" data-path="cleaning-data.html"><a href="cleaning-data.html#missing-values"><i class="fa fa-check"></i><b>4.2.1</b> Missing values</a></li>
+<li class="chapter" data-level="4.2.2" data-path="cleaning-data.html"><a href="cleaning-data.html#changing-column-types"><i class="fa fa-check"></i><b>4.2.2</b> Changing column types</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="cleaning-data.html"><a href="cleaning-data.html"><i class="fa fa-check"></i><b>3.3</b> Cleaning data</a>
+<li class="chapter" data-level="4.3" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>4.3</b> Tidying</a></li>
+<li class="chapter" data-level="4.4" data-path="pivoting-columns.html"><a href="pivoting-columns.html"><i class="fa fa-check"></i><b>4.4</b> Pivoting columns</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="cleaning-data.html"><a href="cleaning-data.html#missing-values"><i class="fa fa-check"></i><b>3.3.1</b> Missing values</a></li>
-<li class="chapter" data-level="3.3.2" data-path="cleaning-data.html"><a href="cleaning-data.html#changing-column-types"><i class="fa fa-check"></i><b>3.3.2</b> Changing column types</a></li>
+<li class="chapter" data-level="4.4.1" data-path="pivoting-columns.html"><a href="pivoting-columns.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>4.4.1</b> Pivoting columns to rows (longer)</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>3.4</b> Tidying</a></li>
-<li class="chapter" data-level="3.5" data-path="summarisation.html"><a href="summarisation.html"><i class="fa fa-check"></i><b>3.5</b> Summarisation</a></li>
-<li class="chapter" data-level="3.6" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>3.6</b> Plotting</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="advanced-data-analysis.html"><a href="advanced-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Advanced data analysis</a>
+<li class="chapter" data-level="4.5" data-path="mutation-new-columns.html"><a href="mutation-new-columns.html"><i class="fa fa-check"></i><b>4.5</b> Mutation (new columns)</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="plotting-1.html"><a href="plotting-1.html"><i class="fa fa-check"></i><b>4.1</b> Plotting</a></li>
-<li class="chapter" data-level="4.2" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>4.2</b> Modelling</a></li>
+<li class="chapter" data-level="4.5.1" data-path="mutation-new-columns.html"><a href="mutation-new-columns.html#grouping"><i class="fa fa-check"></i><b>4.5.1</b> Grouping</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="summarisation.html"><a href="summarisation.html"><i class="fa fa-check"></i><b>4.6</b> Summarisation</a></li>
+<li class="chapter" data-level="4.7" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>4.7</b> Plotting</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="advanced-data-analysis.html"><a href="advanced-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Advanced data analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="plotting-1.html"><a href="plotting-1.html"><i class="fa fa-check"></i><b>5.1</b> Plotting</a></li>
+<li class="chapter" data-level="5.2" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>5.2</b> Modelling</a></li>
 </ul></li>
 </ul>
 
@@ -205,15 +217,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="summarisation" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Summarisation</h2>
+<div id="summarisation" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Summarisation</h2>
+<p>As we saw previously, the base videa game sales dataset has nearly 17,000 entries! That’s a lot of data, and we’re not really going to able to extract or show any real insights from this data without summarising it to some degree. What we want to do is summarise the data to some degree. We lose some of the granularity of the data but it allows is to understand the data a bit better and identify patterns.</p>
+<p>Summarisation uses exactly the same grouping concept as mutatation does; by grouping the data we change the scope of each application of the function to be limited to that group.</p>
+<p>Let’s go through an example. Let’s say that we want to get the total sales for each publisher in each year. For now, we don’t care about genre or platform. To do this, we’ll need to group by Publisher and by Year:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="summarisation.html#cb69-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb69-2"><a href="summarisation.html#cb69-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year)</span></code></pre></div>
+<p>And then we’ll want to sum up the <code>Global_Sales</code> column to get our totals:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="summarisation.html#cb70-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb70-2"><a href="summarisation.html#cb70-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb70-3"><a href="summarisation.html#cb70-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Global_Sales =</span> <span class="fu">sum</span>(Global_Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 2,379 x 3
+##    Publisher                    Year  Total_Global_Sales
+##    &lt;chr&gt;                        &lt;chr&gt;              &lt;dbl&gt;
+##  1 10TACLE Studios              2006                0.02
+##  2 10TACLE Studios              2007                0.09
+##  3 1C Company                   2009                0.01
+##  4 1C Company                   2011                0.09
+##  5 20th Century Fox Video Games 1981                1.35
+##  6 20th Century Fox Video Games 1982                0.59
+##  7 2D Boy                       2008                0.04
+##  8 3DO                          1998                0.4 
+##  9 3DO                          1999                4.14
+## 10 3DO                          2000                3.08
+## # … with 2,369 more rows</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="summarisation.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The .groups = &#39;drop&#39; parameter will automatically remove the groups</span></span></code></pre></div>
+<p>Now we can see that the number of rows has reduced down to just under 2,000, and we’ve got the total global sales for each of our publishers, and for each year. <code>{dplyr}</code> has looked through each publisher and each year that publisher has at least 1 game, and added up the total number of sales, then moved onto the next Publisher/Year combination.</p>
+<p>In this case we’ve used the <code>sum()</code> function, but any kind of summary function can be used:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="summarisation.html#cb73-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb73-2"><a href="summarisation.html#cb73-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb73-3"><a href="summarisation.html#cb73-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Global_Sales =</span> <span class="fu">sum</span>(Global_Sales),</span>
+<span id="cb73-4"><a href="summarisation.html#cb73-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Average_Global_Sales =</span> <span class="fu">mean</span>(Global_Sales))</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;Publisher&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 2,379 x 4
+## # Groups:   Publisher [579]
+##    Publisher                    Year  Total_Global_Sales Average_Global_Sales
+##    &lt;chr&gt;                        &lt;chr&gt;              &lt;dbl&gt;                &lt;dbl&gt;
+##  1 10TACLE Studios              2006                0.02                0.02 
+##  2 10TACLE Studios              2007                0.09                0.045
+##  3 1C Company                   2009                0.01                0.01 
+##  4 1C Company                   2011                0.09                0.045
+##  5 20th Century Fox Video Games 1981                1.35                0.45 
+##  6 20th Century Fox Video Games 1982                0.59                0.295
+##  7 2D Boy                       2008                0.04                0.04 
+##  8 3DO                          1998                0.4                 0.2  
+##  9 3DO                          1999                4.14                0.69 
+## 10 3DO                          2000                3.08                0.308
+## # … with 2,369 more rows</code></pre>
+<p>Because <code>dplyr::mutate()</code> and <code>dplyr::summarise()</code> both use a similar syntax and both function on grouped datasets, using the correct function when starting out can be tough. The best way to remember which one to use is to ask “How many rows am I expecting back from this?”. If the answer is fewer than you’ve got now, you’ll want the <code>summarise()</code> function. Otherwise you’re looking at <code>mutate()</code>.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="tidying.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="mutation-new-columns.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="plotting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
