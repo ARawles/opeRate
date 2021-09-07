@@ -797,7 +797,7 @@ To define our dataset and our aesthetic mappings using `{ggplot2}`, we use the `
 ```{r}
 library(ggplot2)
 
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales, colour = Publisher, n = 10))
+ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales, colour = Publisher))
 ```
 
 Here we've defined that we want to show the `Year` on the X axis, the `Total_Global_Sales` on the Y, and we want to map the `Publisher` to the colour of whatever we show on the plot.
@@ -816,6 +816,7 @@ We want lines for our example, so we use the `geom_line()` function. To add our 
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales, colour = Publisher)) +
   geom_line()
 ```
+
 This is equivalent to:
 
 ```{r, eval = FALSE}
@@ -828,12 +829,20 @@ Different geoms also allow for different mappings. For example, the line geom al
 
 #### Stats
 
-For a data point to be shown on the plot, it can go through a statistical transformation or 'stat'. In our plot so far, we have no statistical transformation - the value in the dataset is the value that's plotted. But we 
-Our two layers also share different 'stats' or statistical transformations. For our lines, we have no statistical transformation - the value in the dataset is the value that's plotted. For our regression line however, we use a statistical transformation to map the values in the dataset to the values that are plotted. We're using the "loess" method for this plot, which by default will use a `y ~ x` formula.
+For a data point to be shown on the plot, it can go through a statistical transformation or 'stat' which is set via the `stat` parameter of our `geom_...` function. We can see that when we call `geom_point()` the default value for the `stat` parameter is 'identity'. This means that `{ggplot2}` performs no stat transformation on the data before it plots it. 
+
+We can change this however, so that some form of stat is done on the data before it's plotted. For example, if we set the `stat` parameter to 'smooth', the values are transformed by a smoothing function (the function can be changed via the `method` parameter):
+
+```{r}
+ggplot(smmrsd_vg_sales) +
+  geom_line(mapping = aes(x = Year, y = Total_Global_Sales, colour = Publisher), stat = "smooth")
+```
+
+This call is equivalent to using the `geom_smooth()` function.
 
 #### Layers
 
-Together, the data, mapping, stat and geom components form a **layer**. A plot can be made up of multiple layers. For example, let's show the same data but overlay a regression line with a slightly different mapping:
+Together, the data, mapping, stat and geom components form a **layer**. A plot can be made up of multiple layers. For example, let's show the same data but overlay a regression line that uses a different stat and a different mapping:
 
 ```{r}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales)) +
@@ -841,13 +850,15 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales)) +
   geom_smooth(method = "loess", formula = y ~ x)
 ```
 
-We've now got two layers to this plot, with slightly different mappings and stats. The lines are split by Publisher, but the regression line does not use that colour mapping, meaning that we have one line for all the Publishers. The coloured lines also have no stat transformation, where the regression line does use a stat transformation - it calculates a smooth conditional mean of y given x (`y ~ x`).
+We've now got two layers to this plot, with slightly different mappings and stats. The colours lines are split by Publisher, but the regression line does not use that colour mapping, meaning that we have one line for all the Publishers. The coloured lines also have no stat transformation, where the regression line does use a stat transformation - it calculates a smooth conditional mean of y given x (`y ~ x`). In fact, we could even change the dataset for the two layers if we wanted to.
 
 In summary, a layer is made up of:
 
 * A dataset and aesthetic mapping (aes)
 * A statistical transformation (stat)
 * A geometric object (geom)
+
+And plots can be made of up one or more layers.
 
 ##### Facet
 
@@ -882,7 +893,7 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   geom_smooth(method = "loess", formula = y ~ x) +
   scale_x_continuous(name = "Year") +
-  scale_y_continuous(name = "Global Sales (Millions)") +
+  scale_y_continuous(name = "Global Sales (Millions)", limits = c(0, NA)) +
   scale_colour_brewer(name = "Publisher", palette = "BrBG")
 ```
 
@@ -891,11 +902,11 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   geom_smooth(method = "loess", formula = y ~ x) +
   scale_x_continuous(name = "Year") +
-  scale_y_continuous(name = "Global Sales (Millions)") +
+  scale_y_continuous(name = "Global Sales (Millions)", limits = c(0, NA)) +
   scale_colour_hue(name = "Publisher", l = 40, c = 30)
 ```
 
-Scales, like facets, are not part of the plot's layers. They will be constant across all layers in the plot.
+Scales, like facets, are not components of layers. They will be constant across all layers in the plot.
 
 ## Modelling
 
