@@ -464,11 +464,11 @@ To replace with the nearest value, we can use the `tidyr::fill()` function. That
 ## Fill a single column
 datasets::airquality %>%
   tidyr::fill(Ozone, .direction = "downup") %>%
-  print(n = 5)
+  head(5)
 
 datasets::airquality %>%
   tidyr::fill(dplyr::everything(), .direction = "downup") %>%
-  print(n = 5)
+  head(5)
 
 
 ```
@@ -823,7 +823,8 @@ ggplot(smmrsd_vg_sales) +
   geom_line(mapping = aes(x = Year, y = Total_Global_Sales, colour = Publisher))
 ```
 
-That looks a little bit more like a plot. We've now got our data, mappings, scales that represent our data variables in 2D space, and finally some geometric objects that represent our data points.
+
+Different geoms also allow for different mappings. For example, the line geom allows you to specify the `linetype` aesthetic that changes the way the line is drawn (solid, dashed, etc.) depending on the value of your variable. This aesthetic would mean nothing for the point geom however, which instead has an aesthetic called `shape`. To see which aesthetics are supported by which geoms, look at the documentation for the geom function you want to use (e.g `?geom_point`).
 
 #### Stats
 
@@ -837,19 +838,16 @@ Together, the data, mapping, stat and geom components form a **layer**. A plot c
 ```{r}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
-  geom_smooth(method = "loess")
+  geom_smooth(method = "loess", formula = y ~ x)
 ```
 
 We've now got two layers to this plot, with slightly different mappings and stats. The lines are split by Publisher, but the regression line does not use that colour mapping, meaning that we have one line for all the Publishers. The coloured lines also have no stat transformation, where the regression line does use a stat transformation - it calculates a smooth conditional mean of y given x (`y ~ x`).
-
-The two layers could also have have different underlying datasets if we wanted. But there are some features that must be shared by all the layers in a plot - the scales and the facets.
 
 In summary, a layer is made up of:
 
 * A dataset and aesthetic mapping (aes)
 * A statistical transformation (stat)
 * A geometric object (geom)
-
 
 ##### Facet
 
