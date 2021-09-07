@@ -231,8 +231,12 @@ Given that the title of this section is "Abstraction", what do you think I went 
 
 Structuring your analysis in this way helps you re-use or repurpose code in the future without having to copy and paste or duplicate any of your previous work.
 
-### Example
-
 It can be quite hard to understand the concept of structuring your project as a package without actually giving it a go, so let's go through an example. 
 
-## Git
+## Git & GitHub
+
+
+## Example
+
+* Do video game sales example
+* Create a repo in GitHub to host it 
