@@ -64,7 +64,7 @@ my_df %>%
 
 ```
 
-When you pass a column name like this, the tidyverse packages will quote that input and then evaluate the resulting expression in the context of the current data frame. So essentially, R looks for the `old_column` object in the context of `my_df`. Because dataframes are essentially just lists and lists can be treated like environments, it finds that object and so returns the content of that column.
+When you pass a column name like this, the tidyverse packages will quote that input and then evaluate the resulting expression in the context of the current data frame. So essentially, R looks for the `old_column` object in the context of `my_df`. Because dataframes are essentially just lists and lists can be treated like environments, it searches that environment for the `old_column` object and finds it, returning the contents of the column.
 
 ### tidyselect
 

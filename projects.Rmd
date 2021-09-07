@@ -1,14 +1,14 @@
 # Projects
 
-In this section, we're going to look at the best way to plan and structure your project. Not all of your analyses will be of sufficient size to warrant a big planning stage, but learning to use a common, separate structure for all of your different projects can really help keep your work clean. This becomes even more important when you begin to combine multiple projects and you want to make sure that they don't slowly start to creep into one. For example, imagine you've previously worked on a project that relied heavily on API data. Then, in your next project, you need to use much of the same data but to a very different end. By utilising this project structure (and more specifically, the idea of ["Projects as packages"](#projects-as-packages)), you'll be able to easily utilise work from previous projects without duplicating or merging code.
+Now we've learnt some basic data science skills, we're going to look at the best way to plan and structure your project. Not all of your analyses will be of sufficient size to warrant a big planning stage, but learning to use a common, separate structure for all of your different projects can really help keep your work clean. This becomes even more important when you begin to combine multiple projects and you want to make sure that they don't slowly start to creep into one. For example, imagine you've previously worked on a project that relied heavily on API data. Then, in your next project, you need to use much of the same data but to a very different end. By utilising this project structure (and more specifically, the idea of ["Projects as packages"](#projects-as-packages)), you'll be able to easily utilise work from previous projects without duplicating or merging code.
 
 ## Workflows
 
-Often the best way to start a data analysis project is to decide what you're workflow should be and roughly how long each bit is going to take.
+Often the best way to start a data analysis project is to decide what you're workflow should be, breaking your project into distinct stages that are relevant for your particular project.
 
-For instance, if you know that the data you're going to be working on is likely to be littered with mistakes and errors, then you should preemptively allocate a decent amount of your time to the "importing" and "cleaning" steps of your workflow. Similarly, if you're end goal is to produce a predictive model at the end, then work in a feedback loop where you inspect and evaluate your model before improving it in the next iteration.
+For instance, if you know that the data you're going to be working on is likely to be littered with mistakes and errors, then you should preemptively allocate a decent amount of your time to the "importing" and "cleaning" steps of your workflow. Similarly, if your end goal is to produce a predictive model at the end, then work in a feedback loop where you inspect and evaluate your model before improving it in the next iteration.
 
-Later on we're going to look at a set of packages called the tidyverse. These packages are designed to make data science easier, and the workflows we'll look at fit into this philosophy quite nicely. Each stage of these workflows is usually handled by a different package but with a common syntax and data structure underpinning them all. If you want to better understand the tidyverse before we look at the workflows, then skip ahead to the tidyverse [section](#tidyverse).
+The [tidyverse](#tidyverse) packages we discussed previously are designed to make data science easier, and the workflows we'll look at fit into this philosophy quite nicely. Each stage of these workflows is usually handled by a different package but with a common syntax and data structure underpinning them all.
 
 ### Basic Workflow
 
@@ -19,6 +19,7 @@ For these basic workflows, we're only going to look at a subset of all of the st
 * Importing
 * Cleaning
 * Tidying
+* Collating
 * Summarising
 * Plotting
 * Modelling
@@ -41,22 +42,20 @@ DiagrammeR::grViz("
   # several 'node' statements
   node [shape = box,
         fontname = Helvetica]
-  Import; Clean; Summarise; Plot; Evaluate; 
+  Import; Clean; Tidy; Summarise; Plot; Evaluate; 
 
   # several 'edge' statements
-  Import->Clean Clean->Summarise Summarise->Plot
+  Import->Clean Clean->Tidy Tidy->Summarise Summarise->Plot
   Plot->Evaluate Evaluate->Summarise Evaluate->Plot
 }
 ")
 ```
 
-We import the data and clean it, then we summarise it and create our plots. We can then use feedback from our colleague to change how we're summarising or how we're plotting the data to improve our plots until we're happy.
+We import the data and clean it and tidy it (more on that later), then we summarise it and create our plots. We can then use feedback from our colleague to change how we're summarising or how we're plotting the data to improve our plots until we're happy.
 
 #### Example 2: Modelling
 
-For this example, imagine a colleague has come to you about a modelling project. They have a number of relatively clean datasets that they want to combine and use to produce a predictive model. They're not too worried about plots or graphics, they're more interested in the model itself. Our workflow here would be similar to Example 1 but there would be some crucial differences. First, we know that we're going to combine multiple datasets into one which we will then use for our model. This is likely going to involve some data manipulation or 'tidying'.
-
-Back to Example 2, if we mapped out a workflow for this project, it might look a bit more like this:
+For this example, imagine a colleague has come to you about a modelling project. They have a number of relatively clean datasets that they want to combine and use to produce a predictive model. They're not too worried about plots or graphics, they're more interested in the model itself. If we mapped out a workflow for this project, it might look a bit more like this:
 
 ```{r,echo=FALSE}
 DiagrammeR::grViz("
@@ -68,16 +67,17 @@ DiagrammeR::grViz("
   # several 'node' statements
   node [shape = box,
         fontname = Helvetica]
-  Collate; Clean; Tidy; Evaluate; 
+  Load; Clean; Tidy; Collate; Model; Evaluate; 
 
   # several 'edge' statements
-  Collate->Clean Clean->Tidy Tidy->Model
+  Load->Clean Clean->Tidy Tidy->Collate Collate->Model
   Model->Evaluate Evaluate->Model
 }
 ")
 ```
 
 As you can see, we still end with the loop of modelling and then evaluating our model and using the output to update the model, but the steps we take to get there are a bit different.
+
 
 #### Summary
 
@@ -110,7 +110,7 @@ Functions do and variables and objects are. Almost all languages share this dist
 
 R is a functional language and so using and creating functions is at the very heart of programming in R. Rather than relying on R scripts that need to be run in their entirety to produce your output, by creating functions and using them in your analysis, you can more easily scale your project. For example, imagine your scope is initially to produce a report for the year. Then, after your done, your manager is so impressed with your report, they want you to do the same thing for the last 10 years. If you've used a couple of R scripts and you haven't written any functions, then this is likely going to involve copying and pasting a whole lot of code and changing the years. Instead, if you use functions to perform your analysis, then creating reports for multiple years can be as simple as changing your dataset.
 
-Later on we'll look at the concept of [**abstraction**](#definition) - removing levels of complexity to focus on the core operation - and this tip is heavily related to that concept. For now though, keep this thought in mind: If you find yourself copying and pasting your R code more than twice to do very similar things, you should probably be using a function.
+As a rough rule of thumb, if you find yourself copying and pasting your R code more than twice to do very similar things, you should probably be using a function.
 
 #### State your dependencies
 
@@ -122,7 +122,7 @@ library(dplyr)
 ```
 
 An extra step which few people do but can be very helpful is to still prepend your functions with which package they came from like this `dplyr::mutate()`. Not only does this avoid any namespace conflicts where two packages might have functions with the same name and you don't end up using the one you think you are because of the order of your `library()` calls, but it also makes it infinitely easier for anyone reading your code to find the package that a function comes from.
-Admittedly, this is overkill in a sense because we've already told R which packages we're using with our `library()` calls, but this practice can really improve the readability of your code.
+Admittedly, this is overkill in a sense because we've already told R which packages we're using with our `library()` calls and R has loaded in the objects from that package, but this practice can really improve the readability of your code.
 
 Later we'll look at designing our project as a package and packages have a different way of stating dependencies for the user, so this is primarily for the case where you're just sending a script or two to someone.
 
@@ -171,7 +171,7 @@ Whilst a README serves as a general introduction to the project, vignettes more 
 
 ## Projects as Packages
 
-To make a good, replicable and easy to understand project, you need a few things:
+With the last two chapters in mind, to make a good, replicable and easy to understand project, you need a few things:
 
 1. A clear structure
 3. Easily replicable code (e.g. consistent functions and clear dependencies)
@@ -180,7 +180,7 @@ To make a good, replicable and easy to understand project, you need a few things
 
 While you could easily fulfill all of these criteria with a standard RStudio project, there's already a type of project that conforms to these standards: *Packages*.
 
-While packages are primarily meant for collating and distributing new functionality, we can utilise the package structure and some of the tools that come along with package development to make our project easier to understand.
+While packages are primarily meant for collating and distributing new functionality, we can utilise the package structure and some of the tools that come along with package development in our projects.
 
 To better understand what a package is and how they are developed and maintained, I would recommend reading Hadley and Jenny Bryan's [R Packages book](https://r-pkgs.org/) book. Although that book is focused directly on developing packages for submission to CRAN, hopefully you'll be able to identify the parts that are going to be applicable to the way we're using packages.
 
@@ -231,3 +231,8 @@ Given that the title of this section is "Abstraction", what do you think I went 
 
 Structuring your analysis in this way helps you re-use or repurpose code in the future without having to copy and paste or duplicate any of your previous work.
 
+### Example
+
+It can be quite hard to understand the concept of structuring your project as a package without actually giving it a go, so let's go through an example. 
+
+## Git
