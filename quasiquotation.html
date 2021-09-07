@@ -163,8 +163,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="cleaning.html"><a href="cleaning.html"><i class="fa fa-check"></i><b>3.2</b> Cleaning</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="cleaning.html"><a href="cleaning.html#missing-values"><i class="fa fa-check"></i><b>3.2.1</b> Missing values</a></li>
-<li class="chapter" data-level="3.2.2" data-path="cleaning.html"><a href="cleaning.html#changing-column-types"><i class="fa fa-check"></i><b>3.2.2</b> Changing column types</a></li>
+<li class="chapter" data-level="3.2.1" data-path="cleaning.html"><a href="cleaning.html#filtering"><i class="fa fa-check"></i><b>3.2.1</b> Filtering</a></li>
+<li class="chapter" data-level="3.2.2" data-path="cleaning.html"><a href="cleaning.html#missing-values"><i class="fa fa-check"></i><b>3.2.2</b> Missing values</a></li>
+<li class="chapter" data-level="3.2.3" data-path="cleaning.html"><a href="cleaning.html#changing-column-types"><i class="fa fa-check"></i><b>3.2.3</b> Changing column types</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>3.3</b> Tidying</a>
 <ul>
@@ -220,11 +221,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In the <a href="https://teacher.arawles.co.uk">teacheR</a> book, we looked at the concept of quasiquotation; selectively quoting and then evaluating parts of an expression. The tidyverse packages rely heavily on this concept, which is why you’ll often see (for example) column names passed to the tidyverse packages as variable names rather than character strings, like this:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="quasiquotation.html#cb9-1" aria-hidden="true" tabindex="-1"></a>my_df <span class="sc">%&gt;%</span></span>
 <span id="cb9-2"><a href="quasiquotation.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">new_column =</span> old_column <span class="sc">+</span> <span class="dv">1</span>)</span></code></pre></div>
-<p>When you pass a column name like this, the tidyverse packages will quote that input and then evaluate the resulting expression in the context of the current data frame. So essentially, R looks for the <code>old_column</code> object in the context of <code>my_df</code>. Because dataframes are essentially just lists and lists can be treated like environments, it searches that environment for the <code>old_column</code> object and finds it, returning the contents of the column.</p>
+<p>This might seem odd when you first start using this approach; isn’t the function going to look for a variable in the global environment called <code>old_column</code> and then fail when it can’t find it?</p>
+<p>When you pass a column name like this, the tidyverse packages will quote that input and then evaluate the resulting expression in the context of the current data frame. So essentially, R looks for the <code>old_column</code> object in the context of <code>my_df</code>, rather than in the global environment. Because dataframes are essentially just lists and lists can be treated like environments, it searches that environment for the <code>old_column</code> object and finds it, returning the contents of the column.</p>
 <div id="tidyselect" class="section level3" number="2.3.1">
 <h3><span class="header-section-number">2.3.1</span> tidyselect</h3>
 <p>Much of this functionality is powered by a package called <code>{tidyselect}</code>. The <code>{tidyselect}</code> package provides a number of functions for selecting variables from datasets, reducing the time spent laboriously typing out the name of every variable you want to reference.</p>
-<p>To better understand the intracicies of the <code>{tidyselect}</code> dialect and how it interacts with the tidyverse packages, there are a number of <a href="https://tidyselect.r-lib.org/reference/language.html">vignettes</a> included in the package that explain things well. For now however, if you can understand the basic concept that variables are evaluated in the specific context of the dataset provided to the function, then you should be fine.</p>
+<p>To better understand the specifics of the <code>{tidyselect}</code> dialect and how it interacts with the tidyverse packages, there are a number of <a href="https://tidyselect.r-lib.org/reference/language.html">vignettes</a> included in the package that explain things well. For now however, if you can understand the basic concept that variables are evaluated in the specific context of the dataset provided to the function, then you should be fine.</p>
 
 </div>
 </div>

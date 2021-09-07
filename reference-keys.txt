@@ -28,7 +28,13 @@ what-are-apis
 accessing-apis-in-r
 bmrsr
 databases
+database-management-systems-and-odbc
+connecting-with-the-odbc-package
+authentication
+dsns
+querying-the-database
 cleaning
+filtering
 missing-values
 changing-column-types
 tidying

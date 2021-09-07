@@ -163,8 +163,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="cleaning.html"><a href="cleaning.html"><i class="fa fa-check"></i><b>3.2</b> Cleaning</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="cleaning.html"><a href="cleaning.html#missing-values"><i class="fa fa-check"></i><b>3.2.1</b> Missing values</a></li>
-<li class="chapter" data-level="3.2.2" data-path="cleaning.html"><a href="cleaning.html#changing-column-types"><i class="fa fa-check"></i><b>3.2.2</b> Changing column types</a></li>
+<li class="chapter" data-level="3.2.1" data-path="cleaning.html"><a href="cleaning.html#filtering"><i class="fa fa-check"></i><b>3.2.1</b> Filtering</a></li>
+<li class="chapter" data-level="3.2.2" data-path="cleaning.html"><a href="cleaning.html#missing-values"><i class="fa fa-check"></i><b>3.2.2</b> Missing values</a></li>
+<li class="chapter" data-level="3.2.3" data-path="cleaning.html"><a href="cleaning.html#changing-column-types"><i class="fa fa-check"></i><b>3.2.3</b> Changing column types</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>3.3</b> Tidying</a>
 <ul>
@@ -220,12 +221,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>As we saw previously, the base videa game sales dataset has nearly 17,000 entries! That’s a lot of data, and we’re not really going to able to extract or show any real insights from this data without summarising it to some degree. What we want to do is summarise the data to some degree. We lose some of the granularity of the data but it allows is to understand the data a bit better and identify patterns.</p>
 <p>Summarisation uses exactly the same <a href="grouping.html#grouping">grouping</a> concept as mutatation does; by grouping the data we change the scope of each application of the function to be limited to that group.</p>
 <p>Let’s go through an example. Let’s say that we want to get the total sales for each publisher in each year. For now, we don’t care about genre or platform. To do this, we’ll need to group by Publisher and by Year:</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="summarising.html#cb83-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb83-2"><a href="summarising.html#cb83-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="summarising.html#cb97-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb97-2"><a href="summarising.html#cb97-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year)</span></code></pre></div>
 <p>And then we’ll want to sum up the <code>Global_Sales</code> column to get our totals:</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="summarising.html#cb84-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb84-2"><a href="summarising.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year) <span class="sc">%&gt;%</span></span>
-<span id="cb84-3"><a href="summarising.html#cb84-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Global_Sales =</span> <span class="fu">sum</span>(Global_Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="summarising.html#cb98-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb98-2"><a href="summarising.html#cb98-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb98-3"><a href="summarising.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Global_Sales =</span> <span class="fu">sum</span>(Global_Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2,379 x 3
 ##    Publisher                    Year  Total_Global_Sales
 ##    &lt;chr&gt;                        &lt;chr&gt;              &lt;dbl&gt;
@@ -240,14 +241,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  9 3DO                          1999                4.14
 ## 10 3DO                          2000                3.08
 ## # … with 2,369 more rows</code></pre>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="summarising.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The .groups = &#39;drop&#39; parameter will automatically remove the groups</span></span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="summarising.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The .groups = &#39;drop&#39; parameter will automatically remove the groups</span></span></code></pre></div>
 <p>Now we can see that the number of rows has reduced down to just under 2,000, and we’ve got the total global sales for each of our publishers, and for each year. <code>{dplyr}</code> has looked through each publisher and each year that publisher has at least 1 game, and added up the total number of sales, then moved onto the next Publisher/Year combination.</p>
 <p>In this case we’ve used the <code>sum()</code> function, but any kind of summary function can be used:</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="summarising.html#cb87-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb87-2"><a href="summarising.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year) <span class="sc">%&gt;%</span></span>
-<span id="cb87-3"><a href="summarising.html#cb87-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Global_Sales =</span> <span class="fu">sum</span>(Global_Sales),</span>
-<span id="cb87-4"><a href="summarising.html#cb87-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Average_Global_Sales =</span> <span class="fu">mean</span>(Global_Sales),</span>
-<span id="cb87-5"><a href="summarising.html#cb87-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="summarising.html#cb101-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb101-2"><a href="summarising.html#cb101-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb101-3"><a href="summarising.html#cb101-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Global_Sales =</span> <span class="fu">sum</span>(Global_Sales),</span>
+<span id="cb101-4"><a href="summarising.html#cb101-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Average_Global_Sales =</span> <span class="fu">mean</span>(Global_Sales),</span>
+<span id="cb101-5"><a href="summarising.html#cb101-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2,379 x 4
 ##    Publisher                    Year  Total_Global_Sales Average_Global_Sales
 ##    &lt;chr&gt;                        &lt;chr&gt;              &lt;dbl&gt;                &lt;dbl&gt;
