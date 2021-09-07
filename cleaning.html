@@ -176,7 +176,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4" data-path="grouping.html"><a href="grouping.html"><i class="fa fa-check"></i><b>3.4</b> Grouping</a></li>
 <li class="chapter" data-level="3.5" data-path="mutating.html"><a href="mutating.html"><i class="fa fa-check"></i><b>3.5</b> Mutating</a></li>
 <li class="chapter" data-level="3.6" data-path="summarising.html"><a href="summarising.html"><i class="fa fa-check"></i><b>3.6</b> Summarising</a></li>
-<li class="chapter" data-level="3.7" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>3.7</b> Plotting</a></li>
+<li class="chapter" data-level="3.7" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>3.7</b> Plotting</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="plotting.html"><a href="plotting.html#ggplot2"><i class="fa fa-check"></i><b>3.7.1</b> ggplot2</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>3.8</b> Modelling</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>4</b> Projects</a>
 <ul>
@@ -195,9 +199,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#documentation-1"><i class="fa fa-check"></i><b>4.3.2</b> Documentation</a></li>
 <li class="chapter" data-level="4.3.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html#description"><i class="fa fa-check"></i><b>4.3.3</b> DESCRIPTION</a></li>
 <li class="chapter" data-level="4.3.4" data-path="projects-as-packages.html"><a href="projects-as-packages.html#abstraction"><i class="fa fa-check"></i><b>4.3.4</b> Abstraction</a></li>
-<li class="chapter" data-level="4.3.5" data-path="projects-as-packages.html"><a href="projects-as-packages.html#example"><i class="fa fa-check"></i><b>4.3.5</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="git.html"><a href="git.html"><i class="fa fa-check"></i><b>4.4</b> Git</a></li>
+<li class="chapter" data-level="4.4" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>4.4</b> Git &amp; GitHub</a></li>
+<li class="chapter" data-level="4.5" data-path="example.html"><a href="example.html"><i class="fa fa-check"></i><b>4.5</b> Example</a></li>
 </ul></li>
 </ul>
 
@@ -218,7 +222,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="cleaning" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Cleaning</h2>
-<p>Loading data is often just the first step in your project. Most of the time, you’ll have messy datasets with odd columns and missing data points that you’ll need to deal with before you can actually do any meaningful analysis: you’ll need to <strong>clean</strong> your data.</p>
+<p>Now you should have some data loaded into R. Most of the time however, you’ll have messy datasets with odd columns and missing data points that you’ll need to deal with before you can actually do any meaningful analysis: you’ll need to <strong>clean</strong> your data.</p>
 <p>Here are some of the more common operations that you’ll be doing when it comes to data cleaning:</p>
 <ul>
 <li>Filtering</li>
@@ -226,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Changing column types</li>
 </ul>
 <p>Let’s look at how we might do these tasks in R using the <code>datasets::airquality</code> dataset as an example.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="cleaning.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datasets<span class="sc">::</span>airquality, <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="cleaning.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datasets<span class="sc">::</span>airquality, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##    Ozone Solar.R Wind Temp Month Day
 ## 1     41     190  7.4   67     5   1
 ## 2     36     118  8.0   72     5   2
@@ -241,9 +245,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="filtering" class="section level3" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> Filtering</h3>
 <p>In some cases, you’ll only want a subset of the data that’s been provided to you. To filter the dataset down, use the <code>dplyr::filter()</code> function and provide your criteria:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="cleaning.html#cb38-1" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
-<span id="cb38-2"><a href="cleaning.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Month <span class="sc">==</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb38-3"><a href="cleaning.html#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="cleaning.html#cb46-1" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="cleaning.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Month <span class="sc">==</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="cleaning.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##   Ozone Solar.R Wind Temp Month Day
 ## 1    41     190  7.4   67     5   1
 ## 2    36     118  8.0   72     5   2
@@ -251,16 +255,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4    18     313 11.5   62     5   4
 ## 5    NA      NA 14.3   56     5   5</code></pre>
 <p>You can utilise the <code>&amp;</code> and <code>|</code> operators (<code>and</code> and <code>or</code> respectively) to create more complicated criteria. You can also separate your expressions with commas, which is equivalent to <code>&amp;</code>:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="cleaning.html#cb40-1" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
-<span id="cb40-2"><a href="cleaning.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Month <span class="sc">==</span> <span class="dv">5</span> <span class="sc">|</span> Month <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb40-3"><a href="cleaning.html#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="cleaning.html#cb48-1" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb48-2"><a href="cleaning.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Month <span class="sc">==</span> <span class="dv">5</span> <span class="sc">|</span> Month <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb48-3"><a href="cleaning.html#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>##   Ozone Solar.R Wind Temp Month Day
 ## 1    41     190  7.4   67     5   1
 ## 2    36     118  8.0   72     5   2</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="cleaning.html#cb42-1" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
-<span id="cb42-2"><a href="cleaning.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Month <span class="sc">==</span> <span class="dv">5</span>, Temp <span class="sc">&gt;</span> <span class="dv">70</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb42-3"><a href="cleaning.html#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># equivalent to dplyr::filter(Month == 5 &amp; Temp &gt; 70)</span></span>
-<span id="cb42-4"><a href="cleaning.html#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="cleaning.html#cb50-1" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb50-2"><a href="cleaning.html#cb50-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Month <span class="sc">==</span> <span class="dv">5</span>, Temp <span class="sc">&gt;</span> <span class="dv">70</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-3"><a href="cleaning.html#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># equivalent to dplyr::filter(Month == 5 &amp; Temp &gt; 70)</span></span>
+<span id="cb50-4"><a href="cleaning.html#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>##   Ozone Solar.R Wind Temp Month Day
 ## 1    36     118  8.0   72     5   2
 ## 2    12     149 12.6   74     5   3</code></pre>
@@ -268,42 +272,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="missing-values" class="section level3" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> Missing values</h3>
 <p>Missing values are common in data science - data collection is often imperfect and so you’ll end up with observations or data-points missing. Firstly, you need to decide what you’re going to do with those.</p>
-<p>The easiest approach to just to remove them, and we can do that with the <code>dplyr::filter()</code> and the <code>is.na()</code> functions:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="cleaning.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To remove rows with NA in one column</span></span>
-<span id="cb44-2"><a href="cleaning.html#cb44-2" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span> </span>
-<span id="cb44-3"><a href="cleaning.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Ozone)) <span class="sc">%&gt;%</span></span>
-<span id="cb44-4"><a href="cleaning.html#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
-<pre><code>##   Ozone Solar.R Wind Temp Month Day
-## 1    41     190  7.4   67     5   1
-## 2    36     118  8.0   72     5   2
-## 3    12     149 12.6   74     5   3
-## 4    18     313 11.5   62     5   4
-## 5    28      NA 14.9   66     5   6</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="cleaning.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To remove rows with NA in any column</span></span>
-<span id="cb46-2"><a href="cleaning.html#cb46-2" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span> </span>
-<span id="cb46-3"><a href="cleaning.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="sc">~!</span><span class="fu">is.na</span>(.x))) <span class="sc">%&gt;%</span></span>
-<span id="cb46-4"><a href="cleaning.html#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
-<pre><code>##   Ozone Solar.R Wind Temp Month Day
-## 1    41     190  7.4   67     5   1
-## 2    36     118  8.0   72     5   2
-## 3    12     149 12.6   74     5   3
-## 4    18     313 11.5   62     5   4
-## 5    23     299  8.6   65     5   7</code></pre>
+<p>The easiest approach to just to remove them, and we can do that with the <code>dplyr::filter()</code> and the <code>is.na()</code> functions. If you remember in the <a href="loading.html#loading">Loading</a> chapter, <code>{readr}</code> had trouble parsing some of the values in our Year column to numeric, and so gave us some NAs. Let’s remove those rows using this approach:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="cleaning.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To remove rows with NA in one column</span></span>
+<span id="cb52-2"><a href="cleaning.html#cb52-2" aria-hidden="true" tabindex="-1"></a>clean_vg_sales <span class="ot">&lt;-</span> vg_sales <span class="sc">%&gt;%</span> </span>
+<span id="cb52-3"><a href="cleaning.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Year))</span>
+<span id="cb52-4"><a href="cleaning.html#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(clean_vg_sales, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 16,327 x 11
+##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
+##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1     1 Wii … Wii       2006 Spor… Nintendo      41.5    29.0      3.77
+## 2     2 Supe… NES       1985 Plat… Nintendo      29.1     3.58     6.81
+## 3     3 Mari… Wii       2008 Raci… Nintendo      15.8    12.9      3.79
+## 4     4 Wii … Wii       2009 Spor… Nintendo      15.8    11.0      3.28
+## 5     5 Poke… GB        1996 Role… Nintendo      11.3     8.89    10.2 
+## # … with 16,322 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
+## #   Global_Sales &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="cleaning.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To remove rows with NA in any column</span></span>
+<span id="cb54-2"><a href="cleaning.html#cb54-2" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span> </span>
+<span id="cb54-3"><a href="cleaning.html#cb54-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="sc">~!</span><span class="fu">is.na</span>(.x))) <span class="sc">%&gt;%</span></span>
+<span id="cb54-4"><a href="cleaning.html#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 16,327 x 11
+##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
+##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1     1 Wii … Wii       2006 Spor… Nintendo      41.5    29.0      3.77
+## 2     2 Supe… NES       1985 Plat… Nintendo      29.1     3.58     6.81
+## 3     3 Mari… Wii       2008 Raci… Nintendo      15.8    12.9      3.79
+## 4     4 Wii … Wii       2009 Spor… Nintendo      15.8    11.0      3.28
+## 5     5 Poke… GB        1996 Role… Nintendo      11.3     8.89    10.2 
+## # … with 16,322 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
+## #   Global_Sales &lt;dbl&gt;</code></pre>
 <p>Another approach to replace them with either the average for that column or with the closest neighbour value (this works better with time series data).</p>
-<p>To replace with the nearest value, we can use the <code>tidyr::fill()</code> function:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="cleaning.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fill a single column</span></span>
-<span id="cb48-2"><a href="cleaning.html#cb48-2" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
-<span id="cb48-3"><a href="cleaning.html#cb48-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">fill</span>(Ozone, <span class="at">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb48-4"><a href="cleaning.html#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<p>To replace with the nearest value, we can use the <code>tidyr::fill()</code> function. That approach wouldn’t be appropriate for our video games example so let’s use the <code>datasets::airquality</code> dataset instead:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="cleaning.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fill a single column</span></span>
+<span id="cb56-2"><a href="cleaning.html#cb56-2" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="cleaning.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">fill</span>(Ozone, <span class="at">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb56-4"><a href="cleaning.html#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##   Ozone Solar.R Wind Temp Month Day
 ## 1    41     190  7.4   67     5   1
 ## 2    36     118  8.0   72     5   2
 ## 3    12     149 12.6   74     5   3
 ## 4    18     313 11.5   62     5   4
 ## 5    18      NA 14.3   56     5   5</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="cleaning.html#cb50-1" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
-<span id="cb50-2"><a href="cleaning.html#cb50-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">fill</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="at">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb50-3"><a href="cleaning.html#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="cleaning.html#cb58-1" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb58-2"><a href="cleaning.html#cb58-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">fill</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="at">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb58-3"><a href="cleaning.html#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##   Ozone Solar.R Wind Temp Month Day
 ## 1    41     190  7.4   67     5   1
 ## 2    36     118  8.0   72     5   2
@@ -311,14 +323,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4    18     313 11.5   62     5   4
 ## 5    18     313 14.3   56     5   5</code></pre>
 <p>To replace them with the mean, we can either use a package like <code>zoo</code>, or we can use the <code>tidyverse</code> packages and our own function:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="cleaning.html#cb52-1" aria-hidden="true" tabindex="-1"></a>replace_with_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb52-2"><a href="cleaning.html#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(x, <span class="fu">is.na</span>(x), <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb52-3"><a href="cleaning.html#cb52-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb52-4"><a href="cleaning.html#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-5"><a href="cleaning.html#cb52-5" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
-<span id="cb52-6"><a href="cleaning.html#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The mutate function creates new columns or overwrites existing ones</span></span>
-<span id="cb52-7"><a href="cleaning.html#cb52-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), replace_with_mean)) <span class="sc">%&gt;%</span></span>
-<span id="cb52-8"><a href="cleaning.html#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="cleaning.html#cb60-1" aria-hidden="true" tabindex="-1"></a>replace_with_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb60-2"><a href="cleaning.html#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(x, <span class="fu">is.na</span>(x), <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb60-3"><a href="cleaning.html#cb60-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb60-4"><a href="cleaning.html#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-5"><a href="cleaning.html#cb60-5" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb60-6"><a href="cleaning.html#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The mutate function creates new columns or overwrites existing ones</span></span>
+<span id="cb60-7"><a href="cleaning.html#cb60-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), replace_with_mean)) <span class="sc">%&gt;%</span></span>
+<span id="cb60-8"><a href="cleaning.html#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##      Ozone  Solar.R Wind Temp Month Day
 ## 1 41.00000 190.0000  7.4   67     5   1
 ## 2 36.00000 118.0000  8.0   72     5   2
@@ -331,21 +343,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.2.3</span> Changing column types</h3>
 <p>When you import data into R, sometimes the type of the column doesn’t match what you want it to be. One way of tackling this is to define your column types when you import the data (as we looked at before), but it’s also perfectly acceptable to change the column type after the import.</p>
 <p>Probably the most common conversion is from a character string to a date. For this example, we’re just going to use some test data:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="cleaning.html#cb54-1" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(<span class="sc">~</span>bad_date, <span class="sc">~</span>value,</span>
-<span id="cb54-2"><a href="cleaning.html#cb54-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2012/01/01&quot;</span>, <span class="dv">100</span>,</span>
-<span id="cb54-3"><a href="cleaning.html#cb54-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2014/06/01&quot;</span>, <span class="dv">200</span>)</span>
-<span id="cb54-4"><a href="cleaning.html#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-5"><a href="cleaning.html#cb54-5" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="sc">%&gt;%</span></span>
-<span id="cb54-6"><a href="cleaning.html#cb54-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">good_date =</span> <span class="fu">as.Date</span>(bad_date, <span class="at">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="cleaning.html#cb62-1" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(<span class="sc">~</span>bad_date, <span class="sc">~</span>value,</span>
+<span id="cb62-2"><a href="cleaning.html#cb62-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2012/01/01&quot;</span>, <span class="dv">100</span>,</span>
+<span id="cb62-3"><a href="cleaning.html#cb62-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2014/06/01&quot;</span>, <span class="dv">200</span>)</span>
+<span id="cb62-4"><a href="cleaning.html#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-5"><a href="cleaning.html#cb62-5" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="sc">%&gt;%</span></span>
+<span id="cb62-6"><a href="cleaning.html#cb62-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">good_date =</span> <span class="fu">as.Date</span>(bad_date, <span class="at">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##   bad_date   value good_date 
 ##   &lt;chr&gt;      &lt;dbl&gt; &lt;date&gt;    
 ## 1 2012/01/01   100 2012-01-01
 ## 2 2014/06/01   200 2014-06-01</code></pre>
 <p>Essentially, all you need to do is wrap your conversion function (e.g. <code>as.Date()</code>, <code>as.character()</code>) in a <code>dplyr::mutate()</code> call and you should be able to change your columns to whatever you need. To replace the original column, make sure you give it the same name when using <code>dplyr::mutate()</code>:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="cleaning.html#cb56-1" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="sc">%&gt;%</span></span>
-<span id="cb56-2"><a href="cleaning.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This will replace the bad_date column rather than creating a new column</span></span>
-<span id="cb56-3"><a href="cleaning.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">bad_date =</span> <span class="fu">as.Date</span>(bad_date, <span class="at">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="cleaning.html#cb64-1" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="sc">%&gt;%</span></span>
+<span id="cb64-2"><a href="cleaning.html#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This will replace the bad_date column rather than creating a new column</span></span>
+<span id="cb64-3"><a href="cleaning.html#cb64-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">bad_date =</span> <span class="fu">as.Date</span>(bad_date, <span class="at">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   bad_date   value
 ##   &lt;date&gt;     &lt;dbl&gt;

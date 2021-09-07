@@ -45,6 +45,15 @@ grouping
 mutating
 summarising
 plotting
+ggplot2
+components
+data-and-aesthetic-mappings
+geometric-objects-geoms
+stats
+layers
+facet
+scales
+modelling
 projects
 workflows
 basic-workflow
@@ -72,5 +81,5 @@ long-form
 description
 dependencies
 abstraction
+git-github
 example
-git
