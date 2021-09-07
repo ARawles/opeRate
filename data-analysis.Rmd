@@ -159,7 +159,7 @@ Loading static data from text and Excel files is very common. However, an emergi
 
 API stands for application programming interface. APIs are essentially just a set of functions for interacting with an application or service. For instance, many of the packages that you'll use will essentially just be forms of API; they provide you with functions to interact with an underlying system or service.
 
-For data extraction, we're going to focus more specifically on web-based APIs. These APIs use the HTTP protocols to accept requests and then return the data requested. Whilst there are multiple *methods* that can be implemented in an API to perform different actions, we're going to focus on `GET` functions. That is, we're purely *getting* something from the API rather than trying to change anything that's stored on the server. You can think of the `GET` method as being read-only.
+For data extraction, we're going to focus more specifically on web-based APIs. These APIs use the HTTP protocols to accept requests and then return the data requested. Whilst there are multiple *methods* that can be implemented in an API to perform different actions, we're going to focus on the `GET` method. That is, we're purely *getting* something from the API rather than trying to change anything that's stored on the server. You can think of the `GET` method as being read-only.
 
 To start with, we're going to look at exactly how you would interact with an API, but then we'll look at the BMRSr package, which I wrote to make interacting with the Balancing Mechanism and Reporting Service easier.
 
@@ -179,6 +179,8 @@ That seems like a really complicated response at first, but when we look at each
     + This is telling us where we got our response from. In this case, we sent a request to Google, so we got a response from Google.
 * Date
     + Fairly self-explanatory - the date and time of the response.
+* Status
+    + [Status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) give you an indication of how the handling of the request went. 200 means "Success".
 * Content-Type
     + This is telling us what type the response is. In this case, the response is just a HTML page, which is exactly what we expect as that's what you get when you type "google.com" into your browser.
 * Size
@@ -275,7 +277,103 @@ And there we have it, we've retrieved a energy-related dataset from an API using
 
 ### Databases
 
-\\TO DO
+In the corporate world or when you're dealing with larger systems, you'll often have some form of database that stores all of the system data. This database can function as a great repository of data for your analyses, and by utilising a live connection to the database, we can easily update our analyses in the future.
+
+In this section, we'll really only cover the basics of how R can interact with an SQL database, so don't feel as though you need to be a data engineer expert to understand this section. As long as you know the tiniest bit of SQL, you should be fine.
+
+#### Database Management Systems and ODBC
+
+There are lots of different types of database managements systems (DBMS) such as SQL Server, MySQL, MariaDB, and so on. These DBMSs allow us to create and maintain databases.
+
+When we connect to our database, we do so through our DBMS, but all of them have slightly different implementations. This means that if we developed a package to connect to one type of database (like MySQL), we'd have to create an entirely different package to do the same thing with a MariaDB database. This is where the Open Database Connectivity (ODBC) standard comes in. The ODBC standard allows is to interface with databases that use different DBMS systems using a common API. This means that we could swap out our SQL Server database with a MySQL one, and we wouldn't need to make too many changes. The ODBC standard is implemented via a driver; this driver functions as an interface layer between our application (R) and the database.
+
+So when we connect to a database with R we go in this order:
+
+R -> ODBC Driver -> DBMS
+
+R tells the ODBC driver to run a query, and then the ODBC driver converts that request to one that can be interpreted by the DBMS that it was built for. This means that as long as we've got the appropriate ODBC driver for our DBMS, we can use (basically) the same R code to interact with any kind of ODBC-compliant database.
+
+So to connect to our database, we're going to need 2 things:
+
+* The `odbc` R package
+    + This provides us with the R functions to create our connections and run our queries as so on.
+    + Think of the `odbc` package as a set of tools for interacting with any ODBC database; it knows how to interface with the ODBC drivers, not the DBMS.
+* The ODBC driver for our database
+    + This is the actual driver used by the `odbc` package that communicates with the database.
+    + This is the implementation of the ODBC standard for the database we're using.
+    
+#### Connecting with the `odbc` package
+
+For this example, let's say that we're using an SQL Server database, and so we've got the ODBC Driver 17 for SQL Server installed.
+
+First, let's make sure we've got the driver detected:
+
+```{r, eval = FALSE}
+odbc::odbcListDrivers()
+```
+
+```{r, echo = FALSE}
+print(structure(list(name = c("ODBC Driver 17 for SQL Server", "ODBC Driver 17 for SQL Server", 
+"ODBC Driver 17 for SQL Server"), attribute = c("Description", 
+"Driver", "UsageCount"), value = c("Microsoft ODBC Driver 17 for SQL Server", 
+"/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.7.so.2.1", 
+"1")), class = "data.frame", row.names = c(NA, -3L)))
+```
+
+
+We can see our driver has been detected. Now we can use the `odbc::dbConnect()` function to create a connection to our database that we can then use to run queries:
+
+```{r, eval = FALSE}
+my_connection <- odbc::dbConnect(drv = odbc::odbc(),
+                                 driver = "ODBC Driver 17 for SQL Server",
+                                 server = "SQLDATABASESERVER" # You'll need to change this to your server
+                                 database = "SQLDATABASE") # You'll need to change this to your database
+```
+
+With the `drv` parameter we're specifying the type of driver that we're using as a `DBIDriver` object. Because we're using an ODBC driver, we can use the `odbc::odbc()` function that returns a `DBIDriver` object. The `driver` parameter expects a character string of the actual driver we're going to use (not the type), so that's where we enter the name we saw when we ran the `odbc::odbcListDrivers()` function. The `server` is the server that your database is being on hosted on and the `database` parameter is the database on the server that you want to connect to.
+
+The `odbc` will use this information to create a [connection string](https://www.connectionstrings.com/) that it will then use to try and connect to the database.
+
+**Note:**
+You'll want to make sure you assign your connection to something because we'll be passing the connection object to some other functions soon. 
+
+
+##### Authentication
+
+You might also have to specify some credentials when you try and connect to your database. To provide a username and password, just use the `uid` and `pwd` parameters. If your database supports it, you can use Windows Authentication, meaning that you don't need to provide an explicit username and password - the database will use your Windows account instead. To force the driver to try and use this type of authentication, you can add a `Trusted_Connection` parameter to the function call and set the value to `"Yes"` (not `TRUE` or `"TRUE"`). This parameter is then added to the connection string via the `...` argument of the `odbc::dbConnect()` function.
+
+##### DSNs
+
+Instead of specifying this information via the `odbc::dbConnect()` function, you can also create a Data Source Name (DSN) entry. This contains essentially the same information as we provided (the server location, the database, access credentials and so on) but then allows us to just use the `dsn` parameter of the `odbc::dbConnect()` function.
+
+A DSN entry might look like this:
+
+```
+[MyDatabase]
+Driver = /opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.7.so.2.1
+Server = SQLDATABASESERVER
+Database = SQLDATABASE
+Port = 1234
+
+```
+
+This can be particularly useful if you're working in more than one environment, where you might want to connect to the same database but the connection string is going to be different for each environment. Instead, you can create a Data Source Name entry with the same name but with different specifications, and then use the same `odbc::dbConnect(drv = odbc::odbc(), dsn = "MyDatabase")` call in both.
+
+I won't go into exactly how to add DSNs here because it depends on your driver and your OS, but the process is pretty simple once you've found the right information for your setup.
+
+#### Querying the database
+
+Now we've got our connection (`my_connection`), we can send queries to the database. To send queries and get back the results in one step, we can use the `odbc::dbGetQuery()` function, passing the connection and then the string containing the SQL we want to execute.
+
+```{r, eval = FALSE}
+odbc::dbGetQuery(my_connection, "select top 1 Id from dbo.ExampleTable")
+```
+
+```{r, echo = FALSE}
+data.frame(Id = 1)
+```
+
+We then get back the data as a normal R data.frame. R will deal with the data type conversion, but the exact conversion is dependent on the driver. Luckily, Microsoft provide a [complete breakdown](https://docs.microsoft.com/en-us/sql/machine-learning/r/r-libraries-and-data-types?view=sql-server-ver15) of how data types are mapped between on R and SQL Server on their website.
 
 
 ## Cleaning
@@ -284,11 +382,9 @@ Loading data is often just the first step in your project. Most of the time, you
 
 Here are some of the more common operations that you'll be doing when it comes to data cleaning:
 
+* Filtering
 * Removing/replacing missing values
 * Changing column types
-* Combining columns
-* Renaming columns
-* Checking for anomalies
 
 Let's look at how we might do these tasks in R using the `datasets::airquality` dataset as an example.
 
@@ -296,11 +392,34 @@ Let's look at how we might do these tasks in R using the `datasets::airquality` 
 head(datasets::airquality, 10)
 ```
 
+### Filtering
+
+In some cases, you'll only want a subset of the data that's been provided to you. To filter the dataset down, use the `dplyr::filter()` function and provide your criteria:
+
+```{r}
+datasets::airquality %>%
+  dplyr::filter(Month == 5) %>%
+  head(5)
+```
+
+You can utilise the `&` and `|` operators (`and` and `or` respectively) to create more complicated criteria. You can also separate your expressions with commas, which is equivalent to `&`:
+
+```{r}
+datasets::airquality %>%
+  dplyr::filter(Month == 5 | Month == 6) %>%
+  head(2)
+
+datasets::airquality %>%
+  dplyr::filter(Month == 5, Temp > 70) %>%
+  # equivalent to dplyr::filter(Month == 5 & Temp > 70)
+  head(2)
+```
+
 ### Missing values
 
 Missing values are common in data science - data collection is often imperfect and so you'll end up with observations or data-points missing. Firstly, you need to decide what you're going to do with those.
 
-The easiest approach to just to remove them, and we can do that with the `dplyr::filter()` function:
+The easiest approach to just to remove them, and we can do that with the `dplyr::filter()` and the `is.na()` functions:
 
 ```{r}
 ## To remove rows with NA in one column
@@ -341,6 +460,7 @@ replace_with_mean <- function(x) {
 }
 
 datasets::airquality %>%
+  # The mutate function creates new columns or overwrites existing ones
   dplyr::mutate(dplyr::across(dplyr::everything(), replace_with_mean)) %>%
   head(5)
 ```
@@ -365,12 +485,17 @@ bad_tibble %>%
 
 ```
 
-Essentially, all you need to do is wrap your conversion function (e.g. `as.Date()`, `as.character()`) in a `dplyr::mutate()` call and you should be able to change your columns to whatever you need.
+Essentially, all you need to do is wrap your conversion function (e.g. `as.Date()`, `as.character()`) in a `dplyr::mutate()` call and you should be able to change your columns to whatever you need. To replace the original column, make sure you give it the same name when using `dplyr::mutate()`:
+
+```{r}
+bad_tibble %>%
+  # This will replace the bad_date column rather than creating a new column
+  dplyr::mutate(bad_date = as.Date(bad_date, format = "%Y/%m/%d"))
+```
 
 ## Tidying
 
-Now that you know your dataset is clean, you'll want to get it into a format that is amenable to your analysis. This is the **tidying** stage. To better understand what "tidy" data is and why we're trying to get our data into this format, go back to the [tidyverse](#tidyverse) chapter.
-
+Now that you know your dataset is clean, you'll want to get it into a format that is amenable to your analysis. This is the **tidying** stage. To better understand what "tidy" data is and why we're trying to get our data into this format, make sure you've read the [tidyverse](#tidyverse) chapter.
 
 ### Pivoting columns
 
@@ -475,6 +600,8 @@ print(tidy_column_example, n = 3)
 ```
 
 Now our code will work regardless of how many months there are.
+
+This is just one example of how we could convert one form of 'messy' data to the tidy format. In the wild you'll get data that violates any of the three cardinal rules in many different ways, and we just don't have the space to go through it here. If you do need how to convert some of the other forms of messy data, then the `{tidyr}` package has a number of [vignettes](https://tidyr.tidyverse.org/articles/index.html) outlining many different ways to use the tidying tools it provides.
 
 ### Pivoting rows to columns (wider)
 
