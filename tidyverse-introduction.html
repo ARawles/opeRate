@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>8.1 Filtering | opeRate</title>
+  <title>2 Introduction | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="8.1 Filtering | opeRate" />
+  <meta property="og:title" content="2 Introduction | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="8.1 Filtering | opeRate" />
+  <meta name="twitter:title" content="2 Introduction | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="cleaning.html"/>
-<link rel="next" href="missing-values.html"/>
+<link rel="prev" href="using-r.html"/>
+<link rel="next" href="tidy-data.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -275,52 +275,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="filtering" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Filtering</h2>
-<p>In some cases, you’ll only want a subset of the data that’s been provided to you. To filter the dataset down, use the <code>dplyr::filter()</code> function and provide your criteria:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="filtering.html#cb43-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb43-2"><a href="filtering.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Year <span class="sc">&gt;</span> <span class="dv">200</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb43-3"><a href="filtering.html#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 16,327 x 11
-##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
-##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1     1 Wii … Wii       2006 Spor… Nintendo      41.5    29.0      3.77
-## 2     2 Supe… NES       1985 Plat… Nintendo      29.1     3.58     6.81
-## 3     3 Mari… Wii       2008 Raci… Nintendo      15.8    12.9      3.79
-## 4     4 Wii … Wii       2009 Spor… Nintendo      15.8    11.0      3.28
-## 5     5 Poke… GB        1996 Role… Nintendo      11.3     8.89    10.2 
-## # … with 16,322 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
-## #   Global_Sales &lt;dbl&gt;</code></pre>
-<p>You can utilise the <code>&amp;</code> and <code>|</code> operators (<code>and</code> and <code>or</code> respectively) to create more complicated criteria. You can also separate your expressions with commas, which is equivalent to <code>&amp;</code>:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="filtering.html#cb45-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb45-2"><a href="filtering.html#cb45-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">1999</span> <span class="sc">|</span> Year <span class="sc">==</span> <span class="dv">2000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb45-3"><a href="filtering.html#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 687 x 11
-##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
-##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1    13 Poke… GB        1999 Role… Nintendo      9        6.18     7.2 
-## 2    70 Gran… PS        1999 Raci… Sony Com…     3.88     3.42     1.69
-## # … with 685 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
-## #   Global_Sales &lt;dbl&gt;</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="filtering.html#cb47-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb47-2"><a href="filtering.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">1999</span>, Platform <span class="sc">==</span> <span class="st">&quot;GB&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb47-3"><a href="filtering.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># equivalent to dplyr::filter(Year == 1999 &amp; Platform == &quot;GB&quot;)</span></span>
-<span id="cb47-4"><a href="filtering.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 11 x 11
-##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
-##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1    13 Poke… GB        1999 Role… Nintendo      9        6.18     7.2 
-## 2   172 Poke… GB        1999 Misc  Nintendo      3.02     1.12     1.01
-## # … with 9 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
-## #   Global_Sales &lt;dbl&gt;</code></pre>
+<div id="tidyverse-introduction" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Introduction</h1>
+<p>As we learnt in the <a href="teacher.arawles.co.uk">teacheR</a> book, R is supported by thousands of packages that provide extra functionality to the base R experience. One of the most popular sets of packages developed by Hadley Wickham and the RStudio Team is called the <a href="https://www.tidyverse.org/">tidyverse</a>. The tidyverse is made up of packages designed for data science work that are all underpinned by a common philosophy and a common syntax. At the core of this philosophy is the concept of “tidiness” in data.</p>
+<p>The tidyverse is a set of <strong>opinionated</strong> packages. That means that there’s (usually) a right way to do things with the package, and there’s a wrong way. There’s much debate in the R community as to whether relying heavily on opinionated external packages such as those included in the tidyverse is a good thing. Personally, I think that the packages included in the tidyverse are fantastic, and are a large reason why R is thriving today.</p>
+<p>So in this book, we’re a tidyverse family, and we’ll be using the tidyverse packages throughout.</p>
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="cleaning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="missing-values.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="using-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tidy-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

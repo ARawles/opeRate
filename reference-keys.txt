@@ -3,12 +3,12 @@ overview
 acknowledgements
 about-me
 using-r
-introduction-tidyverse-introduction
+tidyverse-introduction
 tidy-data
 the-pipe
 quasiquotation
 tidyselect
-introduction-da-intro
+da-intro
 loading
 rds
 advantages
@@ -54,7 +54,7 @@ layers
 facet
 scales
 modelling
-introduction-projects-introduction
+projects-introduction
 workflows
 basic-workflow
 example-1-reporting
