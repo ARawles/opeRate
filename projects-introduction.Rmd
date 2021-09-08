@@ -1,3 +1,3 @@
-# Introduction (#projects-introduction)
+# Introduction {#projects-introduction}
 
 Now we've learnt some basic data science skills, we're going to look at the best way to plan and structure your project. Not all of your analyses will be of sufficient size to warrant a big planning stage, but learning to use a common, separate structure for all of your different projects can really help keep your work clean. This becomes even more important when you begin to combine multiple projects and you want to make sure that they don't slowly start to creep into one. For example, imagine you've previously worked on a project that relied heavily on API data. Then, in your next project, you need to use much of the same data but to a very different end. By utilising this project structure (and more specifically, the idea of ["Projects as packages"](#projects-as-packages)), you'll be able to easily utilise work from previous projects without duplicating or merging code.

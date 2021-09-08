@@ -1,4 +1,4 @@
-# Introduction (#tidyverse-introduction)
+# Introduction {#tidyverse-introduction}
 
 As we learnt in the [teacheR](teacher.arawles.co.uk) book, R is supported by thousands of packages that provide extra functionality to the base R experience. One of the most popular sets of packages developed by Hadley Wickham and the RStudio Team is called the [tidyverse](https://www.tidyverse.org/). The tidyverse is made up of packages designed for data science work that are all underpinned by a common philosophy and a common syntax. At the core of this philosophy is the concept of "tidiness" in data.
 

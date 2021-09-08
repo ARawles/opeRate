@@ -1,14 +1,14 @@
-## Plotting
+# Plotting
 
 Now that you've got your data summarised to a suitable level, you might want to create some graphics to help gain insight into the trends and patterns in the data. For this section, we're going to rely on the `{ggplot2}` package from the tidyverse. This is arguably the most advanced plotting package available for R. R does provide plotting functions without the use of packages, but we're going to focus on `{ggplot2}` here.
 
-### ggplot2
+## ggplot2
 
 `{ggplot2}` is based on the concept of a [Grammar of Graphics](https://www.springer.com/in/book/9780387245447). This is the concept that, like language, graphics have a grammar that allow us to describe their components. 
 
 This concept was originally proposed by Leland Wilkinson, but has been adopted heavily in the `{ggplot2}` philosophy, with Hadley Wickham publishing a paper titled ['A Layered Grammer of Graphics'](http://vita.had.co.nz/papers/layered-grammar.html) that outlines his proposal for a layered grammar and how it's implemented in `{ggplot2}`. We'll cover the real basics of `{ggplot2}` here but I'd recommend reading the paper and reading the `{ggplot2}` [documentation](https://ggplot2.tidyverse.org/) if you're interested in gaining a deeper understanding.
 
-#### Components
+### Components
 
 At the core of the Grammar of Graphics philosophy is the idea that plots are defined by their components. For example, two scatterplots could be extremely different, even though we'd both call them scatterplots. Instead, the two graphics are better defined by the components that make them up.
 
@@ -23,7 +23,7 @@ The main components that make up a plot are:
 
 These sound really scary, but they're actually super simple. Let's look at each one.
 
-##### Data and aesthetic mappings
+#### Data and aesthetic mappings
 
 Every plot is a representation of some data. Therefore, to have a graphic, you need some data. That's simple enough.
 
@@ -64,7 +64,7 @@ ggplot(smmrsd_vg_sales) +
 
 Different geoms also allow for different mappings. For example, the line geom allows you to specify the `linetype` aesthetic that changes the way the line is drawn (solid, dashed, etc.) depending on the value of your variable. This aesthetic would mean nothing for the point geom however, which instead has an aesthetic called `shape`. To see which aesthetics are supported by which geoms, look at the documentation for the geom function you want to use (e.g `?geom_point`).
 
-#### Stats
+### Stats
 
 For a data point to be shown on the plot, it can go through a statistical transformation or 'stat' which is set via the `stat` parameter of our `geom_...` function. We can see that when we call `geom_point()` the default value for the `stat` parameter is 'identity'. This means that `{ggplot2}` performs no stat transformation on the data before it plots it. 
 
@@ -77,7 +77,7 @@ ggplot(smmrsd_vg_sales) +
 
 This call is equivalent to using the `geom_smooth()` function.
 
-#### Layers
+### Layers
 
 Together, the data, mapping, stat and geom components form a **layer**. A plot can be made up of multiple layers. For example, let's show the same data but overlay a regression line that uses a different stat and a different mapping:
 
@@ -97,7 +97,7 @@ In summary, a layer is made up of:
 
 And plots can be made of up one or more layers.
 
-##### Facet
+#### Facet
 
 In our example, we've shown the Publisher column as a mapping to the colour aesthetic, but we could also use faceting. Faceting splits the original dataset, plots the data separately and then combines it into a single panel. To facet our plot, we use the `facet_wrap()` or `facet_grid()` functions:
 
@@ -109,7 +109,7 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales, colour = Publis
 
 Facets are not features of layers, but instead are universal to the plot.
 
-#### Scales
+### Scales
 
 `{ggplot2}` has created default scales for the variables in our mapping, but we can alter them manually. To do so, we just use the accompanying `scale_{aesthetic}_{type}` function. So for our x axis, we're scaling our x mapping and we want a continuous, numeric scale so we would use the `scale_x_continous()` function. Similarly, for our y axis we'd use `scale_y_continuous()`:
 

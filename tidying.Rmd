@@ -38,7 +38,7 @@ Wide data is very common, usually because it's slightly easier to read or to ent
 **Note:**
 One thing to keep in mind is that long data does not always mean tidy, but wide data can never be tidy. It's a subtle distinction but it's important to remember.
 
-## Pivoting columns to rows (longer)
+### Pivoting columns to rows (longer)
 
 To convert wide data to long, we need to pivot the columns to rows. To this using `{tidyr}`, we use the `pivot_longer()` function from the `{tidyr}` package, because we want to pivot from the wide format to the long format.
 
@@ -66,8 +66,8 @@ tidyr::pivot_longer(clean_vg_sales,
 Secondly, our Country column has the country code suffixed with '_Sales' (e.g. "NA_Sales" instead of just "NA"). If the text we wanted to remove was before the country name, we could utilise the `names_prefix` parameter to remove matching text from the start of each variable name:
 
 ```{r, eval = FALSE}
-tidyr::pivot_longer(column_example,
-                    cols = c(Month1, Month2, Month3),
+tidyr::pivot_longer(clean_vg_sales,
+                    cols = c(NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales),
                     names_to = "Country",
                     values_to = "Sales",
                     names_prefix = "(_Sales)") # Remove text matching "_Sales" exactly
@@ -102,7 +102,7 @@ Now our code will work with any number of columns as long as they end in '_Sales
 
 This is just one example of how we could utilise the `pivot_longer()` function to convert 'messy' data to the tidy format. In the wild you'll get data that violates any of the three rules of tidy data in many different ways, and we just don't have the space to go through it here. If you do need how to convert some of the other forms of messy data, then the `{tidyr}` package has a number of [vignettes](https://tidyr.tidyverse.org/articles/index.html) outlining many different ways to use the tidying tools it provides.
 
-# Pivoting rows to columns (wider)
+### Pivoting rows to columns (wider)
 
 Most of the time you should be going from wide to long, but we'll go through how to do the reverse for the occasions where it's required. To transform the data to the wide format, we use the `pivot_wider()` function. At the simplest level, we just need to provide where the name comes from and where the values come from with the `names_from` and `values_from` parameters respectively:
 

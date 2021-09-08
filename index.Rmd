@@ -8,7 +8,7 @@ output:
   bookdown::gitbook:
     config:
       toc:
-        collapse: subsection
+        collapse: section
       download:
         - ["opeRate.mobi", "Kindle EBook"]
         - ["opeRate.epub", "EPUB EBook"]

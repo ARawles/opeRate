@@ -5,6 +5,7 @@ output_dir: "docs"
 rmd_files: [
   "index.Rmd",
   
+  "tidyverse.Rmd",
   "tidyverse-introduction.Rmd",
   "tidy-data.Rmd",
   "pipe.Rmd",
