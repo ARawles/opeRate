@@ -1,0 +1,119 @@
+# Tidying
+
+Now that you know your dataset is clean, you'll want to get it into a format that is amenable to your analysis. This is the **tidying** stage. To better understand what "tidy" data is and why we're trying to get our data into this format, make sure you've read the [tidyverse](#tidyverse) chapter.
+
+## Pivoting columns
+
+The main culprit of untidy data is data that breaks the first rule: Not every column is a variable. Data in this format is sometimes called wide data - as you add more levels, you'll add more columns and so the data will get wider. Conversely, tidy data will get longer as you add more levels.
+
+So there two different forms of data:
+
+* Long
+* Wide
+
+
+Let's look at use our Kaggle dataset as an example to see how the two forms differ in practice:
+
+```{r, echo = FALSE}
+clean_vg_sales %>%
+  dplyr::select(Year, Name, NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales) %>%
+  print(n = 3)
+```
+
+What would happen if we added data for more countries? We'd be adding more columns, and so our data would get wider. So our `clean_vg_sales` data is currently in the wide format. If we had the country as its own column however, like this:
+
+```{r, echo = FALSE}
+clean_vg_sales %>% 
+  tidyr::pivot_longer(cols = c(NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales),
+                      names_to = c("Country", NA), values_to = "Sales", names_sep = "_"
+  ) %>%
+  dplyr::select(Year, Country, Sales) %>%
+  print(n = 5)
+```
+
+Now we've got the country as a variable, the more countries we add the longer the data is going to get. So we've converted our data from the wide format to the long format. To do this, we've pivoted the Sales columns. Let's look at the two types of pivot.
+
+Wide data is very common, usually because it's slightly easier to read or to enter (particularly if you're using Excel), but it's much harder to work with in R. Let's look at how we might convert wide data to tidy-er long data using the concept of pivoting.
+
+**Note:**
+One thing to keep in mind is that long data does not always mean tidy, but wide data can never be tidy. It's a subtle distinction but it's important to remember.
+
+## Pivoting columns to rows (longer)
+
+To convert wide data to long, we need to pivot the columns to rows. To this using `{tidyr}`, we use the `pivot_longer()` function from the `{tidyr}` package, because we want to pivot from the wide format to the long format.
+
+To do this in the simplest way, we just need to tell the function which columns we want to pivot:
+
+```{r}
+tidyr::pivot_longer(clean_vg_sales, cols = c(NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales)) %>%
+  dplyr::select(Name, Year, name, value) %>%
+  print(n = 2)
+
+```
+
+This is a good start. Now we've converted to long format, we're abiding by the three rules and so we've got a tidy dataset! But there's definitely some improvements to be done. Firstly, "name" and "value" aren't the best names we could come up with for these columns, so we should probably use some new ones. To do this, we just need to provide new names to the `names_to` and `values_to` parameters:
+
+```{r}
+tidyr::pivot_longer(column_example,
+                    cols = c(Month1, Month2, Month3),
+                    names_to = "Country",
+                    values_to = "Sales") %>% 
+  dplyr::select(Name, Year, Country, Sales) %>%
+  print(n = 2)
+```
+
+
+Secondly, our Country column has the country code suffixed with '_Sales' (e.g. "NA_Sales" instead of just "NA"). If the text we wanted to remove was before the country name, we could utilise the `names_prefix` parameter to remove matching text from the start of each variable name:
+
+```{r, eval = FALSE}
+tidyr::pivot_longer(column_example,
+                    cols = c(Month1, Month2, Month3),
+                    names_to = "Country",
+                    values_to = "Sales",
+                    names_prefix = "(_Sales)") # Remove text matching "_Sales" exactly
+```
+
+Because it's at the end of the string though, we have to deal with it a bit differently. One way to remove that text would be to split the column name by the "_" and then just exclude the second part:
+
+```{r}
+tidy_vg_sales <- clean_vg_sales %>% 
+  tidyr::pivot_longer(cols = c(NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales),
+                      names_to = c("Country", NA), values_to = "Sales", names_sep = "_"
+  )
+
+tidy_vg_sales %>%
+  dplyr::select(Year, Country, Sales) %>%
+  print(n = 5)
+```
+
+Here, we've specified that we want to convert our column names to two separate 'names' columns, but that we want to exclude the second column (that's what the `NA` in the `c("Country", NA)` vector represents). Then, we've specified with the `names_sep` parameter that we want to split the columns by the `_` character.
+
+But what happens now if we get sent the same dataset but with more countries (e.g. a SA_Sales column)? We'd have to add those extra columns to our `cols` vector manually. Instead, we can use some `tidyselect` syntax to choose columns based on their features, like how they start:
+
+
+```{r, eval = FALSE}
+clean_vg_sales %>% 
+  tidyr::pivot_longer(cols = tidyselect::ends_with("_Sales"),
+                      names_to = c("Country", NA), values_to = "Sales", names_sep = "_"
+  ) 
+```
+
+Now our code will work with any number of columns as long as they end in '_Sales'.
+
+This is just one example of how we could utilise the `pivot_longer()` function to convert 'messy' data to the tidy format. In the wild you'll get data that violates any of the three rules of tidy data in many different ways, and we just don't have the space to go through it here. If you do need how to convert some of the other forms of messy data, then the `{tidyr}` package has a number of [vignettes](https://tidyr.tidyverse.org/articles/index.html) outlining many different ways to use the tidying tools it provides.
+
+# Pivoting rows to columns (wider)
+
+Most of the time you should be going from wide to long, but we'll go through how to do the reverse for the occasions where it's required. To transform the data to the wide format, we use the `pivot_wider()` function. At the simplest level, we just need to provide where the name comes from and where the values come from with the `names_from` and `values_from` parameters respectively:
+
+```{r}
+tidyr::pivot_wider(tidy_vg_sales, names_from = Country, values_from = Sales)
+```
+
+To get our data more like we started, we can use the `names_glue` to provide a [`{glue}`](https://glue.tidyverse.org/) string argument to create the column names from a template:
+
+```{r}
+tidyr::pivot_wider(tidy_vg_sales, names_from = Country, values_from = Sales, names_glue = "{Country}_Sales") %>%
+  dplyr::select(Year, Name, tidyselect::ends_with("_Sales")) %>%
+  print(n = 5)
+```

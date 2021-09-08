@@ -1,7 +1,5 @@
 # Modelling
 
-## Linear modelling
-
-## Clustering
-
-## Programming and modelling
+* `lm()`
+* Other modelling packages
+* GPU-accelerating modelling

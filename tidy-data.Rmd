@@ -1,0 +1,13 @@
+# "Tidy" data
+
+The concept of "tidy" data is something that's important throughout the set of tidyverse packages. There is an [in-depth paper](https://vita.had.co.nz/papers/tidy-data.html) published in the Journal of Statistical Software, authored by Hadley Wickham, that describes the concept and requirements of tidy data in full. But for now we're just going to look at the basics.
+
+In order for a dataset to be tidy, it needs to abide by three rules:
+
+  1. Every column is a variable
+  2. Every row is an observation
+  3. Every cell is a single value
+
+If a dataset doesn't abide by all three of these rules, then it's a "messy" dataset.
+
+The benefit of having your data in a tidy format is fairly simple; it provides a standard for structuring a dataset. This means that tools can be developed with the assumption that the data will be in a specific format, making the development of these data science tools easier. And this is essentially what underpins the entire tidyverse: get your data in a tidy format and you'll have access to everything the tidyverse provides.

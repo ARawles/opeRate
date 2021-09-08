@@ -1,0 +1,33 @@
+# The pipe `%>%`
+
+The pipe is a core feature of the tidyverse packages, and has proved so popular in its R implementation that it served as the inspiration for the `|>` function that was introduced into R in version 4.0. For now we're going to look specifically at the tidyverse (or more specifically the `magrittr`) implementation of the pipe but they are very similar.
+
+At the simplest level, the pipe takes the output from whatever is on its left and passes it as the first argument to the expression on the right. Like this:
+
+```{r}
+1 %>% print()
+```
+
+In this example, the 1 is passed as the first argument to the `print()` function, which prints it out.
+
+You can also specify which argument you want the value to be passed as by using the `.` shorthand:
+
+```{r}
+1 %>% substr("water", ., 2)
+```
+This passes the 1 from the left hand side as the second argument to the `substr()` function (which is the `start` index).
+
+The benefit of the pipe is that it allows you to read code from left to right, rather than from middle outwards. Let's compare two examples with an without the pipe:
+
+
+```{r}
+str <- "water"
+
+print(paste0(substr(str, 1, 1), "ine"))
+
+str %>% substr(1,1) %>% paste0("ine") %>% print()
+```
+
+Although the outcome is exactly the same, following the flow of logic is much easier in the bottom example because we can start at the left and more rightwards.
+
+For the purposes of this book that's as much as you need to know. You'll see the pipe used a lot when we're performing multiple data analysis steps, like cleaning then filtering then selecting columns and so on. So as long as you've grasped the simple concept; we're taking the left hand side and passing it to the right, then you'll be fine.

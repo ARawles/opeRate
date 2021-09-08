@@ -1,0 +1,80 @@
+# Workflows
+
+Often the best way to start a data analysis project is to decide what you're workflow should be, breaking your project into distinct stages that are relevant for your particular project.
+
+For instance, if you know that the data you're going to be working on is likely to be littered with mistakes and errors, then you should preemptively allocate a decent amount of your time to the "importing" and "cleaning" steps of your workflow. Similarly, if your end goal is to produce a predictive model at the end, then work in a feedback loop where you inspect and evaluate your model before improving it in the next iteration.
+
+The [tidyverse](#tidyverse) packages we discussed previously are designed to make data science easier, and the workflows we'll look at fit into this philosophy quite nicely. Each stage of these workflows is usually handled by a different package but with a common syntax and data structure underpinning them all.
+
+## Basic Workflow
+
+For now, let's look at a basic workflow and some likely additions or changes you might make depending on your goals.
+
+For these basic workflows, we're only going to look at a subset of all of the stages of analysis that you might identify. They are going to be:
+
+* Importing
+* Cleaning
+* Tidying
+* Collating
+* Summarising
+* Plotting
+* Modelling
+* Evaluation
+
+
+### Example 1: Reporting
+
+In this example, imagine someone has come to you and they want a bit more insight into the data they have. It's currently in a messy spreadsheet, and they want you to load it into R and produce some nice looking graphics to help them understand trends and correlations in their data. They're not bothered about any modelling for now, they just want some pretty graphs.
+
+If we mapped out an appropriate workflow for this project, it might look something like this:
+
+```{r,echo=FALSE}
+DiagrammeR::grViz("
+  digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  Import; Clean; Tidy; Summarise; Plot; Evaluate; 
+
+  # several 'edge' statements
+  Import->Clean Clean->Tidy Tidy->Summarise Summarise->Plot
+  Plot->Evaluate Evaluate->Summarise Evaluate->Plot
+}
+")
+```
+
+We import the data and clean it and tidy it (more on that later), then we summarise it and create our plots. We can then use feedback from our colleague to change how we're summarising or how we're plotting the data to improve our plots until we're happy.
+
+### Example 2: Modelling
+
+For this example, imagine a colleague has come to you about a modelling project. They have a number of relatively clean datasets that they want to combine and use to produce a predictive model. They're not too worried about plots or graphics, they're more interested in the model itself. If we mapped out a workflow for this project, it might look a bit more like this:
+
+```{r,echo=FALSE}
+DiagrammeR::grViz("
+  digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  Load; Clean; Tidy; Collate; Model; Evaluate; 
+
+  # several 'edge' statements
+  Load->Clean Clean->Tidy Tidy->Collate Collate->Model
+  Model->Evaluate Evaluate->Model
+}
+")
+```
+
+As you can see, we still end with the loop of modelling and then evaluating our model and using the output to update the model, but the steps we take to get there are a bit different.
+
+
+### Summary
+
+Hopefully this section has given you an idea of what a typical project workflow could look like. The benefit of splitting your project into these distinct steps is that it can often help you compartmentalise your functions and scripts into distinct stages. We'll look later at structuring your project like an R package, and so splitting your analysis into separate stages can help you construct your project in a portable and replicable way.

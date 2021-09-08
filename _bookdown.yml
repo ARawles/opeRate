@@ -4,7 +4,28 @@ output_dir: "docs"
 
 rmd_files: [
   "index.Rmd",
-  "tidyverse.Rmd",
+  
+  "tidyverse-introduction.Rmd",
+  "tidy-data.Rmd",
+  "pipe.Rmd",
+  "quasiquotation.Rmd",
+  
   "data-analysis.Rmd",
-  "projects.Rmd"
+  "da-introduction.Rmd",
+  "loading.Rmd",
+  "cleaning.Rmd",
+  "tidying.Rmd",
+  "grouping.Rmd",
+  "mutating.Rmd",
+  "summarising.Rmd",
+  "plotting.Rmd",
+  "modelling.Rmd",
+  
+  "projects.Rmd",
+  "projects-introduction.Rmd",
+  "workflows.Rmd",
+  "replicability.Rmd",
+  "projects-as-packages.Rmd",
+  "git.Rmd",
+  "project-example.Rmd"
   ]

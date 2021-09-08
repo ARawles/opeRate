@@ -1,0 +1,52 @@
+# Summarising
+
+As we saw previously, the base videa game sales dataset has nearly 17,000 entries! That's a lot of data, and we're not really going to able to extract or show any real insights from this data without summarising it to some degree. What we want to do is summarise the data to some degree. We lose some of the granularity of the data but it allows is to understand the data a bit better and identify patterns.
+
+Summarisation uses exactly the same [grouping](#grouping) concept as mutatation does; by grouping the data we change the scope of each application of the function to be limited to that group. 
+
+Let's go through an example. Let's say that we want to get the global sales for each publisher in each year. For now, we don't care about genre or platform. To do this, we'll need to group by Publisher and by Year:
+
+```{r, eval = FALSE}
+tidy_vg_sales %>%
+  dplyr::filter(Country == "Global") %>%
+  dplyr::group_by(Publisher, Year)
+```
+
+And then we'll want to sum up the `Sales` column to get our totals:
+
+```{r}
+tidy_vg_sales %>%
+  dplyr::filter(Country == "Global") %>%
+  dplyr::group_by(Publisher, Year) %>%
+  dplyr::summarise(Total_Sales = sum(Sales), .groups = "drop") %>%
+  # The .groups = 'drop' parameter will automatically remove the groups
+  print(n = 5)
+```
+
+Now we can see that the number of rows has reduced down to just under 2,000, and we've got the total global sales for each of our publishers, and for each year. `{dplyr}` has looked through each publisher and each year that publisher has at least 1 game, and added up the total number of sales, then moved onto the next Publisher/Year combination.
+
+While we're here, let's lump together some of the less popular publishers using the `forcats::fct_lump_n()` function:
+
+```{r}
+smmrsd_vg_sales <- tidy_vg_sales %>%
+  dplyr::filter(Country == "Global") %>%
+  dplyr::group_by(Publisher, Year) %>%
+  dplyr::summarise(Total_Sales = sum(Sales), .groups = "drop") %>%
+  dplyr::mutate(Publisher = forcats::fct_lump_n(Publisher, n = 5, w = Total_Sales)) %>%
+  dplyr::group_by(Publisher, Year) %>%
+  dplyr::summarise(Total_Sales = sum(Total_Sales), .groups = "drop")
+# The .groups = 'drop' parameter will automatically remove the groups
+print(smmrsd_vg_sales, n = 5)
+```
+
+In this case we've used the `sum()` function, but any kind of summary function can be used:
+
+```{r}
+tidy_vg_sales %>%
+  dplyr::group_by(Publisher, Year) %>%
+  dplyr::summarise(Total_Sales = sum(Sales),
+                   Average_Sales = mean(Sales),
+                   .groups = "drop")
+```
+
+Because `dplyr::mutate()` and `dplyr::summarise()` both use a similar syntax and both function on grouped datasets, using the correct function when starting out can be tough. The best way to remember which one to use is to ask "How many rows am I expecting back from this?". If the answer is fewer than you've got now, you'll want the `summarise()` function. Otherwise you're looking at `mutate()`.

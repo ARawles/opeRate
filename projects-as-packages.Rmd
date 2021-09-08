@@ -1,0 +1,62 @@
+# Projects as Packages
+
+With the last two chapters in mind, to make a good, replicable and easy to understand project, you need a few things:
+
+1. A clear structure
+3. Easily replicable code (e.g. consistent functions and clear dependencies)
+4. Good documentation (functional and long-form)
+5. Maybe a test or two if you want to be confident in your functions and findings
+
+While you could easily fulfill all of these criteria with a standard RStudio project, there's already a type of project that conforms to these standards: *Packages*.
+
+While packages are primarily meant for collating and distributing new functionality, we can utilise the package structure and some of the tools that come along with package development in our projects.
+
+To better understand what a package is and how they are developed and maintained, I would recommend reading Hadley and Jenny Bryan's [R Packages book](https://r-pkgs.org/) book. Although that book is focused directly on developing packages for submission to CRAN, hopefully you'll be able to identify the parts that are going to be applicable to the way we're using packages.
+
+## Structure
+
+### R code
+
+The structure of R files in a package is pretty simple. Everything goes in the root of the R folder. That means no subfolders. There are also some filenames that should be avoided for normal packages, but we won't worry too much about that for now.
+
+When you then run the `devtools::load_all()` command, `{devtools}` checks that you've got the dependencies listed in the DESCRIPTION file loaded and then loads all of the files in the R folder are then loaded. This means you can make quick changes to your code and then run `devtools::load_all()` to bring those changes into your current environment. This helps prevent working on data or functions that are out of date (which often happens when you're manually sourcing R files).
+
+### Data
+
+For some projects, you'll want to include a static dataset or datasets that you're basing your analysis on. Packages also have a way of including data in a standard way. Use the `usethis::use_data()` function to bundle an R object with your package. You can make sure that the data needed for your project is included with it.
+
+For other projects, you'll want to use the latest data whenever the analysis is done. For this, I would recommend creating a set of functions to get your data and including those in the package. That will ensure that getting the data needed for your analysis is as simple as possible for people reading your code.
+
+## Documentation
+
+### Functional
+
+To document your functions, I would highly recommend the `roxygen` package. It's by far the easiest way to document your functions. Once you've documentated your functions, you can run `devtools::document()` to automatically generate the documentation that will be seen when someone visits the help page for your function (e.g. via `?your_function`).
+
+### Long-form
+
+For your long-form documentation, the `usethis::use_readme()` function will provide you with a template for you to build your README.
+
+For vignettes, the `usethis::use_vignette()` function will create the appropriate file and folder for you, so you can just focus on writing.
+
+## DESCRIPTION
+
+Every package you download will have a DESCRIPTION file. This file has a number of fields, like who the author is, what license the content is under, and so on. We can utilize many of the fields to help document our project. For example, the Description and Title field are just as relevant for a package-project. Equally, we can use the Version field to keep track of different iterations of our analysis. We can also use this file to state our dependencies.
+
+### Dependencies
+
+Every package will have an entry called Imports in its DESCRIPTION file. Here, the author is stating every other package that's needed for this package to run. So we can use that same field to state all of the packages that are required for our analysis. That way, when someone installs our package to replicate or check our analysis, all the appropriate dependencies can be installed at the same time.
+
+## Abstraction
+
+When I was younger, I wrote a package to create a kind of financial stability report. The report essentially used a number of APIs to pull in macroeconomic data and then create an RMarkdown report displaying the data. Then, a few months later, I started another analysis that used very much the same kind of data but for a different purpose. Now, there were three things I could do:
+
+1. Copy all the code used to get the API data from the original project into the new one
+2. Put the original project as a dependency of the new project, importing all of the API data but also all of the other functions
+3. Abstract the functions used to get the data from the original project into a new package, and then have both projects use that as dependency.
+
+Given that the title of this section is "Abstraction", what do you think I went with?
+
+Structuring your analysis in this way helps you re-use or repurpose code in the future without having to copy and paste or duplicate any of your previous work.
+
+It can be quite hard to understand the concept of structuring your project as a package without actually giving it a go, so let's go through an example. 

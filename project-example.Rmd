@@ -1,0 +1,4 @@
+# Project Example
+
+* Do video game sales example
+* Create a repo in GitHub to host it 

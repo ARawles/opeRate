@@ -1,0 +1,40 @@
+# Grouping
+
+Before we look at adding new columns and summarising our data, we need to understand the concept of grouping our data.
+
+When a data frame has one or more groups, any function that's applied (when summarising or adding a new column) is applied for each combination of those groups. So say we have a dataset like this:
+
+```{r, echo = FALSE}
+ungrpd <- data.frame(Year = c("2012", "2012", "2012", "2012", "2012", "2012", "2013", "2013", "2013", "2013", "2013", "2013"),
+                     Month = c(1,1,2,2,3,3,1,1,2,2,3,3),
+                     Group = c("A", "B", "A", "B", "A", "B", "A", "B", "A", "B", "A", "B"),
+                     Value = c(10,20,30,15,25,35,12,22,32,40,50, 60))
+```
+
+```{r}
+head(ungrpd, 5)
+```
+
+If we grouped by Year or by Month, then any function we applied would be applied separately to each value of those groups. So say we wanted get the total values for each Year, we could group by the `Year` column and then just sum the `Value` column. The same logic applies for if we wanted to get the total for each year *and* month; we could group by the `Year` and `Month` and sum the `Value` column and we'd then get a value for each distinct year and month.
+
+To group a dataset, we use the `dplyr::group_by()` function:
+
+```{r}
+grpd <- dplyr::group_by(ungrpd, Year)
+```
+
+The `dplyr::group_by()` function returns the same dataset but now grouped by the variables you provided. At first, it might not seem as though anything happened - if we print the dataset we still get basically the same output...
+
+```{r}
+print(grpd, n = 5)
+```
+
+Except now we have a new entry `Groups:`. This tells us that the dataset has been grouped and by what variables. This means that any subsequent summarisation or mutation we do will be done relative those groups.
+
+To test whether a dataset has been grouped, you can use the `dplyr::is_grouped_df()`, and to ungroup a dataset, just use `dplyr::ungroup()`:
+
+```{r}
+dplyr::is_grouped_df(grpd)
+dplyr::is_grouped_df(ungrpd)
+print(dplyr::ungroup(grpd), n = 5)
+```

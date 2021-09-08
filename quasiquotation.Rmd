@@ -1,0 +1,20 @@
+# Quasiquotation
+
+In the [teacheR](https://teacher.arawles.co.uk) book, we looked at the concept of quasiquotation; selectively quoting and then evaluating parts of an expression. The tidyverse packages rely heavily on this concept, which is why you'll often see (for example) column names passed to the tidyverse packages as variable names rather than character strings, like this:
+
+```{r, eval = FALSE}
+my_df %>%
+  dplyr::mutate(new_column = old_column + 1)
+
+```
+
+This might seem odd when you first start using this approach; isn't the function going to look for a variable in the global environment called `old_column` and then fail when it can't find it?
+
+When you pass a column name like this, the tidyverse packages will quote that input and then evaluate the resulting expression in the context of the current data frame. So essentially, R looks for the `old_column` object in the context of `my_df`, rather than in the global environment. Because dataframes are essentially just lists and lists can be treated like environments, it searches that environment for the `old_column` object and finds it, returning the contents of the column.
+
+
+## tidyselect
+
+Much of this functionality is powered by a package called `{tidyselect}`. The `{tidyselect}` package provides a number of functions for selecting variables from datasets, reducing the time spent laboriously typing out the name of every variable you want to reference.
+
+To better understand the specifics of the `{tidyselect}` dialect and how it interacts with the tidyverse packages, there are a number of [vignettes](https://tidyselect.r-lib.org/reference/language.html) included in the package that explain things well. For now however, if you can understand the basic concept that variables are evaluated in the specific context of the dataset provided to the function, then you should be fine.

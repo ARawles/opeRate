@@ -1,0 +1,38 @@
+# Mutating
+
+Sometimes you'll want to add new columns to your data. Most of the time, these will be calculated columns that can be created based on one or more of the other columns in the dataset. To create new columns, we use the `dplyr::mutate()` function.
+
+First off, let's add something simple; the Sales column in our dataset is in millions. Let's convert that to normal units. All we need to do is provide the name of our new column to the `dplyr::mutate()` function and how our new column should be calculated:
+
+```{r}
+tidy_vg_sales %>%
+  dplyr::mutate(Sales_units = Sales * 1000000) %>%
+  dplyr::select(Rank, Name, Platform, Year, Genre, Publisher, Sales_units) %>%
+  print(n = 5)
+```
+
+As you can see, we've created a new column called `EU_Proportion` and we've calculated by dividing the number of EU sales by the total number of sales.
+
+If we wanted to overwrite the Sales column, we do the same but give the new column the same name:
+
+```{r}
+tidy_vg_sales %>%
+  dplyr::mutate(Sales = Sales * 1000000) %>%
+  dplyr::select(Rank, Name, Platform, Year, Genre, Publisher, Sales) %>%
+  print(n = 5)
+```
+
+While this is certainly a powerful tool, we're not really changing the world here. However, we can create more complicated columns by leveraging the concept of applying our function to [groups](#grouping).
+
+When our dataset is grouped, our `mutate()` call will be evaluated for each permutation of the provided groups. Let's look at an example of creating a cumulative sum for each Publisher and Country:
+
+```{r, warning = FALSE}
+tidy_vg_sales %>%
+  dplyr::group_by(Publisher, Country) %>%
+  dplyr::arrange(Year) %>% # We need to order from earliest date to latest
+  dplyr::mutate(Cumulative_Sales = cumsum(Sales)) %>%
+  dplyr::filter(Publisher %in% c("Atari", "Activision")) %>% # Let's just look at Atari & Activision
+  print(n = 5)
+```
+
+Now we've got a new column showing the total number of sales for each Publisher up to each year. What `{dplyr}` has done is essentially filtered the data down a specific publisher and country, created a cumulative sum of the `Sales` column, and then done that for each publisher and country and stitched it back together.

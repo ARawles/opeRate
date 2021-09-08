@@ -1,0 +1,83 @@
+# Replicability
+
+The key to a good, robust analysis is replicability. When we say 'replicability', we mean two things:
+
+* That your results can be replicated in other populations and in other settings (i.e. typical 'scientific' replicability)
+* That you can easily share your code and method with others who can verify your outputs
+
+If your project is replicable, then it's likely to have fewer issues, make fewer dodgy assumptions, and rely less on the idiosyncracies of your environment or coding practice. That doesn't mean that everything that you do that can be replicated is immediately correct, but it's a useful credential to have.
+
+For now, we're going to focus on how you can make your *code* more replicable. By that I mean, how you can share your results and your code with others either in your business or instution or even in the open source community in general.
+
+## Good practice
+
+There are a few things you can do to make your work immediately more readable for others:
+
+### Use a consistent naming convention
+
+Take your pick. Everyone has their preference and that's okay. If you like camelCase then go with camelCase. If you like the `_` approach, then go for that. The most important part of your naming convention however is that it's stable. Don't name some of your functions `like_this` and the rest `likeThis`. Not only does it make it harder to read, but every time you do it, a kitten dies. So be consistent.
+
+### Name your variables as nouns and your functions as verbs
+
+Functions do and variables and objects are. Almost all languages share this distinction with verbs and nouns, so utilise that natural divide to improve how you name your functions and variables. Aim to give your functions names that suggest that they `do` something; and bonus points if you can give it a name that's a verb and also gives a decent description of what the function does. When you name your variables, give them meaningful noun-like names. Say you're doing some climate analysis, a good name for the variable that holds the average rainfall in a year might be `avg_yearly_rainfall` whilst a function that converts a temperature in Celsius to Fahrenheit might be `convert_degrees()`.
+
+### Use functions where you can
+
+R is a functional language and so using and creating functions is at the very heart of programming in R. Rather than relying on R scripts that need to be run in their entirety to produce your output, by creating functions and using them in your analysis, you can more easily scale your project. For example, imagine your scope is initially to produce a report for the year. Then, after your done, your manager is so impressed with your report, they want you to do the same thing for the last 10 years. If you've used a couple of R scripts and you haven't written any functions, then this is likely going to involve copying and pasting a whole lot of code and changing the years. Instead, if you use functions to perform your analysis, then creating reports for multiple years can be as simple as changing your dataset.
+
+As a rough rule of thumb, if you find yourself copying and pasting your R code more than twice to do very similar things, you should probably be using a function.
+
+### State your dependencies
+
+One of the great things about R is the number of packages that are available that let you do all sorts of weird and wonderful things. Unfortunately, because there are so many great packages, it's unlikely that the person you're sharing your code with will have them all installed. If you're sending someone a script, then best practice is to include all the packages you use at the top of your script like this:
+
+```{r, eval = FALSE}
+library(ggplot2)
+library(dplyr)
+```
+
+An extra step which few people do but can be very helpful is to still prepend your functions with which package they came from like this `dplyr::mutate()`. Not only does this avoid any namespace conflicts where two packages might have functions with the same name and you don't end up using the one you think you are because of the order of your `library()` calls, but it also makes it infinitely easier for anyone reading your code to find the package that a function comes from.
+Admittedly, this is overkill in a sense because we've already told R which packages we're using with our `library()` calls and R has loaded in the objects from that package, but this practice can really improve the readability of your code.
+
+Later we'll look at designing our project as a package and packages have a different way of stating dependencies for the user, so this is primarily for the case where you're just sending a script or two to someone.
+
+## Documentation
+
+When you're working on a project, never think that you'll remember everything when you come back to it. You won't. Instead, imagine you're always writing for code for someone who's never seen it before, because, trust me, when you come back to a project after 6 months you'll have absolutely no idea what you're looking at.
+
+At the heart of writing code that's easy to understand is documentation. Here we'll talk about the two main types of documentation.
+
+
+### Function documentation
+
+To get a package on CRAN, all the functions that your package exports needs to be documented. So if you type, say, `?dplyr::mutate()` into the console and hit Enter, you'll be taken to the Help page for the `mutate` function. This ensures that the package users are not left guessing what a parameter is supposed to be, or what they're going to get returned from the function.
+
+Even if you're not ever planning on submitting your work to CRAN, function documentation is extremely useful. The `roxygen` package makes this documentation as easy as possible for package developers, and you can use the same principles in your analysis.
+
+At the very least, you should be documentating the input variables (the `@param` tag in `roxygen`), your return value(s) (the `@return` tag) and maybe an example or two (the `@examples` tag). This will make explaining your code to someone else or relearning it yourself infinitely easier.
+
+### Long-form documentation
+
+Whilst understanding what each of your functions does is important, it's also important to document how all of the little pieces fit together. To acheive this, it's a good idea to write some long-form documentation, like a README or a vignette.
+
+Long form-documentation is often written in something called RMarkdown. RMarkdown is a spin on [markdown](https://en.wikipedia.org/wiki/Markdown) that allows you to embed and run R code when generating a document. This can be really useful for explaining your process and sharing your workings.
+
+#### READMEs
+
+READMEs act as an entrypoint for anyone that stumbles across your package. It should be in the root of your project directory, and should be written in markdown or plain text. Anyone should be able to read your README and understand what the project is doing. I won't go into exactly what should be included because it will depend on the type of project your doing, but you know a good README when you see it.
+
+If you also use a repository system like GitHub, your README will act as the homepage and so should always be present.
+
+#### Vignettes
+
+
+Vignettes are less defined that READMEs. Vignettes should be an in-depth form of documentation for a concept in your project. For example, say that your project is looking at the level of data quality of various open source APIs. You might have a few different vignettes covering different important concepts in your project:
+
+1. Background
+    + This would cover why the how the project came to be, and what the ultimate goal is.
+2. Selection of APIs
+    + Why were certain APIs chosen and others excluded? That would be explained here.
+3. Methodology
+    + How are you assessing data quality? Here you would explain your different tests and standards.
+
+Whilst a README serves as a general introduction to the project, vignettes more often serve as in-depth descriptions of certain aspects of the project. Like READMEs, vignettes should be written in markdown (or more likely RMarkdown).

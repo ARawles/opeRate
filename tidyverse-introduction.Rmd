@@ -1,0 +1,7 @@
+# Introduction (#tidyverse-introduction)
+
+As we learnt in the [teacheR](teacher.arawles.co.uk) book, R is supported by thousands of packages that provide extra functionality to the base R experience. One of the most popular sets of packages developed by Hadley Wickham and the RStudio Team is called the [tidyverse](https://www.tidyverse.org/). The tidyverse is made up of packages designed for data science work that are all underpinned by a common philosophy and a common syntax. At the core of this philosophy is the concept of "tidiness" in data.
+
+The tidyverse is a set of **opinionated** packages. That means that there's (usually) a right way to do things with the package, and there's a wrong way. There's much debate in the R community as to whether relying heavily on opinionated external packages such as those included in the tidyverse is a good thing. Personally, I think that the packages included in the tidyverse are fantastic, and are a large reason why R is thriving today.
+
+So in this book, we're a tidyverse family, and we'll be using the tidyverse packages throughout.
