@@ -6,10 +6,10 @@ library(dplyr)
 
 In this chapter, we're going to go through some typical data science tasks and learn how to do them in R. Later on, we'll look at how you should apply these skills in your projects, and some tips for making your project easier to read and share with others.
 
-For this chapter, we're going to use a  [Kaggle dataset](https://www.kaggle.com/gregorut/videogamesales) that holds information on video game sales:
+For this chapter, we're going to use a  [Kaggle dataset](https://www.kaggle.com/gregorut/videogamesales) that holds information on video game sales. The dataset contains sales in North America, Europe, Japan and globally for the top games each year going back to 1985. The games are broken down by platform, genre, and publisher:
 
 ```{r, echo = FALSE}
-print(readr::read_csv("./data/vgsales.csv"), n = 5)
+print(readr::read_csv("./data/vgsales.csv", col_types = readr::cols()), n = 5)
 ```
 
 ## Loading
@@ -20,7 +20,7 @@ The first step in any data analysis project you'll undertake is getting at least
 
 If you need to share an R-specific object (like a linear model created with the `lm()` function) or you're certain that the data never needs to be readable in another program, then you utilise the rds format to save and read data.
 
-To load in .rds files, we use the `readRDS()` function, providing the file path of the file we want to read:
+To load in RDS files, we use the `readRDS()` function, providing the file path of the file we want to read:
 
 ```{r, eval = FALSE}
 my_data <- readRDS(file = "path/to/file")
@@ -55,8 +55,6 @@ Patricia,75
 
 Benefits of the CSV file over something like an Excel file are largely based around simplicity. CSV files are typically smaller and can only have one sheet, meaning that you won't get confused with multiple spreadsheets. Furthermore, values in CSV files are essentially what you see is what you get. With Excel files, sometimes the value that you see in Excel isn't the value that ends up in R (looking at you dates and datetimes). For these reasons, I would suggest using a separated-value file over an Excel file when you can.
 
-The Kaggle dataset we're going to be using throughout is in CSV format, so we'll use that file as an example.
-
 #### Loading CSV files
 
 Loading CSV files in R is relatively simple. There are base* functions that come with R to load CSV files but there's also a popular package called `readr` which can be used so I'll cover both.
@@ -68,7 +66,7 @@ Loading CSV files in R is relatively simple. There are base* functions that come
 To load a CSV file using base R, we'll use the `read.csv()` function:
 
 ```{r, eval = FALSE}
-read.csv(file = "./data/vgsales.csv", header = TRUE, ...)
+read.csv(file = "path/to/file", header = TRUE, ...)
 ```
 
 The `file` parameters needs the path to your file as a character string. The `header` parameter is used to tell R whether or not your file has column headers. Our dataset does have headers (i.e. the first row is the column names) so we set that to `TRUE`.
@@ -126,9 +124,7 @@ Let's use the compact string format to load in the video game dataset again but 
 ```{r, warning = TRUE}
 vg_sales <- readr::read_csv("./data/vgsales.csv", col_types = "dccdccddddd")
 ```
-We've got some warnings here because `{readr}` wasn't able to parse some of the values in the Year column as numeric, giving us some NAs. We'll take a look at this further in the [Cleaning](#cleaning) chapter.
-
-Overall, both functions will give you the same result, so just choose whichever function makes most sense to you and has the parameters you need.
+We've got some warnings here because `{readr}` wasn't able to parse some of the values in the Year column as numeric, giving us some NAs. We'll clean up these values in the [Cleaning](#cleaning) chapter so we can ignore them for now.
 
 #### Advantages
 
@@ -142,7 +138,7 @@ The CSV format also isn't fully standardised, meaning that you might come across
 
 #### Other delimited files
 
-Comma-separated value files are just a form of delimited files that use a comma to separate different values. In the wild you might see files separated with all different kinds of symbols, like pipes (|) or tabs (   ). To load in these types of files, use the `readr::read_delim()` function and specify what's being used to separate the values with the `delim` parameter. `readr::read_csv()` basically just wraps `readr::read_delim()` using `delim = ','` anyway, along as you're comfortable loading in CSV files, you should be well equipped to load in any kind of delimited file.
+Comma-separated value files are just a form of delimited files that use a comma to separate different values. In the wild you might see files separated with all different kinds of symbols, like pipes (|) or tabs. To load in these types of files, use the `readr::read_delim()` function and specify what's being used to separate the values with the `delim` parameter. `readr::read_csv()` basically just wraps `readr::read_delim()` using `delim = ','` anyway, along as you're comfortable loading in CSV files, you should be well equipped to load in any kind of delimited file.
 
 ### Excel files
 
@@ -197,17 +193,17 @@ httr::GET(url = "http://google.com")
 That seems like a really complicated response at first, but when we look at each part, it's quite simple.
 
 * Response
-    + This is telling us where we got our response from. In this case, we sent a request to Google, so we got a response from Google.
++ This is telling us where we got our response from. In this case, we sent a request to Google, so we got a response from Google.
 * Date
-    + Fairly self-explanatory - the date and time of the response.
++ Fairly self-explanatory - the date and time of the response.
 * Status
-    + [Status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) give you an indication of how the handling of the request went. 200 means "Success".
++ [Status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) give you an indication of how the handling of the request went. 200 means "Success".
 * Content-Type
-    + This is telling us what type the response is. In this case, the response is just a HTML page, which is exactly what we expect as that's what you get when you type "google.com" into your browser.
++ This is telling us what type the response is. In this case, the response is just a HTML page, which is exactly what we expect as that's what you get when you type "google.com" into your browser.
 * Size
-    + This is the size of the response
++ This is the size of the response
 * Content
-    + Below the size, we see the actual response body. In this case, we've been given the html for the google.com page.
++ Below the size, we see the actual response body. In this case, we've been given the html for the google.com page.
 
 
 As simple as this example was, it didn't really give us anything interesting back, just the Google homepage. So let's use the GET request to get something more interesting.
@@ -259,13 +255,13 @@ If you're interested, there are a couple of things you'll need:
 Once you've got those two prerequisites, using BMRSr should be quite easy. The main function in the BMRSr package is the `full_request()` function, which will create your URL, send the request, and parse the response depending on your parameters. To do this however, the `full_request()` function needs some parameters:
 
 * `data_item`
-    + A data item to retrieve. The BMRS platform holds lots of datasets, and so we need to specify which one we want to retrieve.
++ A data item to retrieve. The BMRS platform holds lots of datasets, and so we need to specify which one we want to retrieve.
 * `api_key`
-    + Our API_key that we got from the Elexon portal
++ Our API_key that we got from the Elexon portal
 * parameters
-    + Depending on which data_item you chose, you'll need to provide some parameters to filter the data
++ Depending on which data_item you chose, you'll need to provide some parameters to filter the data
 * `service_type`
-    + What format you want the data returned in: values are XML or CSV.
++ What format you want the data returned in: values are XML or CSV.
 
 So what parameters do I need? Well, the easiest way to find out is to use the `get_parameters()` function. This will return all of the parameters that can be provided to the `full_request()`.
 
@@ -317,12 +313,12 @@ R tells the ODBC driver to run a query, and then the ODBC driver converts that r
 So to connect to our database, we're going to need 2 things:
 
 * The `odbc` R package
-    + This provides us with the R functions to create our connections and run our queries as so on.
-    + Think of the `odbc` package as a set of tools for interacting with any ODBC database; it knows how to interface with the ODBC drivers, not the DBMS.
++ This provides us with the R functions to create our connections and run our queries as so on.
++ Think of the `odbc` package as a set of tools for interacting with any ODBC database; it knows how to interface with the ODBC drivers, not the DBMS.
 * The ODBC driver for our database
-    + This is the actual driver used by the `odbc` package that communicates with the database.
-    + This is the implementation of the ODBC standard for the database we're using.
-    
++ This is the actual driver used by the `odbc` package that communicates with the database.
++ This is the implementation of the ODBC standard for the database we're using.
+
 #### Connecting with the `odbc` package
 
 For this example, let's say that we're using an SQL Server database, and so we've got the ODBC Driver 17 for SQL Server installed.
@@ -335,10 +331,10 @@ odbc::odbcListDrivers()
 
 ```{r, echo = FALSE}
 print(structure(list(name = c("ODBC Driver 17 for SQL Server", "ODBC Driver 17 for SQL Server", 
-"ODBC Driver 17 for SQL Server"), attribute = c("Description", 
-"Driver", "UsageCount"), value = c("Microsoft ODBC Driver 17 for SQL Server", 
-"/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.7.so.2.1", 
-"1")), class = "data.frame", row.names = c(NA, -3L)))
+                              "ODBC Driver 17 for SQL Server"), attribute = c("Description", 
+                                                                              "Driver", "UsageCount"), value = c("Microsoft ODBC Driver 17 for SQL Server", 
+                                                                                                                 "/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.7.so.2.1", 
+                                                                                                                 "1")), class = "data.frame", row.names = c(NA, -3L)))
 ```
 
 
@@ -399,41 +395,35 @@ We then get back the data as a normal R data.frame. R will deal with the data ty
 
 ## Cleaning
 
-Now you should have some data loaded into R. Most of the time however, you'll have messy datasets with odd columns and missing data points that you'll need to deal with before you can actually do any meaningful analysis: you'll need to **clean** your data.
-
-Here are some of the more common operations that you'll be doing when it comes to data cleaning:
+Once you've got your data into R, you'll likely need to clean it up a bit. Here are some of the more common operations that you'll be doing when it comes to data cleaning:
 
 * Filtering
 * Removing/replacing missing values
 * Changing column types
 
-Let's look at how we might do these tasks in R using the `datasets::airquality` dataset as an example.
-
-```{r}
-head(datasets::airquality, 10)
-```
+Let's look at how we might do these tasks in R using our Kaggle dataset as an example.
 
 ### Filtering
 
 In some cases, you'll only want a subset of the data that's been provided to you. To filter the dataset down, use the `dplyr::filter()` function and provide your criteria:
 
 ```{r}
-datasets::airquality %>%
-  dplyr::filter(Month == 5) %>%
-  head(5)
+vg_sales %>%
+  dplyr::filter(Year > 200) %>%
+  print(n = 5)
 ```
 
 You can utilise the `&` and `|` operators (`and` and `or` respectively) to create more complicated criteria. You can also separate your expressions with commas, which is equivalent to `&`:
 
 ```{r}
-datasets::airquality %>%
-  dplyr::filter(Month == 5 | Month == 6) %>%
-  head(2)
+vg_sales %>%
+  dplyr::filter(Year == 1999 | Year == 2000) %>%
+  print(n = 2)
 
-datasets::airquality %>%
-  dplyr::filter(Month == 5, Temp > 70) %>%
-  # equivalent to dplyr::filter(Month == 5 & Temp > 70)
-  head(2)
+vg_sales %>%
+  dplyr::filter(Year == 1999, Platform == "GB") %>%
+  # equivalent to dplyr::filter(Year == 1999 & Platform == "GB")
+  print(n = 2)
 ```
 
 ### Missing values
@@ -455,17 +445,20 @@ vg_sales %>%
   print(n = 5)
 ```
 
-
 Another approach to replace them with either the average for that column or with the closest neighbour value (this works better with time series data).
 
 To replace with the nearest value, we can use the `tidyr::fill()` function. That approach wouldn't be appropriate for our video games example so let's use the `datasets::airquality` dataset instead:
 
 ```{r}
+
+head(datasets::airquality, 5)
+
 ## Fill a single column
 datasets::airquality %>%
   tidyr::fill(Ozone, .direction = "downup") %>%
   head(5)
 
+## Fill all columns
 datasets::airquality %>%
   tidyr::fill(dplyr::everything(), .direction = "downup") %>%
   head(5)
@@ -485,7 +478,6 @@ datasets::airquality %>%
   dplyr::mutate(dplyr::across(dplyr::everything(), replace_with_mean)) %>%
   head(5)
 ```
-
 
 A word of warning here, however. If you're doing complex modelling or very sensitive analyses, filling values like this can be misleading at best. Always think about the best approach for your specific project and what the repercussions of filling empty values might be.
 
@@ -520,61 +512,51 @@ Now that you know your dataset is clean, you'll want to get it into a format tha
 
 ### Pivoting columns
 
-There two different forms of data:
-  * Long
-  * Wide
-  
-Tidy data takes this long form - as you add more observations, you'll add more rows.
-Untidy data often takes the wide form - as you add more observations, you'll add more columns.
+The main culprit of untidy data is data that breaks the first rule: Not every column is a variable. Data in this format is sometimes called wide data - as you add more levels, you'll add more columns and so the data will get wider. Conversely, tidy data will get longer as you add more levels.
 
-Let's look at an example. Imagine the following dataset showing the average temperature each year and in each month:
+So there two different forms of data:
+
+* Long
+* Wide
+
+
+Let's look at use our Kaggle dataset as an example to see how the two forms differ in practice:
 
 ```{r, echo = FALSE}
-column_example <- data.frame(Year = c("2012", "2013", "2014"),
-                             Month1 = c(10, 20, 30),
-                             Month2 = c(20, 30, 40),
-                             Month3 = c(30, 40, 50))
-column_example_long <- tidyr::pivot_longer(column_example,
-                                           cols = tidyselect::starts_with("Month"),
-                                           names_to = "Month",
-                                           values_to = "Temperature",
-                                           names_transform = list(Month = readr::parse_number))
+clean_vg_sales %>%
+  dplyr::select(Year, Country, NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales) %>%
+  print(n = 3)
 ```
 
+What would happen if we added data for more countries? We'd be adding more columns, and so our data would get wider. So our `clean_vg_sales` data is currently in the wide format. If we had the country as its own column however, like this:
 
-```{r}
-head(column_example, 3)
+```{r, echo = FALSE}
+clean_vg_sales %>% 
+  tidyr::pivot_longer(cols = c(NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales),
+                      names_to = c("Country", NA), values_to = "Sales", names_sep = "_"
+  ) %>%
+  dplyr::select(Year, Country, Sales) %>%
+  print(n = 5)
 ```
 
-As you can see, the more months we add, the wider the data is going to get. How would the same data look in the long (tidy) format?
+Now we've got the country as a variable, the more countries we add the longer the data is going to get. So we've converted our data from the wide format to the long format. To do this, we've pivoted the Sales columns. Let's look at the two types of pivot.
 
-```{r}
-head(column_example_long, 3)
-```
-
-Now we've got the month as a variable, the more data we add, the longer the dataset is going to get.
+Wide data is very common, usually because it's slightly easier to read or to enter (particularly if you're using Excel), but it's much harder to work with in R. Let's look at how we might convert wide data to tidy-er long data using the concept of pivoting.
 
 **Note:**
-One thing to keep in mind is that long data does not always mean tidy, but wide data cann never be tidy. It's a subtle distinction but it's important to remember.
-
-Wide data is very common, usually because it's slightly easier to read or to enter (particularly if you're using Excel), but it's much harder to work with in R. Let's look at how we might convert wide data to tidy-er long data.
+One thing to keep in mind is that long data does not always mean tidy, but wide data can never be tidy. It's a subtle distinction but it's important to remember.
 
 ### Pivoting columns to rows (longer)
 
-Wide data will always be untidy because it breaks the first rule of tidy data: each column should be a separate variable. Let's revisit our wide example:
-
-```{r}
-head(column_example, 3)
-```
-
-In this example dataset, we've clearly broken the first rule of tidy data: each column is not a unique variable. Instead, we've got the same variable (temperature) in different columns for each month.
-
-How can we convert this example dataset to the tidy, long format? Well, we can utilise the concept of pivoting to transform those month columns into two columns; one with the value (the temperature) and the other with the month. In this case, we need to use the `pivot_longer()` function from the `{tidyr}` package, because we want to pivot from the wide format to the long format.
+To convert wide data to long, we need to pivot the columns to rows. To this using `{tidyr}`, we use the `pivot_longer()` function from the `{tidyr}` package, because we want to pivot from the wide format to the long format.
 
 To do this in the simplest way, we just need to tell the function which columns we want to pivot:
 
 ```{r}
-tidyr::pivot_longer(column_example, cols = c(Month1, Month2, Month3))
+tidyr::pivot_longer(clean_vg_sales, cols = c(NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales)) %>%
+  dplyr::select(Name, Year, name, value) %>%
+  print(n = 2)
+
 ```
 
 This is a good start. Now we've converted to long format, we're abiding by the three rules and so we've got a tidy dataset! But there's definitely some improvements to be done. Firstly, "name" and "value" aren't the best names we could come up with for these columns, so we should probably use some new ones. To do this, we just need to provide new names to the `names_to` and `values_to` parameters:
@@ -582,78 +564,85 @@ This is a good start. Now we've converted to long format, we're abiding by the t
 ```{r}
 tidyr::pivot_longer(column_example,
                     cols = c(Month1, Month2, Month3),
-                    names_to = "Month",
-                    values_to = "Temperature")
+                    names_to = "Country",
+                    values_to = "Sales") %>% 
+  dplyr::select(Name, Year, Country, Sales) %>%
+  print(n = 2)
 ```
 
 
-Secondly, our Month column has the months as character string and prepended with "Month". Instead, we should store just the month number as a number (or maybe as a factor but we'll go with number). To do that, we can utilise the `names_prefix` parameter to remove matching text from the start of each variable name:
+Secondly, our Country column has the country code suffixed with '_Sales' (e.g. "NA_Sales" instead of just "NA"). If the text we wanted to remove was before the country name, we could utilise the `names_prefix` parameter to remove matching text from the start of each variable name:
 
-```{r}
+```{r, eval = FALSE}
 tidyr::pivot_longer(column_example,
                     cols = c(Month1, Month2, Month3),
-                    names_to = "Month",
-                    values_to = "Temperature",
-                    names_prefix = "(Month)") # Remove text matching "Month" exactly
+                    names_to = "Country",
+                    values_to = "Sales",
+                    names_prefix = "(_Sales)") # Remove text matching "_Sales" exactly
 ```
 
-That's pretty good, but that column is still a character column. We can fix that by using the `names_transform` parameter with a function that we want to use to transform the column:
+Because it's at the end of the string though, we have to deal with it a bit differently. One way to remove that text would be to split the column name by the "_" and then just exclude the second part:
 
 ```{r}
-tidyr::pivot_longer(column_example,
-                    cols = c(Month1, Month2, Month3),
-                    names_to = "Month",
-                    values_to = "Temperature",
-                    names_transform = list(Month = readr::parse_number))
+tidy_vg_sales <- clean_vg_sales %>% 
+  tidyr::pivot_longer(cols = c(NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales),
+                      names_to = c("Country", NA), values_to = "Sales", names_sep = "_"
+  )
 
+tidy_vg_sales %>%
+  dplyr::select(Year, Country, Sales) %>%
+  print(n = 5)
 ```
 
-That's better. But what happens now if we get sent the same dataset but with all 12 months worth of data? We'd have to add those extra columns to our `cols` vector. Instead, we can use some `tidyselect` syntax to choose columns based on their features, like how they start:
+Here, we've specified that we want to convert our column names to two separate 'names' columns, but that we want to exclude the second column (that's what the `NA` in the `c("Country", NA)` vector represents). Then, we've specified with the `names_sep` parameter that we want to split the columns by the `_` character.
+
+But what happens now if we get sent the same dataset but with more countries (e.g. a SA_Sales column)? We'd have to add those extra columns to our `cols` vector manually. Instead, we can use some `tidyselect` syntax to choose columns based on their features, like how they start:
 
 
-```{r}
-tidy_column_example <- tidyr::pivot_longer(column_example,
-                                           cols = tidyselect::starts_with("Month"),
-                                           names_to = "Month",
-                                           values_to = "Temperature",
-                                           names_transform = list(Month = readr::parse_number))
-print(tidy_column_example, n = 3)
+```{r, eval = FALSE}
+clean_vg_sales %>% 
+  tidyr::pivot_longer(cols = tidyselect::ends_with("_Sales"),
+                      names_to = c("Country", NA), values_to = "Sales", names_sep = "_"
+  ) 
 ```
 
-Now our code will work regardless of how many months there are.
+Now our code will work with any number of columns as long as they end in '_Sales'.
 
-This is just one example of how we could convert one form of 'messy' data to the tidy format. In the wild you'll get data that violates any of the three cardinal rules in many different ways, and we just don't have the space to go through it here. If you do need how to convert some of the other forms of messy data, then the `{tidyr}` package has a number of [vignettes](https://tidyr.tidyverse.org/articles/index.html) outlining many different ways to use the tidying tools it provides.
+This is just one example of how we could utilise the `pivot_longer()` function to convert 'messy' data to the tidy format. In the wild you'll get data that violates any of the three rules of tidy data in many different ways, and we just don't have the space to go through it here. If you do need how to convert some of the other forms of messy data, then the `{tidyr}` package has a number of [vignettes](https://tidyr.tidyverse.org/articles/index.html) outlining many different ways to use the tidying tools it provides.
 
 ### Pivoting rows to columns (wider)
 
 Most of the time you should be going from wide to long, but we'll go through how to do the reverse for the occasions where it's required. To transform the data to the wide format, we use the `pivot_wider()` function. At the simplest level, we just need to provide where the name comes from and where the values come from with the `names_from` and `values_from` parameters respectively:
 
 ```{r}
-tidyr::pivot_wider(tidy_column_example, names_from = Month, values_from = Temperature)
+tidyr::pivot_wider(tidy_vg_sales, names_from = Country, values_from = Sales)
 ```
 
-To get our data more like we started, we can use the `names_prefix` argument to prepend the column names with a string:
+To get our data more like we started, we can use the `names_glue` to provide a [`{glue}`](https://glue.tidyverse.org/) string argument to create the column names from a template:
 
 ```{r}
-tidyr::pivot_wider(tidy_column_example, names_from = Month, values_from = Temperature, names_prefix = "Month")
+tidyr::pivot_wider(tidy_vg_sales, names_from = Country, values_from = Sales, names_glue = "{Country}_Sales") %>%
+  dplyr::select(Year, Name, tidyselect::ends_with("_Sales")) %>%
+  print(n = 5)
 ```
 
 ## Grouping
 
 Before we look at adding new columns and summarising our data, we need to understand the concept of grouping our data.
 
-When a data frame has one or more groups, any function that's applied (by `dplyr::mutate()` or `dplyr::summarise()`) is applied for each combination of those groups. So say we have a dataset like this:
+When a data frame has one or more groups, any function that's applied (when summarising or adding a new column) is applied for each combination of those groups. So say we have a dataset like this:
 
 ```{r, echo = FALSE}
 ungrpd <- data.frame(Year = c("2012", "2012", "2012", "2012", "2012", "2012", "2013", "2013", "2013", "2013", "2013", "2013"),
-                      Month = c(1,1,2,2,3,3,1,1,2,2,3,3),
-                      Group = c("A", "B", "A", "B", "A", "B", "A", "B", "A", "B", "A", "B"),
-                      Value = c(10,20,30,15,25,35,12,22,32,40,50, 60))
+                     Month = c(1,1,2,2,3,3,1,1,2,2,3,3),
+                     Group = c("A", "B", "A", "B", "A", "B", "A", "B", "A", "B", "A", "B"),
+                     Value = c(10,20,30,15,25,35,12,22,32,40,50, 60))
 ```
 
 ```{r}
 head(ungrpd, 5)
 ```
+
 If we grouped by Year or by Month, then any function we applied would be applied separately to each value of those groups. So say we wanted get the total values for each Year, we could group by the `Year` column and then just sum the `Value` column. The same logic applies for if we wanted to get the total for each year *and* month; we could group by the `Year` and `Month` and sum the `Value` column and we'd then get a value for each distinct year and month.
 
 To group a dataset, we use the `dplyr::group_by()` function:
@@ -683,31 +672,40 @@ print(dplyr::ungroup(grpd), n = 5)
 
 Sometimes you'll want to add new columns to your data. Most of the time, these will be calculated columns that can be created based on one or more of the other columns in the dataset. To create new columns, we use the `dplyr::mutate()` function.
 
-First off, let's add something simple; a column that calculates the proportion of EU sales compared to global sales. All we need to do is provide the name of our new column to the `dplyr::mutate()` function and how our new column should be calculated:
+First off, let's add something simple; the Sales column in our dataset is in millions. Let's convert that to normal units. All we need to do is provide the name of our new column to the `dplyr::mutate()` function and how our new column should be calculated:
 
 ```{r}
-clean_vg_sales %>%
-  dplyr::mutate(EU_Proportion = EU_Sales/Global_Sales) %>%
-  dplyr::select(Rank, Name, Platform, Year, Genre, Publisher, EU_Proportion) %>%
+tidy_vg_sales %>%
+  dplyr::mutate(Sales_units = Sales * 1000000) %>%
+  dplyr::select(Rank, Name, Platform, Year, Genre, Publisher, Sales_units) %>%
   print(n = 5)
 ```
 
 As you can see, we've created a new column called `EU_Proportion` and we've calculated by dividing the number of EU sales by the total number of sales.
 
+If we wanted to overwrite the Sales column, we do the same but give the new column the same name:
+
+```{r}
+tidy_vg_sales %>%
+  dplyr::mutate(Sales = Sales * 1000000) %>%
+  dplyr::select(Rank, Name, Platform, Year, Genre, Publisher, Sales) %>%
+  print(n = 5)
+```
+
 While this is certainly a powerful tool, we're not really changing the world here. However, we can create more complicated columns by leveraging the concept of applying our function to [groups](#grouping).
 
-When our dataset is grouped, our `mutate()` call will be evaluated for each permutation of the provided groups. Let's look at an example of creating a cumulative sum for each Publisher:
+When our dataset is grouped, our `mutate()` call will be evaluated for each permutation of the provided groups. Let's look at an example of creating a cumulative sum for each Publisher and Country:
 
 ```{r, warning = FALSE}
-clean_vg_sales %>%
-  dplyr::group_by(Publisher) %>%
-  dplyr::arrange(as.numeric(Year)) %>% # We need to order from earliest date to latest
-  dplyr::mutate(Cumulative_Sales = cumsum(Global_Sales)) %>%
+tidy_vg_sales %>%
+  dplyr::group_by(Publisher, Country) %>%
+  dplyr::arrange(Year) %>% # We need to order from earliest date to latest
+  dplyr::mutate(Cumulative_Sales = cumsum(Sales)) %>%
   dplyr::filter(Publisher %in% c("Atari", "Activision")) %>% # Let's just look at Atari & Activision
   print(n = 5)
 ```
 
-Now we've got a new column showing the total number of sales for each Publisher up to each year. What `{dplyr}` has done is essentially filtered the data down a specific publisher, created a cumulative sum of the `Global_Sales` column, and then done that for each publisher and stitched it back together.
+Now we've got a new column showing the total number of sales for each Publisher up to each year. What `{dplyr}` has done is essentially filtered the data down a specific publisher and country, created a cumulative sum of the `Sales` column, and then done that for each publisher and country and stitched it back together.
 
 ## Summarising
 
@@ -715,21 +713,23 @@ As we saw previously, the base videa game sales dataset has nearly 17,000 entrie
 
 Summarisation uses exactly the same [grouping](#grouping) concept as mutatation does; by grouping the data we change the scope of each application of the function to be limited to that group. 
 
-Let's go through an example. Let's say that we want to get the total sales for each publisher in each year. For now, we don't care about genre or platform. To do this, we'll need to group by Publisher and by Year:
+Let's go through an example. Let's say that we want to get the global sales for each publisher in each year. For now, we don't care about genre or platform. To do this, we'll need to group by Publisher and by Year:
 
 ```{r, eval = FALSE}
-clean_vg_sales %>%
+tidy_vg_sales %>%
+  dplyr::filter(Country == "Global") %>%
   dplyr::group_by(Publisher, Year)
 ```
 
-And then we'll want to sum up the `Global_Sales` column to get our totals:
+And then we'll want to sum up the `Sales` column to get our totals:
 
 ```{r}
-smmrsd_vg_sales <- clean_vg_sales %>%
+tidy_vg_sales %>%
+  dplyr::filter(Country == "Global") %>%
   dplyr::group_by(Publisher, Year) %>%
-  dplyr::summarise(Total_Global_Sales = sum(Global_Sales), .groups = "drop")
-# The .groups = 'drop' parameter will automatically remove the groups
-print(smmrsd_vg_sales, n = 5)
+  dplyr::summarise(Total_Sales = sum(Sales), .groups = "drop") %>%
+  # The .groups = 'drop' parameter will automatically remove the groups
+  print(n = 5)
 ```
 
 Now we can see that the number of rows has reduced down to just under 2,000, and we've got the total global sales for each of our publishers, and for each year. `{dplyr}` has looked through each publisher and each year that publisher has at least 1 game, and added up the total number of sales, then moved onto the next Publisher/Year combination.
@@ -737,14 +737,13 @@ Now we can see that the number of rows has reduced down to just under 2,000, and
 While we're here, let's lump together some of the less popular publishers using the `forcats::fct_lump_n()` function:
 
 ```{r}
-smmrsd_vg_sales <- clean_vg_sales %>%
+smmrsd_vg_sales <- tidy_vg_sales %>%
+  dplyr::filter(Country == "Global") %>%
   dplyr::group_by(Publisher, Year) %>%
-  dplyr::summarise(Total_Global_Sales = sum(Global_Sales), .groups = "drop") %>%
-  # Now we want to change the value of the Publisher column so that if the publisher wasn't in the top 5,
-  # change it to 'Other'
-  dplyr::mutate(Publisher = forcats::fct_lump_n(Publisher, n = 5, w = Total_Global_Sales)) %>%
+  dplyr::summarise(Total_Sales = sum(Sales), .groups = "drop") %>%
+  dplyr::mutate(Publisher = forcats::fct_lump_n(Publisher, n = 5, w = Total_Sales)) %>%
   dplyr::group_by(Publisher, Year) %>%
-  dplyr::summarise(Total_Global_Sales = sum(Total_Global_Sales), .groups = "drop")
+  dplyr::summarise(Total_Sales = sum(Total_Sales), .groups = "drop")
 # The .groups = 'drop' parameter will automatically remove the groups
 print(smmrsd_vg_sales, n = 5)
 ```
@@ -752,10 +751,10 @@ print(smmrsd_vg_sales, n = 5)
 In this case we've used the `sum()` function, but any kind of summary function can be used:
 
 ```{r}
-clean_vg_sales %>%
+tidy_vg_sales %>%
   dplyr::group_by(Publisher, Year) %>%
-  dplyr::summarise(Total_Global_Sales = sum(Global_Sales),
-                   Average_Global_Sales = mean(Global_Sales),
+  dplyr::summarise(Total_Sales = sum(Sales),
+                   Average_Sales = mean(Sales),
                    .groups = "drop")
 ```
 
@@ -797,7 +796,7 @@ To define our dataset and our aesthetic mappings using `{ggplot2}`, we use the `
 ```{r}
 library(ggplot2)
 
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales, colour = Publisher))
+ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales, colour = Publisher))
 ```
 
 Here we've defined that we want to show the `Year` on the X axis, the `Total_Global_Sales` on the Y, and we want to map the `Publisher` to the colour of whatever we show on the plot.
@@ -813,7 +812,7 @@ Our geometric objects will be the object that's actually shown on the plot (e.g.
 We want lines for our example, so we use the `geom_line()` function. To add our geom component, we just need to add it to our plot so far using the `+` operator:
 
 ```{r}
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales, colour = Publisher)) +
+ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales, colour = Publisher)) +
   geom_line()
 ```
 
@@ -821,7 +820,7 @@ This is equivalent to:
 
 ```{r, eval = FALSE}
 ggplot(smmrsd_vg_sales) +
-  geom_line(mapping = aes(x = Year, y = Total_Global_Sales, colour = Publisher))
+  geom_line(mapping = aes(x = Year, y = Total_Sales, colour = Publisher))
 ```
 
 
@@ -835,7 +834,7 @@ We can change this however, so that some form of stat is done on the data before
 
 ```{r}
 ggplot(smmrsd_vg_sales) +
-  geom_line(mapping = aes(x = Year, y = Total_Global_Sales, colour = Publisher), stat = "smooth")
+  geom_line(mapping = aes(x = Year, y = Total_Sales, colour = Publisher), stat = "smooth")
 ```
 
 This call is equivalent to using the `geom_smooth()` function.
@@ -845,7 +844,7 @@ This call is equivalent to using the `geom_smooth()` function.
 Together, the data, mapping, stat and geom components form a **layer**. A plot can be made up of multiple layers. For example, let's show the same data but overlay a regression line that uses a different stat and a different mapping:
 
 ```{r}
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales)) +
+ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   geom_smooth(method = "loess", formula = y ~ x)
 ```
@@ -865,7 +864,7 @@ And plots can be made of up one or more layers.
 In our example, we've shown the Publisher column as a mapping to the colour aesthetic, but we could also use faceting. Faceting splits the original dataset, plots the data separately and then combines it into a single panel. To facet our plot, we use the `facet_wrap()` or `facet_grid()` functions:
 
 ```{r}
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales, colour = Publisher)) +
+ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales, colour = Publisher)) +
   geom_line() +
   facet_wrap(~Publisher)
 ```
@@ -877,32 +876,32 @@ Facets are not features of layers, but instead are universal to the plot.
 `{ggplot2}` has created default scales for the variables in our mapping, but we can alter them manually. To do so, we just use the accompanying `scale_{aesthetic}_{type}` function. So for our x axis, we're scaling our x mapping and we want a continuous, numeric scale so we would use the `scale_x_continous()` function. Similarly, for our y axis we'd use `scale_y_continuous()`:
 
 ```{r, warning = FALSE}
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales)) +
+ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   geom_smooth(method = "loess", formula = y ~ x) +
   scale_x_continuous(name = "Year") +
   # Let's change the limits to stop at 0
-  scale_y_continuous(name = "Global Sales (Millions)", limits = c(0, NA))
+  scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA))
 ```
 
 To change the colour scale, we would use the `scale_colour_brewer/hue()` function. These two functions take a slightly different approach in how they assign colours to the levels of the variable.
 
 
 ```{r}
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales)) +
+ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   geom_smooth(method = "loess", formula = y ~ x) +
   scale_x_continuous(name = "Year") +
-  scale_y_continuous(name = "Global Sales (Millions)", limits = c(0, NA)) +
+  scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA)) +
   scale_colour_brewer(name = "Publisher", palette = "BrBG")
 ```
 
 ```{r}
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Global_Sales)) +
+ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   geom_smooth(method = "loess", formula = y ~ x) +
   scale_x_continuous(name = "Year") +
-  scale_y_continuous(name = "Global Sales (Millions)", limits = c(0, NA)) +
+  scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA)) +
   scale_colour_hue(name = "Publisher", l = 40, c = 30)
 ```
 
