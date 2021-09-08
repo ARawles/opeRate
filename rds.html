@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9.1 Pivoting columns | opeRate</title>
+  <title>7.1 RDS | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9.1 Pivoting columns | opeRate" />
+  <meta property="og:title" content="7.1 RDS | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9.1 Pivoting columns | opeRate" />
+  <meta name="twitter:title" content="7.1 RDS | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="tidying.html"/>
-<link rel="next" href="pivoting-columns-to-rows-longer.html"/>
+<link rel="prev" href="loading.html"/>
+<link rel="next" href="csv.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -268,44 +268,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pivoting-columns" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Pivoting columns</h2>
-<p>The main culprit of untidy data is data that breaks the first rule: Not every column is a variable. Data in this format is sometimes called wide data - as you add more levels, you’ll add more columns and so the data will get wider. Conversely, tidy data will get longer as you add more levels.</p>
-<p>So there two different forms of data:</p>
-<ul>
-<li>Long</li>
-<li>Wide</li>
-</ul>
-<p>Let’s look at use our Kaggle dataset as an example to see how the two forms differ in practice:</p>
-<pre><code>## # A tibble: 16,327 x 7
-##    Year Name              NA_Sales EU_Sales JP_Sales Other_Sales Global_Sales
-##   &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
-## 1  2006 Wii Sports            41.5    29.0      3.77        8.46         82.7
-## 2  1985 Super Mario Bros.     29.1     3.58     6.81        0.77         40.2
-## 3  2008 Mario Kart Wii        15.8    12.9      3.79        3.31         35.8
-## # … with 16,324 more rows</code></pre>
-<p>What would happen if we added data for more countries? We’d be adding more columns, and so our data would get wider. So our <code>clean_vg_sales</code> data is currently in the wide format. If we had the country as its own column however, like this:</p>
-<pre><code>## # A tibble: 81,635 x 3
-##    Year Country Sales
-##   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
-## 1  2006 NA      41.5 
-## 2  2006 EU      29.0 
-## 3  2006 JP       3.77
-## 4  2006 Other    8.46
-## 5  2006 Global  82.7 
-## # … with 81,630 more rows</code></pre>
-<p>Now we’ve got the country as a variable, the more countries we add the longer the data is going to get. So we’ve converted our data from the wide format to the long format. To do this, we’ve pivoted the Sales columns. Let’s look at the two types of pivot.</p>
-<p>Wide data is very common, usually because it’s slightly easier to read or to enter (particularly if you’re using Excel), but it’s much harder to work with in R. Let’s look at how we might convert wide data to tidy-er long data using the concept of pivoting.</p>
-<p><strong>Note:</strong>
-One thing to keep in mind is that long data does not always mean tidy, but wide data can never be tidy. It’s a subtle distinction but it’s important to remember.</p>
+<div id="rds" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> RDS</h2>
+<p>If you need to share an R-specific object (like a linear model created with the <code>lm()</code> function) or you’re certain that the data never needs to be readable in another program, then you utilise the rds format to save and read data.</p>
+<p>To load in RDS files, we use the <code>readRDS()</code> function, providing the file path of the file we want to read:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="rds.html#cb11-1" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;path/to/file&quot;</span>)</span></code></pre></div>
+<p>To save an object to an .rds file, you just need to provide the object you want to save and a file path to save it to:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="rds.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(my_data, <span class="at">file =</span> <span class="st">&quot;path/to/file&quot;</span>)</span></code></pre></div>
+<div id="advantages" class="section level3" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Advantages</h3>
+<p>RDS files are R specific files that contain a serialized version of a specific object. The benefit of R objects is that the object will be preserved in its entirety - you won’t lose the column data types when you save it and then load it in again.</p>
+</div>
+<div id="disadvantages" class="section level3" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> Disadvantages</h3>
+<p>RDS files cannot be read natively by other programs. This means that if you’re trying to share your dataset and someone wants to open it in, say, Excel, they’re going to need to convert it to a different format before they can load it. The RDS format therefore isn’t ideal for sharing data outside of the R ecosystem.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="tidying.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pivoting-columns-to-rows-longer.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="loading.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="csv.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

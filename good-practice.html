@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9.1 Pivoting columns | opeRate</title>
+  <title>17.1 Good practice | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9.1 Pivoting columns | opeRate" />
+  <meta property="og:title" content="17.1 Good practice | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9.1 Pivoting columns | opeRate" />
+  <meta name="twitter:title" content="17.1 Good practice | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="tidying.html"/>
-<link rel="next" href="pivoting-columns-to-rows-longer.html"/>
+<link rel="prev" href="replicability.html"/>
+<link rel="next" href="documentation.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -268,44 +268,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pivoting-columns" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Pivoting columns</h2>
-<p>The main culprit of untidy data is data that breaks the first rule: Not every column is a variable. Data in this format is sometimes called wide data - as you add more levels, you’ll add more columns and so the data will get wider. Conversely, tidy data will get longer as you add more levels.</p>
-<p>So there two different forms of data:</p>
-<ul>
-<li>Long</li>
-<li>Wide</li>
-</ul>
-<p>Let’s look at use our Kaggle dataset as an example to see how the two forms differ in practice:</p>
-<pre><code>## # A tibble: 16,327 x 7
-##    Year Name              NA_Sales EU_Sales JP_Sales Other_Sales Global_Sales
-##   &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
-## 1  2006 Wii Sports            41.5    29.0      3.77        8.46         82.7
-## 2  1985 Super Mario Bros.     29.1     3.58     6.81        0.77         40.2
-## 3  2008 Mario Kart Wii        15.8    12.9      3.79        3.31         35.8
-## # … with 16,324 more rows</code></pre>
-<p>What would happen if we added data for more countries? We’d be adding more columns, and so our data would get wider. So our <code>clean_vg_sales</code> data is currently in the wide format. If we had the country as its own column however, like this:</p>
-<pre><code>## # A tibble: 81,635 x 3
-##    Year Country Sales
-##   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
-## 1  2006 NA      41.5 
-## 2  2006 EU      29.0 
-## 3  2006 JP       3.77
-## 4  2006 Other    8.46
-## 5  2006 Global  82.7 
-## # … with 81,630 more rows</code></pre>
-<p>Now we’ve got the country as a variable, the more countries we add the longer the data is going to get. So we’ve converted our data from the wide format to the long format. To do this, we’ve pivoted the Sales columns. Let’s look at the two types of pivot.</p>
-<p>Wide data is very common, usually because it’s slightly easier to read or to enter (particularly if you’re using Excel), but it’s much harder to work with in R. Let’s look at how we might convert wide data to tidy-er long data using the concept of pivoting.</p>
-<p><strong>Note:</strong>
-One thing to keep in mind is that long data does not always mean tidy, but wide data can never be tidy. It’s a subtle distinction but it’s important to remember.</p>
+<div id="good-practice" class="section level2" number="17.1">
+<h2><span class="header-section-number">17.1</span> Good practice</h2>
+<p>There are a few things you can do to make your work immediately more readable for others:</p>
+<div id="use-a-consistent-naming-convention" class="section level3" number="17.1.1">
+<h3><span class="header-section-number">17.1.1</span> Use a consistent naming convention</h3>
+<p>Take your pick. Everyone has their preference and that’s okay. If you like camelCase then go with camelCase. If you like the <code>_</code> approach, then go for that. The most important part of your naming convention however is that it’s stable. Don’t name some of your functions <code>like_this</code> and the rest <code>likeThis</code>. Not only does it make it harder to read, but every time you do it, a kitten dies. So be consistent.</p>
+</div>
+<div id="name-your-variables-as-nouns-and-your-functions-as-verbs" class="section level3" number="17.1.2">
+<h3><span class="header-section-number">17.1.2</span> Name your variables as nouns and your functions as verbs</h3>
+<p>Functions do and variables and objects are. Almost all languages share this distinction with verbs and nouns, so utilise that natural divide to improve how you name your functions and variables. Aim to give your functions names that suggest that they <code>do</code> something; and bonus points if you can give it a name that’s a verb and also gives a decent description of what the function does. When you name your variables, give them meaningful noun-like names. Say you’re doing some climate analysis, a good name for the variable that holds the average rainfall in a year might be <code>avg_yearly_rainfall</code> whilst a function that converts a temperature in Celsius to Fahrenheit might be <code>convert_degrees()</code>.</p>
+</div>
+<div id="use-functions-where-you-can" class="section level3" number="17.1.3">
+<h3><span class="header-section-number">17.1.3</span> Use functions where you can</h3>
+<p>R is a functional language and so using and creating functions is at the very heart of programming in R. Rather than relying on R scripts that need to be run in their entirety to produce your output, by creating functions and using them in your analysis, you can more easily scale your project. For example, imagine your scope is initially to produce a report for the year. Then, after your done, your manager is so impressed with your report, they want you to do the same thing for the last 10 years. If you’ve used a couple of R scripts and you haven’t written any functions, then this is likely going to involve copying and pasting a whole lot of code and changing the years. Instead, if you use functions to perform your analysis, then creating reports for multiple years can be as simple as changing your dataset.</p>
+<p>As a rough rule of thumb, if you find yourself copying and pasting your R code more than twice to do very similar things, you should probably be using a function.</p>
+</div>
+<div id="state-your-dependencies" class="section level3" number="17.1.4">
+<h3><span class="header-section-number">17.1.4</span> State your dependencies</h3>
+<p>One of the great things about R is the number of packages that are available that let you do all sorts of weird and wonderful things. Unfortunately, because there are so many great packages, it’s unlikely that the person you’re sharing your code with will have them all installed. If you’re sending someone a script, then best practice is to include all the packages you use at the top of your script like this:</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="good-practice.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb115-2"><a href="good-practice.html#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<p>An extra step which few people do but can be very helpful is to still prepend your functions with which package they came from like this <code>dplyr::mutate()</code>. Not only does this avoid any namespace conflicts where two packages might have functions with the same name and you don’t end up using the one you think you are because of the order of your <code>library()</code> calls, but it also makes it infinitely easier for anyone reading your code to find the package that a function comes from.
+Admittedly, this is overkill in a sense because we’ve already told R which packages we’re using with our <code>library()</code> calls and R has loaded in the objects from that package, but this practice can really improve the readability of your code.</p>
+<p>Later we’ll look at designing our project as a package and packages have a different way of stating dependencies for the user, so this is primarily for the case where you’re just sending a script or two to someone.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="tidying.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pivoting-columns-to-rows-longer.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="replicability.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="documentation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

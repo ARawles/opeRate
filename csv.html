@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9.1 Pivoting columns | opeRate</title>
+  <title>7.2 CSV | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9.1 Pivoting columns | opeRate" />
+  <meta property="og:title" content="7.2 CSV | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9.1 Pivoting columns | opeRate" />
+  <meta name="twitter:title" content="7.2 CSV | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="tidying.html"/>
-<link rel="next" href="pivoting-columns-to-rows-longer.html"/>
+<link rel="prev" href="rds.html"/>
+<link rel="next" href="excel-files.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -268,44 +268,111 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pivoting-columns" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Pivoting columns</h2>
-<p>The main culprit of untidy data is data that breaks the first rule: Not every column is a variable. Data in this format is sometimes called wide data - as you add more levels, you’ll add more columns and so the data will get wider. Conversely, tidy data will get longer as you add more levels.</p>
-<p>So there two different forms of data:</p>
-<ul>
-<li>Long</li>
-<li>Wide</li>
-</ul>
-<p>Let’s look at use our Kaggle dataset as an example to see how the two forms differ in practice:</p>
-<pre><code>## # A tibble: 16,327 x 7
-##    Year Name              NA_Sales EU_Sales JP_Sales Other_Sales Global_Sales
-##   &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
-## 1  2006 Wii Sports            41.5    29.0      3.77        8.46         82.7
-## 2  1985 Super Mario Bros.     29.1     3.58     6.81        0.77         40.2
-## 3  2008 Mario Kart Wii        15.8    12.9      3.79        3.31         35.8
-## # … with 16,324 more rows</code></pre>
-<p>What would happen if we added data for more countries? We’d be adding more columns, and so our data would get wider. So our <code>clean_vg_sales</code> data is currently in the wide format. If we had the country as its own column however, like this:</p>
-<pre><code>## # A tibble: 81,635 x 3
-##    Year Country Sales
-##   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
-## 1  2006 NA      41.5 
-## 2  2006 EU      29.0 
-## 3  2006 JP       3.77
-## 4  2006 Other    8.46
-## 5  2006 Global  82.7 
-## # … with 81,630 more rows</code></pre>
-<p>Now we’ve got the country as a variable, the more countries we add the longer the data is going to get. So we’ve converted our data from the wide format to the long format. To do this, we’ve pivoted the Sales columns. Let’s look at the two types of pivot.</p>
-<p>Wide data is very common, usually because it’s slightly easier to read or to enter (particularly if you’re using Excel), but it’s much harder to work with in R. Let’s look at how we might convert wide data to tidy-er long data using the concept of pivoting.</p>
-<p><strong>Note:</strong>
-One thing to keep in mind is that long data does not always mean tidy, but wide data can never be tidy. It’s a subtle distinction but it’s important to remember.</p>
+<div id="csv" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> CSV</h2>
+<p>If I have any say in the data format of the files I need to load in, I usually ask for them to be in CSV format. CSV stands for “comma-separated values” and essentially means that the data is stored as one long text string, with each different value or cell separated by a comma (although you will see CSV files with different separators). So for example, a really simple CSV file may look, in its most base format, like this:</p>
+<pre><code>name,age,
+Dave,35,
+Simon,60,
+Anna,24,
+Patricia,75</code></pre>
+<p>Benefits of the CSV file over something like an Excel file are largely based around simplicity. CSV files are typically smaller and can only have one sheet, meaning that you won’t get confused with multiple spreadsheets. Furthermore, values in CSV files are essentially what you see is what you get. With Excel files, sometimes the value that you see in Excel isn’t the value that ends up in R (looking at you dates and datetimes). For these reasons, I would suggest using a separated-value file over an Excel file when you can.</p>
+<div id="loading-csv-files" class="section level3" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Loading CSV files</h3>
+<p>Loading CSV files in R is relatively simple. There are base* functions that come with R to load CSV files but there’s also a popular package called <code>readr</code> which can be used so I’ll cover both.</p>
+<p>* They are technically from the <code>utils</code> package which comes bundled with R so we’ll call it base R.</p>
+<div id="base-r" class="section level4" number="7.2.1.1">
+<h4><span class="header-section-number">7.2.1.1</span> Base R</h4>
+<p>To load a CSV file using base R, we’ll use the <code>read.csv()</code> function:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="csv.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;path/to/file&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, ...)</span></code></pre></div>
+<p>The <code>file</code> parameters needs the path to your file as a character string. The <code>header</code> parameter is used to tell R whether or not your file has column headers. Our dataset does have headers (i.e. the first row is the column names) so we set that to <code>TRUE</code>.</p>
+<p>There are lots of other parameters that can be tweaked for the <code>read.csv()</code> function, but we won’t go through them here.</p>
+</div>
+<div id="readr" class="section level4" number="7.2.1.2">
+<h4><span class="header-section-number">7.2.1.2</span> readr</h4>
+<p>The <code>readr</code> package comes with a similar function: <code>read_csv()</code>. With the exception of a couple of extra parameters in the <code>read_csv()</code> function and potentially some better efficiency, there isn’t a massive difference between the two.</p>
+<p>Using the <code>read_csv()</code> function is simple:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="csv.html#cb15-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;path/to/file&quot;</span>, <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>In this function, the <code>header</code> parameter is replaced with the <code>col_names</code> parameter. The <code>col_names</code> parameter is very similar, you can say whether your dataset has column headings, or you can provide a character vector of names to be used as column headers.</p>
+<p>Let’s load our Kaggle dataset in using the <code>readr::read_csv()</code> function:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="csv.html#cb16-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;./data/vgsales.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   Rank = col_double(),
+##   Name = col_character(),
+##   Platform = col_character(),
+##   Year = col_character(),
+##   Genre = col_character(),
+##   Publisher = col_character(),
+##   NA_Sales = col_double(),
+##   EU_Sales = col_double(),
+##   JP_Sales = col_double(),
+##   Other_Sales = col_double(),
+##   Global_Sales = col_double()
+## )</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="csv.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(vg_sales, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 16,598 x 11
+##    Rank Name  Platform Year  Genre Publisher NA_Sales EU_Sales JP_Sales
+##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1     1 Wii … Wii      2006  Spor… Nintendo      41.5    29.0      3.77
+## 2     2 Supe… NES      1985  Plat… Nintendo      29.1     3.58     6.81
+## 3     3 Mari… Wii      2008  Raci… Nintendo      15.8    12.9      3.79
+## 4     4 Wii … Wii      2009  Spor… Nintendo      15.8    11.0      3.28
+## 5     5 Poke… GB       1996  Role… Nintendo      11.3     8.89    10.2 
+## # … with 16,593 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
+## #   Global_Sales &lt;dbl&gt;</code></pre>
+<p>You can see that when we load in a file using <code>{readr}</code> without specifying column types, we get an output showing us exactly how each column has been parsed. This is because CSV is a typeless format, and so data isn’t always imported as the type you intended it to be.</p>
+<p>To override the default types that <code>{readr}</code> has assigned, we can use the <code>col_types</code> parameter. This can either be provided using the <code>cols()</code> helper function like this:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="csv.html#cb20-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;path/to/file&quot;</span>,</span>
+<span id="cb20-2"><a href="csv.html#cb20-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb20-3"><a href="csv.html#cb20-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(</span>
+<span id="cb20-4"><a href="csv.html#cb20-4" aria-hidden="true" tabindex="-1"></a>                  readr<span class="sc">::</span><span class="fu">col_character</span>(), readr<span class="sc">::</span><span class="fu">col_double</span>(), ... <span class="co"># You need to provide a type for each column</span></span>
+<span id="cb20-5"><a href="csv.html#cb20-5" aria-hidden="true" tabindex="-1"></a>                ),</span>
+<span id="cb20-6"><a href="csv.html#cb20-6" aria-hidden="true" tabindex="-1"></a>                ...</span>
+<span id="cb20-7"><a href="csv.html#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Or, you can provide a compact string with different letters representing different datatypes:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="csv.html#cb21-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;path/to/file&quot;</span>,</span>
+<span id="cb21-2"><a href="csv.html#cb21-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">col_names =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb21-3"><a href="csv.html#cb21-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">col_types =</span> <span class="st">&quot;cd&quot;</span>,</span>
+<span id="cb21-4"><a href="csv.html#cb21-4" aria-hidden="true" tabindex="-1"></a>                ...</span>
+<span id="cb21-5"><a href="csv.html#cb21-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>The codes for the different datatypes can be found on the documentation page for the <code>read_csv()</code> function (type <code>?read_csv()</code>).</p>
+<p>Let’s use the compact string format to load in the video game dataset again but this time, we want the year to be imported as a number:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="csv.html#cb22-1" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;./data/vgsales.csv&quot;</span>, <span class="at">col_types =</span> <span class="st">&quot;dccdccddddd&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: 271 parsing failures.
+## row  col expected actual                 file
+## 180 Year a double    N/A &#39;./data/vgsales.csv&#39;
+## 378 Year a double    N/A &#39;./data/vgsales.csv&#39;
+## 432 Year a double    N/A &#39;./data/vgsales.csv&#39;
+## 471 Year a double    N/A &#39;./data/vgsales.csv&#39;
+## 608 Year a double    N/A &#39;./data/vgsales.csv&#39;
+## ... .... ........ ...... ....................
+## See problems(...) for more details.</code></pre>
+<p>We’ve got some warnings here because <code>{readr}</code> wasn’t able to parse some of the values in the Year column as numeric, giving us some NAs. We’ll clean up these values in the <a href="cleaning.html#cleaning">Cleaning</a> chapter so we can ignore them for now.</p>
+</div>
+</div>
+<div id="advantages-1" class="section level3" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> Advantages</h3>
+<p>CSV files can be opened in a number of different software packages, making the CSV format a good candidate for sharing data with people who may not also be using R.</p>
+</div>
+<div id="disadvantages-1" class="section level3" number="7.2.3">
+<h3><span class="header-section-number">7.2.3</span> Disadvantages</h3>
+<p>In the interests of simplicity, CSV files don’t store information on the <strong>type</strong> of the data in each column, meaning that you need to be careful when you’re loading data from a CSV file that the column types you end up with are the ones you want.</p>
+<p>The CSV format also isn’t fully standardised, meaning that you might come across some files that say they’re CSV, but generate errors when they’re parsed. It’s relatively rare to see a CSV file that is so different that it can’t be parsed at all, but it’s something worth remembering.</p>
+</div>
+<div id="other-delimited-files" class="section level3" number="7.2.4">
+<h3><span class="header-section-number">7.2.4</span> Other delimited files</h3>
+<p>Comma-separated value files are just a form of delimited files that use a comma to separate different values. In the wild you might see files separated with all different kinds of symbols, like pipes (|) or tabs. To load in these types of files, use the <code>readr::read_delim()</code> function and specify what’s being used to separate the values with the <code>delim</code> parameter. <code>readr::read_csv()</code> basically just wraps <code>readr::read_delim()</code> using <code>delim = ','</code> anyway, along as you’re comfortable loading in CSV files, you should be well equipped to load in any kind of delimited file.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="tidying.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pivoting-columns-to-rows-longer.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="rds.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="excel-files.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

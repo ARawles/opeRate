@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9.1 Pivoting columns | opeRate</title>
+  <title>8.2 Missing values | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9.1 Pivoting columns | opeRate" />
+  <meta property="og:title" content="8.2 Missing values | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9.1 Pivoting columns | opeRate" />
+  <meta name="twitter:title" content="8.2 Missing values | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="tidying.html"/>
-<link rel="next" href="pivoting-columns-to-rows-longer.html"/>
+<link rel="prev" href="filtering.html"/>
+<link rel="next" href="changing-column-types.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -268,44 +268,91 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pivoting-columns" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Pivoting columns</h2>
-<p>The main culprit of untidy data is data that breaks the first rule: Not every column is a variable. Data in this format is sometimes called wide data - as you add more levels, you’ll add more columns and so the data will get wider. Conversely, tidy data will get longer as you add more levels.</p>
-<p>So there two different forms of data:</p>
-<ul>
-<li>Long</li>
-<li>Wide</li>
-</ul>
-<p>Let’s look at use our Kaggle dataset as an example to see how the two forms differ in practice:</p>
-<pre><code>## # A tibble: 16,327 x 7
-##    Year Name              NA_Sales EU_Sales JP_Sales Other_Sales Global_Sales
-##   &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
-## 1  2006 Wii Sports            41.5    29.0      3.77        8.46         82.7
-## 2  1985 Super Mario Bros.     29.1     3.58     6.81        0.77         40.2
-## 3  2008 Mario Kart Wii        15.8    12.9      3.79        3.31         35.8
-## # … with 16,324 more rows</code></pre>
-<p>What would happen if we added data for more countries? We’d be adding more columns, and so our data would get wider. So our <code>clean_vg_sales</code> data is currently in the wide format. If we had the country as its own column however, like this:</p>
-<pre><code>## # A tibble: 81,635 x 3
-##    Year Country Sales
-##   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
-## 1  2006 NA      41.5 
-## 2  2006 EU      29.0 
-## 3  2006 JP       3.77
-## 4  2006 Other    8.46
-## 5  2006 Global  82.7 
-## # … with 81,630 more rows</code></pre>
-<p>Now we’ve got the country as a variable, the more countries we add the longer the data is going to get. So we’ve converted our data from the wide format to the long format. To do this, we’ve pivoted the Sales columns. Let’s look at the two types of pivot.</p>
-<p>Wide data is very common, usually because it’s slightly easier to read or to enter (particularly if you’re using Excel), but it’s much harder to work with in R. Let’s look at how we might convert wide data to tidy-er long data using the concept of pivoting.</p>
-<p><strong>Note:</strong>
-One thing to keep in mind is that long data does not always mean tidy, but wide data can never be tidy. It’s a subtle distinction but it’s important to remember.</p>
+<div id="missing-values" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Missing values</h2>
+<p>Missing values are common in data science - data collection is often imperfect and so you’ll end up with observations or data-points missing. Firstly, you need to decide what you’re going to do with those.</p>
+<p>The easiest approach to just to remove them, and we can do that with the <code>dplyr::filter()</code> and the <code>is.na()</code> functions. If you remember in the <a href="loading.html#loading">Loading</a> chapter, <code>{readr}</code> had trouble parsing some of the values in our Year column to numeric, and so gave us some NAs. Let’s remove those rows using this approach:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="missing-values.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To remove rows with NA in one column</span></span>
+<span id="cb49-2"><a href="missing-values.html#cb49-2" aria-hidden="true" tabindex="-1"></a>clean_vg_sales <span class="ot">&lt;-</span> vg_sales <span class="sc">%&gt;%</span> </span>
+<span id="cb49-3"><a href="missing-values.html#cb49-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Year))</span>
+<span id="cb49-4"><a href="missing-values.html#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(clean_vg_sales, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 16,327 x 11
+##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
+##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1     1 Wii … Wii       2006 Spor… Nintendo      41.5    29.0      3.77
+## 2     2 Supe… NES       1985 Plat… Nintendo      29.1     3.58     6.81
+## 3     3 Mari… Wii       2008 Raci… Nintendo      15.8    12.9      3.79
+## 4     4 Wii … Wii       2009 Spor… Nintendo      15.8    11.0      3.28
+## 5     5 Poke… GB        1996 Role… Nintendo      11.3     8.89    10.2 
+## # … with 16,322 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
+## #   Global_Sales &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="missing-values.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To remove rows with NA in any column</span></span>
+<span id="cb51-2"><a href="missing-values.html#cb51-2" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span> </span>
+<span id="cb51-3"><a href="missing-values.html#cb51-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="sc">~!</span><span class="fu">is.na</span>(.x))) <span class="sc">%&gt;%</span></span>
+<span id="cb51-4"><a href="missing-values.html#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 16,327 x 11
+##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
+##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1     1 Wii … Wii       2006 Spor… Nintendo      41.5    29.0      3.77
+## 2     2 Supe… NES       1985 Plat… Nintendo      29.1     3.58     6.81
+## 3     3 Mari… Wii       2008 Raci… Nintendo      15.8    12.9      3.79
+## 4     4 Wii … Wii       2009 Spor… Nintendo      15.8    11.0      3.28
+## 5     5 Poke… GB        1996 Role… Nintendo      11.3     8.89    10.2 
+## # … with 16,322 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
+## #   Global_Sales &lt;dbl&gt;</code></pre>
+<p>Another approach to replace them with either the average for that column or with the closest neighbour value (this works better with time series data).</p>
+<p>To replace with the nearest value, we can use the <code>tidyr::fill()</code> function. That approach wouldn’t be appropriate for our video games example so let’s use the <code>datasets::airquality</code> dataset instead:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="missing-values.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datasets<span class="sc">::</span>airquality, <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##   Ozone Solar.R Wind Temp Month Day
+## 1    41     190  7.4   67     5   1
+## 2    36     118  8.0   72     5   2
+## 3    12     149 12.6   74     5   3
+## 4    18     313 11.5   62     5   4
+## 5    NA      NA 14.3   56     5   5</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="missing-values.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fill a single column</span></span>
+<span id="cb55-2"><a href="missing-values.html#cb55-2" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb55-3"><a href="missing-values.html#cb55-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">fill</span>(Ozone, <span class="at">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb55-4"><a href="missing-values.html#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##   Ozone Solar.R Wind Temp Month Day
+## 1    41     190  7.4   67     5   1
+## 2    36     118  8.0   72     5   2
+## 3    12     149 12.6   74     5   3
+## 4    18     313 11.5   62     5   4
+## 5    18      NA 14.3   56     5   5</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="missing-values.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fill all columns</span></span>
+<span id="cb57-2"><a href="missing-values.html#cb57-2" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="missing-values.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">fill</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="at">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb57-4"><a href="missing-values.html#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##   Ozone Solar.R Wind Temp Month Day
+## 1    41     190  7.4   67     5   1
+## 2    36     118  8.0   72     5   2
+## 3    12     149 12.6   74     5   3
+## 4    18     313 11.5   62     5   4
+## 5    18     313 14.3   56     5   5</code></pre>
+<p>To replace them with the mean, we can either use a package like <code>zoo</code>, or we can use the <code>tidyverse</code> packages and our own function:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="missing-values.html#cb59-1" aria-hidden="true" tabindex="-1"></a>replace_with_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb59-2"><a href="missing-values.html#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(x, <span class="fu">is.na</span>(x), <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb59-3"><a href="missing-values.html#cb59-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb59-4"><a href="missing-values.html#cb59-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-5"><a href="missing-values.html#cb59-5" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb59-6"><a href="missing-values.html#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The mutate function creates new columns or overwrites existing ones</span></span>
+<span id="cb59-7"><a href="missing-values.html#cb59-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), replace_with_mean)) <span class="sc">%&gt;%</span></span>
+<span id="cb59-8"><a href="missing-values.html#cb59-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##      Ozone  Solar.R Wind Temp Month Day
+## 1 41.00000 190.0000  7.4   67     5   1
+## 2 36.00000 118.0000  8.0   72     5   2
+## 3 12.00000 149.0000 12.6   74     5   3
+## 4 18.00000 313.0000 11.5   62     5   4
+## 5 42.12931 185.9315 14.3   56     5   5</code></pre>
+<p>A word of warning here, however. If you’re doing complex modelling or very sensitive analyses, filling values like this can be misleading at best. Always think about the best approach for your specific project and what the repercussions of filling empty values might be.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="tidying.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pivoting-columns-to-rows-longer.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="filtering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="changing-column-types.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

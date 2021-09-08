@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.2 Replicability | opeRate</title>
+  <title>17 Replicability | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.2 Replicability | opeRate" />
+  <meta property="og:title" content="17 Replicability | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.2 Replicability | opeRate" />
+  <meta name="twitter:title" content="17 Replicability | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="workflows.html"/>
-<link rel="next" href="projects-as-packages.html"/>
+<link rel="prev" href="basic-workflow.html"/>
+<link rel="next" href="good-practice.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -142,67 +142,115 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="about-me.html"><a href="about-me.html"><i class="fa fa-check"></i><b>1.2</b> About Me</a></li>
 <li class="chapter" data-level="1.3" data-path="using-r.html"><a href="using-r.html"><i class="fa fa-check"></i><b>1.3</b> Using R</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>2</b> tidyverse</a>
+<li class="chapter" data-level="2" data-path="introduction-tidyverse-introduction.html"><a href="introduction-tidyverse-introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction (#tidyverse-introduction)</a></li>
+<li class="chapter" data-level="3" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>3</b> “Tidy” data</a></li>
+<li class="chapter" data-level="4" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>4</b> The pipe <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="5" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>5</b> Quasiquotation</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>2.1</b> “Tidy” data</a></li>
-<li class="chapter" data-level="2.2" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>2.2</b> The pipe <code>%&gt;%</code></a></li>
-<li class="chapter" data-level="2.3" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>2.3</b> Quasiquotation</a>
+<li class="chapter" data-level="5.1" data-path="tidyselect.html"><a href="tidyselect.html"><i class="fa fa-check"></i><b>5.1</b> tidyselect</a></li>
+</ul></li>
+<li class="part"><span><b>I Data Analysis</b></span></li>
+<li class="chapter" data-level="6" data-path="introduction-da-intro.html"><a href="introduction-da-intro.html"><i class="fa fa-check"></i><b>6</b> Introduction (#da-intro)</a></li>
+<li class="chapter" data-level="7" data-path="loading.html"><a href="loading.html"><i class="fa fa-check"></i><b>7</b> Loading</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="quasiquotation.html"><a href="quasiquotation.html#tidyselect"><i class="fa fa-check"></i><b>2.3.1</b> tidyselect</a></li>
+<li class="chapter" data-level="7.1" data-path="rds.html"><a href="rds.html"><i class="fa fa-check"></i><b>7.1</b> RDS</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="rds.html"><a href="rds.html#advantages"><i class="fa fa-check"></i><b>7.1.1</b> Advantages</a></li>
+<li class="chapter" data-level="7.1.2" data-path="rds.html"><a href="rds.html#disadvantages"><i class="fa fa-check"></i><b>7.1.2</b> Disadvantages</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="csv.html"><a href="csv.html"><i class="fa fa-check"></i><b>7.2</b> CSV</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="csv.html"><a href="csv.html#loading-csv-files"><i class="fa fa-check"></i><b>7.2.1</b> Loading CSV files</a></li>
+<li class="chapter" data-level="7.2.2" data-path="csv.html"><a href="csv.html#advantages-1"><i class="fa fa-check"></i><b>7.2.2</b> Advantages</a></li>
+<li class="chapter" data-level="7.2.3" data-path="csv.html"><a href="csv.html#disadvantages-1"><i class="fa fa-check"></i><b>7.2.3</b> Disadvantages</a></li>
+<li class="chapter" data-level="7.2.4" data-path="csv.html"><a href="csv.html#other-delimited-files"><i class="fa fa-check"></i><b>7.2.4</b> Other delimited files</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="excel-files.html"><a href="excel-files.html"><i class="fa fa-check"></i><b>7.3</b> Excel files</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="excel-files.html"><a href="excel-files.html#advantages-2"><i class="fa fa-check"></i><b>7.3.1</b> Advantages</a></li>
+<li class="chapter" data-level="7.3.2" data-path="excel-files.html"><a href="excel-files.html#disadvantages-2"><i class="fa fa-check"></i><b>7.3.2</b> Disadvantages</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="web-based-apis.html"><a href="web-based-apis.html"><i class="fa fa-check"></i><b>7.4</b> Web-based APIs</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="web-based-apis.html"><a href="web-based-apis.html#what-are-apis"><i class="fa fa-check"></i><b>7.4.1</b> What are APIs?</a></li>
+<li class="chapter" data-level="7.4.2" data-path="web-based-apis.html"><a href="web-based-apis.html#accessing-apis-in-r"><i class="fa fa-check"></i><b>7.4.2</b> Accessing APIs in R</a></li>
+<li class="chapter" data-level="7.4.3" data-path="web-based-apis.html"><a href="web-based-apis.html#bmrsr"><i class="fa fa-check"></i><b>7.4.3</b> BMRSr</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="databases.html"><a href="databases.html"><i class="fa fa-check"></i><b>7.5</b> Databases</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="databases.html"><a href="databases.html#database-management-systems-and-odbc"><i class="fa fa-check"></i><b>7.5.1</b> Database Management Systems and ODBC</a></li>
+<li class="chapter" data-level="7.5.2" data-path="databases.html"><a href="databases.html#connecting-with-the-odbc-package"><i class="fa fa-check"></i><b>7.5.2</b> Connecting with the <code>odbc</code> package</a></li>
+<li class="chapter" data-level="7.5.3" data-path="databases.html"><a href="databases.html#querying-the-database"><i class="fa fa-check"></i><b>7.5.3</b> Querying the database</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-analysis.html"><a href="data-analysis.html"><i class="fa fa-check"></i><b>3</b> Data Analysis</a>
+<li class="chapter" data-level="8" data-path="cleaning.html"><a href="cleaning.html"><i class="fa fa-check"></i><b>8</b> Cleaning</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="loading.html"><a href="loading.html"><i class="fa fa-check"></i><b>3.1</b> Loading</a>
+<li class="chapter" data-level="8.1" data-path="filtering.html"><a href="filtering.html"><i class="fa fa-check"></i><b>8.1</b> Filtering</a></li>
+<li class="chapter" data-level="8.2" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>8.2</b> Missing values</a></li>
+<li class="chapter" data-level="8.3" data-path="changing-column-types.html"><a href="changing-column-types.html"><i class="fa fa-check"></i><b>8.3</b> Changing column types</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>9</b> Tidying</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="loading.html"><a href="loading.html#rds"><i class="fa fa-check"></i><b>3.1.1</b> RDS</a></li>
-<li class="chapter" data-level="3.1.2" data-path="loading.html"><a href="loading.html#csv"><i class="fa fa-check"></i><b>3.1.2</b> CSV</a></li>
-<li class="chapter" data-level="3.1.3" data-path="loading.html"><a href="loading.html#excel-files"><i class="fa fa-check"></i><b>3.1.3</b> Excel files</a></li>
-<li class="chapter" data-level="3.1.4" data-path="loading.html"><a href="loading.html#web-based-apis"><i class="fa fa-check"></i><b>3.1.4</b> Web-based APIs</a></li>
-<li class="chapter" data-level="3.1.5" data-path="loading.html"><a href="loading.html#databases"><i class="fa fa-check"></i><b>3.1.5</b> Databases</a></li>
+<li class="chapter" data-level="9.1" data-path="pivoting-columns.html"><a href="pivoting-columns.html"><i class="fa fa-check"></i><b>9.1</b> Pivoting columns</a></li>
+<li class="chapter" data-level="9.2" data-path="pivoting-columns-to-rows-longer.html"><a href="pivoting-columns-to-rows-longer.html"><i class="fa fa-check"></i><b>9.2</b> Pivoting columns to rows (longer)</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="cleaning.html"><a href="cleaning.html"><i class="fa fa-check"></i><b>3.2</b> Cleaning</a>
+<li class="chapter" data-level="10" data-path="pivoting-rows-to-columns-wider.html"><a href="pivoting-rows-to-columns-wider.html"><i class="fa fa-check"></i><b>10</b> Pivoting rows to columns (wider)</a></li>
+<li class="chapter" data-level="11" data-path="grouping.html"><a href="grouping.html"><i class="fa fa-check"></i><b>11</b> Grouping</a></li>
+<li class="chapter" data-level="12" data-path="mutating.html"><a href="mutating.html"><i class="fa fa-check"></i><b>12</b> Mutating</a></li>
+<li class="chapter" data-level="13" data-path="summarising.html"><a href="summarising.html"><i class="fa fa-check"></i><b>13</b> Summarising</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="cleaning.html"><a href="cleaning.html#filtering"><i class="fa fa-check"></i><b>3.2.1</b> Filtering</a></li>
-<li class="chapter" data-level="3.2.2" data-path="cleaning.html"><a href="cleaning.html#missing-values"><i class="fa fa-check"></i><b>3.2.2</b> Missing values</a></li>
-<li class="chapter" data-level="3.2.3" data-path="cleaning.html"><a href="cleaning.html#changing-column-types"><i class="fa fa-check"></i><b>3.2.3</b> Changing column types</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>3.3</b> Tidying</a>
+<li class="chapter" data-level="13.1" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>13.1</b> Plotting</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="tidying.html"><a href="tidying.html#pivoting-columns"><i class="fa fa-check"></i><b>3.3.1</b> Pivoting columns</a></li>
-<li class="chapter" data-level="3.3.2" data-path="tidying.html"><a href="tidying.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>3.3.2</b> Pivoting columns to rows (longer)</a></li>
-<li class="chapter" data-level="3.3.3" data-path="tidying.html"><a href="tidying.html#pivoting-rows-to-columns-wider"><i class="fa fa-check"></i><b>3.3.3</b> Pivoting rows to columns (wider)</a></li>
+<li class="chapter" data-level="13.1.1" data-path="plotting.html"><a href="plotting.html#ggplot2"><i class="fa fa-check"></i><b>13.1.1</b> ggplot2</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="grouping.html"><a href="grouping.html"><i class="fa fa-check"></i><b>3.4</b> Grouping</a></li>
-<li class="chapter" data-level="3.5" data-path="mutating.html"><a href="mutating.html"><i class="fa fa-check"></i><b>3.5</b> Mutating</a></li>
-<li class="chapter" data-level="3.6" data-path="summarising.html"><a href="summarising.html"><i class="fa fa-check"></i><b>3.6</b> Summarising</a></li>
-<li class="chapter" data-level="3.7" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>3.7</b> Plotting</a>
+</ul></li>
+<li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a></li>
+<li class="part"><span><b>II Projects</b></span></li>
+<li class="chapter" data-level="15" data-path="introduction-projects-introduction.html"><a href="introduction-projects-introduction.html"><i class="fa fa-check"></i><b>15</b> Introduction (#projects-introduction)</a></li>
+<li class="chapter" data-level="16" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>16</b> Workflows</a>
 <ul>
-<li class="chapter" data-level="3.7.1" data-path="plotting.html"><a href="plotting.html#ggplot2"><i class="fa fa-check"></i><b>3.7.1</b> ggplot2</a></li>
-</ul></li>
-<li class="chapter" data-level="3.8" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>3.8</b> Modelling</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="projects.html"><a href="projects.html"><i class="fa fa-check"></i><b>4</b> Projects</a>
+<li class="chapter" data-level="16.1" data-path="basic-workflow.html"><a href="basic-workflow.html"><i class="fa fa-check"></i><b>16.1</b> Basic Workflow</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>4.1</b> Workflows</a>
+<li class="chapter" data-level="16.1.1" data-path="basic-workflow.html"><a href="basic-workflow.html#example-1-reporting"><i class="fa fa-check"></i><b>16.1.1</b> Example 1: Reporting</a></li>
+<li class="chapter" data-level="16.1.2" data-path="basic-workflow.html"><a href="basic-workflow.html#example-2-modelling"><i class="fa fa-check"></i><b>16.1.2</b> Example 2: Modelling</a></li>
+<li class="chapter" data-level="16.1.3" data-path="basic-workflow.html"><a href="basic-workflow.html#summary"><i class="fa fa-check"></i><b>16.1.3</b> Summary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>17</b> Replicability</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="workflows.html"><a href="workflows.html#basic-workflow"><i class="fa fa-check"></i><b>4.1.1</b> Basic Workflow</a></li>
-</ul></li>
-<li class="chapter" data-level="4.2" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>4.2</b> Replicability</a>
+<li class="chapter" data-level="17.1" data-path="good-practice.html"><a href="good-practice.html"><i class="fa fa-check"></i><b>17.1</b> Good practice</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="replicability.html"><a href="replicability.html#good-practice"><i class="fa fa-check"></i><b>4.2.1</b> Good practice</a></li>
-<li class="chapter" data-level="4.2.2" data-path="replicability.html"><a href="replicability.html#documentation"><i class="fa fa-check"></i><b>4.2.2</b> Documentation</a></li>
+<li class="chapter" data-level="17.1.1" data-path="good-practice.html"><a href="good-practice.html#use-a-consistent-naming-convention"><i class="fa fa-check"></i><b>17.1.1</b> Use a consistent naming convention</a></li>
+<li class="chapter" data-level="17.1.2" data-path="good-practice.html"><a href="good-practice.html#name-your-variables-as-nouns-and-your-functions-as-verbs"><i class="fa fa-check"></i><b>17.1.2</b> Name your variables as nouns and your functions as verbs</a></li>
+<li class="chapter" data-level="17.1.3" data-path="good-practice.html"><a href="good-practice.html#use-functions-where-you-can"><i class="fa fa-check"></i><b>17.1.3</b> Use functions where you can</a></li>
+<li class="chapter" data-level="17.1.4" data-path="good-practice.html"><a href="good-practice.html#state-your-dependencies"><i class="fa fa-check"></i><b>17.1.4</b> State your dependencies</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html"><i class="fa fa-check"></i><b>4.3</b> Projects as Packages</a>
+<li class="chapter" data-level="17.2" data-path="documentation.html"><a href="documentation.html"><i class="fa fa-check"></i><b>17.2</b> Documentation</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#structure"><i class="fa fa-check"></i><b>4.3.1</b> Structure</a></li>
-<li class="chapter" data-level="4.3.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#documentation-1"><i class="fa fa-check"></i><b>4.3.2</b> Documentation</a></li>
-<li class="chapter" data-level="4.3.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html#description"><i class="fa fa-check"></i><b>4.3.3</b> DESCRIPTION</a></li>
-<li class="chapter" data-level="4.3.4" data-path="projects-as-packages.html"><a href="projects-as-packages.html#abstraction"><i class="fa fa-check"></i><b>4.3.4</b> Abstraction</a></li>
+<li class="chapter" data-level="17.2.1" data-path="documentation.html"><a href="documentation.html#function-documentation"><i class="fa fa-check"></i><b>17.2.1</b> Function documentation</a></li>
+<li class="chapter" data-level="17.2.2" data-path="documentation.html"><a href="documentation.html#long-form-documentation"><i class="fa fa-check"></i><b>17.2.2</b> Long-form documentation</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>4.4</b> Git &amp; GitHub</a></li>
-<li class="chapter" data-level="4.5" data-path="example.html"><a href="example.html"><i class="fa fa-check"></i><b>4.5</b> Example</a></li>
 </ul></li>
+<li class="chapter" data-level="18" data-path="projects-as-packages.html"><a href="projects-as-packages.html"><i class="fa fa-check"></i><b>18</b> Projects as Packages</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="structure.html"><a href="structure.html"><i class="fa fa-check"></i><b>18.1</b> Structure</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="structure.html"><a href="structure.html#r-code"><i class="fa fa-check"></i><b>18.1.1</b> R code</a></li>
+<li class="chapter" data-level="18.1.2" data-path="structure.html"><a href="structure.html#data"><i class="fa fa-check"></i><b>18.1.2</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="documentation-1.html"><a href="documentation-1.html"><i class="fa fa-check"></i><b>18.2</b> Documentation</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="documentation-1.html"><a href="documentation-1.html#functional"><i class="fa fa-check"></i><b>18.2.1</b> Functional</a></li>
+<li class="chapter" data-level="18.2.2" data-path="documentation-1.html"><a href="documentation-1.html#long-form"><i class="fa fa-check"></i><b>18.2.2</b> Long-form</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="description.html"><a href="description.html"><i class="fa fa-check"></i><b>18.3</b> DESCRIPTION</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="description.html"><a href="description.html#dependencies"><i class="fa fa-check"></i><b>18.3.1</b> Dependencies</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="abstraction.html"><a href="abstraction.html"><i class="fa fa-check"></i><b>18.4</b> Abstraction</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>19</b> Git &amp; GitHub</a></li>
+<li class="chapter" data-level="20" data-path="project-example.html"><a href="project-example.html"><i class="fa fa-check"></i><b>20</b> Project Example</a></li>
 </ul>
 
       </nav>
@@ -220,8 +268,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="replicability" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Replicability</h2>
+<div id="replicability" class="section level1" number="17">
+<h1><span class="header-section-number">17</span> Replicability</h1>
 <p>The key to a good, robust analysis is replicability. When we say ‘replicability’, we mean two things:</p>
 <ul>
 <li>That your results can be replicated in other populations and in other settings (i.e. typical ‘scientific’ replicability)</li>
@@ -229,81 +277,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>If your project is replicable, then it’s likely to have fewer issues, make fewer dodgy assumptions, and rely less on the idiosyncracies of your environment or coding practice. That doesn’t mean that everything that you do that can be replicated is immediately correct, but it’s a useful credential to have.</p>
 <p>For now, we’re going to focus on how you can make your <em>code</em> more replicable. By that I mean, how you can share your results and your code with others either in your business or instution or even in the open source community in general.</p>
-<div id="good-practice" class="section level3" number="4.2.1">
-<h3><span class="header-section-number">4.2.1</span> Good practice</h3>
-<p>There are a few things you can do to make your work immediately more readable for others:</p>
-<div id="use-a-consistent-naming-convention" class="section level4" number="4.2.1.1">
-<h4><span class="header-section-number">4.2.1.1</span> Use a consistent naming convention</h4>
-<p>Take your pick. Everyone has their preference and that’s okay. If you like camelCase then go with camelCase. If you like the <code>_</code> approach, then go for that. The most important part of your naming convention however is that it’s stable. Don’t name some of your functions <code>like_this</code> and the rest <code>likeThis</code>. Not only does it make it harder to read, but every time you do it, a kitten dies. So be consistent.</p>
-</div>
-<div id="name-your-variables-as-nouns-and-your-functions-as-verbs" class="section level4" number="4.2.1.2">
-<h4><span class="header-section-number">4.2.1.2</span> Name your variables as nouns and your functions as verbs</h4>
-<p>Functions do and variables and objects are. Almost all languages share this distinction with verbs and nouns, so utilise that natural divide to improve how you name your functions and variables. Aim to give your functions names that suggest that they <code>do</code> something; and bonus points if you can give it a name that’s a verb and also gives a decent description of what the function does. When you name your variables, give them meaningful noun-like names. Say you’re doing some climate analysis, a good name for the variable that holds the average rainfall in a year might be <code>avg_yearly_rainfall</code> whilst a function that converts a temperature in Celsius to Fahrenheit might be <code>convert_degrees()</code>.</p>
-</div>
-<div id="use-functions-where-you-can" class="section level4" number="4.2.1.3">
-<h4><span class="header-section-number">4.2.1.3</span> Use functions where you can</h4>
-<p>R is a functional language and so using and creating functions is at the very heart of programming in R. Rather than relying on R scripts that need to be run in their entirety to produce your output, by creating functions and using them in your analysis, you can more easily scale your project. For example, imagine your scope is initially to produce a report for the year. Then, after your done, your manager is so impressed with your report, they want you to do the same thing for the last 10 years. If you’ve used a couple of R scripts and you haven’t written any functions, then this is likely going to involve copying and pasting a whole lot of code and changing the years. Instead, if you use functions to perform your analysis, then creating reports for multiple years can be as simple as changing your dataset.</p>
-<p>As a rough rule of thumb, if you find yourself copying and pasting your R code more than twice to do very similar things, you should probably be using a function.</p>
-</div>
-<div id="state-your-dependencies" class="section level4" number="4.2.1.4">
-<h4><span class="header-section-number">4.2.1.4</span> State your dependencies</h4>
-<p>One of the great things about R is the number of packages that are available that let you do all sorts of weird and wonderful things. Unfortunately, because there are so many great packages, it’s unlikely that the person you’re sharing your code with will have them all installed. If you’re sending someone a script, then best practice is to include all the packages you use at the top of your script like this:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="replicability.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb120-2"><a href="replicability.html#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
-<p>An extra step which few people do but can be very helpful is to still prepend your functions with which package they came from like this <code>dplyr::mutate()</code>. Not only does this avoid any namespace conflicts where two packages might have functions with the same name and you don’t end up using the one you think you are because of the order of your <code>library()</code> calls, but it also makes it infinitely easier for anyone reading your code to find the package that a function comes from.
-Admittedly, this is overkill in a sense because we’ve already told R which packages we’re using with our <code>library()</code> calls and R has loaded in the objects from that package, but this practice can really improve the readability of your code.</p>
-<p>Later we’ll look at designing our project as a package and packages have a different way of stating dependencies for the user, so this is primarily for the case where you’re just sending a script or two to someone.</p>
-</div>
-</div>
-<div id="documentation" class="section level3" number="4.2.2">
-<h3><span class="header-section-number">4.2.2</span> Documentation</h3>
-<p>When you’re working on a project, never think that you’ll remember everything when you come back to it. You won’t. Instead, imagine you’re always writing for code for someone who’s never seen it before, because, trust me, when you come back to a project after 6 months you’ll have absolutely no idea what you’re looking at.</p>
-<p>At the heart of writing code that’s easy to understand is documentation. Here we’ll talk about the two main types of documentation.</p>
-<div id="function-documentation" class="section level4" number="4.2.2.1">
-<h4><span class="header-section-number">4.2.2.1</span> Function documentation</h4>
-<p>To get a package on CRAN, all the functions that your package exports needs to be documented. So if you type, say, <code>?dplyr::mutate()</code> into the console and hit Enter, you’ll be taken to the Help page for the <code>mutate</code> function. This ensures that the package users are not left guessing what a parameter is supposed to be, or what they’re going to get returned from the function.</p>
-<p>Even if you’re not ever planning on submitting your work to CRAN, function documentation is extremely useful. The <code>roxygen</code> package makes this documentation as easy as possible for package developers, and you can use the same principles in your analysis.</p>
-<p>At the very least, you should be documentating the input variables (the <code>@param</code> tag in <code>roxygen</code>), your return value(s) (the <code>@return</code> tag) and maybe an example or two (the <code>@examples</code> tag). This will make explaining your code to someone else or relearning it yourself infinitely easier.</p>
-</div>
-<div id="long-form-documentation" class="section level4" number="4.2.2.2">
-<h4><span class="header-section-number">4.2.2.2</span> Long-form documentation</h4>
-<p>Whilst understanding what each of your functions does is important, it’s also important to document how all of the little pieces fit together. To acheive this, it’s a good idea to write some long-form documentation, like a README or a vignette.</p>
-<p>Long form-documentation is often written in something called RMarkdown. RMarkdown is a spin on <a href="https://en.wikipedia.org/wiki/Markdown">markdown</a> that allows you to embed and run R code when generating a document. This can be really useful for explaining your process and sharing your workings.</p>
-<div id="readmes" class="section level5" number="4.2.2.2.1">
-<h5><span class="header-section-number">4.2.2.2.1</span> READMEs</h5>
-<p>READMEs act as an entrypoint for anyone that stumbles across your package. It should be in the root of your project directory, and should be written in markdown or plain text. Anyone should be able to read your README and understand what the project is doing. I won’t go into exactly what should be included because it will depend on the type of project your doing, but you know a good README when you see it.</p>
-<p>If you also use a repository system like GitHub, your README will act as the homepage and so should always be present.
-## Projects as packages</p>
-</div>
-<div id="vignettes" class="section level5" number="4.2.2.2.2">
-<h5><span class="header-section-number">4.2.2.2.2</span> Vignettes</h5>
-<p>Vignettes are less defined that READMEs. Vignettes should be an in-depth form of documentation for a concept in your project. For example, say that your project is looking at the level of data quality of various open source APIs. You might have a few different vignettes covering different important concepts in your project:</p>
-<ol style="list-style-type: decimal">
-<li>Background
-<ul>
-<li>This would cover why the how the project came to be, and what the ultimate goal is.</li>
-</ul></li>
-<li>Selection of APIs
-<ul>
-<li>Why were certain APIs chosen and others excluded? That would be explained here.</li>
-</ul></li>
-<li>Methodology
-<ul>
-<li>How are you assessing data quality? Here you would explain your different tests and standards.</li>
-</ul></li>
-</ol>
-<p>Whilst a README serves as a general introduction to the project, vignettes more often serve as in-depth descriptions of certain aspects of the project. Like READMEs, vignettes should be written in markdown (or more likely RMarkdown).</p>
-</div>
-</div>
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="workflows.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="projects-as-packages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="basic-workflow.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="good-practice.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9.1 Pivoting columns | opeRate</title>
+  <title>7.5 Databases | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9.1 Pivoting columns | opeRate" />
+  <meta property="og:title" content="7.5 Databases | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9.1 Pivoting columns | opeRate" />
+  <meta name="twitter:title" content="7.5 Databases | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="tidying.html"/>
-<link rel="next" href="pivoting-columns-to-rows-longer.html"/>
+<link rel="prev" href="web-based-apis.html"/>
+<link rel="next" href="cleaning.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -268,44 +268,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pivoting-columns" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Pivoting columns</h2>
-<p>The main culprit of untidy data is data that breaks the first rule: Not every column is a variable. Data in this format is sometimes called wide data - as you add more levels, you’ll add more columns and so the data will get wider. Conversely, tidy data will get longer as you add more levels.</p>
-<p>So there two different forms of data:</p>
+<div id="databases" class="section level2" number="7.5">
+<h2><span class="header-section-number">7.5</span> Databases</h2>
+<p>In the corporate world or when you’re dealing with larger systems, you’ll often have some form of database that stores all of the system data. This database can function as a great repository of data for your analyses, and by utilising a live connection to the database, we can easily update our analyses in the future.</p>
+<p>In this section, we’ll really only cover the basics of how R can interact with an SQL database, so don’t feel as though you need to be a data engineer expert to understand this section. As long as you know the tiniest bit of SQL, you should be fine.</p>
+<div id="database-management-systems-and-odbc" class="section level3" number="7.5.1">
+<h3><span class="header-section-number">7.5.1</span> Database Management Systems and ODBC</h3>
+<p>There are lots of different types of database managements systems (DBMS) such as SQL Server, MySQL, MariaDB, and so on. These DBMSs allow us to create and maintain databases.</p>
+<p>When we connect to our database, we do so through our DBMS, but all of them have slightly different implementations. This means that if we developed a package to connect to one type of database (like MySQL), we’d have to create an entirely different package to do the same thing with a MariaDB database. This is where the Open Database Connectivity (ODBC) standard comes in. The ODBC standard allows is to interface with databases that use different DBMS systems using a common API. This means that we could swap out our SQL Server database with a MySQL one, and we wouldn’t need to make too many changes. The ODBC standard is implemented via a driver; this driver functions as an interface layer between our application (R) and the database.</p>
+<p>So when we connect to a database with R we go in this order:</p>
+<p>R -&gt; ODBC Driver -&gt; DBMS</p>
+<p>R tells the ODBC driver to run a query, and then the ODBC driver converts that request to one that can be interpreted by the DBMS that it was built for. This means that as long as we’ve got the appropriate ODBC driver for our DBMS, we can use (basically) the same R code to interact with any kind of ODBC-compliant database.</p>
+<p>So to connect to our database, we’re going to need 2 things:</p>
 <ul>
-<li>Long</li>
-<li>Wide</li>
+<li>The <code>odbc</code> R package</li>
+<li>This provides us with the R functions to create our connections and run our queries as so on.</li>
+<li>Think of the <code>odbc</code> package as a set of tools for interacting with any ODBC database; it knows how to interface with the ODBC drivers, not the DBMS.</li>
+<li>The ODBC driver for our database</li>
+<li>This is the actual driver used by the <code>odbc</code> package that communicates with the database.</li>
+<li>This is the implementation of the ODBC standard for the database we’re using.</li>
 </ul>
-<p>Let’s look at use our Kaggle dataset as an example to see how the two forms differ in practice:</p>
-<pre><code>## # A tibble: 16,327 x 7
-##    Year Name              NA_Sales EU_Sales JP_Sales Other_Sales Global_Sales
-##   &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
-## 1  2006 Wii Sports            41.5    29.0      3.77        8.46         82.7
-## 2  1985 Super Mario Bros.     29.1     3.58     6.81        0.77         40.2
-## 3  2008 Mario Kart Wii        15.8    12.9      3.79        3.31         35.8
-## # … with 16,324 more rows</code></pre>
-<p>What would happen if we added data for more countries? We’d be adding more columns, and so our data would get wider. So our <code>clean_vg_sales</code> data is currently in the wide format. If we had the country as its own column however, like this:</p>
-<pre><code>## # A tibble: 81,635 x 3
-##    Year Country Sales
-##   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
-## 1  2006 NA      41.5 
-## 2  2006 EU      29.0 
-## 3  2006 JP       3.77
-## 4  2006 Other    8.46
-## 5  2006 Global  82.7 
-## # … with 81,630 more rows</code></pre>
-<p>Now we’ve got the country as a variable, the more countries we add the longer the data is going to get. So we’ve converted our data from the wide format to the long format. To do this, we’ve pivoted the Sales columns. Let’s look at the two types of pivot.</p>
-<p>Wide data is very common, usually because it’s slightly easier to read or to enter (particularly if you’re using Excel), but it’s much harder to work with in R. Let’s look at how we might convert wide data to tidy-er long data using the concept of pivoting.</p>
-<p><strong>Note:</strong>
-One thing to keep in mind is that long data does not always mean tidy, but wide data can never be tidy. It’s a subtle distinction but it’s important to remember.</p>
 </div>
+<div id="connecting-with-the-odbc-package" class="section level3" number="7.5.2">
+<h3><span class="header-section-number">7.5.2</span> Connecting with the <code>odbc</code> package</h3>
+<p>For this example, let’s say that we’re using an SQL Server database, and so we’ve got the ODBC Driver 17 for SQL Server installed.</p>
+<p>First, let’s make sure we’ve got the driver detected:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="databases.html#cb37-1" aria-hidden="true" tabindex="-1"></a>odbc<span class="sc">::</span><span class="fu">odbcListDrivers</span>()</span></code></pre></div>
+<pre><code>##                            name   attribute
+## 1 ODBC Driver 17 for SQL Server Description
+## 2 ODBC Driver 17 for SQL Server      Driver
+## 3 ODBC Driver 17 for SQL Server  UsageCount
+##                                                       value
+## 1                   Microsoft ODBC Driver 17 for SQL Server
+## 2 /opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.7.so.2.1
+## 3                                                         1</code></pre>
+<p>We can see our driver has been detected. Now we can use the <code>odbc::dbConnect()</code> function to create a connection to our database that we can then use to run queries:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="databases.html#cb39-1" aria-hidden="true" tabindex="-1"></a>my_connection <span class="ot">&lt;-</span> odbc<span class="sc">::</span><span class="fu">dbConnect</span>(<span class="at">drv =</span> odbc<span class="sc">::</span><span class="fu">odbc</span>(),</span>
+<span id="cb39-2"><a href="databases.html#cb39-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">driver =</span> <span class="st">&quot;ODBC Driver 17 for SQL Server&quot;</span>,</span>
+<span id="cb39-3"><a href="databases.html#cb39-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">server =</span> <span class="st">&quot;SQLDATABASESERVER&quot;</span> <span class="co"># You&#39;ll need to change this to your server</span></span>
+<span id="cb39-4"><a href="databases.html#cb39-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">database =</span> <span class="st">&quot;SQLDATABASE&quot;</span>) <span class="co"># You&#39;ll need to change this to your database</span></span></code></pre></div>
+<p>With the <code>drv</code> parameter we’re specifying the type of driver that we’re using as a <code>DBIDriver</code> object. Because we’re using an ODBC driver, we can use the <code>odbc::odbc()</code> function that returns a <code>DBIDriver</code> object. The <code>driver</code> parameter expects a character string of the actual driver we’re going to use (not the type), so that’s where we enter the name we saw when we ran the <code>odbc::odbcListDrivers()</code> function. The <code>server</code> is the server that your database is being on hosted on and the <code>database</code> parameter is the database on the server that you want to connect to.</p>
+<p>The <code>odbc</code> will use this information to create a <a href="https://www.connectionstrings.com/">connection string</a> that it will then use to try and connect to the database.</p>
+<p><strong>Note:</strong>
+You’ll want to make sure you assign your connection to something because we’ll be passing the connection object to some other functions soon.</p>
+<div id="authentication" class="section level4" number="7.5.2.1">
+<h4><span class="header-section-number">7.5.2.1</span> Authentication</h4>
+<p>You might also have to specify some credentials when you try and connect to your database. To provide a username and password, just use the <code>uid</code> and <code>pwd</code> parameters. If your database supports it, you can use Windows Authentication, meaning that you don’t need to provide an explicit username and password - the database will use your Windows account instead. To force the driver to try and use this type of authentication, you can add a <code>Trusted_Connection</code> parameter to the function call and set the value to <code>"Yes"</code> (not <code>TRUE</code> or <code>"TRUE"</code>). This parameter is then added to the connection string via the <code>...</code> argument of the <code>odbc::dbConnect()</code> function.</p>
+</div>
+<div id="dsns" class="section level4" number="7.5.2.2">
+<h4><span class="header-section-number">7.5.2.2</span> DSNs</h4>
+<p>Instead of specifying this information via the <code>odbc::dbConnect()</code> function, you can also create a Data Source Name (DSN) entry. This contains essentially the same information as we provided (the server location, the database, access credentials and so on) but then allows us to just use the <code>dsn</code> parameter of the <code>odbc::dbConnect()</code> function.</p>
+<p>A DSN entry might look like this:</p>
+<pre><code>[MyDatabase]
+Driver = /opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.7.so.2.1
+Server = SQLDATABASESERVER
+Database = SQLDATABASE
+Port = 1234
+</code></pre>
+<p>This can be particularly useful if you’re working in more than one environment, where you might want to connect to the same database but the connection string is going to be different for each environment. Instead, you can create a Data Source Name entry with the same name but with different specifications, and then use the same <code>odbc::dbConnect(drv = odbc::odbc(), dsn = "MyDatabase")</code> call in both.</p>
+<p>I won’t go into exactly how to add DSNs here because it depends on your driver and your OS, but the process is pretty simple once you’ve found the right information for your setup.</p>
+</div>
+</div>
+<div id="querying-the-database" class="section level3" number="7.5.3">
+<h3><span class="header-section-number">7.5.3</span> Querying the database</h3>
+<p>Now we’ve got our connection (<code>my_connection</code>), we can send queries to the database. To send queries and get back the results in one step, we can use the <code>odbc::dbGetQuery()</code> function, passing the connection and then the string containing the SQL we want to execute.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="databases.html#cb41-1" aria-hidden="true" tabindex="-1"></a>odbc<span class="sc">::</span><span class="fu">dbGetQuery</span>(my_connection, <span class="st">&quot;select top 1 Id from dbo.ExampleTable&quot;</span>)</span></code></pre></div>
+<pre><code>##   Id
+## 1  1</code></pre>
+<p>We then get back the data as a normal R data.frame. R will deal with the data type conversion, but the exact conversion is dependent on the driver. Luckily, Microsoft provides a <a href="https://docs.microsoft.com/en-us/sql/machine-learning/r/r-libraries-and-data-types?view=sql-server-ver15">complete breakdown</a> of how data types are mapped between on R and SQL Server on their website.</p>
+
+</div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="tidying.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pivoting-columns-to-rows-longer.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="web-based-apis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cleaning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

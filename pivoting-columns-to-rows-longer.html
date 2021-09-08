@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9.1 Pivoting columns | opeRate</title>
+  <title>9.2 Pivoting columns to rows (longer) | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9.1 Pivoting columns | opeRate" />
+  <meta property="og:title" content="9.2 Pivoting columns to rows (longer) | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9.1 Pivoting columns | opeRate" />
+  <meta name="twitter:title" content="9.2 Pivoting columns to rows (longer) | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="tidying.html"/>
-<link rel="next" href="pivoting-columns-to-rows-longer.html"/>
+<link rel="prev" href="pivoting-columns.html"/>
+<link rel="next" href="pivoting-rows-to-columns-wider.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -268,23 +268,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pivoting-columns" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Pivoting columns</h2>
-<p>The main culprit of untidy data is data that breaks the first rule: Not every column is a variable. Data in this format is sometimes called wide data - as you add more levels, you’ll add more columns and so the data will get wider. Conversely, tidy data will get longer as you add more levels.</p>
-<p>So there two different forms of data:</p>
-<ul>
-<li>Long</li>
-<li>Wide</li>
-</ul>
-<p>Let’s look at use our Kaggle dataset as an example to see how the two forms differ in practice:</p>
-<pre><code>## # A tibble: 16,327 x 7
-##    Year Name              NA_Sales EU_Sales JP_Sales Other_Sales Global_Sales
-##   &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
-## 1  2006 Wii Sports            41.5    29.0      3.77        8.46         82.7
-## 2  1985 Super Mario Bros.     29.1     3.58     6.81        0.77         40.2
-## 3  2008 Mario Kart Wii        15.8    12.9      3.79        3.31         35.8
-## # … with 16,324 more rows</code></pre>
-<p>What would happen if we added data for more countries? We’d be adding more columns, and so our data would get wider. So our <code>clean_vg_sales</code> data is currently in the wide format. If we had the country as its own column however, like this:</p>
+<div id="pivoting-columns-to-rows-longer" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Pivoting columns to rows (longer)</h2>
+<p>To convert wide data to long, we need to pivot the columns to rows. To this using <code>{tidyr}</code>, we use the <code>pivot_longer()</code> function from the <code>{tidyr}</code> package, because we want to pivot from the wide format to the long format.</p>
+<p>To do this in the simplest way, we just need to tell the function which columns we want to pivot:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="pivoting-columns-to-rows-longer.html#cb67-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(clean_vg_sales, <span class="at">cols =</span> <span class="fu">c</span>(NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales)) <span class="sc">%&gt;%</span></span>
+<span id="cb67-2"><a href="pivoting-columns-to-rows-longer.html#cb67-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Name, Year, name, value) <span class="sc">%&gt;%</span></span>
+<span id="cb67-3"><a href="pivoting-columns-to-rows-longer.html#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 81,635 x 4
+##   Name        Year name     value
+##   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+## 1 Wii Sports  2006 NA_Sales  41.5
+## 2 Wii Sports  2006 EU_Sales  29.0
+## # … with 81,633 more rows</code></pre>
+<p>This is a good start. Now we’ve converted to long format, we’re abiding by the three rules and so we’ve got a tidy dataset! But there’s definitely some improvements to be done. Firstly, “name” and “value” aren’t the best names we could come up with for these columns, so we should probably use some new ones. To do this, we just need to provide new names to the <code>names_to</code> and <code>values_to</code> parameters:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="pivoting-columns-to-rows-longer.html#cb69-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(clean_vg_sales,</span>
+<span id="cb69-2"><a href="pivoting-columns-to-rows-longer.html#cb69-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cols =</span> <span class="fu">c</span>(NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales),</span>
+<span id="cb69-3"><a href="pivoting-columns-to-rows-longer.html#cb69-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_to =</span> <span class="st">&quot;Country&quot;</span>,</span>
+<span id="cb69-4"><a href="pivoting-columns-to-rows-longer.html#cb69-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values_to =</span> <span class="st">&quot;Sales&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb69-5"><a href="pivoting-columns-to-rows-longer.html#cb69-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Name, Year, Country, Sales) <span class="sc">%&gt;%</span></span>
+<span id="cb69-6"><a href="pivoting-columns-to-rows-longer.html#cb69-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 81,635 x 4
+##   Name        Year Country  Sales
+##   &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+## 1 Wii Sports  2006 NA_Sales  41.5
+## 2 Wii Sports  2006 EU_Sales  29.0
+## # … with 81,633 more rows</code></pre>
+<p>Secondly, our Country column has the country code suffixed with ’_Sales’ (e.g. “NA_Sales” instead of just “NA”). If the text we wanted to remove was before the country name, we could utilise the <code>names_prefix</code> parameter to remove matching text from the start of each variable name:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="pivoting-columns-to-rows-longer.html#cb71-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(column_example,</span>
+<span id="cb71-2"><a href="pivoting-columns-to-rows-longer.html#cb71-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cols =</span> <span class="fu">c</span>(Month1, Month2, Month3),</span>
+<span id="cb71-3"><a href="pivoting-columns-to-rows-longer.html#cb71-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_to =</span> <span class="st">&quot;Country&quot;</span>,</span>
+<span id="cb71-4"><a href="pivoting-columns-to-rows-longer.html#cb71-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">values_to =</span> <span class="st">&quot;Sales&quot;</span>,</span>
+<span id="cb71-5"><a href="pivoting-columns-to-rows-longer.html#cb71-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">names_prefix =</span> <span class="st">&quot;(_Sales)&quot;</span>) <span class="co"># Remove text matching &quot;_Sales&quot; exactly</span></span></code></pre></div>
+<p>Because it’s at the end of the string though, we have to deal with it a bit differently. One way to remove that text would be to split the column name by the “_” and then just exclude the second part:</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="pivoting-columns-to-rows-longer.html#cb72-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="ot">&lt;-</span> clean_vg_sales <span class="sc">%&gt;%</span> </span>
+<span id="cb72-2"><a href="pivoting-columns-to-rows-longer.html#cb72-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales),</span>
+<span id="cb72-3"><a href="pivoting-columns-to-rows-longer.html#cb72-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;Country&quot;</span>, <span class="cn">NA</span>), <span class="at">values_to =</span> <span class="st">&quot;Sales&quot;</span>, <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span></span>
+<span id="cb72-4"><a href="pivoting-columns-to-rows-longer.html#cb72-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb72-5"><a href="pivoting-columns-to-rows-longer.html#cb72-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-6"><a href="pivoting-columns-to-rows-longer.html#cb72-6" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb72-7"><a href="pivoting-columns-to-rows-longer.html#cb72-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Year, Country, Sales) <span class="sc">%&gt;%</span></span>
+<span id="cb72-8"><a href="pivoting-columns-to-rows-longer.html#cb72-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 81,635 x 3
 ##    Year Country Sales
 ##   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
@@ -294,18 +318,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4  2006 Other    8.46
 ## 5  2006 Global  82.7 
 ## # … with 81,630 more rows</code></pre>
-<p>Now we’ve got the country as a variable, the more countries we add the longer the data is going to get. So we’ve converted our data from the wide format to the long format. To do this, we’ve pivoted the Sales columns. Let’s look at the two types of pivot.</p>
-<p>Wide data is very common, usually because it’s slightly easier to read or to enter (particularly if you’re using Excel), but it’s much harder to work with in R. Let’s look at how we might convert wide data to tidy-er long data using the concept of pivoting.</p>
-<p><strong>Note:</strong>
-One thing to keep in mind is that long data does not always mean tidy, but wide data can never be tidy. It’s a subtle distinction but it’s important to remember.</p>
+<p>Here, we’ve specified that we want to convert our column names to two separate ‘names’ columns, but that we want to exclude the second column (that’s what the <code>NA</code> in the <code>c("Country", NA)</code> vector represents). Then, we’ve specified with the <code>names_sep</code> parameter that we want to split the columns by the <code>_</code> character.</p>
+<p>But what happens now if we get sent the same dataset but with more countries (e.g. a SA_Sales column)? We’d have to add those extra columns to our <code>cols</code> vector manually. Instead, we can use some <code>tidyselect</code> syntax to choose columns based on their features, like how they start:</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="pivoting-columns-to-rows-longer.html#cb74-1" aria-hidden="true" tabindex="-1"></a>clean_vg_sales <span class="sc">%&gt;%</span> </span>
+<span id="cb74-2"><a href="pivoting-columns-to-rows-longer.html#cb74-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> tidyselect<span class="sc">::</span><span class="fu">ends_with</span>(<span class="st">&quot;_Sales&quot;</span>),</span>
+<span id="cb74-3"><a href="pivoting-columns-to-rows-longer.html#cb74-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;Country&quot;</span>, <span class="cn">NA</span>), <span class="at">values_to =</span> <span class="st">&quot;Sales&quot;</span>, <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span></span>
+<span id="cb74-4"><a href="pivoting-columns-to-rows-longer.html#cb74-4" aria-hidden="true" tabindex="-1"></a>  ) </span></code></pre></div>
+<p>Now our code will work with any number of columns as long as they end in ’_Sales’.</p>
+<p>This is just one example of how we could utilise the <code>pivot_longer()</code> function to convert ‘messy’ data to the tidy format. In the wild you’ll get data that violates any of the three rules of tidy data in many different ways, and we just don’t have the space to go through it here. If you do need how to convert some of the other forms of messy data, then the <code>{tidyr}</code> package has a number of <a href="https://tidyr.tidyverse.org/articles/index.html">vignettes</a> outlining many different ways to use the tidying tools it provides.</p>
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="tidying.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pivoting-columns-to-rows-longer.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="pivoting-columns.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pivoting-rows-to-columns-wider.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -3,12 +3,12 @@ overview
 acknowledgements
 about-me
 using-r
-tidyverse
+introduction-tidyverse-introduction
 tidy-data
 the-pipe
 quasiquotation
 tidyselect
-data-analysis
+introduction-da-intro
 loading
 rds
 advantages
@@ -54,7 +54,7 @@ layers
 facet
 scales
 modelling
-projects
+introduction-projects-introduction
 workflows
 basic-workflow
 example-1-reporting
@@ -82,4 +82,4 @@ description
 dependencies
 abstraction
 git-github
-example
+project-example
