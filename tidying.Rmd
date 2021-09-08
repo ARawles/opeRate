@@ -54,8 +54,8 @@ tidyr::pivot_longer(clean_vg_sales, cols = c(NA_Sales, EU_Sales, JP_Sales, Other
 This is a good start. Now we've converted to long format, we're abiding by the three rules and so we've got a tidy dataset! But there's definitely some improvements to be done. Firstly, "name" and "value" aren't the best names we could come up with for these columns, so we should probably use some new ones. To do this, we just need to provide new names to the `names_to` and `values_to` parameters:
 
 ```{r}
-tidyr::pivot_longer(column_example,
-                    cols = c(Month1, Month2, Month3),
+tidyr::pivot_longer(clean_vg_sales,
+                    cols = c(NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales),
                     names_to = "Country",
                     values_to = "Sales") %>% 
   dplyr::select(Name, Year, Country, Sales) %>%
