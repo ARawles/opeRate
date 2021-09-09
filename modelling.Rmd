@@ -1,5 +1,263 @@
 # Modelling
 
-* `lm()`
-* Other modelling packages
-* GPU-accelerating modelling
+This chapter is inspired by the simple and concise explanation presented in Hadley Wickham and Garrett Grolemund's [R for Data Science book](https://r4ds.had.co.nz/model-basics.html#model-basics).
+
+A model helps us quantify the relationships between variables in a dataset. By understanding these relationships, we can use these models to better understand the data we have, and to make predictions for unseen data.
+
+A relationship can be quantified by two influences:
+
+* A true pattern
+* Random error
+
+The goal of the model is to identify the true patterns from the random error and noise. As an example, let's say you're testing the impact of a new drug on cancer treatment. You have half of your participants take the drug, and the other half take placebo. Then, you want to model the impact of your treatment to see if it actually works. In your data though, you're going to see changes between the groups that are due to your intervention (your drug), but also some changes that are just due to random influences, like individual differences, measurement errors, whatever it may be. The goal of a model is to strip away these random influences and quantify in its purest from, the relationship between your variables of interest.
+
+In reality, you will never perfectly capture a relationship for two reasons:
+
+1. We can never truly strip away the noise.
+2. Perfect relationships don't really exist.
+
+But that's not really the point. We will never get things spot on, but models can help us with useful approximations that can inform our decision making and further analysis.
+
+## Types of model
+
+Models types usually fall into "families". These will be a set of models that are underpinned by some common statistics or philosophy. The most common type of model that is taught at beginner level is the linear model. A linear model assumes a relationship that can be represented in the form `y = a + a1x...`, where `a` and `a{n}` represent coefficients (values that will change between models depending on your data). Somewhat confusingly, linear models also extend to what we might call quadratic or exponential models that are represented as `y = a + a1*x + a2*x^2...`. This is because the 'linear' in linear model refers to the coefficients being linear, not our regression line being linear.
+
+## Coefficients
+
+In linear modelling, our coefficients are the values that change in our formula to describe our data. In our standard linear model formula (`y = a + a1*x`), these two coefficients represent the intercept (`a`) and the slope (`a1`). In other words, the `a` represents the value of `y` when `x` is 0 (so where the line would start on the y axis), and `a1` defines how quickly that line goes up or down (is gradient). There will be values for those two coefficients that will produce a better model that others. For example, let's create two models to predict the miles per gallon a car will get based on its weight from the `mtcars` dataset and compare them.
+
+```{r}
+mtcars %>%
+  ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_abline(intercept = 45, slope = -6.5, linetype = "dashed") +
+  geom_abline(intercept = 35, slope = -5, linetype = "dashed")
+```
+
+Here we've created two models with different coefficient values; one where `a` is 45 and `a1` is -6.5, and other where `a` is 35 and `a1` is -5. Both seem to represent the data pretty well, but how can we know which of the coefficients is the 'better' fit? Similarly, we've tried just two sets of values here, how can we compare different combinations of values to determine which model is better? 
+
+## Residuals
+
+When we create a model, there will be a difference between the model's predicted value and each data point. These are the **model residuals**. The smaller the total residual difference, the more accurate the model is. Let's visualise how we would calculate our residuals:
+
+
+```{r echo=FALSE}
+model <- function(coeff, wt) {
+  coeff[1] + (wt * coeff[2])
+}
+
+predicted_dataset <- mtcars %>%
+  dplyr::mutate(prediction = model(c(45, -6.5), wt)) %>%
+  dplyr::mutate(residual = mpg - prediction)
+
+predicted_dataset %>%
+  ggplot(aes(x = wt, y = mpg)) + 
+  geom_point() +
+  geom_line(aes(y = prediction), linetype = "dashed") +
+  geom_linerange(aes(ymin = prediction, ymax = mpg), colour = "red")
+
+predicted_dataset %>%
+  ggplot(aes(x = wt, y = residual)) +
+  geom_point()
+#geom_abline(slope = 21, intercept = -42500)
+# Here's where we plot our model
+```
+
+To compare different models though, we need to boil down this residuals into a single metric. For this we use the root-mean-square-error or RMSE. The calculation for this metric is quite easy - calculate the difference, square it, average it and then take the root. Let's write some functions to produce some models and get some predictions, and then compare the RMSE:
+
+```{r}
+# Create some models with different coefficients
+coefficients <- data.frame(
+  id = 1:10,
+  a = runif(10, min = 35, max = 40),
+  a1 = runif(10, min = -6, max = -5)
+)
+
+
+# Plot the models
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_abline(data = coefficients, aes(intercept = a, slope = a1, colour = as.factor(id)), alpha = 0.5) +
+  scale_colour_discrete(name = "Model")
+
+# Create a function to represent our model
+model <- function(a, a1, wt) {
+  a + (wt * a1)
+}
+
+# A function to work out the rmse of our model
+rmse <- function(a, a1, wt, mpg) {
+  diff <- model(a, a1, wt) - mpg
+  sqrt(mean(diff ^ 2))
+}
+```
+
+Now we now how to calculate our RMSE, let's apply calculate which of our models has the lowest error:
+
+```{r}
+best_model <- coefficients %>%
+  # Here we calculate the rmse of each model
+  dplyr::mutate(rmse = unlist(purrr::map2(a, a1, rmse, wt = mtcars$wt, mpg = mtcars$mpg))) %>%
+  dplyr::filter(rmse == min(rmse))
+print(best_model_id)
+```
+
+According to our analysis, model `r best_model_id` has the lowest residual error. Let's see what that model looks like:
+
+```{r}
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_abline(data = best_model, aes(intercept = a, slope = a1, colour = as.factor(id)), alpha = 0.5) +
+  scale_colour_discrete(name = "Model")
+```
+
+That looks pretty good, but it's not perfect. We've just tried a number of different values and then chosen the best one. This doesn't mean that we've found the absolute best coefficients for our model. In reality, we'd need to work out the best values by **optimising** our RMSE function - finding the values that produce the global minimum value from that function.
+
+We're not going to bother doing that manually, but that's essentially the process that the `lm()` function in R uses; it automatically finds the best coefficient values by calculating the RMSE for lots of different values and then finding the best one.
+
+## `lm()` function
+
+Now that we've understood the basics behind a linear model, I can finally reveal that R has a function that will do all of this for us. The `lm()` function in R just needs the dataset and the formula for our model, and works out the coefficients for us, giving us back a model:
+
+```{r}
+lm_model <- lm(data = mtcars, mpg ~ wt)
+lm_model
+```
+We can see that the `lm()` function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren't too far off!
+
+## Example
+
+Now we've created our first model, let's apply what we've learned to our video games dataset. First off, let's model the effect of year on video game sales between 1980 and 2000. Let's start with a plot:
+
+```{r}
+vg_sales_to_model <- smmrsd_vg_sales %>%
+  dplyr::filter(Year >= 1980 & Year <= 2000) %>%
+  dplyr::group_by(Year) %>%
+  dplyr::summarise(Total_Sales =  sum(Total_Sales))
+
+vg_sales_to_model %>%
+  ggplot(aes(x = Year, y = Total_Sales)) +
+  geom_point()
+```
+There does seem to be a relationship, but it doesn't seem to be quite as linear as our `mtcars` example. Instead, we seem to increase more slowly in the earlier years, before increasing dramatically toward 2000.
+
+To model this relationship then, let's use a quadratic equation. This allows for us to model non-linear relationships between variables.
+
+Quadratic equations are written in the form `y = a + a1*x + a2*x^2`, where `a`, `a1` and `a2` are all coefficients. Although we've introduced a new coefficient here compared to our previous examples, the logic behind the modelling is exactly the same.
+
+Let's create this model using the `lm()` function:
+
+```{r}
+vg_model <- lm(data = vg_sales_to_model, formula = Total_Sales ~ Year + I(Year^2))
+vg_model
+```
+
+Let's plot this model using `{ggplot2}`:
+
+```{r}
+vg_sales_to_model %>%
+  ggplot(aes(x = Year, y = Total_Sales)) +
+  geom_point() +
+  # This will produce the same model as we did with the `lm()` model
+  geom_smooth(formula = y ~ x + I(x^2), method = "lm")
+```
+
+That doesn't look too bad at all.
+
+
+## Evaluating Models
+
+Jumping straight into modelling a dataset you don't understand or creating a model that looks good and then declaring that your work is done can be a dangerous thing. Modelling should be a weapon in your data science arsenal, but it should be handled with care. It's very easy to make an error and end up with a model that is pointless at best and misleading at worst.
+
+To demonstrate this, let's produce 4 models for the each of the sub-datasets in the `anscombe` dataset:
+
+```{r}
+tidy_anscombe <- anscombe %>%
+  tidyr::pivot_longer(everything(),
+                      names_to = c(".value", "dataset"),
+                      names_pattern = "(.)(.)"
+  )
+
+models <- purrr::map(1:4, ~tidy_anscombe %>% dplyr::filter(dataset == .x) %>% lm(data = ., formula = y ~ x))
+models
+```
+
+
+According to our output, we've got 4 very similar models. From that output we might assume that the datasets must be very similar. Let's plot them now:
+
+```{r}
+tidy_anscombe %>%
+  ggplot(aes(x = x, y  = y)) +
+  geom_point() +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE) +
+  facet_wrap(~dataset)
+```
+
+Now that we've looked a little deeper, we can clearly see that these models are inappropriate for 3 of the datasets (2, 3 and 4). The lesson here is that there are multiple tools at your disposal when analysing data, and overeliance on a particular tool without due care and attention can cause issues.
+
+
+With that in mind, let's look at some ways of evaluating the strength of your model.
+
+
+### Residuals
+
+As we've learnt previously, the goal of our model is to reduce the total residual difference between our model and the data. But blindly reducing this value without then inspecting the result can be dangerous. When you're using the `lm()` function, your residuals should be **normally distributed**. That means that (essentially) your model should be overestmating as much as it's underestimating for every value of y. 
+
+Let's take a look at the residual values for our video game sales model:
+
+
+```{r}
+vg_residuals <- vg_sales_to_model %>%
+  modelr::add_residuals(model = vg_model)
+
+vg_residuals %>%
+  ggplot(aes(x = resid)) +
+  geom_freqpoly(binwidth = 25)
+
+vg_residuals %>%
+  ggplot(aes(x = Year, y = resid)) + 
+  geom_point()
+```
+
+Looking just at the frequency polygon doesn't really tell us enough but when we then look at the residuals by Year, we can see what looks like random noise. This is good because it means that our model isn't better at predicted one year or range of years better than another.
+
+Alternatively, let's compare this plot with a plot of one of the `anscombe` datasets:
+
+```{r}
+tidy_anscombe %>%
+  dplyr::filter(dataset == 2) %>%
+  modelr::add_residuals(model = models[[2]]) %>%
+  ggplot(aes(x = x, y = resid)) +
+  geom_point()
+```
+
+Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern.
+
+For instance, let's look at the residuals of our 4 models from the previous example looking at the anscombe dataset:
+
+```{r}
+resid <- purrr::map(models, residuals)
+names(resid) <- 1:4
+tibble::as_tibble(
+  resid,
+  .name_repair = ~paste0("Model", .x)
+) %>%
+  tidyr::pivot_longer(cols = dplyr::everything(), names_to = "Model", values_to = "Residuals",
+                      names_prefix = "(Model)", names_transform = list(Model = readr::parse_number),
+  ) %>%
+  ggplot(aes(x = Residuals)) +
+  geom_point() +
+  facet_wrap(~Model)
+
+```
+
+
+* The goal of a model
++ Quantify relationships and make predictions
++ A model is always wrong, but it can be helpful
+* How a model is produced
++ Minimising residual error
+* Generalised linear modeling
++ `lm()`
+* Neural networks
++ 

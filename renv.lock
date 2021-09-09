@@ -9,6 +9,12 @@
     ]
   },
   "Packages": {
+    "modelr": {
+      "Package": "modelr",
+      "Version": "0.1.8",
+      "Source": "Repository",
+      "Repository": "CRAN"
+    },
     "BH": {
       "Package": "BH",
       "Version": "1.72.0-3",

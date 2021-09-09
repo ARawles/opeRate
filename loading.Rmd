@@ -74,8 +74,7 @@ In this function, the `header` parameter is replaced with the `col_names` parame
 Let's load our Kaggle dataset in using the `readr::read_csv()` function:
 
 ```{r}
-vg_sales <- readr::read_csv("./data/vgsales.csv")
-print(vg_sales, n = 5)
+print(readr::read_csv("./data/vgsales.csv"), n = 5)
 ```
 
 You can see that when we load in a file using `{readr}` without specifying column types, we get an output showing us exactly how each column has been parsed. This is because CSV is a typeless format, and so data isn't always imported as the type you intended it to be.
