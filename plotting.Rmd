@@ -67,16 +67,20 @@ Different geoms also allow for different mappings. For example, the line geom al
 
 #### Statistical transformations (stats)
 
-For a data point to be shown on the plot, it can go through a statistical transformation or 'stat' which is set via the `stat` parameter of our `geom_...` function. We can see that when we call `geom_line()` the default value for the `stat` parameter is 'identity'. This means that `{ggplot2}` performs no stat transformation on the data before it plots it. 
+Before the data is plotted, it can go through a statistical transformation or 'stat'. This will take the value or values from the dataset and transform them. For example, we might want to plot the sum of all of the values in a group rather than each value individually. We could use a statistical transformation that sums up all the values to do this for us. That way, we can plot the data in different ways with the same base dataset.
 
-We can change this however, so that some form of stat is done on the data before it's plotted. For example, if we set the `stat` parameter to 'smooth', the values are transformed by a smoothing function (the function can be changed via the `method` parameter):
+We can see that when we call `geom_line()` the default value for the `stat` parameter is 'identity'. This means that `{ggplot2}` performs no stat transformation on the data before it plots it - if the value of the variable on the x axis is 10, then the value that's plotted will be 10.
+
+There are many predefined stats that `{ggplot2}` provides that we can to plot the data in different ways. To change the stat transformation for a geom, we can change the `stat` parameter to one of a set of predefined character strings that represent certain stats. For example, if we set the `stat` parameter for our `geom_line()` to `'smooth'`, the values are transformed by a smoothing function (the smoothing method can be changed via the `method` parameter):
 
 ```{r}
 ggplot(smmrsd_vg_sales) +
   geom_line(mapping = aes(x = Year, y = Total_Sales, colour = Publisher), stat = "smooth")
 ```
 
-There is a shorthand function `geom_smooth()` that does exactly this.
+Some geoms use a stat different to 'identity' by default. For example, using `geom_smooth()` uses the 'smooth' stat to essentially do the same as we just did with `geom_line()`. Similary, `geom_boxplot()` will automatically calculate the median and the whiskers and hinges from your data via the `"boxplot"` stat.
+
+Stats are particularly useful because they allow us to plot the same data at different levels of summary. If we didn't utilise stats, we would have to transform the dataset before we started plotting. When we look at [layers](#layers) in one of the coming sections, this should help demonstrate the power of stat transformations in building meaningful graphics.
 
 #### Facets
 
