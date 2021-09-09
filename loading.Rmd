@@ -299,11 +299,11 @@ R tells the ODBC driver to run a query, and then the ODBC driver converts that r
 So to connect to our database, we're going to need 2 things:
 
 * The `odbc` R package
-+ This provides us with the R functions to create our connections and run our queries as so on.
-+ Think of the `odbc` package as a set of tools for interacting with any ODBC database; it knows how to interface with the ODBC drivers, not the DBMS.
+    + This provides us with the R functions to create our connections and run our queries as so on.
+    + Think of the `odbc` package as a set of tools for interacting with any ODBC database; it knows how to interface with the ODBC drivers, not the DBMS.
 * The ODBC driver for our database
-+ This is the actual driver used by the `odbc` package that communicates with the database.
-+ This is the implementation of the ODBC standard for the database we're using.
+    + This is the actual driver used by the `odbc` package that communicates with the database.
+    + This is the implementation of the ODBC standard for the database we're using.
 
 ### Connecting with the `odbc` package
 
@@ -329,21 +329,35 @@ We can see our driver has been detected. Now we can use the `odbc::dbConnect()` 
 ```{r, eval = FALSE}
 my_connection <- odbc::dbConnect(drv = odbc::odbc(),
                                  driver = "ODBC Driver 17 for SQL Server",
-                                 server = "SQLDATABASESERVER" # You'll need to change this to your server
-                                 database = "SQLDATABASE") # You'll need to change this to your database
+                                 # You'll need to change this to your server
+                                 server = "SQLDATABASESERVER",
+                                 # You'll need to change this to your database
+                                 database = "SQLDATABASE") 
 ```
 
-With the `drv` parameter we're specifying the type of driver that we're using as a `DBIDriver` object. Because we're using an ODBC driver, we can use the `odbc::odbc()` function that returns a `DBIDriver` object. The `driver` parameter expects a character string of the actual driver we're going to use (not the type), so that's where we enter the name we saw when we ran the `odbc::odbcListDrivers()` function. The `server` is the server that your database is being on hosted on and the `database` parameter is the database on the server that you want to connect to.
+With the `drv` parameter we're specifying the type of driver that we're using. Because we're using an ODBC driver, we can use the `odbc::odbc()` function. The `driver` parameter expects a character string of the actual driver we're going to use (not the type), so that's where we enter the name we saw when we ran the `odbc::odbcListDrivers()` function. The `server` is the server that your database is being on hosted on and the `database` parameter is the database on the server that you want to connect to.
 
-The `odbc` will use this information to create a [connection string](https://www.connectionstrings.com/) that it will then use to try and connect to the database.
+The `odbc` will use this information to create a [connection string](https://www.connectionstrings.com/) that it will then use to try and connect to the database. If there are any other values you need to include in the connection string, you can include them as named parameters and they'll be added to the string:
+
+```{r, eval = FALSE}
+my_connection <- odbc::dbConnect(drv = odbc::odbc(),
+                                 driver = "ODBC Driver 17 for SQL Server",
+                                 # You'll need to change this to your server
+                                 server = "SQLDATABASESERVER",
+                                 # You'll need to change this to your database
+                                 database = "SQLDATABASE",
+                                 # This would add an 'extra_parameter' entry to the string
+                                 extra_parameter = "extra_parameter_value") 
+```
 
 **Note:**
 You'll want to make sure you assign your connection to something because we'll be passing the connection object to some other functions soon. 
 
-
 #### Authentication
 
-You might also have to specify some credentials when you try and connect to your database. To provide a username and password, just use the `uid` and `pwd` parameters. If your database supports it, you can use Windows Authentication, meaning that you don't need to provide an explicit username and password - the database will use your Windows account instead. To force the driver to try and use this type of authentication, you can add a `Trusted_Connection` parameter to the function call and set the value to `"Yes"` (not `TRUE` or `"TRUE"`). This parameter is then added to the connection string via the `...` argument of the `odbc::dbConnect()` function.
+You might also have to specify some credentials when you try and connect to your database. To provide a username and password, just use the `uid` and `pwd` parameters.
+
+If your database supports it, you can use Windows Authentication, meaning that you don't need to provide an explicit username and password - the database will use your Windows account instead. To force the driver to try and use this type of authentication, you can add a `Trusted_Connection` parameter to the function call and set the value to `"Yes"` (not `TRUE` or `"TRUE"`). This parameter is then added to the connection string via the `...` argument of the `odbc::dbConnect()` function.
 
 #### DSNs
 
@@ -358,6 +372,13 @@ Server = SQLDATABASESERVER
 Database = SQLDATABASE
 Port = 1234
 
+```
+
+We can then just provide the DSN name to the `odbc::dbConnect()` function:
+
+```{r, eval = FALSE}
+my_connection <- odbc::dbConnect(drv = odbc::odbc(),
+                                 dsn = "MyDatabase") 
 ```
 
 This can be particularly useful if you're working in more than one environment, where you might want to connect to the same database but the connection string is going to be different for each environment. Instead, you can create a Data Source Name entry with the same name but with different specifications, and then use the same `odbc::dbConnect(drv = odbc::odbc(), dsn = "MyDatabase")` call in both.
