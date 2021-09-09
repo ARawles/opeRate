@@ -41,7 +41,7 @@ smmrsd_vg_sales %>%
   ggplot(mapping = aes(x = Year, y = Total_Sales, colour = Publisher))
 ```
 
-Here we've defined that we want to show the `Year` on the X axis, the `Total_Global_Sales` on the Y, and we want to map the `Publisher` to the colour of whatever we show on the plot.
+Here we've defined that we want to show the `Year` on the X axis, the `Total_Sales` on the Y, and we want to map the `Publisher` to the colour of whatever we show on the plot.
 
 As part of our mapping, we can see that `{ggplot2}` has also provided appropriate scales for our variables. It's provided a numeric scale with an appropriate range for the X and Y axis. We can't see it yet, but it's also assigned a scale to our colour aesthetic, mapping colours to values in the Publisher column. We'll look at manually specifying and customising the scales later.
 
