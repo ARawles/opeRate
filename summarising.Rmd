@@ -19,7 +19,7 @@ tidy_vg_sales %>%
   dplyr::filter(Country == "Global") %>%
   dplyr::group_by(Publisher, Year) %>%
   dplyr::summarise(Total_Sales = sum(Sales), .groups = "drop") %>%
-  # The .groups = 'drop' parameter will automatically remove the groups
+  # The .groups = 'drop' parameter will automatically remove the grouping from the dataset
   print(n = 5)
 ```
 
@@ -35,7 +35,7 @@ smmrsd_vg_sales <- tidy_vg_sales %>%
   dplyr::mutate(Publisher = forcats::fct_lump_n(Publisher, n = 5, w = Total_Sales)) %>%
   dplyr::group_by(Publisher, Year) %>%
   dplyr::summarise(Total_Sales = sum(Total_Sales), .groups = "drop")
-# The .groups = 'drop' parameter will automatically remove the groups
+# The .groups = 'drop' parameter will automatically remove the grouping from the dataset
 print(smmrsd_vg_sales, n = 5)
 ```
 
