@@ -102,7 +102,7 @@ best_model <- coefficients %>%
 print(best_model_id)
 ```
 
-According to our analysis, model `r best_model_id` has the lowest residual error. Let's see what that model looks like:
+According to our analysis, model `r best_model$id` has the lowest residual error. Let's see what that model looks like:
 
 ```{r}
 ggplot(mtcars, aes(x = wt, y = mpg)) +
