@@ -4,20 +4,18 @@ As we saw previously, the base videa game sales dataset has nearly 17,000 entrie
 
 Summarisation uses exactly the same [grouping](#grouping) concept as mutatation does; by grouping the data we change the scope of each application of the function to be limited to that group. 
 
-Let's go through an example. Let's say that we want to get the global sales for each publisher in each year. For now, we don't care about genre or platform. To do this, we'll need to group by Publisher and by Year:
+Let's go through an example. Let's say that we want to get the global sales for each publisher in each year. For now, we don't care about genre or platform. To do this, we'll need to group by Publisher, Year and Country:
 
 ```{r, eval = FALSE}
 tidy_vg_sales %>%
-  dplyr::filter(Country == "Global") %>%
-  dplyr::group_by(Publisher, Year)
+  dplyr::group_by(Publisher, Year, Country)
 ```
 
 And then we'll want to sum up the `Sales` column to get our totals:
 
 ```{r}
 tidy_vg_sales %>%
-  dplyr::filter(Country == "Global") %>%
-  dplyr::group_by(Publisher, Year) %>%
+  dplyr::group_by(Publisher, Year, Country) %>%
   dplyr::summarise(Total_Sales = sum(Sales), .groups = "drop") %>%
   # The .groups = 'drop' parameter will automatically remove the grouping from the dataset
   print(n = 5)
@@ -29,11 +27,10 @@ While we're here, let's lump together some of the less popular publishers using 
 
 ```{r}
 smmrsd_vg_sales <- tidy_vg_sales %>%
-  dplyr::filter(Country == "Global") %>%
-  dplyr::group_by(Publisher, Year) %>%
+  dplyr::group_by(Publisher, Year, Country) %>%
   dplyr::summarise(Total_Sales = sum(Sales), .groups = "drop") %>%
   dplyr::mutate(Publisher = forcats::fct_lump_n(Publisher, n = 5, w = Total_Sales)) %>%
-  dplyr::group_by(Publisher, Year) %>%
+  dplyr::group_by(Publisher, Year, Country) %>%
   dplyr::summarise(Total_Sales = sum(Total_Sales), .groups = "drop")
 # The .groups = 'drop' parameter will automatically remove the grouping from the dataset
 print(smmrsd_vg_sales, n = 5)
@@ -43,7 +40,7 @@ In this case we've used the `sum()` function, but any kind of summary function c
 
 ```{r}
 tidy_vg_sales %>%
-  dplyr::group_by(Publisher, Year) %>%
+  dplyr::group_by(Publisher, Year, Country) %>%
   dplyr::summarise(Total_Sales = sum(Sales),
                    Average_Sales = mean(Sales),
                    .groups = "drop")

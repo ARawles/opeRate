@@ -35,7 +35,10 @@ To define our dataset and our aesthetic mappings using `{ggplot2}`, we use the `
 ```{r}
 library(ggplot2)
 
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales, colour = Publisher))
+smmrsd_vg_sales %>%
+  # Just plot global sales for now
+  dplyr::filter(Country == "Global") %>%
+  ggplot(mapping = aes(x = Year, y = Total_Sales, colour = Publisher))
 ```
 
 Here we've defined that we want to show the `Year` on the X axis, the `Total_Global_Sales` on the Y, and we want to map the `Publisher` to the colour of whatever we show on the plot.
@@ -51,14 +54,17 @@ Our geometric objects will be the object that's actually shown on the plot (e.g.
 We want lines for our example, so we use the `geom_line()` function. To add our geom component, we just need to add it to our plot so far using the `+` operator:
 
 ```{r}
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales, colour = Publisher)) +
+smmrsd_vg_sales %>%
+  dplyr::filter(Country == "Global") %>%
+  ggplot(mapping = aes(x = Year, y = Total_Sales, colour = Publisher)) +
   geom_line()
 ```
 
 This is equivalent to:
 
 ```{r, eval = FALSE}
-ggplot(smmrsd_vg_sales) +
+smmrsd_vg_sales %>%
+  dplyr::filter(Country == "Global") %>%
   geom_line(mapping = aes(x = Year, y = Total_Sales, colour = Publisher))
 ```
 
@@ -74,7 +80,8 @@ We can see that when we call `geom_line()` the default value for the `stat` para
 There are many predefined stats that `{ggplot2}` provides that we can to plot the data in different ways. To change the stat transformation for a geom, we can change the `stat` parameter to one of a set of predefined character strings that represent certain stats. For example, if we set the `stat` parameter for our `geom_line()` to `'smooth'`, the values are transformed by a smoothing function (the smoothing method can be changed via the `method` parameter):
 
 ```{r}
-ggplot(smmrsd_vg_sales) +
+smmrsd_vg_sales %>%
+  dplyr::filter(Country == "Global") %>%
   geom_line(mapping = aes(x = Year, y = Total_Sales, colour = Publisher), stat = "smooth")
 ```
 
@@ -84,16 +91,15 @@ Stats are particularly useful because they allow us to plot the same data at dif
 
 #### Facets
 
-In our example, we've shown the Publisher column as a mapping to the colour aesthetic, but we could also use faceting. Faceting splits the original dataset, plots the data separately and then combines it into a single panel. To facet our plot, we use the `facet_wrap()` or `facet_grid()` functions:
+In our example, we've filtered the dataset down to just show the global sales, but instead we could also use faceting to show the data for each region in a different subplot. Faceting splits the original dataset, plots the data separately and then combines it into a single panel. To facet our plot, we use the `facet_wrap()` or `facet_grid()` functions:
 
 ```{r}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales, colour = Publisher)) +
   geom_line() +
-  facet_wrap(~Publisher)
+  facet_wrap(~Country, scales = "free_y")
 ```
 
-
-We use the `~` shorthand to say that we want to use the Publisher variable. We could also use the `dplyr::vars()` function (i.e. `facet_wrap(dplyr::vars(Publisher))`).
+We use the `~` shorthand to say that we want to use the Publisher variable. We could also use the `dplyr::vars()` function (i.e. `facet_wrap(dplyr::vars(Publisher))`). Then we specify that we want each subplot to have a free Y axis (rather than all using the same scale range).
 
 Facets are not features of layers, but instead are universal to the plot. So we couldn't facet our coloured lines by Publisher but then not facet our regression line.
 
@@ -108,7 +114,8 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   scale_x_continuous(name = "Year") +
   # Let's change the limits to stop at 0
-  scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA))
+  scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA)) +
+  facet_wrap(~Country, scales = "free_y")
 ```
 
 To change the colour scale, we would use the `scale_colour_brewer/hue()` function. These two functions take a slightly different approach in how they assign colours to the levels of the variable.
@@ -119,7 +126,8 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   scale_x_continuous(name = "Year") +
   scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA)) +
-  scale_colour_brewer(name = "Publisher", palette = "BrBG")
+  scale_colour_brewer(name = "Publisher", palette = "BrBG") +
+  facet_wrap(~Country, scales = "free_y")
 ```
 
 ```{r, warning=FALSE}
@@ -127,7 +135,8 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   scale_x_continuous(name = "Year") +
   scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA)) +
-  scale_colour_hue(name = "Publisher", l = 40, c = 30)
+  scale_colour_hue(name = "Publisher", l = 40, c = 30) +
+  facet_wrap(~Country, scales = "free_y")
 ```
 
 ### Layers
@@ -137,7 +146,11 @@ Together, the data, mapping, stat and geom components form a **layer**. A plot c
 ```{r}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
-  geom_smooth(method = "loess", formula = y ~ x)
+  geom_smooth(method = "loess", formula = y ~ x) +
+  scale_x_continuous(name = "Year") +
+  scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA)) +
+  scale_colour_hue(name = "Publisher", l = 40, c = 30) +
+  facet_wrap(~Country, scales = "free_y")
 ```
 
 We've now got two layers to this plot, with slightly different mappings and stats. The coloured lines are split by Publisher, but the regression line does not use that colour mapping, meaning that we have a single line for all the Publishers. The coloured lines also use the 'identity' stat transformation (essentially no stat), where the regression line uses the 'smooth' stat transformation - it calculates a smooth conditional mean of y given x (`y ~ x`).
