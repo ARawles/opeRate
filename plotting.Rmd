@@ -93,7 +93,7 @@ Stats are particularly useful because they allow us to plot the same data at dif
 
 In our example, we've filtered the dataset down to just show the global sales, but instead we could also use faceting to show the data for each region in a different subplot. Faceting splits the original dataset, plots the data separately and then combines it into a single panel. To facet our plot, we use the `facet_wrap()` or `facet_grid()` functions:
 
-```{r}
+```{r, fig.asp=1.5}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales, colour = Publisher)) +
   geom_line() +
   facet_wrap(~Country, scales = "free_y", ncol = 2)
@@ -109,7 +109,7 @@ Scales are the domains of our mappings. Each variable that we map via `aes` will
 
 `{ggplot2}` will create default scales for the variables in our mapping, but we can alter them manually. To do so, we just use the accompanying `scale_{aesthetic}_{type}` function. So for our x axis, we're scaling our x mapping and we want a continuous, numeric scale so we would use the `scale_x_continous()` function. Similarly, for our y axis we'd use `scale_y_continuous()`:
 
-```{r, warning = FALSE, fig.asp=1.2}
+```{r, warning = FALSE, fig.asp=1.5}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   scale_x_continuous(name = "Year") +
@@ -130,7 +130,7 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   facet_wrap(~Country, scales = "free_y", ncol = 2)
 ```
 
-```{r, warning=FALSE, fig.asp=1.2}
+```{r, warning=FALSE, fig.asp=1.5}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   scale_x_continuous(name = "Year") +
@@ -143,7 +143,7 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
 
 Together, the data, mapping, stat and geom components form a **layer**. A plot can be made up of multiple layers. For example, let's show the same data but overlay a regression line that uses the smooth stat and a different mapping:
 
-```{r, fig.asp=1.2}
+```{r, fig.asp=1.5}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   geom_smooth(method = "loess", formula = y ~ x) +
