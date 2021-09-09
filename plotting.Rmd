@@ -18,6 +18,7 @@ The main components that make up a plot are:
 
 * Data and aesthetics mappings
 * Geometrics objects (or geoms)
+* Statistical transformations (or stats)
 * Scales
 * Facets
 
@@ -62,11 +63,11 @@ ggplot(smmrsd_vg_sales) +
 ```
 
 
-Different geoms also allow for different mappings. For example, the line geom allows you to specify the `linetype` aesthetic that changes the way the line is drawn (solid, dashed, etc.) depending on the value of your variable. This aesthetic would mean nothing for the point geom however, which instead has an aesthetic called `shape`. To see which aesthetics are supported by which geoms, look at the documentation for the geom function you want to use (e.g `?geom_point`).
+Different geoms also allow for different mappings. For example, the line geom allows you to specify the `linetype` aesthetic that changes the way the line is drawn (solid, dashed, etc.) depending on the value of your variable. This aesthetic would mean nothing for the point geom however, which instead has an aesthetic called `shape`. To see which aesthetics are supported by which geoms, look at the documentation for the geom function you want to use (e.g `?geom_line`).
 
-#### Stats
+#### Statistical transformations (stats)
 
-For a data point to be shown on the plot, it can go through a statistical transformation or 'stat' which is set via the `stat` parameter of our `geom_...` function. We can see that when we call `geom_point()` the default value for the `stat` parameter is 'identity'. This means that `{ggplot2}` performs no stat transformation on the data before it plots it. 
+For a data point to be shown on the plot, it can go through a statistical transformation or 'stat' which is set via the `stat` parameter of our `geom_...` function. We can see that when we call `geom_line()` the default value for the `stat` parameter is 'identity'. This means that `{ggplot2}` performs no stat transformation on the data before it plots it. 
 
 We can change this however, so that some form of stat is done on the data before it's plotted. For example, if we set the `stat` parameter to 'smooth', the values are transformed by a smoothing function (the function can be changed via the `method` parameter):
 
@@ -76,26 +77,6 @@ ggplot(smmrsd_vg_sales) +
 ```
 
 There is a shorthand function `geom_smooth()` that does exactly this.
-
-#### Layers
-
-Together, the data, mapping, stat and geom components form a **layer**. A plot can be made up of multiple layers. For example, let's show the same data but overlay a regression line that uses a different stat and a different mapping:
-
-```{r}
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
-  geom_line(mapping = aes(colour = Publisher)) +
-  geom_smooth(method = "loess", formula = y ~ x)
-```
-
-We've now got two layers to this plot, with slightly different mappings and stats. The coloured lines are split by Publisher, but the regression line does not use that colour mapping, meaning that we have one line for all the Publishers. The coloured lines also use the 'identity' stat transformation (essentially no stat), where the regression line uses the 'smooth' stat transformation - it calculates a smooth conditional mean of y given x (`y ~ x`).
-
-In summary, a layer is made up of:
-
-* A dataset and aesthetic mapping (aes)
-* A statistical transformation (stat)
-* A geometric object (geom)
-
-And plots can be made of up one or more layers.
 
 #### Facets
 
@@ -112,14 +93,15 @@ We use the `~` shorthand to say that we want to use the Publisher variable. We c
 
 Facets are not features of layers, but instead are universal to the plot. So we couldn't facet our coloured lines by Publisher but then not facet our regression line.
 
-### Scales
+#### Scales
 
-`{ggplot2}` has created default scales for the variables in our mapping, but we can alter them manually. To do so, we just use the accompanying `scale_{aesthetic}_{type}` function. So for our x axis, we're scaling our x mapping and we want a continuous, numeric scale so we would use the `scale_x_continous()` function. Similarly, for our y axis we'd use `scale_y_continuous()`:
+Scales are the domains of our mappings. Each variable that we map via `aes` will have a scale associated with it. For example, when we map our Year variable to the x axis, `{ggplot2}` creates an automatic numeric scale, with values between 1980 and 2020 (the minimum and maximum values in our range). Similarly, when we map the Publisher to the colour aesthetic, `{ggplot2}` automatically creates a colour scale, mapping colours to specific Publishers.
+
+`{ggplot2}` will create default scales for the variables in our mapping, but we can alter them manually. To do so, we just use the accompanying `scale_{aesthetic}_{type}` function. So for our x axis, we're scaling our x mapping and we want a continuous, numeric scale so we would use the `scale_x_continous()` function. Similarly, for our y axis we'd use `scale_y_continuous()`:
 
 ```{r, warning = FALSE}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
-  geom_smooth(method = "loess", formula = y ~ x) +
   scale_x_continuous(name = "Year") +
   # Let's change the limits to stop at 0
   scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA))
@@ -131,7 +113,6 @@ To change the colour scale, we would use the `scale_colour_brewer/hue()` functio
 ```{r,warning=FALSE}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
-  geom_smooth(method = "loess", formula = y ~ x) +
   scale_x_continuous(name = "Year") +
   scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA)) +
   scale_colour_brewer(name = "Publisher", palette = "BrBG")
@@ -140,10 +121,29 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
 ```{r, warning=FALSE}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
-  geom_smooth(method = "loess", formula = y ~ x) +
   scale_x_continuous(name = "Year") +
   scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA)) +
   scale_colour_hue(name = "Publisher", l = 40, c = 30)
 ```
 
-Scales, like facets, are not components of layers. They will be constant across all layers in the plot.
+### Layers
+
+Together, the data, mapping, stat and geom components form a **layer**. A plot can be made up of multiple layers. For example, let's show the same data but overlay a regression line that uses the smooth stat and a different mapping:
+
+```{r}
+ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
+  geom_line(mapping = aes(colour = Publisher)) +
+  geom_smooth(method = "loess", formula = y ~ x)
+```
+
+We've now got two layers to this plot, with slightly different mappings and stats. The coloured lines are split by Publisher, but the regression line does not use that colour mapping, meaning that we have a single line for all the Publishers. The coloured lines also use the 'identity' stat transformation (essentially no stat), where the regression line uses the 'smooth' stat transformation - it calculates a smooth conditional mean of y given x (`y ~ x`).
+
+In summary, a layer is made up of:
+
+* A dataset and aesthetic mapping (aes)
+* A statistical transformation (stat)
+* A geometric object (geom)
+
+And plots can be made of up one or more layers.
+
+Facets and scales are not components of layers - they are universal to the plot. You couldn't have one layer that used a completely different scale (e.g. one showing numbers and the other showing groups) because you wouldn't be able to plot them on the same graph!
