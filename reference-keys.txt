@@ -1,6 +1,5 @@
 operate
 overview
-acknowledgements
 about-me
 using-r
 tidyverse-introduction
@@ -41,6 +40,9 @@ tidying
 pivoting-columns
 pivoting-columns-to-rows-longer
 pivoting-rows-to-columns-wider
+separating-uniting
+separating
+uniting
 grouping
 mutating
 summarising
@@ -51,7 +53,7 @@ data-and-aesthetic-mappings
 geometric-objects-geoms
 stats
 layers
-facet
+facets
 scales
 modelling
 projects-introduction
@@ -59,6 +61,9 @@ workflows
 basic-workflow
 example-1-reporting
 example-2-modelling
+separating-stages
+functions
+files
 summary
 replicability
 good-practice

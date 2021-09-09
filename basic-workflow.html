@@ -31,7 +31,7 @@
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link rel="prev" href="workflows.html"/>
-<link rel="next" href="replicability.html"/>
+<link rel="next" href="separating-stages.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -135,10 +135,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> opeRate</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>1.1</b> Overview</a>
-<ul>
-<li class="chapter" data-level="1.1.1" data-path="overview.html"><a href="overview.html#acknowledgements"><i class="fa fa-check"></i><b>1.1.1</b> Acknowledgements</a></li>
-</ul></li>
+<li class="chapter" data-level="1.1" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>1.1</b> Overview</a></li>
 <li class="chapter" data-level="1.2" data-path="about-me.html"><a href="about-me.html"><i class="fa fa-check"></i><b>1.2</b> About Me</a></li>
 <li class="chapter" data-level="1.3" data-path="using-r.html"><a href="using-r.html"><i class="fa fa-check"></i><b>1.3</b> Using R</a></li>
 </ul></li>
@@ -197,6 +194,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.1.1" data-path="pivoting-columns.html"><a href="pivoting-columns.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>9.1.1</b> Pivoting columns to rows (longer)</a></li>
 <li class="chapter" data-level="9.1.2" data-path="pivoting-columns.html"><a href="pivoting-columns.html#pivoting-rows-to-columns-wider"><i class="fa fa-check"></i><b>9.1.2</b> Pivoting rows to columns (wider)</a></li>
 </ul></li>
+<li class="chapter" data-level="9.2" data-path="separating-uniting.html"><a href="separating-uniting.html"><i class="fa fa-check"></i><b>9.2</b> Separating &amp; Uniting</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="separating-uniting.html"><a href="separating-uniting.html#separating"><i class="fa fa-check"></i><b>9.2.1</b> Separating</a></li>
+<li class="chapter" data-level="9.2.2" data-path="separating-uniting.html"><a href="separating-uniting.html#uniting"><i class="fa fa-check"></i><b>9.2.2</b> Uniting</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="grouping.html"><a href="grouping.html"><i class="fa fa-check"></i><b>10</b> Grouping</a></li>
 <li class="chapter" data-level="11" data-path="mutating.html"><a href="mutating.html"><i class="fa fa-check"></i><b>11</b> Mutating</a></li>
@@ -206,9 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>13.1</b> ggplot2</a>
 <ul>
 <li class="chapter" data-level="13.1.1" data-path="ggplot2.html"><a href="ggplot2.html#components"><i class="fa fa-check"></i><b>13.1.1</b> Components</a></li>
-<li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#stats"><i class="fa fa-check"></i><b>13.1.2</b> Stats</a></li>
-<li class="chapter" data-level="13.1.3" data-path="ggplot2.html"><a href="ggplot2.html#layers"><i class="fa fa-check"></i><b>13.1.3</b> Layers</a></li>
-<li class="chapter" data-level="13.1.4" data-path="ggplot2.html"><a href="ggplot2.html#scales"><i class="fa fa-check"></i><b>13.1.4</b> Scales</a></li>
+<li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#scales"><i class="fa fa-check"></i><b>13.1.2</b> Scales</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a></li>
@@ -220,8 +220,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="16.1.1" data-path="basic-workflow.html"><a href="basic-workflow.html#example-1-reporting"><i class="fa fa-check"></i><b>16.1.1</b> Example 1: Reporting</a></li>
 <li class="chapter" data-level="16.1.2" data-path="basic-workflow.html"><a href="basic-workflow.html#example-2-modelling"><i class="fa fa-check"></i><b>16.1.2</b> Example 2: Modelling</a></li>
-<li class="chapter" data-level="16.1.3" data-path="basic-workflow.html"><a href="basic-workflow.html#summary"><i class="fa fa-check"></i><b>16.1.3</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="16.2" data-path="separating-stages.html"><a href="separating-stages.html"><i class="fa fa-check"></i><b>16.2</b> Separating Stages</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="separating-stages.html"><a href="separating-stages.html#functions"><i class="fa fa-check"></i><b>16.2.1</b> Functions</a></li>
+<li class="chapter" data-level="16.2.2" data-path="separating-stages.html"><a href="separating-stages.html#files"><i class="fa fa-check"></i><b>16.2.2</b> Files</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>16.3</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="17" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>17</b> Replicability</a>
 <ul>
@@ -293,31 +298,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">16.1.1</span> Example 1: Reporting</h3>
 <p>In this example, imagine someone has come to you and they want a bit more insight into the data they have. It’s currently in a messy spreadsheet, and they want you to load it into R and produce some nice looking graphics to help them understand trends and correlations in their data. They’re not bothered about any modelling for now, they just want some pretty graphs.</p>
 <p>If we mapped out an appropriate workflow for this project, it might look something like this:</p>
-<div id="htmlwidget-3b0acd83c216cb83fea3" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3b0acd83c216cb83fea3">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Import; Clean; Tidy; Summarise; Plot; Evaluate; \n\n  # several \"edge\" statements\n  Import->Clean Clean->Tidy Tidy->Summarise Summarise->Plot\n  Plot->Evaluate Evaluate->Summarise Evaluate->Plot\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1597fb8d4fd05e93e7b4" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1597fb8d4fd05e93e7b4">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Import; Clean; Tidy; Summarise; Plot; Evaluate; \n\n  # several \"edge\" statements\n  Import->Clean Clean->Tidy Tidy->Summarise Summarise->Plot\n  Plot->Evaluate Evaluate->Summarise Evaluate->Plot\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>We import the data and clean it and tidy it (more on that later), then we summarise it and create our plots. We can then use feedback from our colleague to change how we’re summarising or how we’re plotting the data to improve our plots until we’re happy.</p>
 </div>
 <div id="example-2-modelling" class="section level3" number="16.1.2">
 <h3><span class="header-section-number">16.1.2</span> Example 2: Modelling</h3>
 <p>For this example, imagine a colleague has come to you about a modelling project. They have a number of relatively clean datasets that they want to combine and use to produce a predictive model. They’re not too worried about plots or graphics, they’re more interested in the model itself. If we mapped out a workflow for this project, it might look a bit more like this:</p>
-<div id="htmlwidget-ef6a56c74c9d92573911" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ef6a56c74c9d92573911">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Load; Clean; Tidy; Collate; Model; Evaluate; \n\n  # several \"edge\" statements\n  Load->Clean Clean->Tidy Tidy->Collate Collate->Model\n  Model->Evaluate Evaluate->Model\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6b5bcfc88d911a1b3f0a" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6b5bcfc88d911a1b3f0a">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Load; Clean; Tidy; Collate; Model; Evaluate; \n\n  # several \"edge\" statements\n  Load->Clean Clean->Tidy Tidy->Collate Collate->Model\n  Model->Evaluate Evaluate->Model\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>As you can see, we still end with the loop of modelling and then evaluating our model and using the output to update the model, but the steps we take to get there are a bit different.</p>
 </div>
-<div id="summary" class="section level3" number="16.1.3">
-<h3><span class="header-section-number">16.1.3</span> Summary</h3>
-<p>Hopefully this section has given you an idea of what a typical project workflow could look like. The benefit of splitting your project into these distinct steps is that it can often help you compartmentalise your functions and scripts into distinct stages. We’ll look later at structuring your project like an R package, and so splitting your analysis into separate stages can help you construct your project in a portable and replicable way.</p>
-
 </div>
-</div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
 <a href="workflows.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="replicability.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="separating-stages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

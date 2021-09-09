@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="pivoting-columns.html"/>
+<link rel="prev" href="separating-uniting.html"/>
 <link rel="next" href="mutating.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -135,10 +135,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> opeRate</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>1.1</b> Overview</a>
-<ul>
-<li class="chapter" data-level="1.1.1" data-path="overview.html"><a href="overview.html#acknowledgements"><i class="fa fa-check"></i><b>1.1.1</b> Acknowledgements</a></li>
-</ul></li>
+<li class="chapter" data-level="1.1" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i><b>1.1</b> Overview</a></li>
 <li class="chapter" data-level="1.2" data-path="about-me.html"><a href="about-me.html"><i class="fa fa-check"></i><b>1.2</b> About Me</a></li>
 <li class="chapter" data-level="1.3" data-path="using-r.html"><a href="using-r.html"><i class="fa fa-check"></i><b>1.3</b> Using R</a></li>
 </ul></li>
@@ -197,6 +194,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.1.1" data-path="pivoting-columns.html"><a href="pivoting-columns.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>9.1.1</b> Pivoting columns to rows (longer)</a></li>
 <li class="chapter" data-level="9.1.2" data-path="pivoting-columns.html"><a href="pivoting-columns.html#pivoting-rows-to-columns-wider"><i class="fa fa-check"></i><b>9.1.2</b> Pivoting rows to columns (wider)</a></li>
 </ul></li>
+<li class="chapter" data-level="9.2" data-path="separating-uniting.html"><a href="separating-uniting.html"><i class="fa fa-check"></i><b>9.2</b> Separating &amp; Uniting</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="separating-uniting.html"><a href="separating-uniting.html#separating"><i class="fa fa-check"></i><b>9.2.1</b> Separating</a></li>
+<li class="chapter" data-level="9.2.2" data-path="separating-uniting.html"><a href="separating-uniting.html#uniting"><i class="fa fa-check"></i><b>9.2.2</b> Uniting</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="grouping.html"><a href="grouping.html"><i class="fa fa-check"></i><b>10</b> Grouping</a></li>
 <li class="chapter" data-level="11" data-path="mutating.html"><a href="mutating.html"><i class="fa fa-check"></i><b>11</b> Mutating</a></li>
@@ -206,9 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>13.1</b> ggplot2</a>
 <ul>
 <li class="chapter" data-level="13.1.1" data-path="ggplot2.html"><a href="ggplot2.html#components"><i class="fa fa-check"></i><b>13.1.1</b> Components</a></li>
-<li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#stats"><i class="fa fa-check"></i><b>13.1.2</b> Stats</a></li>
-<li class="chapter" data-level="13.1.3" data-path="ggplot2.html"><a href="ggplot2.html#layers"><i class="fa fa-check"></i><b>13.1.3</b> Layers</a></li>
-<li class="chapter" data-level="13.1.4" data-path="ggplot2.html"><a href="ggplot2.html#scales"><i class="fa fa-check"></i><b>13.1.4</b> Scales</a></li>
+<li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#scales"><i class="fa fa-check"></i><b>13.1.2</b> Scales</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a></li>
@@ -220,8 +220,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="16.1.1" data-path="basic-workflow.html"><a href="basic-workflow.html#example-1-reporting"><i class="fa fa-check"></i><b>16.1.1</b> Example 1: Reporting</a></li>
 <li class="chapter" data-level="16.1.2" data-path="basic-workflow.html"><a href="basic-workflow.html#example-2-modelling"><i class="fa fa-check"></i><b>16.1.2</b> Example 2: Modelling</a></li>
-<li class="chapter" data-level="16.1.3" data-path="basic-workflow.html"><a href="basic-workflow.html#summary"><i class="fa fa-check"></i><b>16.1.3</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="16.2" data-path="separating-stages.html"><a href="separating-stages.html"><i class="fa fa-check"></i><b>16.2</b> Separating Stages</a>
+<ul>
+<li class="chapter" data-level="16.2.1" data-path="separating-stages.html"><a href="separating-stages.html#functions"><i class="fa fa-check"></i><b>16.2.1</b> Functions</a></li>
+<li class="chapter" data-level="16.2.2" data-path="separating-stages.html"><a href="separating-stages.html#files"><i class="fa fa-check"></i><b>16.2.2</b> Files</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="summary.html"><a href="summary.html"><i class="fa fa-check"></i><b>16.3</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="17" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>17</b> Replicability</a>
 <ul>
@@ -279,7 +284,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">10</span> Grouping</h1>
 <p>Before we look at adding new columns and summarising our data, we need to understand the concept of grouping our data.</p>
 <p>When a data frame has one or more groups, any function that’s applied (when summarising or adding a new column) is applied for each combination of those groups. So say we have a dataset like this:</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="grouping.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ungrpd, <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="grouping.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ungrpd, <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##   Year Month Group Value
 ## 1 2012     1     A    10
 ## 2 2012     1     B    20
@@ -288,9 +293,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 2012     3     A    25</code></pre>
 <p>If we grouped by Year or by Month, then any function we applied would be applied separately to each value of those groups. So say we wanted get the total values for each Year, we could group by the <code>Year</code> column and then just sum the <code>Value</code> column. The same logic applies for if we wanted to get the total for each year <em>and</em> month; we could group by the <code>Year</code> and <code>Month</code> and sum the <code>Value</code> column and we’d then get a value for each distinct year and month.</p>
 <p>To group a dataset, we use the <code>dplyr::group_by()</code> function:</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="grouping.html#cb81-1" aria-hidden="true" tabindex="-1"></a>grpd <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(ungrpd, Year)</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="grouping.html#cb86-1" aria-hidden="true" tabindex="-1"></a>grpd <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(ungrpd, Year)</span></code></pre></div>
 <p>The <code>dplyr::group_by()</code> function returns the same dataset but now grouped by the variables you provided. At first, it might not seem as though anything happened - if we print the dataset we still get basically the same output…</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="grouping.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(grpd, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="grouping.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(grpd, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 12 x 4
 ## # Groups:   Year [2]
 ##   Year  Month Group Value
@@ -303,11 +308,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## # … with 7 more rows</code></pre>
 <p>Except now we have a new entry <code>Groups:</code>. This tells us that the dataset has been grouped and by what variables. This means that any subsequent summarisation or mutation we do will be done relative those groups.</p>
 <p>To test whether a dataset has been grouped, you can use the <code>dplyr::is_grouped_df()</code>, and to ungroup a dataset, just use <code>dplyr::ungroup()</code>:</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="grouping.html#cb84-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">is_grouped_df</span>(grpd)</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="grouping.html#cb89-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">is_grouped_df</span>(grpd)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="grouping.html#cb86-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">is_grouped_df</span>(ungrpd)</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="grouping.html#cb91-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">is_grouped_df</span>(ungrpd)</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="grouping.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dplyr<span class="sc">::</span><span class="fu">ungroup</span>(grpd), <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="grouping.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dplyr<span class="sc">::</span><span class="fu">ungroup</span>(grpd), <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 12 x 4
 ##   Year  Month Group Value
 ##   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
@@ -324,7 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="pivoting-columns.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="separating-uniting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="mutating.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

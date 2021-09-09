@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>18.1 Structure | opeRate</title>
+  <title>9.2 Separating &amp; Uniting | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="18.1 Structure | opeRate" />
+  <meta property="og:title" content="9.2 Separating &amp; Uniting | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="18.1 Structure | opeRate" />
+  <meta name="twitter:title" content="9.2 Separating &amp; Uniting | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="projects-as-packages.html"/>
-<link rel="next" href="documentation-1.html"/>
+<link rel="prev" href="pivoting-columns.html"/>
+<link rel="next" href="grouping.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -280,26 +280,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="structure" class="section level2" number="18.1">
-<h2><span class="header-section-number">18.1</span> Structure</h2>
-<div id="r-code" class="section level3" number="18.1.1">
-<h3><span class="header-section-number">18.1.1</span> R code</h3>
-<p>The structure of R files in a package is pretty simple. Everything goes in the root of the R folder. That means no subfolders. There are also some filenames that should be avoided for normal packages, but we won’t worry too much about that for now.</p>
-<p>When you then run the <code>devtools::load_all()</code> command, <code>{devtools}</code> checks that you’ve got the dependencies listed in the DESCRIPTION file loaded and then loads all of the files in the R folder are then loaded. This means you can make quick changes to your code and then run <code>devtools::load_all()</code> to bring those changes into your current environment. This helps prevent working on data or functions that are out of date (which often happens when you’re manually sourcing R files).</p>
+<div id="separating-uniting" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Separating &amp; Uniting</h2>
+<div id="separating" class="section level3" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Separating</h3>
+<p>A less common violation of the tidy data principles occurs when a single column contains more than one variable. Let’s look at an example:</p>
+<pre><code>## # A tibble: 4 x 2
+##   Species    LeafArea
+##   &lt;chr&gt;      &lt;chr&gt;   
+## 1 Eucalyptus 20x100  
+## 2 Elm        10x5    
+## 3 Agave      2x10    
+## 4 Persea     15x11</code></pre>
+<p>Here we’ve got a dataset with different plant species and the area of their leaves. But we’ve got two variables combined into a single column; we’ve got both the width and the length of the leaf included in a single ‘area’ variable. To convert this dataset to the tidy format, we need to split out those values into separate ‘width’ and ‘length’ variables.</p>
+<p>We can use the <code>separate()</code> function from the <code>{tidyr}</code> package to do this. We just need to provide the column we want to split via the <code>col</code> parameter, the column names that we want to split the original column into with the <code>into</code> parameter, and the separator that’s separating the two or more values within the column via the <code>sep</code> parameter:</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="separating-uniting.html#cb80-1" aria-hidden="true" tabindex="-1"></a>separate_example <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">separate</span>(combined_example, <span class="at">col =</span> LeafArea, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;Width&quot;</span>, <span class="st">&quot;Length&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;x&quot;</span>)</span>
+<span id="cb80-2"><a href="separating-uniting.html#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(separate_example)</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 3
+##   Species    Width Length
+##   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; 
+## 1 Eucalyptus 20    100   
+## 2 Elm        10    5     
+## 3 Agave      2     10    
+## 4 Persea     15    11</code></pre>
 </div>
-<div id="data" class="section level3" number="18.1.2">
-<h3><span class="header-section-number">18.1.2</span> Data</h3>
-<p>For some projects, you’ll want to include a static dataset or datasets that you’re basing your analysis on. Packages also have a way of including data in a standard way. Use the <code>usethis::use_data()</code> function to bundle an R object with your package. You can make sure that the data needed for your project is included with it.</p>
-<p>For other projects, you’ll want to use the latest data whenever the analysis is done. For this, I would recommend creating a set of functions to get your data and including those in the package. That will ensure that getting the data needed for your analysis is as simple as possible for people reading your code.</p>
+<div id="uniting" class="section level3" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> Uniting</h3>
+<p>Just like pivoting wider was essentially the inverse of pivoting longer, uniting columns is the inverse of separating them. Again, our focus in this chapter is to tidy up our data, and so we’ll likely always be separating columns rather than uniting them. Regardless, it’s good to understand how to unite columns for the occasions that it is required.</p>
+<p>To join multiple columns together, we use the <code>unite()</code> function from the <code>{tidyr}</code> package. We just need to provide the name of the new column we want to create via the <code>col</code> parameter, the column names of the columns to unite as unnamed parameters, and then the separating character we want to use via <code>sep</code>:</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="separating-uniting.html#cb82-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">unite</span>(separate_example, <span class="at">col =</span> <span class="st">&quot;LeafArea&quot;</span>, Width, Length, <span class="at">sep =</span> <span class="st">&quot;x&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 2
+##   Species    LeafArea
+##   &lt;chr&gt;      &lt;chr&gt;   
+## 1 Eucalyptus 20x100  
+## 2 Elm        10x5    
+## 3 Agave      2x10    
+## 4 Persea     15x11</code></pre>
+
 </div>
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="projects-as-packages.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="documentation-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="pivoting-columns.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="grouping.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

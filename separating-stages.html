@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>18.1 Structure | opeRate</title>
+  <title>16.2 Separating Stages | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="18.1 Structure | opeRate" />
+  <meta property="og:title" content="16.2 Separating Stages | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="18.1 Structure | opeRate" />
+  <meta name="twitter:title" content="16.2 Separating Stages | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="projects-as-packages.html"/>
-<link rel="next" href="documentation-1.html"/>
+<link rel="prev" href="basic-workflow.html"/>
+<link rel="next" href="summary.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -280,17 +280,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="structure" class="section level2" number="18.1">
-<h2><span class="header-section-number">18.1</span> Structure</h2>
-<div id="r-code" class="section level3" number="18.1.1">
-<h3><span class="header-section-number">18.1.1</span> R code</h3>
-<p>The structure of R files in a package is pretty simple. Everything goes in the root of the R folder. That means no subfolders. There are also some filenames that should be avoided for normal packages, but we won’t worry too much about that for now.</p>
-<p>When you then run the <code>devtools::load_all()</code> command, <code>{devtools}</code> checks that you’ve got the dependencies listed in the DESCRIPTION file loaded and then loads all of the files in the R folder are then loaded. This means you can make quick changes to your code and then run <code>devtools::load_all()</code> to bring those changes into your current environment. This helps prevent working on data or functions that are out of date (which often happens when you’re manually sourcing R files).</p>
+<div id="separating-stages" class="section level2" number="16.2">
+<h2><span class="header-section-number">16.2</span> Separating Stages</h2>
+<div id="functions" class="section level3" number="16.2.1">
+<h3><span class="header-section-number">16.2.1</span> Functions</h3>
 </div>
-<div id="data" class="section level3" number="18.1.2">
-<h3><span class="header-section-number">18.1.2</span> Data</h3>
-<p>For some projects, you’ll want to include a static dataset or datasets that you’re basing your analysis on. Packages also have a way of including data in a standard way. Use the <code>usethis::use_data()</code> function to bundle an R object with your package. You can make sure that the data needed for your project is included with it.</p>
-<p>For other projects, you’ll want to use the latest data whenever the analysis is done. For this, I would recommend creating a set of functions to get your data and including those in the package. That will ensure that getting the data needed for your analysis is as simple as possible for people reading your code.</p>
+<div id="files" class="section level3" number="16.2.2">
+<h3><span class="header-section-number">16.2.2</span> Files</h3>
 </div>
 </div>
             </section>
@@ -298,8 +294,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="projects-as-packages.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="documentation-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="basic-workflow.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="summary.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
