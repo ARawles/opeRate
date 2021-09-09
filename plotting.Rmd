@@ -96,7 +96,7 @@ In our example, we've filtered the dataset down to just show the global sales, b
 ```{r}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales, colour = Publisher)) +
   geom_line() +
-  facet_wrap(~Country, scales = "free_y")
+  facet_wrap(~Country, scales = "free_y", ncol = 2)
 ```
 
 We use the `~` shorthand to say that we want to use the Publisher variable. We could also use the `dplyr::vars()` function (i.e. `facet_wrap(dplyr::vars(Publisher))`). Then we specify that we want each subplot to have a free Y axis (rather than all using the same scale range).
@@ -109,48 +109,48 @@ Scales are the domains of our mappings. Each variable that we map via `aes` will
 
 `{ggplot2}` will create default scales for the variables in our mapping, but we can alter them manually. To do so, we just use the accompanying `scale_{aesthetic}_{type}` function. So for our x axis, we're scaling our x mapping and we want a continuous, numeric scale so we would use the `scale_x_continous()` function. Similarly, for our y axis we'd use `scale_y_continuous()`:
 
-```{r, warning = FALSE}
+```{r, warning = FALSE, fig.asp=1.2}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   scale_x_continuous(name = "Year") +
   # Let's change the limits to stop at 0
   scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA)) +
-  facet_wrap(~Country, scales = "free_y")
+  facet_wrap(~Country, scales = "free_y", ncol = 2)
 ```
 
 To change the colour scale, we would use the `scale_colour_brewer/hue()` function. These two functions take a slightly different approach in how they assign colours to the levels of the variable.
 
 
-```{r,warning=FALSE}
+```{r,warning=FALSE, fig.asp=1.2}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   scale_x_continuous(name = "Year") +
   scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA)) +
   scale_colour_brewer(name = "Publisher", palette = "BrBG") +
-  facet_wrap(~Country, scales = "free_y")
+  facet_wrap(~Country, scales = "free_y", ncol = 2)
 ```
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.asp=1.2}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   scale_x_continuous(name = "Year") +
   scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA)) +
   scale_colour_hue(name = "Publisher", l = 40, c = 30) +
-  facet_wrap(~Country, scales = "free_y")
+  facet_wrap(~Country, scales = "free_y", ncol = 2)
 ```
 
 ### Layers
 
 Together, the data, mapping, stat and geom components form a **layer**. A plot can be made up of multiple layers. For example, let's show the same data but overlay a regression line that uses the smooth stat and a different mapping:
 
-```{r}
+```{r, fig.asp=1.2}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   geom_smooth(method = "loess", formula = y ~ x) +
   scale_x_continuous(name = "Year") +
   scale_y_continuous(name = "Total Sales (Millions)", limits = c(0, NA)) +
   scale_colour_hue(name = "Publisher", l = 40, c = 30) +
-  facet_wrap(~Country, scales = "free_y")
+  facet_wrap(~Country, scales = "free_y", ncol = 2)
 ```
 
 We've now got two layers to this plot, with slightly different mappings and stats. The coloured lines are split by Publisher, but the regression line does not use that colour mapping, meaning that we have a single line for all the Publishers. The coloured lines also use the 'identity' stat transformation (essentially no stat), where the regression line uses the 'smooth' stat transformation - it calculates a smooth conditional mean of y given x (`y ~ x`).
