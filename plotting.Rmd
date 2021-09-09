@@ -99,7 +99,7 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales, colour = Publis
   facet_wrap(~Country, scales = "free_y", ncol = 2)
 ```
 
-We use the `~` shorthand to say that we want to use the Publisher variable. We could also use the `dplyr::vars()` function (i.e. `facet_wrap(dplyr::vars(Publisher))`). Then we specify that we want each subplot to have a free Y axis (rather than all using the same scale range).
+We use the `~` shorthand to say that we want to use the Publisher variable. We could also use the `dplyr::vars()` function (i.e. `facet_wrap(dplyr::vars(Publisher))`). Then we specify that we want each subplot to have a free Y axis (rather than all using the same scale range) with `scales = "free_y"`, and that we want to have 2 columns of subplots with `ncol = 2`.
 
 Facets are not features of layers, but instead are universal to the plot. So we couldn't facet our coloured lines by Publisher but then not facet our regression line.
 
@@ -163,4 +163,4 @@ In summary, a layer is made up of:
 
 And plots can be made of up one or more layers.
 
-Facets and scales are not components of layers - they are universal to the plot. You couldn't have one layer that used a completely different scale (e.g. one showing numbers and the other showing groups) because you wouldn't be able to plot them on the same graph!
+Facets and scales are not components of layers - they are universal to the plot. You couldn't have one layer that used a completely different scale (e.g. one showing numbers on the x axis and the other showing groups on the same axis) because you wouldn't be able to plot them on the same graph!
