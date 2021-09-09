@@ -4,10 +4,13 @@
 * Creating project
 * Filling out description (including dependencies)
 * Importing data
+    + Store the file in the 'data-raw' folder, using the `usethis::use_data_raw()` function
+    + Write the script to load the csv file and save it with `usethis::use_data()`
 * File structure
-* Cleaning
-* Tidying
-* etc.
+    + Separate files for each stage (e.g. clean, tidy, summarise, plot)
+    + analysis.R file that has the overarching analysis
 * Documentation
-    + Function
+    + README
+    + Function & dataset
+        + `{roxygen2}` and markdown
     + Vignettes
