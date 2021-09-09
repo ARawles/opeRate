@@ -286,14 +286,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Creating GitHub repo</li>
 <li>Creating project</li>
 <li>Filling out description (including dependencies)</li>
-<li>Importing data</li>
-<li>File structure</li>
-<li>Cleaning</li>
-<li>Tidying</li>
-<li>etc.</li>
+<li>Importing data
+<ul>
+<li>Store the file in the ‘data-raw’ folder, using the <code>usethis::use_data_raw()</code> function</li>
+<li>Write the script to load the csv file and save it with <code>usethis::use_data()</code></li>
+</ul></li>
+<li>File structure
+<ul>
+<li>Separate files for each stage (e.g. clean, tidy, summarise, plot)</li>
+<li>analysis.R file that has the overarching analysis</li>
+</ul></li>
 <li>Documentation
 <ul>
-<li>Function</li>
+<li>README</li>
+<li>Function &amp; dataset
+<ul>
+<li><code>{roxygen2}</code> and markdown</li>
+</ul></li>
 <li>Vignettes</li>
 </ul></li>
 </ul>
