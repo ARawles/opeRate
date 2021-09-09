@@ -74,7 +74,14 @@ DiagrammeR::grViz("
 
 As you can see, we still end with the loop of modelling and then evaluating our model and using the output to update the model, but the steps we take to get there are a bit different.
 
+## Separating Stages
 
-### Summary
+### Functions
+
+
+### Files
+
+
+## Summary
 
 Hopefully this section has given you an idea of what a typical project workflow could look like. The benefit of splitting your project into these distinct steps is that it can often help you compartmentalise your functions and scripts into distinct stages. We'll look later at structuring your project like an R package, and so splitting your analysis into separate stages can help you construct your project in a portable and replicable way.

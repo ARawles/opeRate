@@ -32,9 +32,6 @@ This book is a collection of materials to help users apply their fundamental R k
 
 As with the [teacheR](teacher.arawles.co.uk) book, this is a work in progress, so please feel free to make any suggestions or corrections via this book's [GitHub repository](www.github.com/arawles/operate/issues).
 
-### Acknowledgements
-
-This book was made possible with the help of those who raised issues and proposed pull requests. With thanks to:
 ```{r, results = "asis", echo = FALSE, message = FALSE}
 library(dplyr)
 contributors <- read.csv("contribs.csv", stringsAsFactors = FALSE)
@@ -43,8 +40,13 @@ contributors <- contributors %>%
     link = glue::glue("[\\@{login}](https://github.com/{login})"),
     desc = ifelse(is.na(name), link, glue::glue("{name} ({link})"))
   )
-  
- cat(paste0(contributors$desc, collapse = ", "))
+
+if (nrow(contributors)) {
+  cat("### Acknowledgements\n\n",
+      "This book was made possible with the help of those who raised issues and proposed pull requests. With thanks to:\n\n",
+      paste0(contributors$desc, collapse = ", ")
+  )
+}
 ```
 
 ## About Me

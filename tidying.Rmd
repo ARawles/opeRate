@@ -33,19 +33,18 @@ clean_vg_sales %>%
 
 Now we've got the country as a variable, the more countries we add the longer the data is going to get. So we've converted our data from the wide format to the long format. To do this, we've pivoted the Sales columns. Let's look at the two types of pivot.
 
-Wide data is very common, usually because it's slightly easier to read or to enter (particularly if you're using Excel), but it's much harder to work with in R. Let's look at how we might convert wide data to tidy-er long data using the concept of pivoting.
-
 **Note:**
 One thing to keep in mind is that long data does not always mean tidy, but wide data can never be tidy. It's a subtle distinction but it's important to remember.
 
 ### Pivoting columns to rows (longer)
 
-To convert wide data to long, we need to pivot the columns to rows. To this using `{tidyr}`, we use the `pivot_longer()` function from the `{tidyr}` package, because we want to pivot from the wide format to the long format.
+To convert wide data to long, we need to pivot the columns to rows. To this using `{tidyr}`, we use the `pivot_longer()` function because we want to pivot from the wide format to the long format.
 
 To do this in the simplest way, we just need to tell the function which columns we want to pivot:
 
 ```{r}
 tidyr::pivot_longer(clean_vg_sales, cols = c(NA_Sales, EU_Sales, JP_Sales, Other_Sales, Global_Sales)) %>%
+  # We'll just look at the columns we're interested in for the moment
   dplyr::select(Name, Year, name, value) %>%
   print(n = 2)
 
@@ -88,7 +87,7 @@ tidy_vg_sales %>%
 
 Here, we've specified that we want to convert our column names to two separate 'names' columns, but that we want to exclude the second column (that's what the `NA` in the `c("Country", NA)` vector represents). Then, we've specified with the `names_sep` parameter that we want to split the columns by the `_` character.
 
-But what happens now if we get sent the same dataset but with more countries (e.g. a SA_Sales column)? We'd have to add those extra columns to our `cols` vector manually. Instead, we can use some `tidyselect` syntax to choose columns based on their features, like how they start:
+But what happens now if we get sent the same dataset but with more countries (e.g. a `SA_Sales` column)? We'd have to add those extra columns to our `cols` vector manually. Instead, we can use some `tidyselect` syntax to choose columns based on their features, like how they end:
 
 
 ```{r, eval = FALSE}
@@ -113,7 +112,44 @@ tidyr::pivot_wider(tidy_vg_sales, names_from = Country, values_from = Sales)
 To get our data more like we started, we can use the `names_glue` to provide a [`{glue}`](https://glue.tidyverse.org/) string argument to create the column names from a template:
 
 ```{r}
-tidyr::pivot_wider(tidy_vg_sales, names_from = Country, values_from = Sales, names_glue = "{Country}_Sales") %>%
+tidyr::pivot_wider(tidy_vg_sales, names_from = Country, values_from = Sales,
+                   names_glue = "{Country}_Sales") %>%
   dplyr::select(Year, Name, tidyselect::ends_with("_Sales")) %>%
   print(n = 5)
+```
+
+## Separating & Uniting
+
+### Separating
+
+A less common violation of the tidy data principles occurs when a single column contains more than one variable. Let's look at an example:
+
+```{r, echo = FALSE}
+combined_example <- tibble::tribble(
+  ~Species, ~LeafArea,
+  "Eucalyptus", "20x100",
+  "Elm", "10x5",
+  "Agave", "2x10",
+  "Persea", "15x11"
+)
+print(combined_example)
+```
+
+Here we've got a dataset with different plant species and the area of their leaves. But we've got two variables combined into a single column; we've got both the width and the length of the leaf included in a single 'area' variable. To convert this dataset to the tidy format, we need to split out those values into separate 'width' and 'length' variables.
+
+We can use the `separate()` function from the `{tidyr}` package to do this. We just need to provide the column we want to split via the `col` parameter, the column names that we want to split the original column into with the `into` parameter, and the separator that's separating the two or more values within the column via the `sep` parameter:
+
+```{r}
+separate_example <- tidyr::separate(combined_example, col = LeafArea, into = c("Width", "Length"), sep = "x")
+print(separate_example)
+```
+
+### Uniting
+
+Just like pivoting wider was essentially the inverse of pivoting longer, uniting columns is the inverse of separating them. Again, our focus in this chapter is to tidy up our data, and so we'll likely always be separating columns rather than uniting them. Regardless, it's good to understand how to unite columns for the occasions that it is required.
+
+To join multiple columns together, we use the `unite()` function from the `{tidyr}` package. We just need to provide the name of the new column we want to create via the `col` parameter, the column names of the columns to unite as unnamed parameters, and then the separating character we want to use via `sep`:
+
+```{r}
+tidyr::unite(separate_example, col = "LeafArea", Width, Length, sep = "x")
 ```

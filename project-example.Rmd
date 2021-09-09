@@ -1,4 +1,13 @@
 # Project Example
 
-* Do video game sales example
-* Create a repo in GitHub to host it 
+* Creating GitHub repo
+* Creating project
+* Filling out description (including dependencies)
+* Importing data
+* File structure
+* Cleaning
+* Tidying
+* etc.
+* Documentation
+    + Function
+    + Vignettes

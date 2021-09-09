@@ -17,8 +17,8 @@ When we create a plot using `{ggplot2}` we build it up by creating and combining
 The main components that make up a plot are:
 
 * Data and aesthetics mappings
-* Scales
 * Geometrics objects (or geoms)
+* Scales
 * Facets
 
 These sound really scary, but they're actually super simple. Let's look at each one.
@@ -43,7 +43,7 @@ As part of our mapping, we can see that `{ggplot2}` has also provided appropriat
 
 Although we've got our scales, and we can see that `{ggplot2}` clearly knows which variable we want on each axis, but there's nothing on the graph at the moment... This is because we now need to define our geoms.
 
-##### Geometric objects (geoms)
+#### Geometric objects (geoms)
 
 Our geometric objects will be the object that's actually shown on the plot (e.g. bars, points, lines, and so on). To add our geometric object, we use the `geom_...` functions. Our geom will then inherit the mapping from our `ggplot()` call. If we wanted to add additional mappings, the `geom_...` functions also allow for a `mapping` parameter where additional mappings can be provided.
 
@@ -64,7 +64,7 @@ ggplot(smmrsd_vg_sales) +
 
 Different geoms also allow for different mappings. For example, the line geom allows you to specify the `linetype` aesthetic that changes the way the line is drawn (solid, dashed, etc.) depending on the value of your variable. This aesthetic would mean nothing for the point geom however, which instead has an aesthetic called `shape`. To see which aesthetics are supported by which geoms, look at the documentation for the geom function you want to use (e.g `?geom_point`).
 
-### Stats
+#### Stats
 
 For a data point to be shown on the plot, it can go through a statistical transformation or 'stat' which is set via the `stat` parameter of our `geom_...` function. We can see that when we call `geom_point()` the default value for the `stat` parameter is 'identity'. This means that `{ggplot2}` performs no stat transformation on the data before it plots it. 
 
@@ -75,9 +75,9 @@ ggplot(smmrsd_vg_sales) +
   geom_line(mapping = aes(x = Year, y = Total_Sales, colour = Publisher), stat = "smooth")
 ```
 
-This call is equivalent to using the `geom_smooth()` function.
+There is a shorthand function `geom_smooth()` that does exactly this.
 
-### Layers
+#### Layers
 
 Together, the data, mapping, stat and geom components form a **layer**. A plot can be made up of multiple layers. For example, let's show the same data but overlay a regression line that uses a different stat and a different mapping:
 
@@ -87,7 +87,7 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_smooth(method = "loess", formula = y ~ x)
 ```
 
-We've now got two layers to this plot, with slightly different mappings and stats. The colours lines are split by Publisher, but the regression line does not use that colour mapping, meaning that we have one line for all the Publishers. The coloured lines also have no stat transformation, where the regression line does use a stat transformation - it calculates a smooth conditional mean of y given x (`y ~ x`). In fact, we could even change the dataset for the two layers if we wanted to.
+We've now got two layers to this plot, with slightly different mappings and stats. The coloured lines are split by Publisher, but the regression line does not use that colour mapping, meaning that we have one line for all the Publishers. The coloured lines also use the 'identity' stat transformation (essentially no stat), where the regression line uses the 'smooth' stat transformation - it calculates a smooth conditional mean of y given x (`y ~ x`).
 
 In summary, a layer is made up of:
 
@@ -97,7 +97,7 @@ In summary, a layer is made up of:
 
 And plots can be made of up one or more layers.
 
-#### Facet
+#### Facets
 
 In our example, we've shown the Publisher column as a mapping to the colour aesthetic, but we could also use faceting. Faceting splits the original dataset, plots the data separately and then combines it into a single panel. To facet our plot, we use the `facet_wrap()` or `facet_grid()` functions:
 
@@ -107,7 +107,10 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales, colour = Publis
   facet_wrap(~Publisher)
 ```
 
-Facets are not features of layers, but instead are universal to the plot.
+
+We use the `~` shorthand to say that we want to use the Publisher variable. We could also use the `dplyr::vars()` function (i.e. `facet_wrap(dplyr::vars(Publisher))`).
+
+Facets are not features of layers, but instead are universal to the plot. So we couldn't facet our coloured lines by Publisher but then not facet our regression line.
 
 ### Scales
 
@@ -125,7 +128,7 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
 To change the colour scale, we would use the `scale_colour_brewer/hue()` function. These two functions take a slightly different approach in how they assign colours to the levels of the variable.
 
 
-```{r}
+```{r,warning=FALSE}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   geom_smooth(method = "loess", formula = y ~ x) +
@@ -134,7 +137,7 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   scale_colour_brewer(name = "Publisher", palette = "BrBG")
 ```
 
-```{r}
+```{r, warning=FALSE}
 ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   geom_smooth(method = "loess", formula = y ~ x) +
