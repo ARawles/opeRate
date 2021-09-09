@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 The pipe %&gt;% | opeRate</title>
+  <title>4 The pipe (%&gt;%) | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 The pipe %&gt;% | opeRate" />
+  <meta property="og:title" content="4 The pipe (%&gt;%) | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 The pipe %&gt;% | opeRate" />
+  <meta name="twitter:title" content="4 The pipe (%&gt;%) | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -142,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>I tidyverse</b></span></li>
 <li class="chapter" data-level="2" data-path="tidyverse-introduction.html"><a href="tidyverse-introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>3</b> “Tidy” data</a></li>
-<li class="chapter" data-level="4" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>4</b> The pipe <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="4" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>4</b> The pipe (<code>%&gt;%</code>)</a></li>
 <li class="chapter" data-level="5" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>5</b> Quasiquotation</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="tidyselect.html"><a href="tidyselect.html"><i class="fa fa-check"></i><b>5.1</b> tidyselect</a></li>
@@ -189,10 +189,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>9</b> Tidying</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="pivoting-columns.html"><a href="pivoting-columns.html"><i class="fa fa-check"></i><b>9.1</b> Pivoting columns</a>
+<li class="chapter" data-level="9.1" data-path="pivoting.html"><a href="pivoting.html"><i class="fa fa-check"></i><b>9.1</b> Pivoting</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="pivoting-columns.html"><a href="pivoting-columns.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>9.1.1</b> Pivoting columns to rows (longer)</a></li>
-<li class="chapter" data-level="9.1.2" data-path="pivoting-columns.html"><a href="pivoting-columns.html#pivoting-rows-to-columns-wider"><i class="fa fa-check"></i><b>9.1.2</b> Pivoting rows to columns (wider)</a></li>
+<li class="chapter" data-level="9.1.1" data-path="pivoting.html"><a href="pivoting.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>9.1.1</b> Pivoting columns to rows (longer)</a></li>
+<li class="chapter" data-level="9.1.2" data-path="pivoting.html"><a href="pivoting.html#pivoting-rows-to-columns-wider"><i class="fa fa-check"></i><b>9.1.2</b> Pivoting rows to columns (wider)</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="separating-uniting.html"><a href="separating-uniting.html"><i class="fa fa-check"></i><b>9.2</b> Separating &amp; Uniting</a>
 <ul>
@@ -208,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>13.1</b> ggplot2</a>
 <ul>
 <li class="chapter" data-level="13.1.1" data-path="ggplot2.html"><a href="ggplot2.html#components"><i class="fa fa-check"></i><b>13.1.1</b> Components</a></li>
-<li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#scales"><i class="fa fa-check"></i><b>13.1.2</b> Scales</a></li>
+<li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#layers"><i class="fa fa-check"></i><b>13.1.2</b> Layers</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a></li>
@@ -281,7 +281,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="the-pipe" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> The pipe <code>%&gt;%</code></h1>
+<h1><span class="header-section-number">4</span> The pipe (<code>%&gt;%</code>)</h1>
 <p>The pipe is a core feature of the tidyverse packages, and has proved so popular in its R implementation that it served as the inspiration for the <code>|&gt;</code> function that was introduced into R in version 4.0. For now we’re going to look specifically at the tidyverse (or more specifically the <code>magrittr</code>) implementation of the pipe but they are very similar.</p>
 <p>At the simplest level, the pipe takes the output from whatever is on its left and passes it as the first argument to the expression on the right. Like this:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="the-pipe.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span></code></pre></div>
@@ -290,7 +290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>You can also specify which argument you want the value to be passed as by using the <code>.</code> shorthand:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="the-pipe.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">%&gt;%</span> <span class="fu">substr</span>(<span class="st">&quot;water&quot;</span>, ., <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;wa&quot;</code></pre>
-<p>This passes the 1 from the left hand side as the second argument to the <code>substr()</code> function (which is the <code>start</code> index).</p>
+<p>This passes the <code>1</code> from the left hand side as the second argument to the <code>substr()</code> function (which is the <code>start</code> index).</p>
 <p>The benefit of the pipe is that it allows you to read code from left to right, rather than from middle outwards. Let’s compare two examples with an without the pipe:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="the-pipe.html#cb5-1" aria-hidden="true" tabindex="-1"></a>str <span class="ot">&lt;-</span> <span class="st">&quot;water&quot;</span></span>
 <span id="cb5-2"><a href="the-pipe.html#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -299,7 +299,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="the-pipe.html#cb7-1" aria-hidden="true" tabindex="-1"></a>str <span class="sc">%&gt;%</span> <span class="fu">substr</span>(<span class="dv">1</span>,<span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">paste0</span>(<span class="st">&quot;ine&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;wine&quot;</code></pre>
 <p>Although the outcome is exactly the same, following the flow of logic is much easier in the bottom example because we can start at the left and more rightwards.</p>
-<p>For the purposes of this book that’s as much as you need to know. You’ll see the pipe used a lot when we’re performing multiple data analysis steps, like cleaning then filtering then selecting columns and so on. So as long as you’ve grasped the simple concept; we’re taking the left hand side and passing it to the right, then you’ll be fine.</p>
+<p>For the purposes of this book that’s as much as you need to know. You’ll see the pipe used a lot when we’re performing multiple data analysis steps, like cleaning then filtering then selecting columns and so on. This is why almost all of the tidyverse functions used for data science will accept the dataset as their first argument - it allows you to chain function calls together using the pipe.</p>
 
 </div>
             </section>

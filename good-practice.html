@@ -142,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>I tidyverse</b></span></li>
 <li class="chapter" data-level="2" data-path="tidyverse-introduction.html"><a href="tidyverse-introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>3</b> “Tidy” data</a></li>
-<li class="chapter" data-level="4" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>4</b> The pipe <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="4" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>4</b> The pipe (<code>%&gt;%</code>)</a></li>
 <li class="chapter" data-level="5" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>5</b> Quasiquotation</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="tidyselect.html"><a href="tidyselect.html"><i class="fa fa-check"></i><b>5.1</b> tidyselect</a></li>
@@ -189,10 +189,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>9</b> Tidying</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="pivoting-columns.html"><a href="pivoting-columns.html"><i class="fa fa-check"></i><b>9.1</b> Pivoting columns</a>
+<li class="chapter" data-level="9.1" data-path="pivoting.html"><a href="pivoting.html"><i class="fa fa-check"></i><b>9.1</b> Pivoting</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="pivoting-columns.html"><a href="pivoting-columns.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>9.1.1</b> Pivoting columns to rows (longer)</a></li>
-<li class="chapter" data-level="9.1.2" data-path="pivoting-columns.html"><a href="pivoting-columns.html#pivoting-rows-to-columns-wider"><i class="fa fa-check"></i><b>9.1.2</b> Pivoting rows to columns (wider)</a></li>
+<li class="chapter" data-level="9.1.1" data-path="pivoting.html"><a href="pivoting.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>9.1.1</b> Pivoting columns to rows (longer)</a></li>
+<li class="chapter" data-level="9.1.2" data-path="pivoting.html"><a href="pivoting.html#pivoting-rows-to-columns-wider"><i class="fa fa-check"></i><b>9.1.2</b> Pivoting rows to columns (wider)</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="separating-uniting.html"><a href="separating-uniting.html"><i class="fa fa-check"></i><b>9.2</b> Separating &amp; Uniting</a>
 <ul>
@@ -208,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>13.1</b> ggplot2</a>
 <ul>
 <li class="chapter" data-level="13.1.1" data-path="ggplot2.html"><a href="ggplot2.html#components"><i class="fa fa-check"></i><b>13.1.1</b> Components</a></li>
-<li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#scales"><i class="fa fa-check"></i><b>13.1.2</b> Scales</a></li>
+<li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#layers"><i class="fa fa-check"></i><b>13.1.2</b> Layers</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a></li>
@@ -299,8 +299,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="state-your-dependencies" class="section level3" number="17.1.4">
 <h3><span class="header-section-number">17.1.4</span> State your dependencies</h3>
 <p>One of the great things about R is the number of packages that are available that let you do all sorts of weird and wonderful things. Unfortunately, because there are so many great packages, it’s unlikely that the person you’re sharing your code with will have them all installed. If you’re sending someone a script, then best practice is to include all the packages you use at the top of your script like this:</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="good-practice.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb118-2"><a href="good-practice.html#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="good-practice.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb120-2"><a href="good-practice.html#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
 <p>An extra step which few people do but can be very helpful is to still prepend your functions with which package they came from like this <code>dplyr::mutate()</code>. Not only does this avoid any namespace conflicts where two packages might have functions with the same name and you don’t end up using the one you think you are because of the order of your <code>library()</code> calls, but it also makes it infinitely easier for anyone reading your code to find the package that a function comes from.
 Admittedly, this is overkill in a sense because we’ve already told R which packages we’re using with our <code>library()</code> calls and R has loaded in the objects from that package, but this practice can really improve the readability of your code.</p>
 <p>Later we’ll look at designing our project as a package and packages have a different way of stating dependencies for the user, so this is primarily for the case where you’re just sending a script or two to someone.</p>

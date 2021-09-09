@@ -142,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>I tidyverse</b></span></li>
 <li class="chapter" data-level="2" data-path="tidyverse-introduction.html"><a href="tidyverse-introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>3</b> “Tidy” data</a></li>
-<li class="chapter" data-level="4" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>4</b> The pipe <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="4" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>4</b> The pipe (<code>%&gt;%</code>)</a></li>
 <li class="chapter" data-level="5" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>5</b> Quasiquotation</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="tidyselect.html"><a href="tidyselect.html"><i class="fa fa-check"></i><b>5.1</b> tidyselect</a></li>
@@ -189,10 +189,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>9</b> Tidying</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="pivoting-columns.html"><a href="pivoting-columns.html"><i class="fa fa-check"></i><b>9.1</b> Pivoting columns</a>
+<li class="chapter" data-level="9.1" data-path="pivoting.html"><a href="pivoting.html"><i class="fa fa-check"></i><b>9.1</b> Pivoting</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="pivoting-columns.html"><a href="pivoting-columns.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>9.1.1</b> Pivoting columns to rows (longer)</a></li>
-<li class="chapter" data-level="9.1.2" data-path="pivoting-columns.html"><a href="pivoting-columns.html#pivoting-rows-to-columns-wider"><i class="fa fa-check"></i><b>9.1.2</b> Pivoting rows to columns (wider)</a></li>
+<li class="chapter" data-level="9.1.1" data-path="pivoting.html"><a href="pivoting.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>9.1.1</b> Pivoting columns to rows (longer)</a></li>
+<li class="chapter" data-level="9.1.2" data-path="pivoting.html"><a href="pivoting.html#pivoting-rows-to-columns-wider"><i class="fa fa-check"></i><b>9.1.2</b> Pivoting rows to columns (wider)</a></li>
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="separating-uniting.html"><a href="separating-uniting.html"><i class="fa fa-check"></i><b>9.2</b> Separating &amp; Uniting</a>
 <ul>
@@ -208,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1" data-path="ggplot2.html"><a href="ggplot2.html"><i class="fa fa-check"></i><b>13.1</b> ggplot2</a>
 <ul>
 <li class="chapter" data-level="13.1.1" data-path="ggplot2.html"><a href="ggplot2.html#components"><i class="fa fa-check"></i><b>13.1.1</b> Components</a></li>
-<li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#scales"><i class="fa fa-check"></i><b>13.1.2</b> Scales</a></li>
+<li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#layers"><i class="fa fa-check"></i><b>13.1.2</b> Layers</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a></li>
@@ -284,21 +284,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">8.3</span> Changing column types</h2>
 <p>When you import data into R, sometimes the type of the column doesn’t match what you want it to be. One way of tackling this is to define your column types when you import the data (as we looked at before), but it’s also perfectly acceptable to change the column type after the import.</p>
 <p>Probably the most common conversion is from a character string to a date. For this example, we’re just going to use some test data:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="changing-column-types.html#cb61-1" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(<span class="sc">~</span>bad_date, <span class="sc">~</span>value,</span>
-<span id="cb61-2"><a href="changing-column-types.html#cb61-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2012/01/01&quot;</span>, <span class="dv">100</span>,</span>
-<span id="cb61-3"><a href="changing-column-types.html#cb61-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2014/06/01&quot;</span>, <span class="dv">200</span>)</span>
-<span id="cb61-4"><a href="changing-column-types.html#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-5"><a href="changing-column-types.html#cb61-5" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="sc">%&gt;%</span></span>
-<span id="cb61-6"><a href="changing-column-types.html#cb61-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">good_date =</span> <span class="fu">as.Date</span>(bad_date, <span class="at">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="changing-column-types.html#cb63-1" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(<span class="sc">~</span>bad_date, <span class="sc">~</span>value,</span>
+<span id="cb63-2"><a href="changing-column-types.html#cb63-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2012/01/01&quot;</span>, <span class="dv">100</span>,</span>
+<span id="cb63-3"><a href="changing-column-types.html#cb63-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2014/06/01&quot;</span>, <span class="dv">200</span>)</span>
+<span id="cb63-4"><a href="changing-column-types.html#cb63-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-5"><a href="changing-column-types.html#cb63-5" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="sc">%&gt;%</span></span>
+<span id="cb63-6"><a href="changing-column-types.html#cb63-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">good_date =</span> <span class="fu">as.Date</span>(bad_date, <span class="at">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##   bad_date   value good_date 
 ##   &lt;chr&gt;      &lt;dbl&gt; &lt;date&gt;    
 ## 1 2012/01/01   100 2012-01-01
 ## 2 2014/06/01   200 2014-06-01</code></pre>
 <p>Essentially, all you need to do is wrap your conversion function (e.g. <code>as.Date()</code>, <code>as.character()</code>) in a <code>dplyr::mutate()</code> call and you should be able to change your columns to whatever you need. To replace the original column, make sure you give it the same name when using <code>dplyr::mutate()</code>:</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="changing-column-types.html#cb63-1" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="sc">%&gt;%</span></span>
-<span id="cb63-2"><a href="changing-column-types.html#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This will replace the bad_date column rather than creating a new column</span></span>
-<span id="cb63-3"><a href="changing-column-types.html#cb63-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">bad_date =</span> <span class="fu">as.Date</span>(bad_date, <span class="at">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="changing-column-types.html#cb65-1" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="sc">%&gt;%</span></span>
+<span id="cb65-2"><a href="changing-column-types.html#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This will replace the bad_date column rather than creating a new column</span></span>
+<span id="cb65-3"><a href="changing-column-types.html#cb65-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">bad_date =</span> <span class="fu">as.Date</span>(bad_date, <span class="at">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   bad_date   value
 ##   &lt;date&gt;     &lt;dbl&gt;

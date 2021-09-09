@@ -37,7 +37,7 @@ filtering
 missing-values
 changing-column-types
 tidying
-pivoting-columns
+pivoting
 pivoting-columns-to-rows-longer
 pivoting-rows-to-columns-wider
 separating-uniting
@@ -51,10 +51,10 @@ ggplot2
 components
 data-and-aesthetic-mappings
 geometric-objects-geoms
-stats
-layers
+statistical-transformations-stats
 facets
 scales
+layers
 modelling
 projects-introduction
 workflows
