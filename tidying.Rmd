@@ -2,7 +2,7 @@
 
 Now that you know your dataset is clean, you'll want to get it into a format that is amenable to your analysis. This is the **tidying** stage. To better understand what "tidy" data is and why we're trying to get our data into this format, make sure you've read the [tidyverse](#tidyverse) chapter.
 
-## Pivoting columns
+## Pivoting
 
 The main culprit of untidy data is data that breaks the first rule: Not every column is a variable. Data in this format is sometimes called wide data - as you add more levels, you'll add more columns and so the data will get wider. Conversely, tidy data will get longer as you add more levels.
 
