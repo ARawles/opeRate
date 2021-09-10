@@ -9,6 +9,12 @@
     ]
   },
   "Packages": {
+    "neuralnet": {
+    "Package": "neuralnet",
+    "Version": "1.44.2",
+    "Source": "Repository",
+    "Repository": "CRAN"
+    },
     "modelr": {
       "Package": "modelr",
       "Version": "0.1.8",

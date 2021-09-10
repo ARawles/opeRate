@@ -1,0 +1,84 @@
+# Machine Learning
+
+Machine learning (ML) and artificial intelligence (AI) are two buzzwords that are used constantly, sometimes appropriately and sometimes not. At its core however, ML is still just a subset of statistical modelling. Although computing power has increased exponentially over the last 20 years, allowing us to deal with more data and perform more calculations per second, many of the methods that underpin modern machine learning methods are not new, and in many cases aren't particularly complicated. So now we're going to try and understand some of the basics of a particular type of machine learning model - a neural network - and how we can create one with R.
+
+## Neural networks
+
+### Introduction
+
+Neural networks were developed in an attempt to model how neurons in the brain may function. Neurons process inputs and then produce outputs by either firing or not firing. If the inputs to a neuron breach a threshold, then the neuron fires. If that threshold isn't reached, then it doesn't fire. That neuron will then become an input to a subsequent neuron. This network of interconnected nodes can then connect a certain input pattern with a corresponding output pattern.
+
+Importantly, the inputs have weights that can change due to feedback. So if an input erroneously results in a neuron firing, then the weights of the inputs can be adjusted to ensure that the neuron doesn't fire again if it's presented with the same information.
+
+```{r}
+"Do the neuron graphic"
+```
+
+### Example
+
+Let's model how a neural network might learn to identify a lemon from a collection of fruits. When an object is presented, its broken down into its constituent features, which are then treated as the first set of inputs. For now, let's imagine we have three features; 'is yellow', 'is round', 'is sour'. The value of each of these is either going to be 1 (true) or 0 (false). These three inputs then feed into a second node. That node has a threshold that needs to be met before it will fire. When it fires, that means the model thinks that the fruit that's been presented is a lemon.
+
+```{r}
+"Do the lemon NN graphic"
+```
+
+To start off, let's set the weights for our inputs to all be 1, and the threshold for our second node to fire as 1. Let's present our first object, which is an orange:
+
+```{r}
+"present an orange graphic"
+```
+
+The neuron has fired, but it's definitely not a lemon. The orange has triggered two of the three inputs to be 1, but because the threshold for the second node to fire is 1, these two inputs are enough to pass the threshold. We need to decrease our weights. For now, let's drop them all down to 0.25.
+
+Now let's present our next object, which is a lime:
+
+```{r}
+"Do the lime NN graphic"
+```
+
+In this case, we've triggered two of the three inputs again but this time the threshold hasn't been met and so the second node hasn't fired. The model is saying that this isn't a lemon and it's correct. For now, we don't need to change the weights.
+
+Next, we present it with a lemon:
+
+```{r}
+"Do the lemon NN graphic"
+```
+
+Now all of the three inputs are triggered, but this isn't enough to pass the threshold, so the second node doesn't fire. This is a lemon though, so it should have fired. Now we need to increase our weights.
+
+We won't go through the painstaking process of changing the weights until we get them right (which would be 0.33 for each of the inputs), but hopefully this has demonstrated the key process by which a neural network learns; by changing the weights of its input layers to match inputs with outputs.
+
+In this case, we've done an extremely simple example. In reality, no neural network is as simple as this because it would be pointless. Instead, neural networks usually have multiple layers and many many more inputs. If we consider models that can read through text documents and classify them (e.g. classify reviews as being positive or negative), these will often use every word in the text as an input. As you can imagine, this can lead to a lot of inputs!
+
+### Neural Networks in R
+
+There are lots of different packages that have been developed to create neural networks in R. For larger projects, I use the `{keras}` package which used the TensorFlow library to create machine learning models with support for GPU-accelerated learning. `{keras}` requires Python to be installed however and can be tough to learn due to its scale and flexiblity. For now, we're going to use the `{neuralnet}` package. It's a little on the older side but it uses a similar syntax to the `lm()` function so we can use what we've learnt so far.
+
+For this example, let's create a neural network that will predict what genre a game is based on how well it sold, the year and who the publisher was.
+
+```{r}
+
+# nn_vgsales <- tidy_vg_sales %>%
+# dplyr::filter(Genre %in% c("Platform", "Shooter", "Action")) %>%
+# dplyr::filter(Country == "Global") %>%
+# dplyr::mutate(dplyr::across(c(Publisher, Platform), ~as.numeric(as.factor(.x))))
+# 
+# training_indices <- sample(nrow(nn_vgsales), 2/3 * nrow(nn_vgsales))
+# 
+# nn_vgsales_train <- nn_vgsales[training_indices,]
+# nn_vgsales_test <- nn_vgsales[-training_indices,]
+# 
+# 
+# nn <- neuralnet::neuralnet(data = nn_vgsales_train, formula = (Genre == "Platform") + (Genre == "Shooter") + (Genre == "Action") ~ Sales + Year + Publisher, linear.output = FALSE, rep = 10)
+# pred <- predict(nn, nn_vgsales_test)
+# table(nn_vgsales_test$Genre, apply(pred, 1, which.max))
+# 
+# 
+# predictions <- apply(predict(nn, nn_vgsales_test), 1, which.max)
+# 
+# tst <- nn_vgsales_test %>%
+# modelr::add_predictions(nn) %>%
+# dplyr::mutate(correct = ifelse(pred == Genre, TRUE, FALSE))
+
+```
+

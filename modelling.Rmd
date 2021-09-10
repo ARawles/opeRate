@@ -22,6 +22,8 @@ But that's not really the point. We will never get things spot on, but models ca
 
 Models types usually fall into "families". These will be a set of models that are underpinned by some common statistics or philosophy. The most common type of model that is taught at beginner level is the linear model. A linear model assumes a relationship that can be represented in the form `y = a + a1x...`, where `a` and `a{n}` represent coefficients (values that will change between models depending on your data).
 
+In this chapter we're going to look exclusively at linear models. In the next chapter though, we'll take a different family of models; neural networks.
+
 ### Linear models
 
 A linear model with the formula `y = 8 + (2*x)` might look like this:
@@ -58,9 +60,9 @@ Although the value of the coefficients will change, a linear model that uses tha
 
 The linear model also extends to quadratic or exponential functions. This is because the 'linear' in linear model refers to the coefficients rather than our regression line being linear.
 
-Quadratic models are expressed by the formula `y = a + (a1*x) + (a2*x^2) ... + (a{n}*x^{n})`, and allow us to quantify non-linear relationships. For example, a quadratic model with the formula `y = 12000 - (2200*x) + (100*x^2)` might look like this:
+Quadratic models are expressed by the formula `y = a + (a1*x) + (a2*x^2)`, and allow us to quantify non-linear relationships. For example, a quadratic model with the formula `y = 12000 - (2200*x) + (100*x^2)` might look like this:
 
-```{r}
+```{r, echo = FALSE}
 lm_test_data <- data.frame(
   x = 11:20,
   y = (seq(1, 100, by = 10)^2)
@@ -72,6 +74,7 @@ ggplot(lm_test_data, aes(x = x, y = y)) +
 ```
 
 Quadratic models allow us to capture relationships between variables that change with different values of x. Real-life examples of relationships like this include:
+
 * population growth
 * appreciation of certain commodities.
 * disease infection
@@ -90,7 +93,7 @@ mtcars %>%
   geom_abline(intercept = 35, slope = -5, linetype = "dashed")
 ```
 
-Here we've created two models with different coefficient values; one where `a` is 45 and `a1` is -6.5, and other where `a` is 35 and `a1` is -5. Both seem to represent the data pretty well, but how can we know which of the coefficients is the 'better' fit? Similarly, we've tried just two sets of values here, how can we compare different combinations of values to determine which model is better? 
+Here we've created two models with different coefficient values; one where `a = 45` and `a1 = -6.5`, and other where `a = 35` and `a1 = -5`. Both seem to represent the data pretty well, but how can we know which of the coefficients is the 'better' fit? Similarly, we've tried just two sets of values here, how can we compare different combinations of values to determine which model is better? 
 
 ## Residuals
 
@@ -115,7 +118,7 @@ predicted_dataset %>%
 # Here's where we plot our model
 ```
 
-To compare different models though, we need to boil down these residuals into a single metric. For this we use the root-mean-square-error or RMSE. The calculation for this metric is quite easy - calculate the difference between each data point and the model, square it, average them all and then take the root. Let's write some functions to produce some models and get some predictions, and then compare the RMSE:
+To compare different models though, we need to boil down these residuals into a single metric. For this we use the **root-mean-square-error** or RMSE. The calculation for this metric is quite easy - calculate the difference between each data point and the model, square it, average them all and then take the root. Let's write some functions to produce some models and get some predictions, and then compare the RMSE:
 
 ```{r}
 # Create some models with different coefficients
@@ -139,6 +142,7 @@ model <- function(a, a1, wt) {
 
 # Create a function to work out the rmse of our model
 rmse <- function(a, a1, wt, mpg) {
+  # Find the difference between the model value and the actual value
   diff <- model(a, a1, wt) - mpg
   sqrt(mean(diff ^ 2))
 }
@@ -163,7 +167,7 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
   scale_colour_discrete(name = "Model")
 ```
 
-That looks pretty good, but it's not perfect. We've just tried 10 different sets of values and then chosen the best one. This doesn't mean that we've found the absolute best coefficients for our model. To produce the best model possible, we'd need to work out the best values by **optimising** our RMSE function - finding the values that produce the global minimum value from that function.
+That looks pretty good, but it's not perfect. We've just tried 10 different sets of values and then chosen the best one. This doesn't mean that we've found the absolute best coefficients for our model. To produce the best model possible, we'd need to work out the best values by **optimising** our RMSE function - finding the values that produce the global minimum RMSE value.
 
 That's essentially the process that the `lm()` function in R uses; it automatically finds the best coefficient values by calculating the RMSE for lots of different values and then choosing the best ones.
 
@@ -172,8 +176,10 @@ That's essentially the process that the `lm()` function in R uses; it automatica
 Now that we've understood the basics behind a linear model, I can finally reveal that R has a function that will do all of this for us. The `lm()` function in R just needs the dataset and the formula for our model, and works out the coefficients for us, giving us back a model:
 
 ```{r}
-lm_model <- lm(data = mtcars, mpg ~ wt)
-lm_model
+lm(data = mtcars, mpg ~ wt)
+# This formula is equivalent to `y = a + (a1*x)`
+# where y = mpg and x = wt
+
 ```
 
 We can see that the `lm()` function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren't too far off!
@@ -182,10 +188,13 @@ To model quadratic relationships with the `lm()` function, our syntax is a littl
 
 ```{r}
 lm(data = mtcars, mpg ~ wt + I(wt^2))
+# This formula is equivalent to `y = a + (a1*x) + (a2*x^2)
 ```
 
 **Note:**
 The `I()` bit here tells R to treat what we've written (`wt^2`) as one expression, rather than two (`wt` & `2`).
+
+The `lm()` function returns a linear model. We'll take a look at how to evaluate our model in the [Evaluating Models](#evaluating-models) section.
 
 ## Multiple Predictors
 
@@ -198,7 +207,7 @@ Simple effects are the additive effects of multiple variables when used to predi
 ```{r}
 lm(data = mtcars, mpg ~ wt + hp)
 ```
-We now get coefficient values for each of the variables we provided. This tells us the impact of weight and horsepower separately on the `mpg` value. In other words, for every increase of 1 in `wt`, we see a drop of around 4 in `mpg`, and for every increase of 1 in `hp`, we see a drop of around 0.03 in `mpg`.
+We now get coefficient values for each of the variables we provided. This tells us the impact of weight and horsepower separately on the `mpg` value. In other words, for every increase of 1 in `wt`, we see a drop of around 4 in `mpg`, and for every increase of 1 in `hp`, we see a drop of around 0.03 in `mpg`. These drops are consistent regardless of the value of either of the variables.
 
 ### Interaction effects
 
@@ -215,7 +224,9 @@ Now we have 3 coefficients:
   * The impact of `hp` alone
   * The impact of `wt:hp` together
   
-We'll look at how to evaluate whether or not you have a meaninful relationship in the next section.
+We could also write the formula like this `mpg ~ wt + hp + wt:hp`.
+  
+Now we know how to create models using the `lm()` function, let's look at how we can better understand and evaluate them.
 
 ## Evaluating Models
 
@@ -261,32 +272,41 @@ summary(lm_model)
 There's a lot to unpack here.
 
 **Residuals**
+
 We've now got a residuals section that shows us the range and quartiles of our residuals. This can be helpful to understand whether your model is consistently over or underestimating
 
 **Coefficients**
+
 We've also now got an expanded view of our coefficients. We've still got our estimates, but now we've also got standard error, t value and then P value entries.
 
 *Standard error*
-The standard error represents the average difference between the estimated value and the actual value. So for example, our coefficient estimate for `wt` is roughly -5, meaning that we lose 5 miles per gallon for every increase of 1000 lbs (1 `wt` unit). Our error value of roughly 0.5 tells us that actually, on average, it's between -5.5 and -4.5. If our standard error was 2, then that would suggest that on average, an create in 1 `wt` unit would correspond with a change of between -6 and -4. A lower standard error value usually represents a more accurate model.
+
+The standard error represents the average difference between the estimated value and the actual value. So for example, our coefficient estimate for `wt` is roughly -5, meaning that we lose 5 miles per gallon for every increase of 1000 lbs (1 `wt` unit). Our error value of roughly 0.5 tells us that actually, on average, it's between -5.5 and -4.5. If our standard error was 2, then that would suggest that on average, an create in 1 `wt` unit would correspond with a change of between -7 and -3. A lower standard error value usually represents a more accurate model.
 
 *t value*
-The t value is then the estimate divided by its error. We can use this value to estimate the strength of our relationship between the two variables; a strong relationship (i.e. a high coefficient value) and a low error will produce a high t value, so we can be more sure that there is a real relationship. Conversely, a smaller coefficient value representing a weaker relationship and then a large error value suggesting that we're struggling to accurately predict the value of y will have a low t value.
+
+The t value is then the estimate divided by its error. We can use this value to estimate the strength of our relationship between the two variables; a strong relationship (i.e. a high coefficient value) and a low error will produce a high t value. Conversely, a smaller coefficient value representing a weaker relationship and then a large error value suggesting that we're struggling to accurately predict the value of y will have a low t value.
 
 *P value*
+
 P values are something of a hot topic in statistics so we won't discuss them in length here. Instead, we'll focus on exactly what a P value is - not whether it's a good idea to use one.
 
-A t value is converted to a P value via a T distribution table  based on the degrees of freedom (don't worry about what this is). P values represent how often we would see this same t value if the two variables had absolutely no relationship at all. The larger the t value is (i.e., the stronger the relationship appears to be), the less likely it is that we would observe this relationship purely by chance. The typically accepted value for considering a relationship to not be the result of chance is 0.05 (i.e. we'd only see these results if there was truly no relationship 1 in 20 times), but that's more an academic rule of thumb. In reality, you shouldn't really rely too heavily on the p value to tell you the strength of your model.
+A t value is converted to a P value via a T distribution table  based on the degrees of freedom (don't worry about what this is). P values represent how often we would see this same t value if the two variables had absolutely no relationship at all. The larger the t value is (i.e., the stronger the relationship appears to be), the less likely it is that we would observe this relationship purely by chance.
+The typically accepted value for considering a relationship to not be the result of chance is 0.05 (i.e. we'd only see these results if there was truly no relationship 1 in 20 times), but that's more an academic rule of thumb. In reality, you shouldn't really rely too heavily on the p value to tell you the strength of your model.
 
 **Residual standard error**
+
 This is the residual standard error of the entire model (as opposed to a single variable). The logic is the same though; it's the average difference between our model's estimate and the actual value. This is almost equivalent to the Residual Mean Standard Error we calculated before, but it's calculated slightly differently.
 
 **Multiple & Adjusted R-squared**
-The R-squared value represents how much of the variance in y can be explained by your model. So we've got a Multiple R-Squared value of around 0.7, meaning that 70% of the variance we see in the `mpg` value can be explained by the effect of `wt`. The larger the value the better, but if you ever get an R-Squared value of 1, you've definitely done something wrong.
+
+The R-squared value represents how much of the variance in y can be explained by your model. So we've got a Multiple R-Squared value of around 0.7, meaning that 70% of the variance we see in the `mpg` value can be explained by the effect of `wt`. The larger the value the better. But if you ever get an R-Squared value of 1, you've definitely done something wrong.
 
 If you have one variable, then the Multiple R-Squared value is fine to use. If you have more than 1 though, the Adjusted R-Squared value will account for the fact that you're going to explain more variance simply by adding more variables, and so tries to correct for that.
 
 **F Statistic**
-The F statistic is a global test for whether any of your coefficients are non-zero (if you have any relationship at all). The reason we have this global test is that as you increase the number of variables in our model, you're increasing the likelihood that at least 1 will have a significant relationship with y. We learned before that our rough estimate for considering a 'true' relationship is that we would only observe the t value for our variable once every 20 times. Well then if you include 20 variables, you'll get one significant predictor on average each time. The F value tells you then whether you have at least 1 significant predictor given the number of variables that you tried.
+
+The F statistic is a global test for whether any of your coefficients are non-zero (if you have a relationship between any of your variables and the dependent variable). The reason we have this global test is that as you increase the number of variables in our model, you're increasing the likelihood that at least 1 will have a significant relationship with y. We learned before that our rough estimate for considering a 'true' relationship is that we would only observe the t value of that size once every 20 times if there was no relationship. Well then if you include 20 variables, you'll get one significant predictor on average each time. The F value tells you then whether you have at least 1 significant predictor given the number of variables that you tried.
 
 ### Residuals
 
@@ -323,11 +343,13 @@ tidy_anscombe %>%
   geom_point()
 ```
 
-Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern for different values of x. If you see a residual plot like this, you're likelyl not applying an appropriate model family or type.
+Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern for different values of x. If you see a residual plot like this, you're likely not applying an appropriate model family or type.
 
 ## Video Game Sales Model
 
-Now we've created some example models, let's apply what we've learned to our video games dataset. First off, let's model the effect of year and genre on video game sales between 1980 and 2000. Let's start with a plot:
+Now we've created some example models, let's apply what we've learned to our video games dataset.
+
+Let's model the effect of year and genre on video game sales between 1980 and 2000:
 
 ```{r}
 vg_sales_to_model <- tidy_vg_sales %>%
@@ -352,7 +374,7 @@ There does seem to be a relationship - we're seeing more sales as the years incr
 vg_model <- lm(data = vg_sales_to_model, formula = Total_Sales ~ Year * Genre)
 ```
 
-Let's plot the same model using `{ggplot2}`:
+Let's plot a model for each genre model using `{ggplot2}`:
 
 ```{r, warning = FALSE}
 vg_sales_to_model %>%
@@ -370,11 +392,11 @@ From our plot, it looks as though we're only seeing a different effect of year i
 summary(vg_model)
 ```
 
-This seems to support what we estimated from the plots - there's definitely an effect of year, and we can see that this effect is different for the Role-Playing and Shooter groups. If we look at the estimate values, we can see that the Shooter genre has a negative value and the Role-Playing genre is positive. This also backs up what we estimated from the plots - the popularity of shooter games has grown more slowly than role-playing games.
+This seems to support what we estimated from the plots - there's definitely a positive effect of year (we're selling more games as the years go by), and we can see that this effect is different for the Role-Playing and Shooter groups. If we look at the estimate values, we can see that the Shooter genre has a negative value and the Role-Playing genre is positive. This also backs up what we estimated from the plots - the popularity of shooter games has grown more slowly than role-playing games.
 
-It's worth noting that when you use a character or factor variable like we have here, the first level of that variable for the model. So we can see that there's no `GenreAction` entry in our summary. This is because R has treated that genre as the base - the Intercept value - and then compared the effect of the other levels against that base. So when we say that the popularity of shooter game has grown more slowly, this is compare to the base class (the growth of action games).
+It's worth noting that when you use a character or factor variable like we have here (`Genre`), the first level of that variable is used as the base for the model. So we can see that there's no `GenreAction` entry in our summary. This is because R has treated that genre as the base (i.e the Intercept value) and then compared the effect of the other levels against that base. So when we say that the popularity of shooter game has grown more slowly, this is compare to the base class (the growth of action games).
 
-Before we call it a day however, I'm not sure we've got the right model. If we look at the residuals of the model specifically for the 'Action' genre, they don't look very random:
+Before we call it a day however, let's evaluate our model residuals. If we look at the residuals of the model specifically for the 'Action' genre, they don't look very random:
 
 ```{r}
 action_genre_model <- lm(data = vg_sales_to_model %>% dplyr::filter(Genre == "Action"), Total_Sales ~ Year)
@@ -402,7 +424,7 @@ vg_sales_to_model %>%
 summary(vg_quad_model)
 ```
 
-This seems to have improved things. We now have a higher t value for our Intercept (representing our Action genre), suggesting that we've better captured the relationship with this new model. When we now look at the interactions, we can see that actually only the shooter genre has a significantly different interaction with Year. In other words, there is no difference in the relationship between Year and Sales for the genres other than if the game is shooter.
+This seems to have improved things. We now have a higher t value for our Intercept (representing our Action genre), suggesting that we've better captured the relationship between the genre and sales with this new model. When we now look at the interactions, we can see that actually only the shooter genre has a significantly different interaction with Year. In other words, there is no difference in the relationship between Year and Sales between the genres other than if the game is shooter.
 
 Let's check our residuals again to make sure we're not still predictably over or underestimating:
 
@@ -417,5 +439,3 @@ vg_sales_to_model %>%
 
 
 That looks much more random to me!
-
-## Machine Learning Models
