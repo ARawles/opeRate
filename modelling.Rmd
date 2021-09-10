@@ -219,7 +219,7 @@ vg_residuals %>%
   geom_point()
 ```
 
-Looking just at the frequency polygon doesn't really tell us enough but when we then look at the residuals by Year, we can see what looks like random noise. This is good because it means that our model isn't better at predicted one year or range of years better than another.
+Looking just at the frequency polygon doesn't really tell us enough but when we then look at the residuals by Year, we can see what looks like random noise. This is good because it means that our model isn't better at predicted one year or range of years better than any other.
 
 Alternatively, let's compare this plot with a plot of one of the `anscombe` datasets:
 
@@ -231,25 +231,8 @@ tidy_anscombe %>%
   geom_point()
 ```
 
-Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern.
+Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern for different values of x.
 
-For instance, let's look at the residuals of our 4 models from the previous example looking at the anscombe dataset:
-
-```{r}
-resid <- purrr::map(models, residuals)
-names(resid) <- 1:4
-tibble::as_tibble(
-  resid,
-  .name_repair = ~paste0("Model", .x)
-) %>%
-  tidyr::pivot_longer(cols = dplyr::everything(), names_to = "Model", values_to = "Residuals",
-                      names_prefix = "(Model)", names_transform = list(Model = readr::parse_number),
-  ) %>%
-  ggplot(aes(x = Residuals)) +
-  geom_point() +
-  facet_wrap(~Model)
-
-```
 
 
 * The goal of a model
