@@ -211,7 +211,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#layers"><i class="fa fa-check"></i><b>13.1.2</b> Layers</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a></li>
+<li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="types-of-model.html"><a href="types-of-model.html"><i class="fa fa-check"></i><b>14.1</b> Types of model</a></li>
+<li class="chapter" data-level="14.2" data-path="coefficients.html"><a href="coefficients.html"><i class="fa fa-check"></i><b>14.2</b> Coefficients</a></li>
+<li class="chapter" data-level="14.3" data-path="residuals.html"><a href="residuals.html"><i class="fa fa-check"></i><b>14.3</b> Residuals</a></li>
+<li class="chapter" data-level="14.4" data-path="lm-function.html"><a href="lm-function.html"><i class="fa fa-check"></i><b>14.4</b> <code>lm()</code> function</a></li>
+<li class="chapter" data-level="14.5" data-path="example.html"><a href="example.html"><i class="fa fa-check"></i><b>14.5</b> Example</a></li>
+<li class="chapter" data-level="14.6" data-path="evaluating-models.html"><a href="evaluating-models.html"><i class="fa fa-check"></i><b>14.6</b> Evaluating Models</a>
+<ul>
+<li class="chapter" data-level="14.6.1" data-path="evaluating-models.html"><a href="evaluating-models.html#residuals-1"><i class="fa fa-check"></i><b>14.6.1</b> Residuals</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>III Projects</b></span></li>
 <li class="chapter" data-level="15" data-path="projects-introduction.html"><a href="projects-introduction.html"><i class="fa fa-check"></i><b>15</b> Introduction</a></li>
 <li class="chapter" data-level="16" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>16</b> Workflows</a>
@@ -284,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">10</span> Grouping</h1>
 <p>Before we look at adding new columns and summarising our data, we need to understand the concept of grouping our data.</p>
 <p>When a data frame has one or more groups, any function that’s applied (when summarising or adding a new column) is applied for each combination of those groups. So say we have a dataset like this:</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="grouping.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ungrpd, <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="grouping.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ungrpd, <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##   Year Month Group Value
 ## 1 2012     1     A    10
 ## 2 2012     1     B    20
@@ -293,9 +304,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 2012     3     A    25</code></pre>
 <p>If we grouped by Year or by Month, then any function we applied would be applied separately to each value of those groups. So say we wanted get the total values for each Year, we could group by the <code>Year</code> column and then just sum the <code>Value</code> column. The same logic applies for if we wanted to get the total for each year <em>and</em> month; we could group by the <code>Year</code> and <code>Month</code> and sum the <code>Value</code> column and we’d then get a value for each distinct year and month.</p>
 <p>To group a dataset, we use the <code>dplyr::group_by()</code> function:</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="grouping.html#cb88-1" aria-hidden="true" tabindex="-1"></a>grpd <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(ungrpd, Year)</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="grouping.html#cb87-1" aria-hidden="true" tabindex="-1"></a>grpd <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(ungrpd, Year)</span></code></pre></div>
 <p>The <code>dplyr::group_by()</code> function returns the same dataset but now grouped by the variables you provided. At first, it might not seem as though anything happened - if we print the dataset we still get basically the same output…</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="grouping.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(grpd, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="grouping.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(grpd, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 12 x 4
 ## # Groups:   Year [2]
 ##   Year  Month Group Value
@@ -308,11 +319,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## # … with 7 more rows</code></pre>
 <p>Except now we have a new entry <code>Groups:</code>. This tells us that the dataset has been grouped and by what variables. This means that any subsequent summarisation or mutation we do will be done relative those groups.</p>
 <p>To test whether a dataset has been grouped, you can use the <code>dplyr::is_grouped_df()</code>, and to ungroup a dataset, just use <code>dplyr::ungroup()</code>:</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="grouping.html#cb91-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">is_grouped_df</span>(grpd)</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="grouping.html#cb90-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">is_grouped_df</span>(grpd)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="grouping.html#cb93-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">is_grouped_df</span>(ungrpd)</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="grouping.html#cb92-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">is_grouped_df</span>(ungrpd)</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="grouping.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dplyr<span class="sc">::</span><span class="fu">ungroup</span>(grpd), <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="grouping.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dplyr<span class="sc">::</span><span class="fu">ungroup</span>(grpd), <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 12 x 4
 ##   Year  Month Group Value
 ##   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;

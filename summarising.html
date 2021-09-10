@@ -211,7 +211,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#layers"><i class="fa fa-check"></i><b>13.1.2</b> Layers</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a></li>
+<li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="types-of-model.html"><a href="types-of-model.html"><i class="fa fa-check"></i><b>14.1</b> Types of model</a></li>
+<li class="chapter" data-level="14.2" data-path="coefficients.html"><a href="coefficients.html"><i class="fa fa-check"></i><b>14.2</b> Coefficients</a></li>
+<li class="chapter" data-level="14.3" data-path="residuals.html"><a href="residuals.html"><i class="fa fa-check"></i><b>14.3</b> Residuals</a></li>
+<li class="chapter" data-level="14.4" data-path="lm-function.html"><a href="lm-function.html"><i class="fa fa-check"></i><b>14.4</b> <code>lm()</code> function</a></li>
+<li class="chapter" data-level="14.5" data-path="example.html"><a href="example.html"><i class="fa fa-check"></i><b>14.5</b> Example</a></li>
+<li class="chapter" data-level="14.6" data-path="evaluating-models.html"><a href="evaluating-models.html"><i class="fa fa-check"></i><b>14.6</b> Evaluating Models</a>
+<ul>
+<li class="chapter" data-level="14.6.1" data-path="evaluating-models.html"><a href="evaluating-models.html#residuals-1"><i class="fa fa-check"></i><b>14.6.1</b> Residuals</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>III Projects</b></span></li>
 <li class="chapter" data-level="15" data-path="projects-introduction.html"><a href="projects-introduction.html"><i class="fa fa-check"></i><b>15</b> Introduction</a></li>
 <li class="chapter" data-level="16" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>16</b> Workflows</a>
@@ -285,14 +296,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>As we saw previously, the base videa game sales dataset has nearly 17,000 entries! That’s a lot of data, and we’re not really going to able to extract or show any real insights from this data without summarising it to some degree. What we want to do is summarise the data to some degree. We lose some of the granularity of the data but it allows is to understand the data a bit better and identify patterns.</p>
 <p>Summarisation uses exactly the same <a href="grouping.html#grouping">grouping</a> concept as mutatation does; by grouping the data we change the scope of each application of the function to be limited to that group.</p>
 <p>Let’s go through an example. Let’s say that we want to get the global sales for each publisher in each year. For now, we don’t care about genre or platform. To do this, we’ll need to group by Publisher, Year and Country:</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="summarising.html#cb103-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb103-2"><a href="summarising.html#cb103-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year, Country)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="summarising.html#cb102-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb102-2"><a href="summarising.html#cb102-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year, Country)</span></code></pre></div>
 <p>And then we’ll want to sum up the <code>Sales</code> column to get our totals:</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="summarising.html#cb104-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb104-2"><a href="summarising.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year, Country) <span class="sc">%&gt;%</span></span>
-<span id="cb104-3"><a href="summarising.html#cb104-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb104-4"><a href="summarising.html#cb104-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The .groups = &#39;drop&#39; parameter will automatically remove the grouping from the dataset</span></span>
-<span id="cb104-5"><a href="summarising.html#cb104-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="summarising.html#cb103-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb103-2"><a href="summarising.html#cb103-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year, Country) <span class="sc">%&gt;%</span></span>
+<span id="cb103-3"><a href="summarising.html#cb103-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb103-4"><a href="summarising.html#cb103-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The .groups = &#39;drop&#39; parameter will automatically remove the grouping from the dataset</span></span>
+<span id="cb103-5"><a href="summarising.html#cb103-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 11,645 x 4
 ##   Publisher        Year Country Total_Sales
 ##   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;
@@ -304,14 +315,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## # … with 11,640 more rows</code></pre>
 <p>Now we can see that the number of rows has reduced down to just under 2,000, and we’ve got the total global sales for each of our publishers, and for each year. <code>{dplyr}</code> has looked through each publisher and each year that publisher has at least 1 game, and added up the total number of sales, then moved onto the next Publisher/Year combination.</p>
 <p>While we’re here, let’s lump together some of the less popular publishers using the <code>forcats::fct_lump_n()</code> function:</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="summarising.html#cb106-1" aria-hidden="true" tabindex="-1"></a>smmrsd_vg_sales <span class="ot">&lt;-</span> tidy_vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb106-2"><a href="summarising.html#cb106-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year, Country) <span class="sc">%&gt;%</span></span>
-<span id="cb106-3"><a href="summarising.html#cb106-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb106-4"><a href="summarising.html#cb106-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Publisher =</span> forcats<span class="sc">::</span><span class="fu">fct_lump_n</span>(Publisher, <span class="at">n =</span> <span class="dv">5</span>, <span class="at">w =</span> Total_Sales)) <span class="sc">%&gt;%</span></span>
-<span id="cb106-5"><a href="summarising.html#cb106-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year, Country) <span class="sc">%&gt;%</span></span>
-<span id="cb106-6"><a href="summarising.html#cb106-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Total_Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span>
-<span id="cb106-7"><a href="summarising.html#cb106-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The .groups = &#39;drop&#39; parameter will automatically remove the grouping from the dataset</span></span>
-<span id="cb106-8"><a href="summarising.html#cb106-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(smmrsd_vg_sales, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="summarising.html#cb105-1" aria-hidden="true" tabindex="-1"></a>smmrsd_vg_sales <span class="ot">&lt;-</span> tidy_vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb105-2"><a href="summarising.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year, Country) <span class="sc">%&gt;%</span></span>
+<span id="cb105-3"><a href="summarising.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb105-4"><a href="summarising.html#cb105-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Publisher =</span> forcats<span class="sc">::</span><span class="fu">fct_lump_n</span>(Publisher, <span class="at">n =</span> <span class="dv">5</span>, <span class="at">w =</span> Total_Sales)) <span class="sc">%&gt;%</span></span>
+<span id="cb105-5"><a href="summarising.html#cb105-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year, Country) <span class="sc">%&gt;%</span></span>
+<span id="cb105-6"><a href="summarising.html#cb105-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Total_Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span>
+<span id="cb105-7"><a href="summarising.html#cb105-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The .groups = &#39;drop&#39; parameter will automatically remove the grouping from the dataset</span></span>
+<span id="cb105-8"><a href="summarising.html#cb105-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(smmrsd_vg_sales, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 870 x 4
 ##   Publisher   Year Country Total_Sales
 ##   &lt;fct&gt;      &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;
@@ -322,11 +333,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 Activision  1980 Other          0.03
 ## # … with 865 more rows</code></pre>
 <p>In this case we’ve used the <code>sum()</code> function, but any kind of summary function can be used:</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="summarising.html#cb108-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb108-2"><a href="summarising.html#cb108-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year, Country) <span class="sc">%&gt;%</span></span>
-<span id="cb108-3"><a href="summarising.html#cb108-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Sales),</span>
-<span id="cb108-4"><a href="summarising.html#cb108-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Average_Sales =</span> <span class="fu">mean</span>(Sales),</span>
-<span id="cb108-5"><a href="summarising.html#cb108-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="summarising.html#cb107-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb107-2"><a href="summarising.html#cb107-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year, Country) <span class="sc">%&gt;%</span></span>
+<span id="cb107-3"><a href="summarising.html#cb107-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Sales),</span>
+<span id="cb107-4"><a href="summarising.html#cb107-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Average_Sales =</span> <span class="fu">mean</span>(Sales),</span>
+<span id="cb107-5"><a href="summarising.html#cb107-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 11,645 x 5
 ##    Publisher        Year Country Total_Sales Average_Sales
 ##    &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;         &lt;dbl&gt;

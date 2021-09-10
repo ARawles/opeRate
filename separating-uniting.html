@@ -211,7 +211,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#layers"><i class="fa fa-check"></i><b>13.1.2</b> Layers</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a></li>
+<li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="types-of-model.html"><a href="types-of-model.html"><i class="fa fa-check"></i><b>14.1</b> Types of model</a></li>
+<li class="chapter" data-level="14.2" data-path="coefficients.html"><a href="coefficients.html"><i class="fa fa-check"></i><b>14.2</b> Coefficients</a></li>
+<li class="chapter" data-level="14.3" data-path="residuals.html"><a href="residuals.html"><i class="fa fa-check"></i><b>14.3</b> Residuals</a></li>
+<li class="chapter" data-level="14.4" data-path="lm-function.html"><a href="lm-function.html"><i class="fa fa-check"></i><b>14.4</b> <code>lm()</code> function</a></li>
+<li class="chapter" data-level="14.5" data-path="example.html"><a href="example.html"><i class="fa fa-check"></i><b>14.5</b> Example</a></li>
+<li class="chapter" data-level="14.6" data-path="evaluating-models.html"><a href="evaluating-models.html"><i class="fa fa-check"></i><b>14.6</b> Evaluating Models</a>
+<ul>
+<li class="chapter" data-level="14.6.1" data-path="evaluating-models.html"><a href="evaluating-models.html#residuals-1"><i class="fa fa-check"></i><b>14.6.1</b> Residuals</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>III Projects</b></span></li>
 <li class="chapter" data-level="15" data-path="projects-introduction.html"><a href="projects-introduction.html"><i class="fa fa-check"></i><b>15</b> Introduction</a></li>
 <li class="chapter" data-level="16" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>16</b> Workflows</a>
@@ -294,8 +305,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 Persea     15x11</code></pre>
 <p>Here we’ve got a dataset with different plant species and the area of their leaves. But we’ve got two variables combined into a single column; we’ve got both the width and the length of the leaf included in a single ‘area’ variable. To convert this dataset to the tidy format, we need to split out those values into separate ‘width’ and ‘length’ variables.</p>
 <p>We can use the <code>separate()</code> function from the <code>{tidyr}</code> package to do this. We just need to provide the column we want to split via the <code>col</code> parameter, the column names that we want to split the original column into with the <code>into</code> parameter, and the separator that’s separating the two or more values within the column via the <code>sep</code> parameter:</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="separating-uniting.html#cb82-1" aria-hidden="true" tabindex="-1"></a>separate_example <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">separate</span>(combined_example, <span class="at">col =</span> LeafArea, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;Width&quot;</span>, <span class="st">&quot;Length&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;x&quot;</span>)</span>
-<span id="cb82-2"><a href="separating-uniting.html#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(separate_example)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="separating-uniting.html#cb81-1" aria-hidden="true" tabindex="-1"></a>separate_example <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">separate</span>(combined_example, <span class="at">col =</span> LeafArea, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;Width&quot;</span>, <span class="st">&quot;Length&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;x&quot;</span>)</span>
+<span id="cb81-2"><a href="separating-uniting.html#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(separate_example)</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   Species    Width Length
 ##   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; 
@@ -308,7 +319,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">9.2.2</span> Uniting</h3>
 <p>Just like pivoting wider was essentially the inverse of pivoting longer, uniting columns is the inverse of separating them. Again, our focus in this chapter is to tidy up our data, and so we’ll likely always be separating columns rather than uniting them. Regardless, it’s good to understand how to unite columns for the occasions that it is required.</p>
 <p>To join multiple columns together, we use the <code>unite()</code> function from the <code>{tidyr}</code> package. We just need to provide the name of the new column we want to create via the <code>col</code> parameter, the column names of the columns to unite as unnamed parameters, and then the separating character we want to use via <code>sep</code>:</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="separating-uniting.html#cb84-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">unite</span>(separate_example, <span class="at">col =</span> <span class="st">&quot;LeafArea&quot;</span>, Width, Length, <span class="at">sep =</span> <span class="st">&quot;x&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="separating-uniting.html#cb83-1" aria-hidden="true" tabindex="-1"></a>tidyr<span class="sc">::</span><span class="fu">unite</span>(separate_example, <span class="at">col =</span> <span class="st">&quot;LeafArea&quot;</span>, Width, Length, <span class="at">sep =</span> <span class="st">&quot;x&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 2
 ##   Species    LeafArea
 ##   &lt;chr&gt;      &lt;chr&gt;   

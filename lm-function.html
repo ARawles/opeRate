@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.1 tidyselect | opeRate</title>
+  <title>14.4 lm() function | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.1 tidyselect | opeRate" />
+  <meta property="og:title" content="14.4 lm() function | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.1 tidyselect | opeRate" />
+  <meta name="twitter:title" content="14.4 lm() function | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="quasiquotation.html"/>
-<link rel="next" href="da-intro.html"/>
+<link rel="prev" href="residuals.html"/>
+<link rel="next" href="example.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -291,24 +291,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tidyselect" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> tidyselect</h2>
-<p>Much of this functionality is powered by a package called <code>{tidyselect}</code>. The <code>{tidyselect}</code> package provides a number of functions for selecting variables from datasets, reducing the time spent laboriously typing out the name of every variable you want to reference.</p>
-<p>To better understand the specifics of the <code>{tidyselect}</code> dialect and how it interacts with the tidyverse packages, there are a number of <a href="https://tidyselect.r-lib.org/reference/language.html">vignettes</a> included in the package that explain things well. For now however, if you can understand the basic concept that variables are evaluated in the specific context of the dataset provided to the function, then you should be fine.</p>
-
-</div>
-<!-- </div> -->
-
-
-
+<div id="lm-function" class="section level2" number="14.4">
+<h2><span class="header-section-number">14.4</span> <code>lm()</code> function</h2>
+<p>Now that we’ve understood the basics behind a linear model, I can finally reveal that R has a function that will do all of this for us. The <code>lm()</code> function in R just needs the dataset and the formula for our model, and works out the coefficients for us, giving us back a model:</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="lm-function.html#cb126-1" aria-hidden="true" tabindex="-1"></a>lm_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> mtcars, mpg <span class="sc">~</span> wt)</span>
+<span id="cb126-2"><a href="lm-function.html#cb126-2" aria-hidden="true" tabindex="-1"></a>lm_model</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ wt, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           wt  
+##      37.285       -5.344</code></pre>
+<p>We can see that the <code>lm()</code> function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren’t too far off!</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="quasiquotation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="da-intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="residuals.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="example.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

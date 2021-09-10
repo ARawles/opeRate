@@ -211,7 +211,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1.2" data-path="ggplot2.html"><a href="ggplot2.html#layers"><i class="fa fa-check"></i><b>13.1.2</b> Layers</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a></li>
+<li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="types-of-model.html"><a href="types-of-model.html"><i class="fa fa-check"></i><b>14.1</b> Types of model</a></li>
+<li class="chapter" data-level="14.2" data-path="coefficients.html"><a href="coefficients.html"><i class="fa fa-check"></i><b>14.2</b> Coefficients</a></li>
+<li class="chapter" data-level="14.3" data-path="residuals.html"><a href="residuals.html"><i class="fa fa-check"></i><b>14.3</b> Residuals</a></li>
+<li class="chapter" data-level="14.4" data-path="lm-function.html"><a href="lm-function.html"><i class="fa fa-check"></i><b>14.4</b> <code>lm()</code> function</a></li>
+<li class="chapter" data-level="14.5" data-path="example.html"><a href="example.html"><i class="fa fa-check"></i><b>14.5</b> Example</a></li>
+<li class="chapter" data-level="14.6" data-path="evaluating-models.html"><a href="evaluating-models.html"><i class="fa fa-check"></i><b>14.6</b> Evaluating Models</a>
+<ul>
+<li class="chapter" data-level="14.6.1" data-path="evaluating-models.html"><a href="evaluating-models.html#residuals-1"><i class="fa fa-check"></i><b>14.6.1</b> Residuals</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>III Projects</b></span></li>
 <li class="chapter" data-level="15" data-path="projects-introduction.html"><a href="projects-introduction.html"><i class="fa fa-check"></i><b>15</b> Introduction</a></li>
 <li class="chapter" data-level="16" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>16</b> Workflows</a>
@@ -284,10 +295,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">11</span> Mutating</h1>
 <p>Sometimes you’ll want to add new columns to your data. Most of the time, these will be calculated columns that can be created based on one or more of the other columns in the dataset. To create new columns, we use the <code>dplyr::mutate()</code> function.</p>
 <p>First off, let’s add something simple; the Sales column in our dataset is in millions. Let’s convert that to normal units. All we need to do is provide the name of our new column to the <code>dplyr::mutate()</code> function and how our new column should be calculated:</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="mutating.html#cb97-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb97-2"><a href="mutating.html#cb97-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Sales_units =</span> Sales <span class="sc">*</span> <span class="dv">1000000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb97-3"><a href="mutating.html#cb97-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Rank, Name, Platform, Year, Genre, Publisher, Sales_units) <span class="sc">%&gt;%</span></span>
-<span id="cb97-4"><a href="mutating.html#cb97-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="mutating.html#cb96-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb96-2"><a href="mutating.html#cb96-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Sales_units =</span> Sales <span class="sc">*</span> <span class="dv">1000000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb96-3"><a href="mutating.html#cb96-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Rank, Name, Platform, Year, Genre, Publisher, Sales_units) <span class="sc">%&gt;%</span></span>
+<span id="cb96-4"><a href="mutating.html#cb96-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 81,635 x 7
 ##    Rank Name       Platform  Year Genre  Publisher Sales_units
 ##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;dbl&gt;
@@ -299,10 +310,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## # … with 81,630 more rows</code></pre>
 <p>As you can see, we’ve created a new column called <code>EU_Proportion</code> and we’ve calculated by dividing the number of EU sales by the total number of sales.</p>
 <p>If we wanted to overwrite the Sales column, we do the same but give the new column the same name:</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="mutating.html#cb99-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb99-2"><a href="mutating.html#cb99-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Sales =</span> Sales <span class="sc">*</span> <span class="dv">1000000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb99-3"><a href="mutating.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Rank, Name, Platform, Year, Genre, Publisher, Sales) <span class="sc">%&gt;%</span></span>
-<span id="cb99-4"><a href="mutating.html#cb99-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="mutating.html#cb98-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb98-2"><a href="mutating.html#cb98-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Sales =</span> Sales <span class="sc">*</span> <span class="dv">1000000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb98-3"><a href="mutating.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Rank, Name, Platform, Year, Genre, Publisher, Sales) <span class="sc">%&gt;%</span></span>
+<span id="cb98-4"><a href="mutating.html#cb98-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 81,635 x 7
 ##    Rank Name       Platform  Year Genre  Publisher    Sales
 ##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt;
@@ -314,12 +325,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## # … with 81,630 more rows</code></pre>
 <p>While this is certainly a powerful tool, we’re not really changing the world here. However, we can create more complicated columns by leveraging the concept of applying our function to <a href="grouping.html#grouping">groups</a>.</p>
 <p>When our dataset is grouped, our <code>mutate()</code> call will be evaluated for each permutation of the provided groups. Let’s look at an example of creating a cumulative sum for each Publisher and Country:</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="mutating.html#cb101-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb101-2"><a href="mutating.html#cb101-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Country) <span class="sc">%&gt;%</span></span>
-<span id="cb101-3"><a href="mutating.html#cb101-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(Year) <span class="sc">%&gt;%</span> <span class="co"># We need to order from earliest date to latest</span></span>
-<span id="cb101-4"><a href="mutating.html#cb101-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Cumulative_Sales =</span> <span class="fu">cumsum</span>(Sales)) <span class="sc">%&gt;%</span></span>
-<span id="cb101-5"><a href="mutating.html#cb101-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Publisher <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Atari&quot;</span>, <span class="st">&quot;Activision&quot;</span>)) <span class="sc">%&gt;%</span> <span class="co"># Let&#39;s just look at Atari &amp; Activision</span></span>
-<span id="cb101-6"><a href="mutating.html#cb101-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="mutating.html#cb100-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb100-2"><a href="mutating.html#cb100-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Country) <span class="sc">%&gt;%</span></span>
+<span id="cb100-3"><a href="mutating.html#cb100-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(Year) <span class="sc">%&gt;%</span> <span class="co"># We need to order from earliest date to latest</span></span>
+<span id="cb100-4"><a href="mutating.html#cb100-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Cumulative_Sales =</span> <span class="fu">cumsum</span>(Sales)) <span class="sc">%&gt;%</span></span>
+<span id="cb100-5"><a href="mutating.html#cb100-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Publisher <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Atari&quot;</span>, <span class="st">&quot;Activision&quot;</span>)) <span class="sc">%&gt;%</span> <span class="co"># Let&#39;s just look at Atari &amp; Activision</span></span>
+<span id="cb100-6"><a href="mutating.html#cb100-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 6,565 x 9
 ## # Groups:   Publisher, Country [10]
 ##    Rank Name      Platform  Year Genre  Publisher Country Sales Cumulative_Sales

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.1 tidyselect | opeRate</title>
+  <title>14.1 Types of model | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.1 tidyselect | opeRate" />
+  <meta property="og:title" content="14.1 Types of model | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.1 tidyselect | opeRate" />
+  <meta name="twitter:title" content="14.1 Types of model | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="quasiquotation.html"/>
-<link rel="next" href="da-intro.html"/>
+<link rel="prev" href="modelling.html"/>
+<link rel="next" href="coefficients.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -291,24 +291,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tidyselect" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> tidyselect</h2>
-<p>Much of this functionality is powered by a package called <code>{tidyselect}</code>. The <code>{tidyselect}</code> package provides a number of functions for selecting variables from datasets, reducing the time spent laboriously typing out the name of every variable you want to reference.</p>
-<p>To better understand the specifics of the <code>{tidyselect}</code> dialect and how it interacts with the tidyverse packages, there are a number of <a href="https://tidyselect.r-lib.org/reference/language.html">vignettes</a> included in the package that explain things well. For now however, if you can understand the basic concept that variables are evaluated in the specific context of the dataset provided to the function, then you should be fine.</p>
-
-</div>
-<!-- </div> -->
-
-
-
+<div id="types-of-model" class="section level2" number="14.1">
+<h2><span class="header-section-number">14.1</span> Types of model</h2>
+<p>Models types usually fall into “families”. These will be a set of models that are underpinned by some common statistics or philosophy. The most common type of model that is taught at beginner level is the linear model. A linear model assumes a relationship that can be represented in the form <code>y = a + a1x...</code>, where <code>a</code> and <code>a{n}</code> represent coefficients (values that will change between models depending on your data). Somewhat confusingly, linear models also extend to what we might call quadratic or exponential models that are represented as <code>y = a + a1*x + a2*x^2...</code>. This is because the ‘linear’ in linear model refers to the coefficients being linear, not our regression line being linear.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="quasiquotation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="da-intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="modelling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="coefficients.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

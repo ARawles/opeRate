@@ -56,6 +56,13 @@ facets
 scales
 layers
 modelling
+types-of-model
+coefficients
+residuals
+lm-function
+example
+evaluating-models
+residuals-1
 projects-introduction
 workflows
 basic-workflow

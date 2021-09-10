@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.1 tidyselect | opeRate</title>
+  <title>14.6 Evaluating Models | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.1 tidyselect | opeRate" />
+  <meta property="og:title" content="14.6 Evaluating Models | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.1 tidyselect | opeRate" />
+  <meta name="twitter:title" content="14.6 Evaluating Models | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="quasiquotation.html"/>
-<link rel="next" href="da-intro.html"/>
+<link rel="prev" href="example.html"/>
+<link rel="next" href="projects-introduction.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -291,11 +291,102 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tidyselect" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> tidyselect</h2>
-<p>Much of this functionality is powered by a package called <code>{tidyselect}</code>. The <code>{tidyselect}</code> package provides a number of functions for selecting variables from datasets, reducing the time spent laboriously typing out the name of every variable you want to reference.</p>
-<p>To better understand the specifics of the <code>{tidyselect}</code> dialect and how it interacts with the tidyverse packages, there are a number of <a href="https://tidyselect.r-lib.org/reference/language.html">vignettes</a> included in the package that explain things well. For now however, if you can understand the basic concept that variables are evaluated in the specific context of the dataset provided to the function, then you should be fine.</p>
+<div id="evaluating-models" class="section level2" number="14.6">
+<h2><span class="header-section-number">14.6</span> Evaluating Models</h2>
+<p>Jumping straight into modelling a dataset you don’t understand or creating a model that looks good and then declaring that your work is done can be a dangerous thing. Modelling should be a weapon in your data science arsenal, but it should be handled with care. It’s very easy to make an error and end up with a model that is pointless at best and misleading at worst.</p>
+<p>To demonstrate this, let’s produce 4 models for the each of the sub-datasets in the <code>anscombe</code> dataset:</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="evaluating-models.html#cb134-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe <span class="ot">&lt;-</span> anscombe <span class="sc">%&gt;%</span></span>
+<span id="cb134-2"><a href="evaluating-models.html#cb134-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="fu">everything</span>(),</span>
+<span id="cb134-3"><a href="evaluating-models.html#cb134-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;dataset&quot;</span>),</span>
+<span id="cb134-4"><a href="evaluating-models.html#cb134-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_pattern =</span> <span class="st">&quot;(.)(.)&quot;</span></span>
+<span id="cb134-5"><a href="evaluating-models.html#cb134-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb134-6"><a href="evaluating-models.html#cb134-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-7"><a href="evaluating-models.html#cb134-7" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="sc">~</span>tidy_anscombe <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(dataset <span class="sc">==</span> .x) <span class="sc">%&gt;%</span> <span class="fu">lm</span>(<span class="at">data =</span> ., <span class="at">formula =</span> y <span class="sc">~</span> x))</span>
+<span id="cb134-8"><a href="evaluating-models.html#cb134-8" aria-hidden="true" tabindex="-1"></a>models</span></code></pre></div>
+<pre><code>## [[1]]
+## 
+## Call:
+## lm(formula = y ~ x, data = .)
+## 
+## Coefficients:
+## (Intercept)            x  
+##      3.0001       0.5001  
+## 
+## 
+## [[2]]
+## 
+## Call:
+## lm(formula = y ~ x, data = .)
+## 
+## Coefficients:
+## (Intercept)            x  
+##       3.001        0.500  
+## 
+## 
+## [[3]]
+## 
+## Call:
+## lm(formula = y ~ x, data = .)
+## 
+## Coefficients:
+## (Intercept)            x  
+##      3.0025       0.4997  
+## 
+## 
+## [[4]]
+## 
+## Call:
+## lm(formula = y ~ x, data = .)
+## 
+## Coefficients:
+## (Intercept)            x  
+##      3.0017       0.4999</code></pre>
+<p>According to our output, we’ve got 4 very similar models. From that output we might assume that the datasets must be very similar. Let’s plot them now:</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="evaluating-models.html#cb136-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe <span class="sc">%&gt;%</span></span>
+<span id="cb136-2"><a href="evaluating-models.html#cb136-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y  =</span> y)) <span class="sc">+</span></span>
+<span id="cb136-3"><a href="evaluating-models.html#cb136-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb136-4"><a href="evaluating-models.html#cb136-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb136-5"><a href="evaluating-models.html#cb136-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>dataset)</span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<p>Now that we’ve looked a little deeper, we can clearly see that these models are inappropriate for 3 of the datasets (2, 3 and 4). The lesson here is that there are multiple tools at your disposal when analysing data, and overeliance on a particular tool without due care and attention can cause issues.</p>
+<p>With that in mind, let’s look at some ways of evaluating the strength of your model.</p>
+<div id="residuals-1" class="section level3" number="14.6.1">
+<h3><span class="header-section-number">14.6.1</span> Residuals</h3>
+<p>As we’ve learnt previously, the goal of our model is to reduce the total residual difference between our model and the data. But blindly reducing this value without then inspecting the result can be dangerous. When you’re using the <code>lm()</code> function, your residuals should be <strong>normally distributed</strong>. That means that (essentially) your model should be overestmating as much as it’s underestimating for every value of y.</p>
+<p>Let’s take a look at the residual values for our video game sales model:</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="evaluating-models.html#cb137-1" aria-hidden="true" tabindex="-1"></a>vg_residuals <span class="ot">&lt;-</span> vg_sales_to_model <span class="sc">%&gt;%</span></span>
+<span id="cb137-2"><a href="evaluating-models.html#cb137-2" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_residuals</span>(<span class="at">model =</span> vg_model)</span>
+<span id="cb137-3"><a href="evaluating-models.html#cb137-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-4"><a href="evaluating-models.html#cb137-4" aria-hidden="true" tabindex="-1"></a>vg_residuals <span class="sc">%&gt;%</span></span>
+<span id="cb137-5"><a href="evaluating-models.html#cb137-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> resid)) <span class="sc">+</span></span>
+<span id="cb137-6"><a href="evaluating-models.html#cb137-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> <span class="dv">25</span>)</span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="evaluating-models.html#cb138-1" aria-hidden="true" tabindex="-1"></a>vg_residuals <span class="sc">%&gt;%</span></span>
+<span id="cb138-2"><a href="evaluating-models.html#cb138-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
+<span id="cb138-3"><a href="evaluating-models.html#cb138-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-82-2.png" width="672" /></p>
+<p>Looking just at the frequency polygon doesn’t really tell us enough but when we then look at the residuals by Year, we can see what looks like random noise. This is good because it means that our model isn’t better at predicted one year or range of years better than any other.</p>
+<p>Alternatively, let’s compare this plot with a plot of one of the <code>anscombe</code> datasets:</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="evaluating-models.html#cb139-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe <span class="sc">%&gt;%</span></span>
+<span id="cb139-2"><a href="evaluating-models.html#cb139-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(dataset <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb139-3"><a href="evaluating-models.html#cb139-3" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_residuals</span>(<span class="at">model =</span> models[[<span class="dv">2</span>]]) <span class="sc">%&gt;%</span></span>
+<span id="cb139-4"><a href="evaluating-models.html#cb139-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
+<span id="cb139-5"><a href="evaluating-models.html#cb139-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
+<p>Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern for different values of x.</p>
+<ul>
+<li>The goal of a model</li>
+<li>Quantify relationships and make predictions</li>
+<li>A model is always wrong, but it can be helpful</li>
+<li>How a model is produced</li>
+<li>Minimising residual error</li>
+<li>Generalised linear modeling</li>
+<li><code>lm()</code></li>
+<li>Neural networks</li>
+<li></li>
+</ul>
 
+</div>
 </div>
 <!-- </div> -->
 
@@ -307,8 +398,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="quasiquotation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="da-intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="example.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="projects-introduction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
