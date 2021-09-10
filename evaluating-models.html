@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="example.html"/>
-<link rel="next" href="projects-introduction.html"/>
+<link rel="prev" href="multiple-predictors.html"/>
+<link rel="next" href="video-game-sales-model.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -213,15 +213,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="types-of-model.html"><a href="types-of-model.html"><i class="fa fa-check"></i><b>14.1</b> Types of model</a></li>
+<li class="chapter" data-level="14.1" data-path="types-of-model.html"><a href="types-of-model.html"><i class="fa fa-check"></i><b>14.1</b> Types of model</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="types-of-model.html"><a href="types-of-model.html#linear-models"><i class="fa fa-check"></i><b>14.1.1</b> Linear models</a></li>
+<li class="chapter" data-level="14.1.2" data-path="types-of-model.html"><a href="types-of-model.html#quadratic-exponential-models"><i class="fa fa-check"></i><b>14.1.2</b> Quadratic &amp; Exponential Models</a></li>
+</ul></li>
 <li class="chapter" data-level="14.2" data-path="coefficients.html"><a href="coefficients.html"><i class="fa fa-check"></i><b>14.2</b> Coefficients</a></li>
 <li class="chapter" data-level="14.3" data-path="residuals.html"><a href="residuals.html"><i class="fa fa-check"></i><b>14.3</b> Residuals</a></li>
-<li class="chapter" data-level="14.4" data-path="lm-function.html"><a href="lm-function.html"><i class="fa fa-check"></i><b>14.4</b> <code>lm()</code> function</a></li>
-<li class="chapter" data-level="14.5" data-path="example.html"><a href="example.html"><i class="fa fa-check"></i><b>14.5</b> Example</a></li>
+<li class="chapter" data-level="14.4" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>14.4</b> <code>lm()</code></a></li>
+<li class="chapter" data-level="14.5" data-path="multiple-predictors.html"><a href="multiple-predictors.html"><i class="fa fa-check"></i><b>14.5</b> Multiple Predictors</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="multiple-predictors.html"><a href="multiple-predictors.html#simple-effects"><i class="fa fa-check"></i><b>14.5.1</b> Simple effects</a></li>
+<li class="chapter" data-level="14.5.2" data-path="multiple-predictors.html"><a href="multiple-predictors.html#interaction-effects"><i class="fa fa-check"></i><b>14.5.2</b> Interaction effects</a></li>
+</ul></li>
 <li class="chapter" data-level="14.6" data-path="evaluating-models.html"><a href="evaluating-models.html"><i class="fa fa-check"></i><b>14.6</b> Evaluating Models</a>
 <ul>
-<li class="chapter" data-level="14.6.1" data-path="evaluating-models.html"><a href="evaluating-models.html#residuals-1"><i class="fa fa-check"></i><b>14.6.1</b> Residuals</a></li>
+<li class="chapter" data-level="14.6.1" data-path="evaluating-models.html"><a href="evaluating-models.html#lm-output"><i class="fa fa-check"></i><b>14.6.1</b> <code>lm()</code> Output</a></li>
+<li class="chapter" data-level="14.6.2" data-path="evaluating-models.html"><a href="evaluating-models.html#residuals-1"><i class="fa fa-check"></i><b>14.6.2</b> Residuals</a></li>
 </ul></li>
+<li class="chapter" data-level="14.7" data-path="video-game-sales-model.html"><a href="video-game-sales-model.html"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a></li>
+<li class="chapter" data-level="14.8" data-path="machine-learning-models.html"><a href="machine-learning-models.html"><i class="fa fa-check"></i><b>14.8</b> Machine Learning Models</a></li>
 </ul></li>
 <li class="part"><span><b>III Projects</b></span></li>
 <li class="chapter" data-level="15" data-path="projects-introduction.html"><a href="projects-introduction.html"><i class="fa fa-check"></i><b>15</b> Introduction</a></li>
@@ -295,14 +306,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">14.6</span> Evaluating Models</h2>
 <p>Jumping straight into modelling a dataset you don’t understand or creating a model that looks good and then declaring that your work is done can be a dangerous thing. Modelling should be a weapon in your data science arsenal, but it should be handled with care. It’s very easy to make an error and end up with a model that is pointless at best and misleading at worst.</p>
 <p>To demonstrate this, let’s produce 4 models for the each of the sub-datasets in the <code>anscombe</code> dataset:</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="evaluating-models.html#cb134-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe <span class="ot">&lt;-</span> anscombe <span class="sc">%&gt;%</span></span>
-<span id="cb134-2"><a href="evaluating-models.html#cb134-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="fu">everything</span>(),</span>
-<span id="cb134-3"><a href="evaluating-models.html#cb134-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;dataset&quot;</span>),</span>
-<span id="cb134-4"><a href="evaluating-models.html#cb134-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_pattern =</span> <span class="st">&quot;(.)(.)&quot;</span></span>
-<span id="cb134-5"><a href="evaluating-models.html#cb134-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb134-6"><a href="evaluating-models.html#cb134-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb134-7"><a href="evaluating-models.html#cb134-7" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="sc">~</span>tidy_anscombe <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(dataset <span class="sc">==</span> .x) <span class="sc">%&gt;%</span> <span class="fu">lm</span>(<span class="at">data =</span> ., <span class="at">formula =</span> y <span class="sc">~</span> x))</span>
-<span id="cb134-8"><a href="evaluating-models.html#cb134-8" aria-hidden="true" tabindex="-1"></a>models</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="evaluating-models.html#cb135-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe <span class="ot">&lt;-</span> anscombe <span class="sc">%&gt;%</span></span>
+<span id="cb135-2"><a href="evaluating-models.html#cb135-2" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="fu">everything</span>(),</span>
+<span id="cb135-3"><a href="evaluating-models.html#cb135-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;dataset&quot;</span>),</span>
+<span id="cb135-4"><a href="evaluating-models.html#cb135-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_pattern =</span> <span class="st">&quot;(.)(.)&quot;</span></span>
+<span id="cb135-5"><a href="evaluating-models.html#cb135-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb135-6"><a href="evaluating-models.html#cb135-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-7"><a href="evaluating-models.html#cb135-7" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="sc">~</span>tidy_anscombe <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(dataset <span class="sc">==</span> .x) <span class="sc">%&gt;%</span> <span class="fu">lm</span>(<span class="at">data =</span> ., <span class="at">formula =</span> y <span class="sc">~</span> x))</span>
+<span id="cb135-8"><a href="evaluating-models.html#cb135-8" aria-hidden="true" tabindex="-1"></a>models</span></code></pre></div>
 <pre><code>## [[1]]
 ## 
 ## Call:
@@ -342,64 +353,90 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## (Intercept)            x  
 ##      3.0017       0.4999</code></pre>
 <p>According to our output, we’ve got 4 very similar models. From that output we might assume that the datasets must be very similar. Let’s plot them now:</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="evaluating-models.html#cb136-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe <span class="sc">%&gt;%</span></span>
-<span id="cb136-2"><a href="evaluating-models.html#cb136-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y  =</span> y)) <span class="sc">+</span></span>
-<span id="cb136-3"><a href="evaluating-models.html#cb136-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb136-4"><a href="evaluating-models.html#cb136-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb136-5"><a href="evaluating-models.html#cb136-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>dataset)</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="evaluating-models.html#cb137-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe <span class="sc">%&gt;%</span></span>
+<span id="cb137-2"><a href="evaluating-models.html#cb137-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y  =</span> y)) <span class="sc">+</span></span>
+<span id="cb137-3"><a href="evaluating-models.html#cb137-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb137-4"><a href="evaluating-models.html#cb137-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb137-5"><a href="evaluating-models.html#cb137-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>dataset)</span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
 <p>Now that we’ve looked a little deeper, we can clearly see that these models are inappropriate for 3 of the datasets (2, 3 and 4). The lesson here is that there are multiple tools at your disposal when analysing data, and overeliance on a particular tool without due care and attention can cause issues.</p>
 <p>With that in mind, let’s look at some ways of evaluating the strength of your model.</p>
-<div id="residuals-1" class="section level3" number="14.6.1">
-<h3><span class="header-section-number">14.6.1</span> Residuals</h3>
-<p>As we’ve learnt previously, the goal of our model is to reduce the total residual difference between our model and the data. But blindly reducing this value without then inspecting the result can be dangerous. When you’re using the <code>lm()</code> function, your residuals should be <strong>normally distributed</strong>. That means that (essentially) your model should be overestmating as much as it’s underestimating for every value of y.</p>
-<p>Let’s take a look at the residual values for our video game sales model:</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="evaluating-models.html#cb137-1" aria-hidden="true" tabindex="-1"></a>vg_residuals <span class="ot">&lt;-</span> vg_sales_to_model <span class="sc">%&gt;%</span></span>
-<span id="cb137-2"><a href="evaluating-models.html#cb137-2" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_residuals</span>(<span class="at">model =</span> vg_model)</span>
-<span id="cb137-3"><a href="evaluating-models.html#cb137-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb137-4"><a href="evaluating-models.html#cb137-4" aria-hidden="true" tabindex="-1"></a>vg_residuals <span class="sc">%&gt;%</span></span>
-<span id="cb137-5"><a href="evaluating-models.html#cb137-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> resid)) <span class="sc">+</span></span>
-<span id="cb137-6"><a href="evaluating-models.html#cb137-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> <span class="dv">25</span>)</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="evaluating-models.html#cb138-1" aria-hidden="true" tabindex="-1"></a>vg_residuals <span class="sc">%&gt;%</span></span>
-<span id="cb138-2"><a href="evaluating-models.html#cb138-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
-<span id="cb138-3"><a href="evaluating-models.html#cb138-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-82-2.png" width="672" /></p>
-<p>Looking just at the frequency polygon doesn’t really tell us enough but when we then look at the residuals by Year, we can see what looks like random noise. This is good because it means that our model isn’t better at predicted one year or range of years better than any other.</p>
+<div id="lm-output" class="section level3" number="14.6.1">
+<h3><span class="header-section-number">14.6.1</span> <code>lm()</code> Output</h3>
+<p>Now we’ve created a model using the <code>lm()</code> function, let’s understand the output a little bit so we can evaluate our model. When we just print the model, we get the formula we provided, and the coefficients. By using the <code>summary()</code> function, we can find out a little more about our model:</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="evaluating-models.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ wt, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.5432 -2.3647 -0.1252  1.4096  6.8727 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  37.2851     1.8776  19.858  &lt; 2e-16 ***
+## wt           -5.3445     0.5591  -9.559 1.29e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.046 on 30 degrees of freedom
+## Multiple R-squared:  0.7528, Adjusted R-squared:  0.7446 
+## F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
+<p>There’s a lot to unpack here.</p>
+<p><strong>Residuals</strong>
+We’ve now got a residuals section that shows us the range and quartiles of our residuals. This can be helpful to understand whether your model is consistently over or underestimating</p>
+<p><strong>Coefficients</strong>
+We’ve also now got an expanded view of our coefficients. We’ve still got our estimates, but now we’ve also got standard error, t value and then P value entries.</p>
+<p><em>Standard error</em>
+The standard error represents the average difference between the estimated value and the actual value. So for example, our coefficient estimate for <code>wt</code> is roughly -5, meaning that we lose 5 miles per gallon for every increase of 1000 lbs (1 <code>wt</code> unit). Our error value of roughly 0.5 tells us that actually, on average, it’s between -5.5 and -4.5. If our standard error was 2, then that would suggest that on average, an create in 1 <code>wt</code> unit would correspond with a change of between -6 and -4. A lower standard error value usually represents a more accurate model.</p>
+<p><em>t value</em>
+The t value is then the estimate divided by its error. We can use this value to estimate the strength of our relationship between the two variables; a strong relationship (i.e. a high coefficient value) and a low error will produce a high t value, so we can be more sure that there is a real relationship. Conversely, a smaller coefficient value representing a weaker relationship and then a large error value suggesting that we’re struggling to accurately predict the value of y will have a low t value.</p>
+<p><em>P value</em>
+P values are something of a hot topic in statistics so we won’t discuss them in length here. Instead, we’ll focus on exactly what a P value is - not whether it’s a good idea to use one.</p>
+<p>A t value is converted to a P value via a T distribution table based on the degrees of freedom (don’t worry about what this is). P values represent how often we would see this same t value if the two variables had absolutely no relationship at all. The larger the t value is (i.e., the stronger the relationship appears to be), the less likely it is that we would observe this relationship purely by chance. The typically accepted value for considering a relationship to not be the result of chance is 0.05 (i.e. we’d only see these results if there was truly no relationship 1 in 20 times), but that’s more an academic rule of thumb. In reality, you shouldn’t really rely too heavily on the p value to tell you the strength of your model.</p>
+<p><strong>Residual standard error</strong>
+This is the residual standard error of the entire model (as opposed to a single variable). The logic is the same though; it’s the average difference between our model’s estimate and the actual value. This is almost equivalent to the Residual Mean Standard Error we calculated before, but it’s calculated slightly differently.</p>
+<p><strong>Multiple &amp; Adjusted R-squared</strong>
+The R-squared value represents how much of the variance in y can be explained by your model. So we’ve got a Multiple R-Squared value of around 0.7, meaning that 70% of the variance we see in the <code>mpg</code> value can be explained by the effect of <code>wt</code>. The larger the value the better, but if you ever get an R-Squared value of 1, you’ve definitely done something wrong.</p>
+<p>If you have one variable, then the Multiple R-Squared value is fine to use. If you have more than 1 though, the Adjusted R-Squared value will account for the fact that you’re going to explain more variance simply by adding more variables, and so tries to correct for that.</p>
+<p><strong>F Statistic</strong>
+The F statistic is a global test for whether any of your coefficients are non-zero (if you have any relationship at all). The reason we have this global test is that as you increase the number of variables in our model, you’re increasing the likelihood that at least 1 will have a significant relationship with y. We learned before that our rough estimate for considering a ‘true’ relationship is that we would only observe the t value for our variable once every 20 times. Well then if you include 20 variables, you’ll get one significant predictor on average each time. The F value tells you then whether you have at least 1 significant predictor given the number of variables that you tried.</p>
+</div>
+<div id="residuals-1" class="section level3" number="14.6.2">
+<h3><span class="header-section-number">14.6.2</span> Residuals</h3>
+<p>As we’ve learnt previously, the goal of our model is to reduce the total residual difference between our model and the data. But blindly reducing this value without then inspecting the result can be dangerous. When you’re using the <code>lm()</code> function, your residuals should be <strong>normally distributed</strong>. That means that (essentially) your model should be overestimating as much as it’s underestimating for every value of y.</p>
+<p>Let’s take a look at the residual values for our <code>mtcars</code> model:</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="evaluating-models.html#cb140-1" aria-hidden="true" tabindex="-1"></a>mt_residuals <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span></span>
+<span id="cb140-2"><a href="evaluating-models.html#cb140-2" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_residuals</span>(<span class="at">model =</span> <span class="fu">lm</span>(<span class="at">data =</span> mtcars, <span class="at">formula =</span> mpg <span class="sc">~</span> wt <span class="sc">+</span> hp))</span>
+<span id="cb140-3"><a href="evaluating-models.html#cb140-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-4"><a href="evaluating-models.html#cb140-4" aria-hidden="true" tabindex="-1"></a>mt_residuals <span class="sc">%&gt;%</span></span>
+<span id="cb140-5"><a href="evaluating-models.html#cb140-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> resid)) <span class="sc">+</span></span>
+<span id="cb140-6"><a href="evaluating-models.html#cb140-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
+<p>Things kind of look okay, but it’s tough to know for sure because have so few estimates. Let’s take a look at how our residuals change for different <code>mpg</code> values:</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="evaluating-models.html#cb141-1" aria-hidden="true" tabindex="-1"></a>mt_residuals <span class="sc">%&gt;%</span></span>
+<span id="cb141-2"><a href="evaluating-models.html#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mpg, <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
+<span id="cb141-3"><a href="evaluating-models.html#cb141-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
+<p>Here we can see what looks like random noise. This is good because it means that our model isn’t performing better for some values than for others. If it is, that means we have a systematic bias in our model.</p>
 <p>Alternatively, let’s compare this plot with a plot of one of the <code>anscombe</code> datasets:</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="evaluating-models.html#cb139-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe <span class="sc">%&gt;%</span></span>
-<span id="cb139-2"><a href="evaluating-models.html#cb139-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(dataset <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb139-3"><a href="evaluating-models.html#cb139-3" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_residuals</span>(<span class="at">model =</span> models[[<span class="dv">2</span>]]) <span class="sc">%&gt;%</span></span>
-<span id="cb139-4"><a href="evaluating-models.html#cb139-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
-<span id="cb139-5"><a href="evaluating-models.html#cb139-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
-<p>Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern for different values of x.</p>
-<ul>
-<li>The goal of a model</li>
-<li>Quantify relationships and make predictions</li>
-<li>A model is always wrong, but it can be helpful</li>
-<li>How a model is produced</li>
-<li>Minimising residual error</li>
-<li>Generalised linear modeling</li>
-<li><code>lm()</code></li>
-<li>Neural networks</li>
-<li></li>
-</ul>
-
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="evaluating-models.html#cb142-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe <span class="sc">%&gt;%</span></span>
+<span id="cb142-2"><a href="evaluating-models.html#cb142-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(dataset <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb142-3"><a href="evaluating-models.html#cb142-3" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_residuals</span>(<span class="at">model =</span> models[[<span class="dv">2</span>]]) <span class="sc">%&gt;%</span></span>
+<span id="cb142-4"><a href="evaluating-models.html#cb142-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
+<span id="cb142-5"><a href="evaluating-models.html#cb142-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
+<p>Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern for different values of x. If you see a residual plot like this, you’re likelyl not applying an appropriate model family or type.</p>
 </div>
-</div>
-<!-- </div> -->
-
-
-
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="example.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="projects-introduction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="multiple-predictors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="video-game-sales-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

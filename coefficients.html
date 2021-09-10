@@ -213,15 +213,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="types-of-model.html"><a href="types-of-model.html"><i class="fa fa-check"></i><b>14.1</b> Types of model</a></li>
+<li class="chapter" data-level="14.1" data-path="types-of-model.html"><a href="types-of-model.html"><i class="fa fa-check"></i><b>14.1</b> Types of model</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="types-of-model.html"><a href="types-of-model.html#linear-models"><i class="fa fa-check"></i><b>14.1.1</b> Linear models</a></li>
+<li class="chapter" data-level="14.1.2" data-path="types-of-model.html"><a href="types-of-model.html#quadratic-exponential-models"><i class="fa fa-check"></i><b>14.1.2</b> Quadratic &amp; Exponential Models</a></li>
+</ul></li>
 <li class="chapter" data-level="14.2" data-path="coefficients.html"><a href="coefficients.html"><i class="fa fa-check"></i><b>14.2</b> Coefficients</a></li>
 <li class="chapter" data-level="14.3" data-path="residuals.html"><a href="residuals.html"><i class="fa fa-check"></i><b>14.3</b> Residuals</a></li>
-<li class="chapter" data-level="14.4" data-path="lm-function.html"><a href="lm-function.html"><i class="fa fa-check"></i><b>14.4</b> <code>lm()</code> function</a></li>
-<li class="chapter" data-level="14.5" data-path="example.html"><a href="example.html"><i class="fa fa-check"></i><b>14.5</b> Example</a></li>
+<li class="chapter" data-level="14.4" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>14.4</b> <code>lm()</code></a></li>
+<li class="chapter" data-level="14.5" data-path="multiple-predictors.html"><a href="multiple-predictors.html"><i class="fa fa-check"></i><b>14.5</b> Multiple Predictors</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="multiple-predictors.html"><a href="multiple-predictors.html#simple-effects"><i class="fa fa-check"></i><b>14.5.1</b> Simple effects</a></li>
+<li class="chapter" data-level="14.5.2" data-path="multiple-predictors.html"><a href="multiple-predictors.html#interaction-effects"><i class="fa fa-check"></i><b>14.5.2</b> Interaction effects</a></li>
+</ul></li>
 <li class="chapter" data-level="14.6" data-path="evaluating-models.html"><a href="evaluating-models.html"><i class="fa fa-check"></i><b>14.6</b> Evaluating Models</a>
 <ul>
-<li class="chapter" data-level="14.6.1" data-path="evaluating-models.html"><a href="evaluating-models.html#residuals-1"><i class="fa fa-check"></i><b>14.6.1</b> Residuals</a></li>
+<li class="chapter" data-level="14.6.1" data-path="evaluating-models.html"><a href="evaluating-models.html#lm-output"><i class="fa fa-check"></i><b>14.6.1</b> <code>lm()</code> Output</a></li>
+<li class="chapter" data-level="14.6.2" data-path="evaluating-models.html"><a href="evaluating-models.html#residuals-1"><i class="fa fa-check"></i><b>14.6.2</b> Residuals</a></li>
 </ul></li>
+<li class="chapter" data-level="14.7" data-path="video-game-sales-model.html"><a href="video-game-sales-model.html"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a></li>
+<li class="chapter" data-level="14.8" data-path="machine-learning-models.html"><a href="machine-learning-models.html"><i class="fa fa-check"></i><b>14.8</b> Machine Learning Models</a></li>
 </ul></li>
 <li class="part"><span><b>III Projects</b></span></li>
 <li class="chapter" data-level="15" data-path="projects-introduction.html"><a href="projects-introduction.html"><i class="fa fa-check"></i><b>15</b> Introduction</a></li>
@@ -293,13 +304,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="coefficients" class="section level2" number="14.2">
 <h2><span class="header-section-number">14.2</span> Coefficients</h2>
-<p>In linear modelling, our coefficients are the values that change in our formula to describe our data. In our standard linear model formula (<code>y = a + a1*x</code>), these two coefficients represent the intercept (<code>a</code>) and the slope (<code>a1</code>). In other words, the <code>a</code> represents the value of <code>y</code> when <code>x</code> is 0 (so where the line would start on the y axis), and <code>a1</code> defines how quickly that line goes up or down (is gradient). There will be values for those two coefficients that will produce a better model that others. For example, let’s create two models to predict the miles per gallon a car will get based on its weight from the <code>mtcars</code> dataset and compare them.</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="coefficients.html#cb120-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span></span>
-<span id="cb120-2"><a href="coefficients.html#cb120-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
-<span id="cb120-3"><a href="coefficients.html#cb120-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb120-4"><a href="coefficients.html#cb120-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">45</span>, <span class="at">slope =</span> <span class="sc">-</span><span class="fl">6.5</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
-<span id="cb120-5"><a href="coefficients.html#cb120-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">35</span>, <span class="at">slope =</span> <span class="sc">-</span><span class="dv">5</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
+<p>In linear modelling, our coefficients are the values that change in our formula to describe our data. In our standard linear model formula (e.g. <code>y = a + a1*x</code>), the two coefficients represent the intercept (<code>a</code>) and the slope (<code>a1</code>). In other words, the <code>a</code> represents the value of <code>y</code> when <code>x</code> is 0 (so where the line would start on the y axis), and <code>a1</code> defines how quickly that line goes up or down (its gradient). There will be values for those two coefficients that will produce a better model that others. For example, let’s create two models to predict the miles per gallon a car will get based on its weight from the <code>mtcars</code> dataset and compare them.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="coefficients.html#cb121-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span></span>
+<span id="cb121-2"><a href="coefficients.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb121-3"><a href="coefficients.html#cb121-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb121-4"><a href="coefficients.html#cb121-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">45</span>, <span class="at">slope =</span> <span class="sc">-</span><span class="fl">6.5</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb121-5"><a href="coefficients.html#cb121-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">35</span>, <span class="at">slope =</span> <span class="sc">-</span><span class="dv">5</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
 <p>Here we’ve created two models with different coefficient values; one where <code>a</code> is 45 and <code>a1</code> is -6.5, and other where <code>a</code> is 35 and <code>a1</code> is -5. Both seem to represent the data pretty well, but how can we know which of the coefficients is the ‘better’ fit? Similarly, we’ve tried just two sets of values here, how can we compare different combinations of values to determine which model is better?</p>
 </div>
             </section>

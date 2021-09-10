@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>17.2 Documentation | opeRate</title>
+  <title>14.7 Video Game Sales Model | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="17.2 Documentation | opeRate" />
+  <meta property="og:title" content="14.7 Video Game Sales Model | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="17.2 Documentation | opeRate" />
+  <meta name="twitter:title" content="14.7 Video Game Sales Model | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="good-practice.html"/>
-<link rel="next" href="projects-as-packages.html"/>
+<link rel="prev" href="evaluating-models.html"/>
+<link rel="next" href="machine-learning-models.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -302,55 +302,140 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="documentation" class="section level2" number="17.2">
-<h2><span class="header-section-number">17.2</span> Documentation</h2>
-<p>When you’re working on a project, never think that you’ll remember everything when you come back to it. You won’t. Instead, imagine you’re always writing for code for someone who’s never seen it before, because, trust me, when you come back to a project after 6 months you’ll have absolutely no idea what you’re looking at.</p>
-<p>At the heart of writing code that’s easy to understand is documentation. Here we’ll talk about the two main types of documentation.</p>
-<div id="function-documentation" class="section level3" number="17.2.1">
-<h3><span class="header-section-number">17.2.1</span> Function documentation</h3>
-<p>To get a package on CRAN, all the functions that your package exports needs to be documented. So if you type, say, <code>?dplyr::mutate()</code> into the console and hit Enter, you’ll be taken to the Help page for the <code>mutate</code> function. This ensures that the package users are not left guessing what a parameter is supposed to be, or what they’re going to get returned from the function.</p>
-<p>Even if you’re not ever planning on submitting your work to CRAN, function documentation is extremely useful. The <code>roxygen</code> package makes this documentation as easy as possible for package developers, and you can use the same principles in your analysis.</p>
-<p>At the very least, you should be documentating the input variables (the <code>@param</code> tag in <code>roxygen</code>), your return value(s) (the <code>@return</code> tag) and maybe an example or two (the <code>@examples</code> tag). This will make explaining your code to someone else or relearning it yourself infinitely easier.</p>
+<div id="video-game-sales-model" class="section level2" number="14.7">
+<h2><span class="header-section-number">14.7</span> Video Game Sales Model</h2>
+<p>Now we’ve created some example models, let’s apply what we’ve learned to our video games dataset. First off, let’s model the effect of year and genre on video game sales between 1980 and 2000. Let’s start with a plot:</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="video-game-sales-model.html#cb143-1" aria-hidden="true" tabindex="-1"></a>vg_sales_to_model <span class="ot">&lt;-</span> tidy_vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb143-2"><a href="video-game-sales-model.html#cb143-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">1980</span> <span class="sc">&amp;</span> Year <span class="sc">&lt;=</span> <span class="dv">2000</span>,</span>
+<span id="cb143-3"><a href="video-game-sales-model.html#cb143-3" aria-hidden="true" tabindex="-1"></a>                Country <span class="sc">==</span> <span class="st">&quot;Global&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb143-4"><a href="video-game-sales-model.html#cb143-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Genre, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb143-5"><a href="video-game-sales-model.html#cb143-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb143-6"><a href="video-game-sales-model.html#cb143-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Genre =</span> forcats<span class="sc">::</span><span class="fu">fct_lump_n</span>(Genre, <span class="at">n =</span> <span class="dv">7</span>, <span class="at">w =</span> Total_Sales)) <span class="sc">%&gt;%</span></span>
+<span id="cb143-7"><a href="video-game-sales-model.html#cb143-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Genre <span class="sc">!=</span> <span class="st">&quot;Other&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb143-8"><a href="video-game-sales-model.html#cb143-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Genre, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb143-9"><a href="video-game-sales-model.html#cb143-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Total_Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span>
+<span id="cb143-10"><a href="video-game-sales-model.html#cb143-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb143-11"><a href="video-game-sales-model.html#cb143-11" aria-hidden="true" tabindex="-1"></a>vg_sales_to_model <span class="sc">%&gt;%</span></span>
+<span id="cb143-12"><a href="video-game-sales-model.html#cb143-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Total_Sales)) <span class="sc">+</span></span>
+<span id="cb143-13"><a href="video-game-sales-model.html#cb143-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb143-14"><a href="video-game-sales-model.html#cb143-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Genre)</span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
+<p>There does seem to be a relationship - we’re seeing more sales as the years increase - but it might not be equal for the different genres. For this reason, let’s create a model that looks at the interaction effects between genre and year:</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="video-game-sales-model.html#cb144-1" aria-hidden="true" tabindex="-1"></a>vg_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> vg_sales_to_model, <span class="at">formula =</span> Total_Sales <span class="sc">~</span> Year <span class="sc">*</span> Genre)</span></code></pre></div>
+<p>Let’s plot the same model using <code>{ggplot2}</code>:</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="video-game-sales-model.html#cb145-1" aria-hidden="true" tabindex="-1"></a>vg_sales_to_model <span class="sc">%&gt;%</span></span>
+<span id="cb145-2"><a href="video-game-sales-model.html#cb145-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Total_Sales, <span class="at">colour =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb145-3"><a href="video-game-sales-model.html#cb145-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb145-4"><a href="video-game-sales-model.html#cb145-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This will produce the same model as we did with the `lm()` model</span></span>
+<span id="cb145-5"><a href="video-game-sales-model.html#cb145-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb145-6"><a href="video-game-sales-model.html#cb145-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>)) <span class="sc">+</span></span>
+<span id="cb145-7"><a href="video-game-sales-model.html#cb145-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Genre)</span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<p>From our plot, it looks as though we’re only seeing a different effect of year in a couple of the genres - the role-playing genre seems to have grown at a faster rate than the others, with shooters growing at a slower rate. Let’s compare this to our model summary:</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="video-game-sales-model.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(vg_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Total_Sales ~ Year * Genre, data = vg_sales_to_model)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -14.139  -5.391  -1.586   5.334  30.230 
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)            -2.476e+03  6.403e+02  -3.867 0.000186 ***
+## Year                    1.249e+00  3.217e-01   3.883 0.000175 ***
+## GenreFighting           1.700e+02  1.084e+03   0.157 0.875656    
+## GenrePlatform           8.928e+02  9.407e+02   0.949 0.344602    
+## GenreRacing            -6.248e+02  9.957e+02  -0.627 0.531648    
+## GenreRole-Playing      -3.077e+03  1.241e+03  -2.479 0.014680 *  
+## GenreShooter            2.191e+03  9.055e+02   2.419 0.017162 *  
+## GenreSports            -8.449e+02  9.055e+02  -0.933 0.352778    
+## Year:GenreFighting     -8.664e-02  5.443e-01  -0.159 0.873805    
+## Year:GenrePlatform     -4.455e-01  4.727e-01  -0.943 0.347919    
+## Year:GenreRacing        3.130e-01  5.001e-01   0.626 0.532647    
+## Year:GenreRole-Playing  1.544e+00  6.231e-01   2.478 0.014693 *  
+## Year:GenreShooter      -1.103e+00  4.550e-01  -2.424 0.016969 *  
+## Year:GenreSports        4.245e-01  4.550e-01   0.933 0.352896    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 8.928 on 112 degrees of freedom
+## Multiple R-squared:  0.5087, Adjusted R-squared:  0.4517 
+## F-statistic: 8.922 on 13 and 112 DF,  p-value: 2.696e-12</code></pre>
+<p>This seems to support what we estimated from the plots - there’s definitely an effect of year, and we can see that this effect is different for the Role-Playing and Shooter groups. If we look at the estimate values, we can see that the Shooter genre has a negative value and the Role-Playing genre is positive. This also backs up what we estimated from the plots - the popularity of shooter games has grown more slowly than role-playing games.</p>
+<p>It’s worth noting that when you use a character or factor variable like we have here, the first level of that variable for the model. So we can see that there’s no <code>GenreAction</code> entry in our summary. This is because R has treated that genre as the base - the Intercept value - and then compared the effect of the other levels against that base. So when we say that the popularity of shooter game has grown more slowly, this is compare to the base class (the growth of action games).</p>
+<p>Before we call it a day however, I’m not sure we’ve got the right model. If we look at the residuals of the model specifically for the ‘Action’ genre, they don’t look very random:</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="video-game-sales-model.html#cb148-1" aria-hidden="true" tabindex="-1"></a>action_genre_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> vg_sales_to_model <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(Genre <span class="sc">==</span> <span class="st">&quot;Action&quot;</span>), Total_Sales <span class="sc">~</span> Year)</span>
+<span id="cb148-2"><a href="video-game-sales-model.html#cb148-2" aria-hidden="true" tabindex="-1"></a>vg_sales_to_model <span class="sc">%&gt;%</span></span>
+<span id="cb148-3"><a href="video-game-sales-model.html#cb148-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Genre <span class="sc">==</span> <span class="st">&quot;Action&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb148-4"><a href="video-game-sales-model.html#cb148-4" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_residuals</span>(action_genre_model) <span class="sc">%&gt;%</span></span>
+<span id="cb148-5"><a href="video-game-sales-model.html#cb148-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
+<span id="cb148-6"><a href="video-game-sales-model.html#cb148-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() </span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
+<p>Instead, we’re overestimating closer to the limits of our year range, and underestimating in the middle. This suggests to me that a quadratic model would be more appropriate. Let’s try that:</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="video-game-sales-model.html#cb149-1" aria-hidden="true" tabindex="-1"></a>vg_quad_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> vg_sales_to_model, <span class="at">formula =</span> Total_Sales <span class="sc">~</span> Year <span class="sc">+</span> <span class="fu">I</span>(Year<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Genre <span class="sc">+</span> Genre<span class="sc">:</span>Year)</span>
+<span id="cb149-2"><a href="video-game-sales-model.html#cb149-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb149-3"><a href="video-game-sales-model.html#cb149-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb149-4"><a href="video-game-sales-model.html#cb149-4" aria-hidden="true" tabindex="-1"></a>vg_sales_to_model <span class="sc">%&gt;%</span></span>
+<span id="cb149-5"><a href="video-game-sales-model.html#cb149-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Total_Sales, <span class="at">colour =</span> Genre)) <span class="sc">+</span></span>
+<span id="cb149-6"><a href="video-game-sales-model.html#cb149-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb149-7"><a href="video-game-sales-model.html#cb149-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This will produce the same model as we did with the `lm()` model</span></span>
+<span id="cb149-8"><a href="video-game-sales-model.html#cb149-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x <span class="sc">+</span> <span class="fu">I</span>(x<span class="sc">^</span><span class="dv">2</span>), <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb149-9"><a href="video-game-sales-model.html#cb149-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>)) <span class="sc">+</span></span>
+<span id="cb149-10"><a href="video-game-sales-model.html#cb149-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Genre)</span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="video-game-sales-model.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(vg_quad_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Total_Sales ~ Year + I(Year^2) + Genre + Genre:Year, 
+##     data = vg_sales_to_model)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -15.4608  -5.0524  -0.6718   3.5095  30.5729 
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)             4.506e+05  9.400e+04   4.794 5.11e-06 ***
+## Year                   -4.541e+02  9.447e+01  -4.807 4.84e-06 ***
+## I(Year^2)               1.144e-01  2.374e-02   4.820 4.58e-06 ***
+## GenreFighting           3.878e+02  9.913e+02   0.391  0.69637    
+## GenrePlatform           1.121e+03  8.606e+02   1.303  0.19542    
+## GenreRacing            -3.969e+02  9.108e+02  -0.436  0.66384    
+## GenreRole-Playing      -1.708e+03  1.169e+03  -1.461  0.14688    
+## GenreShooter            2.190e+03  8.271e+02   2.648  0.00927 ** 
+## GenreSports            -8.449e+02  8.271e+02  -1.022  0.30923    
+## Year:GenreFighting     -1.961e-01  4.977e-01  -0.394  0.69428    
+## Year:GenrePlatform     -5.599e-01  4.324e-01  -1.295  0.19802    
+## Year:GenreRacing        1.986e-01  4.575e-01   0.434  0.66499    
+## Year:GenreRole-Playing  8.577e-01  5.867e-01   1.462  0.14659    
+## Year:GenreShooter      -1.103e+00  4.156e-01  -2.653  0.00914 ** 
+## Year:GenreSports        4.245e-01  4.156e-01   1.021  0.30935    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 8.155 on 111 degrees of freedom
+## Multiple R-squared:  0.5938, Adjusted R-squared:  0.5425 
+## F-statistic: 11.59 on 14 and 111 DF,  p-value: 5.34e-16</code></pre>
+<p>This seems to have improved things. We now have a higher t value for our Intercept (representing our Action genre), suggesting that we’ve better captured the relationship with this new model. When we now look at the interactions, we can see that actually only the shooter genre has a significantly different interaction with Year. In other words, there is no difference in the relationship between Year and Sales for the genres other than if the game is shooter.</p>
+<p>Let’s check our residuals again to make sure we’re not still predictably over or underestimating:</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="video-game-sales-model.html#cb152-1" aria-hidden="true" tabindex="-1"></a>qd_action_genre_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> vg_sales_to_model <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(Genre <span class="sc">==</span> <span class="st">&quot;Action&quot;</span>), Total_Sales <span class="sc">~</span> Year <span class="sc">+</span> <span class="fu">I</span>(Year<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb152-2"><a href="video-game-sales-model.html#cb152-2" aria-hidden="true" tabindex="-1"></a>vg_sales_to_model <span class="sc">%&gt;%</span></span>
+<span id="cb152-3"><a href="video-game-sales-model.html#cb152-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Genre <span class="sc">==</span> <span class="st">&quot;Action&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb152-4"><a href="video-game-sales-model.html#cb152-4" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_residuals</span>(qd_action_genre_model) <span class="sc">%&gt;%</span></span>
+<span id="cb152-5"><a href="video-game-sales-model.html#cb152-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
+<span id="cb152-6"><a href="video-game-sales-model.html#cb152-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
+<p>That looks much more random to me!</p>
 </div>
-<div id="long-form-documentation" class="section level3" number="17.2.2">
-<h3><span class="header-section-number">17.2.2</span> Long-form documentation</h3>
-<p>Whilst understanding what each of your functions does is important, it’s also important to document how all of the little pieces fit together. To acheive this, it’s a good idea to write some long-form documentation, like a README or a vignette.</p>
-<p>Long form-documentation is often written in something called RMarkdown. RMarkdown is a spin on <a href="https://en.wikipedia.org/wiki/Markdown">markdown</a> that allows you to embed and run R code when generating a document. This can be really useful for explaining your process and sharing your workings.</p>
-<div id="readmes" class="section level4" number="17.2.2.1">
-<h4><span class="header-section-number">17.2.2.1</span> READMEs</h4>
-<p>READMEs act as an entrypoint for anyone that stumbles across your package. It should be in the root of your project directory, and should be written in markdown or plain text. Anyone should be able to read your README and understand what the project is doing. I won’t go into exactly what should be included because it will depend on the type of project your doing, but you know a good README when you see it.</p>
-<p>If you also use a repository system like GitHub, your README will act as the homepage and so should always be present.</p>
-</div>
-<div id="vignettes" class="section level4" number="17.2.2.2">
-<h4><span class="header-section-number">17.2.2.2</span> Vignettes</h4>
-<p>Vignettes are less defined that READMEs. Vignettes should be an in-depth form of documentation for a concept in your project. For example, say that your project is looking at the level of data quality of various open source APIs. You might have a few different vignettes covering different important concepts in your project:</p>
-<ol style="list-style-type: decimal">
-<li>Background
-<ul>
-<li>This would cover why the how the project came to be, and what the ultimate goal is.</li>
-</ul></li>
-<li>Selection of APIs
-<ul>
-<li>Why were certain APIs chosen and others excluded? That would be explained here.</li>
-</ul></li>
-<li>Methodology
-<ul>
-<li>How are you assessing data quality? Here you would explain your different tests and standards.</li>
-</ul></li>
-</ol>
-<p>Whilst a README serves as a general introduction to the project, vignettes more often serve as in-depth descriptions of certain aspects of the project. Like READMEs, vignettes should be written in markdown (or more likely RMarkdown).</p>
-
-</div>
-</div>
-</div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="good-practice.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="projects-as-packages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="evaluating-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="machine-learning-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
