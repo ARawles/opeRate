@@ -99,7 +99,7 @@ best_model <- coefficients %>%
   # Here we calculate the rmse of each model
   dplyr::mutate(rmse = unlist(purrr::map2(a, a1, rmse, wt = mtcars$wt, mpg = mtcars$mpg))) %>%
   dplyr::filter(rmse == min(rmse))
-print(best_model_id)
+print(best_model)
 ```
 
 According to our analysis, model `r best_model$id` has the lowest residual error. Let's see what that model looks like:
