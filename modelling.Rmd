@@ -292,27 +292,26 @@ The F statistic is a global test for whether any of your coefficients are non-ze
 
 As we've learnt previously, the goal of our model is to reduce the total residual difference between our model and the data. But blindly reducing this value without then inspecting the result can be dangerous. When you're using the `lm()` function, your residuals should be **normally distributed**. That means that (essentially) your model should be overestimating as much as it's underestimating for every value of y. 
 
-Let's take a look at the residual values for our video game sales model:
-
+Let's take a look at the residual values for our `mtcars` model:
 
 ```{r}
-vg_residuals <- vg_sales_to_model %>%
-  modelr::add_residuals(model = vg_model)
+mt_residuals <- mtcars %>%
+  modelr::add_residuals(model = lm(data = mtcars, formula = mpg ~ wt + hp))
 
-vg_residuals %>%
+mt_residuals %>%
   ggplot(aes(x = resid)) +
-  geom_freqpoly(binwidth = 25)
+  geom_freqpoly(binwidth = 0.5)
 ```
 
-Things kind of look okay, but it's tough to know for sure because have so few estimates. Let's take a look at how our residuals change for different Year values:
+Things kind of look okay, but it's tough to know for sure because have so few estimates. Let's take a look at how our residuals change for different `mpg` values:
 
 ```{r}
-vg_residuals %>%
-  ggplot(aes(x = Year, y = resid)) + 
+mt_residuals %>%
+  ggplot(aes(x = mpg, y = resid)) + 
   geom_point()
 ```
 
-Here we can see what looks like random noise. This is good because it means that our model isn't better at predicted one year or range of years better than any other.
+Here we can see what looks like random noise. This is good because it means that our model isn't performing better for some values than for others. If it is, that means we have a systematic bias in our model.
 
 Alternatively, let's compare this plot with a plot of one of the `anscombe` datasets:
 
@@ -324,8 +323,7 @@ tidy_anscombe %>%
   geom_point()
 ```
 
-Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern for different values of x.
-
+Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern for different values of x. If you see a residual plot like this, you're likelyl not applying an appropriate model family or type.
 
 ## Video Game Sales Model
 
