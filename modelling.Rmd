@@ -76,8 +76,8 @@ ggplot(lm_test_data, aes(x = x, y = y)) +
 Quadratic models allow us to capture relationships between variables that change with different values of x. Real-life examples of relationships like this include:
 
 * population growth
-* appreciation of certain commodities.
-* disease infection
+* appreciation of certain commodities
+* infection rates
 
 We'll look at how to identify what type of model is more appropriate for your analysis a bit later.
 
@@ -148,7 +148,7 @@ rmse <- function(a, a1, wt, mpg) {
 }
 ```
 
-Now we know how to calculate our RMSE, let's apply calculate which of our models has the lowest error:
+Now we know how to calculate our RMSE, let's calculate which of our models has the lowest error:
 
 ```{r}
 best_model <- coefficients %>%
@@ -177,25 +177,25 @@ Now that we've understood the basics behind a linear model, I can finally reveal
 
 ```{r}
 lm_model <- lm(data = mtcars, mpg ~ wt)
-lm_model
 # This formula is equivalent to `y = a + (a1*x)`
 # where y = mpg and x = wt
+lm_model
 
 ```
 
-We can see that the `lm()` function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren't too far off!
+We can see that the `lm()` function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren't too far off with `r best_model$a` and `r best_model$a1`!
 
 To model quadratic relationships with the `lm()` function, our syntax is a little different:
 
 ```{r}
-lm(data = mtcars, mpg ~ wt + I(wt^2))
 # This formula is equivalent to `y = a + (a1*x) + (a2*x^2)
+lm(data = mtcars, mpg ~ wt + I(wt^2))
 ```
 
 **Note:**
 The `I()` bit here tells R to treat what we've written (`wt^2`) as one expression, rather than two (`wt` & `2`).
 
-The `lm()` function returns a linear model. We'll take a look at how to evaluate our model in the [Evaluating Models](#evaluating-models) section.
+The `lm()` function returns a linear model object. We'll take a look at how to evaluate a model in the [Evaluating Models](#evaluating-models) section.
 
 ## Multiple Predictors
 
@@ -221,12 +221,12 @@ lm(data = mtcars, formula = mpg ~ wt * hp)
 ```
 
 Now we have 3 coefficients:
-  * The impact of `wt` alone
-  * The impact of `hp` alone
-  * The impact of `wt:hp` together
-  
-We could also write the formula like this `mpg ~ wt + hp + wt:hp`.
-  
+* The impact of `wt` alone
+* The impact of `hp` alone
+* The impact of `wt:hp` together
+
+We could also write the formula like this `mpg ~ wt + hp + wt:hp`. 
+
 Now we know how to create models using the `lm()` function, let's look at how we can better understand and evaluate them.
 
 ## Evaluating Models
@@ -242,7 +242,10 @@ tidy_anscombe <- anscombe %>%
                       names_pattern = "(.)(.)"
   )
 
-models <- purrr::map(1:4, ~tidy_anscombe %>% dplyr::filter(dataset == .x) %>% lm(data = ., formula = y ~ x))
+models <- purrr::map(1:4, ~tidy_anscombe %>%
+                       dplyr::filter(dataset == .x) %>%
+                       lm(data = ., formula = y ~ x)
+)
 models
 ```
 
@@ -257,14 +260,20 @@ tidy_anscombe %>%
   facet_wrap(~dataset)
 ```
 
-Now that we've looked a little deeper, we can clearly see that these models are inappropriate for 3 of the datasets (2, 3 and 4). The lesson here is that there are multiple tools at your disposal when analysing data, and overeliance on a particular tool without due care and attention can cause issues.
+Now that we've looked a little deeper, we can clearly see that these models are inappropriate for three of the four datasets (2, 3 and 4). The lesson here is that there are multiple tools at your disposal when analysing data, and overeliance on a particular tool without due care and attention can cause issues.
 
 With that in mind, let's look at some ways of evaluating the strength of your model.
 
 
 ### `lm()` Output
 
-Now we've created a model using the `lm()` function, let's understand the output a little bit so we can evaluate our model. When we just print the model, we get the formula we provided, and the coefficients. By using the `summary()` function, we can find out a little more about our model:
+Now we've created a model using the `lm()` function, let's understand the output a little bit so we can evaluate our model. When we just print the model, we get the formula we provided, and the coefficients:
+
+```{r}
+print(lm_model)
+```
+
+By using the `summary()` function, we can find out a little more about our model:
 
 ```{r}
 summary(lm_model)
@@ -282,7 +291,7 @@ We've also now got an expanded view of our coefficients. We've still got our est
 
 *Standard error*
 
-The standard error represents the average difference between the estimated value and the actual value. So for example, our coefficient estimate for `wt` is roughly -5, meaning that we lose 5 miles per gallon for every increase of 1000 lbs (1 `wt` unit). Our error value of roughly 0.5 tells us that actually, on average, it's between -5.5 and -4.5. If our standard error was 2, then that would suggest that on average, an create in 1 `wt` unit would correspond with a change of between -7 and -3. A lower standard error value usually represents a more accurate model.
+The standard error represents the average difference between the estimated value and the actual value. So for example, our coefficient estimate for `wt` is roughly -5, meaning that we lose 5 miles per gallon for every increase of 1000 lbs (1 `wt` unit). Our error value of roughly 0.5 tells us that actually, on average, it's between -5.5 and -4.5. If our standard error was 2, then that would suggest that on average, an increase in 1 `wt` unit would correspond with a change of between -7 and -3. A lower standard error value usually represents a more accurate model.
 
 *t value*
 
@@ -292,7 +301,7 @@ The t value is then the estimate divided by its error. We can use this value to 
 
 P values are something of a hot topic in statistics so we won't discuss them in length here. Instead, we'll focus on exactly what a P value is - not whether it's a good idea to use one.
 
-A t value is converted to a P value via a T distribution table  based on the degrees of freedom (don't worry about what this is). P values represent how often we would see this same t value if the two variables had absolutely no relationship at all. The larger the t value is (i.e., the stronger the relationship appears to be), the less likely it is that we would observe this relationship purely by chance.
+A t value is converted to a P value via a T distribution table  based on the degrees of freedom (don't worry about what this is). P values represent how often we would see this same t value if the two variables had absolutely no relationship at all. The larger the t value is (i.e. the stronger the relationship appears to be), the less likely it is that we would observe this relationship purely by chance.
 The typically accepted value for considering a relationship to not be the result of chance is 0.05 (i.e. we'd only see these results if there was truly no relationship 1 in 20 times), but that's more an academic rule of thumb. In reality, you shouldn't really rely too heavily on the p value to tell you the strength of your model.
 
 **Residual standard error**
@@ -307,7 +316,7 @@ If you have one variable, then the Multiple R-Squared value is fine to use. If y
 
 **F Statistic**
 
-The F statistic is a global test for whether any of your coefficients are non-zero (if you have a relationship between any of your variables and the dependent variable). The reason we have this global test is that as you increase the number of variables in our model, you're increasing the likelihood that at least 1 will have a significant relationship with y. We learned before that our rough estimate for considering a 'true' relationship is that we would only observe the t value of that size once every 20 times if there was no relationship. Well then if you include 20 variables, you'll get one significant predictor on average each time. The F value tells you then whether you have at least 1 significant predictor given the number of variables that you tried.
+The F statistic is a global test for whether any of your coefficients are non-zero (if you have a relationship between any of your variables and the dependent variable). The reason we have this global test is that as you increase the number of variables in our model, you're increasing the likelihood that at least 1 will have a significant relationship with your dependent variable. We learned before that our rough estimate for considering a 'true' relationship is that we would only observe the t value of that size once every 20 times if there was no relationship. Well then if you include 20 variables, you'll get one significant predictor on average each time. The F value takes this into account and then tells you whether you have at least 1 significant predictor given the number of variables that you tried.
 
 ### Residuals
 
@@ -346,6 +355,74 @@ tidy_anscombe %>%
 
 Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern for different values of x. If you see a residual plot like this, you're likely not applying an appropriate model family or type.
 
+### Overfitting
+
+The goal of a model is usually to make a prediction. To be able to make those predictions, we train the model on observed data (i.e. data where we have the values of the independent and dependent variables). However, if we train the model to represent the observed data too well, the model may not perform well on new datasets. We call this **overfitting** - our model represents the test data too well and does not generalise well.
+
+Let's look at an example of overfitting. We'll split the `mtcars` dataset into two; a training set and a test set:
+
+```{r}
+train_mtcars <- dplyr::filter(mtcars, wt <= 3.3)
+test_mtcars <- dplyr::filter(mtcars, wt >= 3.3)
+
+```
+
+Then we'll train our model on the test set and evaluate the residuals:
+
+```{r}
+# This is the same as wt + wt^2 + wt^3 + wt^4 + ... wt^7
+overfit_model <- lm(data = train_mtcars, formula = mpg ~ splines::ns(wt, 7))
+
+train_mtcars %>%
+  modelr::add_predictions(overfit_model) %>%
+  ggplot(aes(y = mpg, x = wt)) +
+  geom_point() +
+  geom_line(aes(y = pred))
+
+train_mtcars %>%
+  modelr::add_residuals(overfit_model) %>%
+  ggplot(aes(x = wt, y = resid)) +
+  geom_hline(yintercept = 0) +
+  geom_point()
+```
+
+Things seem to look fine. Our residuals look pretty random and we seem to be representing the data we have well. When we then apply the model to our test dataset however...
+
+```{r, echo = FALSE}
+test_mtcars %>%
+  modelr::add_predictions(overfit_model) %>%
+  ggplot(aes(y = mpg, x = wt)) +
+  geom_point() +
+  geom_line(aes(y = pred))
+```
+ 
+That's clearly not right at all. We've got predictions that are no where near the actual values.
+
+What's happened is our model has overfit the training data, representing noise and randomness as a true relationship between the variables. When we then apply the model to new data then, where that noise is different, it performs terribly.
+ 
+Let's compare this with a simpler model that doesn't overfit.
+
+```{r}
+nonoverfit_model <- lm(data = train_mtcars, formula = mpg ~ wt)
+test_mtcars %>%
+  modelr::add_predictions(nonoverfit_model) %>%
+  ggplot(aes(y = mpg, x = wt)) +
+  geom_point() +
+  geom_line(aes(y = pred))
+```
+
+Much better. The model still isn't perfect - certainly not as good as if it was trained on all the data - but it's much better than our previous example even though it's much less complex.
+
+#### Avoiding overfitting
+
+Unforunately, there's no single way to really avoid overfitting. There are things that can be done to mitigate it though:
+
+* Prefer simplicity
+    + Where possible, a simpler model will likely be preferable to a more complex model
+* Split your test and training data appropriately
+    + In our example, we purposely split the training data badly but in practice you should aim to represent your data equally well in both your training and test datasets.
+*  Properly evaluate your models
+    + By properly evaluating and understanding our model, you should be able to identify and mitigate the effects of overfitting
 ## Video Game Sales Model
 
 Now we've created some example models, let's apply what we've learned to our video games dataset.
@@ -405,6 +482,7 @@ vg_sales_to_model %>%
   dplyr::filter(Genre == "Action") %>%
   modelr::add_residuals(action_genre_model) %>%
   ggplot(aes(x = Year, y = resid)) +
+  geom_hline(yintercept = 0) +
   geom_point() 
 ```
 
@@ -435,8 +513,13 @@ vg_sales_to_model %>%
   dplyr::filter(Genre == "Action") %>%
   modelr::add_residuals(qd_action_genre_model) %>%
   ggplot(aes(x = Year, y = resid)) +
+  geom_hline(yintercept = 0) +
   geom_point()
 ```
 
 
 That looks much more random to me!
+
+## Questions
+
+1. What's the difference between `y ~ x*w` and `y ~ x:w`?
