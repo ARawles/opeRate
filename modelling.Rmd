@@ -388,7 +388,7 @@ train_mtcars %>%
 
 Things seem to look fine. Our residuals look pretty random and we seem to be representing the data we have well. When we then apply the model to our test dataset however...
 
-```{r, echo = FALSE}
+```{r}
 test_mtcars %>%
   modelr::add_predictions(overfit_model) %>%
   ggplot(aes(y = mpg, x = wt)) +
@@ -423,6 +423,7 @@ Unforunately, there's no single way to really avoid overfitting. There are thing
     + In our example, we purposely split the training data badly but in practice you should aim to represent your data equally well in both your training and test datasets.
 *  Properly evaluate your models
     + By properly evaluating and understanding our model, you should be able to identify and mitigate the effects of overfitting
+
 ## Video Game Sales Model
 
 Now we've created some example models, let's apply what we've learned to our video games dataset.
@@ -452,7 +453,7 @@ There does seem to be a relationship - we're seeing more sales as the years incr
 vg_model <- lm(data = vg_sales_to_model, formula = Total_Sales ~ Year * Genre)
 ```
 
-Let's plot a model for each genre model using `{ggplot2}`:
+Let's plot a model for each genre model:
 
 ```{r, warning = FALSE}
 vg_sales_to_model %>%
@@ -470,9 +471,9 @@ From our plot, it looks as though we're only seeing a different effect of year i
 summary(vg_model)
 ```
 
-This seems to support what we estimated from the plots - there's definitely a positive effect of year (we're selling more games as the years go by), and we can see that this effect is different for the Role-Playing and Shooter groups. If we look at the estimate values, we can see that the Shooter genre has a negative value and the Role-Playing genre is positive. This also backs up what we estimated from the plots - the popularity of shooter games has grown more slowly than role-playing games.
+This seems to support what we estimated from the plots - there's definitely a positive effect of year (we're selling more games as the years go by), and we can see that this effect is different for the Role-Playing and Shooter groups. If we look at the estimate values, we can see that the Shooter genre has a negative value and the Role-Playing genre is positive. This also backs up what we estimated from the plots - the popularity of shooter games has grown more slowly than other genres, whilst the popularity of role-playing games has increased more quickly.
 
-It's worth noting that when you use a character or factor variable like we have here (`Genre`), the first level of that variable is used as the base for the model. So we can see that there's no `GenreAction` entry in our summary. This is because R has treated that genre as the base (i.e the Intercept value) and then compared the effect of the other levels against that base. So when we say that the popularity of shooter game has grown more slowly, this is compare to the base class (the growth of action games).
+It's worth noting that when you use a character or factor variable like we have here (`Genre`), the first level of that variable is used as the base for the model. So we can see that there's no `GenreAction` entry in our summary. This is because R has treated that genre as the base (i.e the Intercept value) and then compared the effect of the other levels against that base. So when we say that the popularity of shooter game has grown more slowly, this is compared to the base class (the growth of action games).
 
 Before we call it a day however, let's evaluate our model residuals. If we look at the residuals of the model specifically for the 'Action' genre, they don't look very random:
 
