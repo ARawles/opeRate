@@ -176,7 +176,8 @@ That's essentially the process that the `lm()` function in R uses; it automatica
 Now that we've understood the basics behind a linear model, I can finally reveal that R has a function that will do all of this for us. The `lm()` function in R just needs the dataset and the formula for our model, and works out the coefficients for us, giving us back a model:
 
 ```{r}
-lm(data = mtcars, mpg ~ wt)
+lm_model <- lm(data = mtcars, mpg ~ wt)
+lm_model
 # This formula is equivalent to `y = a + (a1*x)`
 # where y = mpg and x = wt
 
