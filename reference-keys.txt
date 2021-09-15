@@ -69,7 +69,6 @@ evaluating-models
 lm-output
 residuals-1
 video-game-sales-model
-machine-learning-models
 projects-introduction
 workflows
 basic-workflow

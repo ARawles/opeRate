@@ -232,7 +232,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.6.2" data-path="evaluating-models.html"><a href="evaluating-models.html#residuals-1"><i class="fa fa-check"></i><b>14.6.2</b> Residuals</a></li>
 </ul></li>
 <li class="chapter" data-level="14.7" data-path="video-game-sales-model.html"><a href="video-game-sales-model.html"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a></li>
-<li class="chapter" data-level="14.8" data-path="machine-learning-models.html"><a href="machine-learning-models.html"><i class="fa fa-check"></i><b>14.8</b> Machine Learning Models</a></li>
 </ul></li>
 <li class="part"><span><b>III Projects</b></span></li>
 <li class="chapter" data-level="15" data-path="projects-introduction.html"><a href="projects-introduction.html"><i class="fa fa-check"></i><b>15</b> Introduction</a></li>
@@ -321,8 +320,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="state-your-dependencies" class="section level3" number="17.1.4">
 <h3><span class="header-section-number">17.1.4</span> State your dependencies</h3>
 <p>One of the great things about R is the number of packages that are available that let you do all sorts of weird and wonderful things. Unfortunately, because there are so many great packages, it’s unlikely that the person you’re sharing your code with will have them all installed. If you’re sending someone a script, then best practice is to include all the packages you use at the top of your script like this:</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="good-practice.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb153-2"><a href="good-practice.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="good-practice.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb154-2"><a href="good-practice.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
 <p>An extra step which few people do but can be very helpful is to still prepend your functions with which package they came from like this <code>dplyr::mutate()</code>. Not only does this avoid any namespace conflicts where two packages might have functions with the same name and you don’t end up using the one you think you are because of the order of your <code>library()</code> calls, but it also makes it infinitely easier for anyone reading your code to find the package that a function comes from.
 Admittedly, this is overkill in a sense because we’ve already told R which packages we’re using with our <code>library()</code> calls and R has loaded in the objects from that package, but this practice can really improve the readability of your code.</p>
 <p>Later we’ll look at designing our project as a package and packages have a different way of stating dependencies for the user, so this is primarily for the case where you’re just sending a script or two to someone.</p>

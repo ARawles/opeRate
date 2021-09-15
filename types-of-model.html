@@ -232,7 +232,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.6.2" data-path="evaluating-models.html"><a href="evaluating-models.html#residuals-1"><i class="fa fa-check"></i><b>14.6.2</b> Residuals</a></li>
 </ul></li>
 <li class="chapter" data-level="14.7" data-path="video-game-sales-model.html"><a href="video-game-sales-model.html"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a></li>
-<li class="chapter" data-level="14.8" data-path="machine-learning-models.html"><a href="machine-learning-models.html"><i class="fa fa-check"></i><b>14.8</b> Machine Learning Models</a></li>
 </ul></li>
 <li class="part"><span><b>III Projects</b></span></li>
 <li class="chapter" data-level="15" data-path="projects-introduction.html"><a href="projects-introduction.html"><i class="fa fa-check"></i><b>15</b> Introduction</a></li>
@@ -305,6 +304,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="types-of-model" class="section level2" number="14.1">
 <h2><span class="header-section-number">14.1</span> Types of model</h2>
 <p>Models types usually fall into “families”. These will be a set of models that are underpinned by some common statistics or philosophy. The most common type of model that is taught at beginner level is the linear model. A linear model assumes a relationship that can be represented in the form <code>y = a + a1x...</code>, where <code>a</code> and <code>a{n}</code> represent coefficients (values that will change between models depending on your data).</p>
+<p>In this chapter we’re going to look exclusively at linear models. In the next chapter though, we’ll take a different family of models; neural networks.</p>
 <div id="linear-models" class="section level3" number="14.1.1">
 <h3><span class="header-section-number">14.1.1</span> Linear models</h3>
 <p>A linear model with the formula <code>y = 8 + (2*x)</code> might look like this:</p>
@@ -316,20 +316,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quadratic-exponential-models" class="section level3" number="14.1.2">
 <h3><span class="header-section-number">14.1.2</span> Quadratic &amp; Exponential Models</h3>
 <p>The linear model also extends to quadratic or exponential functions. This is because the ‘linear’ in linear model refers to the coefficients rather than our regression line being linear.</p>
-<p>Quadratic models are expressed by the formula <code>y = a + (a1*x) + (a2*x^2) ... + (a{n}*x^{n})</code>, and allow us to quantify non-linear relationships. For example, a quadratic model with the formula <code>y = 12000 - (2200*x) + (100*x^2)</code> might look like this:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="types-of-model.html#cb120-1" aria-hidden="true" tabindex="-1"></a>lm_test_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb120-2"><a href="types-of-model.html#cb120-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">20</span>,</span>
-<span id="cb120-3"><a href="types-of-model.html#cb120-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> (<span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">10</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb120-4"><a href="types-of-model.html#cb120-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb120-5"><a href="types-of-model.html#cb120-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb120-6"><a href="types-of-model.html#cb120-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lm_test_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb120-7"><a href="types-of-model.html#cb120-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="st">&quot;jitter&quot;</span>) <span class="sc">+</span></span>
-<span id="cb120-8"><a href="types-of-model.html#cb120-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> x <span class="sc">+</span> <span class="fu">I</span>(x<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
+<p>Quadratic models are expressed by the formula <code>y = a + (a1*x) + (a2*x^2)</code>, and allow us to quantify non-linear relationships. For example, a quadratic model with the formula <code>y = 12000 - (2200*x) + (100*x^2)</code> might look like this:</p>
 <p><img src="opeRate_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
-<p>Quadratic models allow us to capture relationships between variables that change with different values of x. Real-life examples of relationships like this include:
-* population growth
-* appreciation of certain commodities.
-* disease infection</p>
+<p>Quadratic models allow us to capture relationships between variables that change with different values of x. Real-life examples of relationships like this include:</p>
+<ul>
+<li>population growth</li>
+<li>appreciation of certain commodities.</li>
+<li>disease infection</li>
+</ul>
 <p>We’ll look at how to identify what type of model is more appropriate for your analysis a bit later.</p>
 </div>
 </div>

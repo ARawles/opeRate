@@ -232,7 +232,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.6.2" data-path="evaluating-models.html"><a href="evaluating-models.html#residuals-1"><i class="fa fa-check"></i><b>14.6.2</b> Residuals</a></li>
 </ul></li>
 <li class="chapter" data-level="14.7" data-path="video-game-sales-model.html"><a href="video-game-sales-model.html"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a></li>
-<li class="chapter" data-level="14.8" data-path="machine-learning-models.html"><a href="machine-learning-models.html"><i class="fa fa-check"></i><b>14.8</b> Machine Learning Models</a></li>
 </ul></li>
 <li class="part"><span><b>III Projects</b></span></li>
 <li class="chapter" data-level="15" data-path="projects-introduction.html"><a href="projects-introduction.html"><i class="fa fa-check"></i><b>15</b> Introduction</a></li>
@@ -305,8 +304,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="lm" class="section level2" number="14.4">
 <h2><span class="header-section-number">14.4</span> <code>lm()</code></h2>
 <p>Now that we’ve understood the basics behind a linear model, I can finally reveal that R has a function that will do all of this for us. The <code>lm()</code> function in R just needs the dataset and the formula for our model, and works out the coefficients for us, giving us back a model:</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="lm.html#cb127-1" aria-hidden="true" tabindex="-1"></a>lm_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> mtcars, mpg <span class="sc">~</span> wt)</span>
-<span id="cb127-2"><a href="lm.html#cb127-2" aria-hidden="true" tabindex="-1"></a>lm_model</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="lm.html#cb126-1" aria-hidden="true" tabindex="-1"></a>lm_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> mtcars, mpg <span class="sc">~</span> wt)</span>
+<span id="cb126-2"><a href="lm.html#cb126-2" aria-hidden="true" tabindex="-1"></a>lm_model</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ wt, data = mtcars)
@@ -314,6 +313,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Coefficients:
 ## (Intercept)           wt  
 ##      37.285       -5.344</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="lm.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This formula is equivalent to `y = a + (a1*x)`</span></span>
+<span id="cb128-2"><a href="lm.html#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="co"># where y = mpg and x = wt</span></span></code></pre></div>
 <p>We can see that the <code>lm()</code> function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren’t too far off!</p>
 <p>To model quadratic relationships with the <code>lm()</code> function, our syntax is a little different:</p>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="lm.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> mtcars, mpg <span class="sc">~</span> wt <span class="sc">+</span> <span class="fu">I</span>(wt<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
@@ -324,8 +325,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Coefficients:
 ## (Intercept)           wt      I(wt^2)  
 ##      49.931      -13.380        1.171</code></pre>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="lm.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This formula is equivalent to `y = a + (a1*x) + (a2*x^2)</span></span></code></pre></div>
 <p><strong>Note:</strong>
 The <code>I()</code> bit here tells R to treat what we’ve written (<code>wt^2</code>) as one expression, rather than two (<code>wt</code> &amp; <code>2</code>).</p>
+<p>The <code>lm()</code> function returns a linear model. We’ll take a look at how to evaluate our model in the <a href="evaluating-models.html#evaluating-models">Evaluating Models</a> section.</p>
 </div>
             </section>
 
