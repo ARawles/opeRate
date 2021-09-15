@@ -68,7 +68,9 @@ interaction-effects
 evaluating-models
 lm-output
 residuals-1
-video-game-sales-model
+overfitting
+avoiding-overfitting
+questions
 projects-introduction
 workflows
 basic-workflow

@@ -230,8 +230,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="14.6.1" data-path="evaluating-models.html"><a href="evaluating-models.html#lm-output"><i class="fa fa-check"></i><b>14.6.1</b> <code>lm()</code> Output</a></li>
 <li class="chapter" data-level="14.6.2" data-path="evaluating-models.html"><a href="evaluating-models.html#residuals-1"><i class="fa fa-check"></i><b>14.6.2</b> Residuals</a></li>
+<li class="chapter" data-level="14.6.3" data-path="evaluating-models.html"><a href="evaluating-models.html#overfitting"><i class="fa fa-check"></i><b>14.6.3</b> Overfitting</a></li>
 </ul></li>
-<li class="chapter" data-level="14.7" data-path="video-game-sales-model.html"><a href="video-game-sales-model.html"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a></li>
+<li class="chapter" data-level="14.7" data-path="questions.html"><a href="questions.html"><i class="fa fa-check"></i><b>14.7</b> Questions</a></li>
 </ul></li>
 <li class="part"><span><b>III Projects</b></span></li>
 <li class="chapter" data-level="15" data-path="projects-introduction.html"><a href="projects-introduction.html"><i class="fa fa-check"></i><b>15</b> Introduction</a></li>
@@ -331,15 +332,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb122-9"><a href="residuals.html#cb122-9" aria-hidden="true" tabindex="-1"></a>  diff <span class="ot">&lt;-</span> <span class="fu">model</span>(a, a1, wt) <span class="sc">-</span> mpg</span>
 <span id="cb122-10"><a href="residuals.html#cb122-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="fu">mean</span>(diff <span class="sc">^</span> <span class="dv">2</span>))</span>
 <span id="cb122-11"><a href="residuals.html#cb122-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Now we know how to calculate our RMSE, let’s apply calculate which of our models has the lowest error:</p>
+<p>Now we know how to calculate our RMSE, let’s calculate which of our models has the lowest error:</p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="residuals.html#cb123-1" aria-hidden="true" tabindex="-1"></a>best_model <span class="ot">&lt;-</span> coefficients <span class="sc">%&gt;%</span></span>
 <span id="cb123-2"><a href="residuals.html#cb123-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Here we calculate the rmse of each model</span></span>
 <span id="cb123-3"><a href="residuals.html#cb123-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">rmse =</span> <span class="fu">unlist</span>(purrr<span class="sc">::</span><span class="fu">map2</span>(a, a1, rmse, <span class="at">wt =</span> mtcars<span class="sc">$</span>wt, <span class="at">mpg =</span> mtcars<span class="sc">$</span>mpg))) <span class="sc">%&gt;%</span></span>
 <span id="cb123-4"><a href="residuals.html#cb123-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(rmse <span class="sc">==</span> <span class="fu">min</span>(rmse))</span>
 <span id="cb123-5"><a href="residuals.html#cb123-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(best_model)</span></code></pre></div>
-<pre><code>##   id        a        a1     rmse
-## 1  6 37.11744 -5.449676 2.993998</code></pre>
-<p>According to our analysis, model 6 has the lowest residual error. Let’s see what that model looks like:</p>
+<pre><code>##   id        a       a1     rmse
+## 1  7 37.00178 -5.27566 2.950558</code></pre>
+<p>According to our analysis, model 7 has the lowest residual error. Let’s see what that model looks like:</p>
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="residuals.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
 <span id="cb125-2"><a href="residuals.html#cb125-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb125-3"><a href="residuals.html#cb125-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">data =</span> best_model, <span class="fu">aes</span>(<span class="at">intercept =</span> a, <span class="at">slope =</span> a1, <span class="at">colour =</span> <span class="fu">as.factor</span>(id)), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>

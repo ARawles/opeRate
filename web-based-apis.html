@@ -230,8 +230,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="14.6.1" data-path="evaluating-models.html"><a href="evaluating-models.html#lm-output"><i class="fa fa-check"></i><b>14.6.1</b> <code>lm()</code> Output</a></li>
 <li class="chapter" data-level="14.6.2" data-path="evaluating-models.html"><a href="evaluating-models.html#residuals-1"><i class="fa fa-check"></i><b>14.6.2</b> Residuals</a></li>
+<li class="chapter" data-level="14.6.3" data-path="evaluating-models.html"><a href="evaluating-models.html#overfitting"><i class="fa fa-check"></i><b>14.6.3</b> Overfitting</a></li>
 </ul></li>
-<li class="chapter" data-level="14.7" data-path="video-game-sales-model.html"><a href="video-game-sales-model.html"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a></li>
+<li class="chapter" data-level="14.7" data-path="questions.html"><a href="questions.html"><i class="fa fa-check"></i><b>14.7</b> Questions</a></li>
 </ul></li>
 <li class="part"><span><b>III Projects</b></span></li>
 <li class="chapter" data-level="15" data-path="projects-introduction.html"><a href="projects-introduction.html"><i class="fa fa-check"></i><b>15</b> Introduction</a></li>
@@ -316,10 +317,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>As previously mentioned, to extract something from the API, you’ll be using the <code>GET</code> method. The <code>httr</code> package makes this super easy by providing a <code>GET</code> function. To this function, we’ll need to provide a URL. The <code>GET</code> function will then send a GET request to that address and return the response. A really simple GET request could be:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="web-based-apis.html#cb24-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;http://google.com&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [http://www.google.com/]
-##   Date: 2021-09-15 09:29
+##   Date: 2021-09-15 11:02
 ##   Status: 200
 ##   Content-Type: text/html; charset=ISO-8859-1
-##   Size: 15.8 kB
+##   Size: 15.9 kB
 ## &lt;!doctype html&gt;&lt;html itemscope=&quot;&quot; itemtype=&quot;http://schema.org/WebPage&quot; lang=&quot;...
 ## var f=this||self;var h,k=[];function l(a){for(var b;a&amp;&amp;(!a.getAttribute||!(b=...
 ## function n(a,b,c,d,g){var e=&quot;&quot;;c||-1!==b.search(&quot;&amp;ei=&quot;)||(e=&quot;&amp;ei=&quot;+l(d),-1===...
@@ -361,7 +362,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The first step in accessing an API is to understand that commands the API is expecting. APIs will have what we call <strong>endpoints</strong>. These are paths that we can use to access a certain dataset. For instance, looking at the website, we can see that there are endpoints for lots of different types of data: posts, comments, albums, photos, todos and users. To access an endpoint, we just need to make sure we’re using the correct path. So let’s try getting a list of users:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="web-based-apis.html#cb26-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [https://jsonplaceholder.typicode.com/users]
-##   Date: 2021-09-15 09:29
+##   Date: 2021-09-15 11:02
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 5.64 kB
