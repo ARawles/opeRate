@@ -28,5 +28,8 @@ rmd_files: [
   "replicability.Rmd",
   "projects-as-packages.Rmd",
   "git.Rmd",
-  "project-example.Rmd"
+  "project-example.Rmd",
+  
+  
+  "answers.Rmd"
   ]

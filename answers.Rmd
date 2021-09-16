@@ -1,0 +1,35 @@
+# Answers
+
+## "Tidy" data
+
+1. If we also had the number of cancer cases in our example dataset, what would be the 'tidy' way of adding that data? Would it be A or B below? Why?
+    + B would be the 'tidy' way of representing the data. A does not represent our variable (the number of cases) as a single variable, and so can't be tidy.
+
+## The pipe (%>%)
+
+1. What does `1 %>% substr("hello", ., .)` return? Why?
+    + It returns `"h"`. The `.` represents the value on the left of the pipe, so the code is equivalent to `substr("hello", 1, 1)` which returns `"h"`.
+
+## Quasiquotation
+
+1. What is the going to be the value in the new column in the **A** example below? Why?
+    + The value is going to be `11` (`1 + 10`). Because the `tstval` variable is evaluated in the context of the dataframe first, R will use the value of the `tstval` column. If the `tstval` column did not exist, then R would keep looking through the environments until it found a matching object, and then would use that object. In that case, the value of the column would be `21` (`1 + 20`).
+
+## Loading
+
+## Cleaning
+
+## Tidying
+
+## Grouping
+
+## Mutating
+
+## Summarising
+
+## Plotting
+
+## Modelling
+
+1. What's the difference between `y ~ x*w` and `y ~ x:w`?
+    + `y ~ x*w` is expanded to the effect of `x` and `w` and their interaction (i.e. `x + w + x:w`). `x:w` just represents the interaction effect between `x` and `w`. In other words, it doesn't include the simple effect of each one.

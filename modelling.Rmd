@@ -93,7 +93,7 @@ mtcars %>%
   geom_abline(intercept = 35, slope = -5, linetype = "dashed")
 ```
 
-Here we've created two models with different coefficient values; one where `a = 45` and `a1 = -6.5`, and other where `a = 35` and `a1 = -5`. Both seem to represent the data pretty well, but how can we know which of the coefficients is the 'better' fit? Similarly, we've tried just two sets of values here, how can we compare different combinations of values to determine which model is better? 
+Here we've created two models with different coefficient values; one where `a = 45` and `a1 = -6.5`, and other where `a = 35` and `a1 = -5`. Both seem to represent the data pretty well, but how can we know which of the pair of coefficients is the 'better' fit? Similarly, we've tried just two sets of values here, how can we compare different combinations of values to determine which model is better? 
 
 ## Residuals
 
@@ -359,7 +359,7 @@ Here we can see a very clear trend, meaning that our model is not representing t
 
 The goal of a model is usually to make a prediction. To be able to make those predictions, we train the model on observed data (i.e. data where we have the values of the independent and dependent variables). However, if we train the model to represent the observed data too well, the model may not perform well on new datasets. We call this **overfitting** - our model represents the test data too well and does not generalise well.
 
-Let's look at an example of overfitting. We'll split the `mtcars` dataset into two; a training set and a test set:
+Let's look at an example of overfitting. We'll split the `mtcars` dataset into two; a training set and a test set. We're purposely going to split our data badly here but in reality you'd split the dataset randomly.
 
 ```{r}
 train_mtcars <- dplyr::filter(mtcars, wt <= 3.3)
@@ -371,7 +371,7 @@ Then we'll train our model on the test set and evaluate the residuals:
 
 ```{r}
 # This is the same as wt + wt^2 + wt^3 + wt^4 + ... wt^7
-overfit_model <- lm(data = train_mtcars, formula = mpg ~ splines::ns(wt, 7))
+overfit_model <- lm(data = train_mtcars, formula = mpg ~ poly(wt, 7))
 
 train_mtcars %>%
   modelr::add_predictions(overfit_model) %>%
@@ -396,7 +396,7 @@ test_mtcars %>%
   geom_line(aes(y = pred))
 ```
  
-That's clearly not right at all. We've got predictions that are no where near the actual values.
+That's clearly not right at all. We've got predictions that are nowhere near the actual values.
 
 What's happened is our model has overfit the training data, representing noise and randomness as a true relationship between the variables. When we then apply the model to new data then, where that noise is different, it performs terribly.
  
@@ -423,6 +423,7 @@ Unforunately, there's no single way to really avoid overfitting. There are thing
     + In our example, we purposely split the training data badly but in practice you should aim to represent your data equally well in both your training and test datasets.
 *  Properly evaluate your models
     + By properly evaluating and understanding our model, you should be able to identify and mitigate the effects of overfitting
+
 
 ## Video Game Sales Model
 

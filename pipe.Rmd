@@ -31,3 +31,7 @@ str %>% substr(1,1) %>% paste0("ine") %>% print()
 Although the outcome is exactly the same, following the flow of logic is much easier in the bottom example because we can start at the left and more rightwards.
 
 For the purposes of this book that's as much as you need to know. You'll see the pipe used a lot when we're performing multiple data analysis steps, like cleaning then filtering then selecting columns and so on. This is why almost all of the tidyverse functions used for data science will accept the dataset as their first argument - it allows you to chain function calls together using the pipe.
+
+## Questions
+
+1. What does `1 %>% substr("hello", ., .)` return? Why?

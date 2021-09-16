@@ -18,3 +18,14 @@ When you pass a column name like this, the tidyverse packages will quote that in
 Much of this functionality is powered by a package called `{tidyselect}`. The `{tidyselect}` package provides a number of functions for selecting variables from datasets, reducing the time spent laboriously typing out the name of every variable you want to reference.
 
 To better understand the specifics of the `{tidyselect}` dialect and how it interacts with the tidyverse packages, there are a number of [vignettes](https://tidyselect.r-lib.org/reference/language.html) included in the package that explain things well. For now however, if you can understand the basic concept that variables are evaluated in the specific context of the dataset provided to the function, then you should be fine.
+
+## Questions
+
+1. What is the going to be the value in the new column in the **A** example below? Why?
+
+**A**
+```{r, eval = FALSE}
+my_tibble <- tibble::tribble(~tstcol, ~tstval, 1, 10)
+tstval <- 20
+my_tibble %>% dplyr::mutate(newcol = tstcol + tstval)
+```
