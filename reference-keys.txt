@@ -4,7 +4,6 @@ about-me
 using-r
 tidyverse-introduction
 tidy-data
-example
 questions
 the-pipe
 questions-1
@@ -76,6 +75,11 @@ overfitting
 avoiding-overfitting
 video-game-sales-model
 questions-3
+machine-learning
+neural-networks
+introduction
+example
+neural-networks-in-r
 projects-introduction
 workflows
 basic-workflow
