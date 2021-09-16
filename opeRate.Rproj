@@ -15,3 +15,7 @@ LaTeX: pdfLaTeX
 BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
+
+PythonType: system
+PythonVersion: 3.8.10
+PythonPath: /bin/python3.8

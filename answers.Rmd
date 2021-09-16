@@ -8,12 +8,12 @@
 ## The pipe (%>%)
 
 1. What does `1 %>% substr("hello", ., .)` return? Why?
-    + It returns `"h"`. The `.` represents the value on the left of the pipe, so the code is equivalent to `substr("hello", 1, 1)` which returns `"h"`.
+    + It returns `"h"`. The `.` represents the result of the expression on the left of the pipe, so the code is equivalent to `substr("hello", 1, 1)` which returns `"h"`.
 
 ## Quasiquotation
 
 1. What is the going to be the value in the new column in the **A** example below? Why?
-    + The value is going to be `11` (`1 + 10`). Because the `tstval` variable is evaluated in the context of the dataframe first, R will use the value of the `tstval` column. If the `tstval` column did not exist, then R would keep looking through the environments until it found a matching object, and then would use that object. In that case, the value of the column would be `21` (`1 + 20`).
+    + The value is going to be `11` (`1 + 10`). Because the `tstval` variable is evaluated in the context of the dataframe first, R will use the value of the `tstval` column. If the `tstval` column did not exist, then R would keep looking through the environments until it found a matching object, and then would use that object. In that case, the value of the column would be `21` (`1 + 20`) because it was use the `tstval` variable we defined in the global environment.
 
 ## Loading
 

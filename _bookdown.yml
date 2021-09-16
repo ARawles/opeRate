@@ -21,6 +21,7 @@ rmd_files: [
   "summarising.Rmd",
   "plotting.Rmd",
   "modelling.Rmd",
+  "machine-learning.Rmd",
   
   "projects.Rmd",
   "projects-introduction.Rmd",

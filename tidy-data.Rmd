@@ -10,10 +10,6 @@ In order for a dataset to be tidy, it needs to abide by three rules:
 
 If a dataset doesn't abide by all three of these rules, then it's a "messy" dataset.
 
-The benefit of having your data in a tidy format is fairly simple; it provides a standard for structuring a dataset. This means that tools can be developed with the assumption that the data will be in a specific format, making the development of these data science tools easier. And this is essentially what underpins the entire tidyverse: get your data in a tidy format and you'll have access to everything the tidyverse provides.
-
-## Example
-
 Let's compare a dataset in both a 'messy' and 'tidy' format. Let's imagine we have this dataset with the number of cases of emphysema in different countries:
 
 ```{r, echo = FALSE}
@@ -33,6 +29,8 @@ In the first representation, we've got a separate column for each month, meaning
 In our second representation, we've changed the Month to a column, meaning that we now have a single column for our cases column. In this format, the dataset is 'tidy'.
 
 Later we'll look at how we can convert messy datasets to tidy ones, and back again for the rare cases you'll need to make things messy.
+
+The benefit of having your data in a tidy format is fairly simple; it provides a standard for structuring a dataset. This means that tools can be developed with the assumption that the data will be in a specific format, making the development of these data science tools easier. And this is essentially what underpins the entire tidyverse: get your data in a tidy format and you'll have access to everything the tidyverse provides.
 
 ## Questions
 
