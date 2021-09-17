@@ -31,6 +31,6 @@ rmd_files: [
   "git.Rmd",
   "project-example.Rmd",
   
-  
+  "answers-title.Rmd",
   "answers.Rmd"
   ]
