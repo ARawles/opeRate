@@ -15,15 +15,15 @@ Neural networks were developed in an attempt to model how neurons in the brain m
 
 Importantly, the inputs have weights that can change due to feedback. So if an input erroneously results in a neuron firing, then the weights of the inputs can be adjusted to ensure that the neuron doesn't fire again if it's presented with the same information.
 
-```{r, label = "nn-prototype", echo = FALSE, fig.cap = "Example neural network}
+```{r, label = "nn-prototype", echo = FALSE, fig.cap = "Example neural network"}
 knitr::include_graphics("./img/Template.png")
 ```
 
-```{r, label = "nn-positive", out.width='50%', echo = FALSE, fig.show='hold',fig.align='center', fig.cap='Neural network firing'}
+```{r, label = "nn-positive", out.width='50%', echo = FALSE, fig.show='hold',fig.align='center', fig.cap="Neural network firing"}
 knitr::include_graphics("./img/Positive.png")
 ```
 
-```{r, label = "nn-negative", out.width='50%', echo = FALSE, fig.show='hold',fig.align='center', fig.cap='Neural network not firing'}
+```{r, label = "nn-negative", out.width='50%', echo = FALSE, fig.show='hold',fig.align='center', fig.cap="Neural network not firing"}
 knitr::include_graphics("./img/Negative.png")
 ```
 
