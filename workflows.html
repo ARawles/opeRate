@@ -385,15 +385,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">17.1.1</span> Example 1: Reporting</h3>
 <p>In this example, imagine someone has come to you and they want a bit more insight into the data they have. It’s currently in a messy spreadsheet, and they want you to load it into R and produce some nice looking graphics to help them understand trends and correlations in their data. They’re not bothered about any modelling for now, they just want some pretty graphs.</p>
 <p>If we mapped out an appropriate workflow for this project, it might look something like this:</p>
-<div id="htmlwidget-a29a33c347e1ac7762a7" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a29a33c347e1ac7762a7">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Import; Clean; Tidy; Summarise; Plot; Evaluate; \n\n  # several \"edge\" statements\n  Import->Clean Clean->Tidy Tidy->Summarise Summarise->Plot\n  Plot->Evaluate Evaluate->Summarise Evaluate->Plot\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9c87c59c071f68fe3d5b" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9c87c59c071f68fe3d5b">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Import; Clean; Tidy; Summarise; Plot; Evaluate; \n\n  # several \"edge\" statements\n  Import->Clean Clean->Tidy Tidy->Summarise Summarise->Plot\n  Plot->Evaluate Evaluate->Summarise Evaluate->Plot\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>We import the data and clean it and tidy it (more on that later), then we summarise it and create our plots. We can then use feedback from our colleague to change how we’re summarising or how we’re plotting the data to improve our plots until we’re happy.</p>
 </div>
 <div id="example-2-modelling" class="section level3" number="17.1.2">
 <h3><span class="header-section-number">17.1.2</span> Example 2: Modelling</h3>
 <p>For this example, imagine a colleague has come to you about a modelling project. They have a number of relatively clean datasets that they want to combine and use to produce a predictive model. They’re not too worried about plots or graphics, they’re more interested in the model itself. If we mapped out a workflow for this project, it might look a bit more like this:</p>
-<div id="htmlwidget-f6e35dbe21bb0defab66" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f6e35dbe21bb0defab66">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Load; Clean; Tidy; Collate; Model; Evaluate; \n\n  # several \"edge\" statements\n  Load->Clean Clean->Tidy Tidy->Collate Collate->Model\n  Model->Evaluate Evaluate->Model\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5fbd4907327cff11fd89" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5fbd4907327cff11fd89">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Load; Clean; Tidy; Collate; Model; Evaluate; \n\n  # several \"edge\" statements\n  Load->Clean Clean->Tidy Tidy->Collate Collate->Model\n  Model->Evaluate Evaluate->Model\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>As you can see, we still end with the loop of modelling and then evaluating our model and using the output to update the model, but the steps we take to get there are a bit different.</p>
 </div>
 </div>
@@ -462,7 +462,7 @@ gitbook.start({
 },
 "download": [["opeRate.mobi", "Kindle EBook"], ["opeRate.epub", "EPUB EBook"]],
 "toc": {
-"collapse": "none"
+"collapse": "section"
 }
 });
 });

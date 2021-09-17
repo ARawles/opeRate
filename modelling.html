@@ -451,9 +451,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb127-3"><a href="modelling.html#cb127-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">rmse =</span> <span class="fu">unlist</span>(purrr<span class="sc">::</span><span class="fu">map2</span>(a, a1, rmse, <span class="at">wt =</span> mtcars<span class="sc">$</span>wt, <span class="at">mpg =</span> mtcars<span class="sc">$</span>mpg))) <span class="sc">%&gt;%</span></span>
 <span id="cb127-4"><a href="modelling.html#cb127-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(rmse <span class="sc">==</span> <span class="fu">min</span>(rmse))</span>
 <span id="cb127-5"><a href="modelling.html#cb127-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(best_model)</span></code></pre></div>
-<pre><code>##   id       a        a1     rmse
-## 1  6 36.1204 -5.154335 3.006145</code></pre>
-<p>According to our analysis, model 6 has the lowest residual error. Let’s see what that model looks like:</p>
+<pre><code>##   id        a       a1     rmse
+## 1  4 37.97976 -5.43513 2.977845</code></pre>
+<p>According to our analysis, model 4 has the lowest residual error. Let’s see what that model looks like:</p>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="modelling.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
 <span id="cb129-2"><a href="modelling.html#cb129-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb129-3"><a href="modelling.html#cb129-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">data =</span> best_model, <span class="fu">aes</span>(<span class="at">intercept =</span> a, <span class="at">slope =</span> a1, <span class="at">colour =</span> <span class="fu">as.factor</span>(id)), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
@@ -476,7 +476,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Coefficients:
 ## (Intercept)           wt  
 ##      37.285       -5.344</code></pre>
-<p>We can see that the <code>lm()</code> function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren’t too far off with 36.1204005 and -5.1543347!</p>
+<p>We can see that the <code>lm()</code> function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren’t too far off with 37.9797579 and -5.4351298!</p>
 <p>To model quadratic relationships with the <code>lm()</code> function, our syntax is a little different:</p>
 <div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="modelling.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This formula is equivalent to `y = a + (a1*x) + (a2*x^2)</span></span>
 <span id="cb132-2"><a href="modelling.html#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> mtcars, mpg <span class="sc">~</span> wt <span class="sc">+</span> <span class="fu">I</span>(wt<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
@@ -915,7 +915,7 @@ gitbook.start({
 },
 "download": [["opeRate.mobi", "Kindle EBook"], ["opeRate.epub", "EPUB EBook"]],
 "toc": {
-"collapse": "none"
+"collapse": "section"
 }
 });
 });
