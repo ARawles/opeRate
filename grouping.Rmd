@@ -5,14 +5,14 @@ Before we look at adding new columns and summarising our data, we need to unders
 When a data frame has one or more groups, any function that's applied (when summarising or adding a new column) is applied for each combination of those groups. So say we have a dataset like this:
 
 ```{r, echo = FALSE}
-ungrpd <- data.frame(Year = c("2012", "2012", "2012", "2012", "2012", "2012", "2013", "2013", "2013", "2013", "2013", "2013"),
+ungrpd <- tibble::tibble(Year = c("2012", "2012", "2012", "2012", "2012", "2012", "2013", "2013", "2013", "2013", "2013", "2013"),
                      Month = c(1,1,2,2,3,3,1,1,2,2,3,3),
                      Group = c("A", "B", "A", "B", "A", "B", "A", "B", "A", "B", "A", "B"),
                      Value = c(10,20,30,15,25,35,12,22,32,40,50, 60))
 ```
 
 ```{r}
-head(ungrpd, 5)
+print(ungrpd, n = 5)
 ```
 
 If we grouped by Year or by Month, then any function we applied would be applied separately to each value of those groups. So say we wanted get the total values for each Year, we could group by the `Year` column and then just sum the `Value` column. The same logic applies for if we wanted to get the total for each year *and* month; we could group by the `Year` and `Month` and sum the `Value` column and we'd then get a value for each distinct year and month.

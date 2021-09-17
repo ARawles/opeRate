@@ -11,7 +11,6 @@ tidy_vg_sales %>%
   print(n = 5)
 ```
 
-As you can see, we've created a new column called `EU_Proportion` and we've calculated by dividing the number of EU sales by the total number of sales.
 
 If we wanted to overwrite the Sales column, we do the same but give the new column the same name:
 
@@ -32,7 +31,7 @@ tidy_vg_sales %>%
   dplyr::arrange(Year) %>% # We need to order from earliest date to latest
   dplyr::mutate(Cumulative_Sales = cumsum(Sales)) %>%
   dplyr::filter(Publisher %in% c("Atari", "Activision")) %>% # Let's just look at Atari & Activision
-  print(n = 5)
+  print(n = 10)
 ```
 
 Now we've got a new column showing the total number of sales for each Publisher up to each year. What `{dplyr}` has done is essentially filtered the data down a specific publisher and country, created a cumulative sum of the `Sales` column, and then done that for each publisher and country and stitched it back together.

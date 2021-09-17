@@ -1,6 +1,6 @@
 # Summarising
 
-As we saw previously, the base videa game sales dataset has nearly 17,000 entries! That's a lot of data, and we're not really going to able to extract or show any real insights from this data without summarising it to some degree. What we want to do is summarise the data to some degree. We lose some of the granularity of the data but it allows is to understand the data a bit better and identify patterns.
+As we saw previously, the base video game sales dataset has nearly 17,000 entries! That's a lot of data, and we're not really going to able to extract or show any real insights from this data without summarising it to some degree. We'll lose some of the granularity of the data but it allows us to understand the data a bit better and identify patterns.
 
 Summarisation uses exactly the same [grouping](#grouping) concept as mutatation does; by grouping the data we change the scope of each application of the function to be limited to that group. 
 
@@ -21,25 +21,12 @@ tidy_vg_sales %>%
   print(n = 5)
 ```
 
-Now we can see that the number of rows has reduced down to just under 2,000, and we've got the total global sales for each of our publishers, and for each year. `{dplyr}` has looked through each publisher and each year that publisher has at least 1 game, and added up the total number of sales, then moved onto the next Publisher/Year combination.
-
-While we're here, let's lump together some of the less popular publishers using the `forcats::fct_lump_n()` function:
-
-```{r}
-smmrsd_vg_sales <- tidy_vg_sales %>%
-  dplyr::group_by(Publisher, Year, Country) %>%
-  dplyr::summarise(Total_Sales = sum(Sales), .groups = "drop") %>%
-  dplyr::mutate(Publisher = forcats::fct_lump_n(Publisher, n = 5, w = Total_Sales)) %>%
-  dplyr::group_by(Publisher, Year, Country) %>%
-  dplyr::summarise(Total_Sales = sum(Total_Sales), .groups = "drop")
-# The .groups = 'drop' parameter will automatically remove the grouping from the dataset
-print(smmrsd_vg_sales, n = 5)
-```
+Now we can see that the number of rows has reduced down to just under 9,000, and we've got the total global sales for each of our publishers, countries, and for each year. `{dplyr}` has looked through each publisher, each country, and each year that publisher has at least 1 game, and added up the total number of sales, then moved onto the next Publisher/Country/Year combination.
 
 In this case we've used the `sum()` function, but any kind of summary function can be used:
 
 ```{r}
-tidy_vg_sales %>%
+smmrsd_vg_sales <- tidy_vg_sales %>%
   dplyr::group_by(Publisher, Year, Country) %>%
   dplyr::summarise(Total_Sales = sum(Sales),
                    Average_Sales = mean(Sales),

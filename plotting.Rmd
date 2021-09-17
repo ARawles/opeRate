@@ -35,7 +35,16 @@ To define our dataset and our aesthetic mappings using `{ggplot2}`, we use the `
 ```{r}
 library(ggplot2)
 
-smmrsd_vg_sales %>%
+# Here we lump together any publisher not in the top 5 by total sales
+# otherwise we'll have too many publishers
+plot_vg_sales <- tidy_vg_sales %>%
+  dplyr::group_by(Publisher, Year, Country) %>%
+  dplyr::summarise(Total_Sales = sum(Sales), .groups = "drop") %>%
+  dplyr::mutate(Publisher = forcats::fct_lump_n(Publisher, n = 5, w = Total_Sales)) %>%
+  dplyr::group_by(Publisher, Year, Country) %>%
+  dplyr::summarise(Total_Sales = sum(Total_Sales), .groups = "drop")
+
+plot_vg_sales %>%
   # Just plot global sales for now
   dplyr::filter(Country == "Global") %>%
   ggplot(mapping = aes(x = Year, y = Total_Sales, colour = Publisher))
@@ -54,7 +63,7 @@ Our geometric objects will be the object that's actually shown on the plot (e.g.
 We want lines for our example, so we use the `geom_line()` function. To add our geom component, we just need to add it to our plot so far using the `+` operator:
 
 ```{r}
-smmrsd_vg_sales %>%
+plot_vg_sales %>%
   dplyr::filter(Country == "Global") %>%
   ggplot(mapping = aes(x = Year, y = Total_Sales, colour = Publisher)) +
   geom_line()
@@ -63,7 +72,7 @@ smmrsd_vg_sales %>%
 This is equivalent to:
 
 ```{r, eval = FALSE}
-smmrsd_vg_sales %>%
+plot_vg_sales %>%
   dplyr::filter(Country == "Global") %>%
     ggplot() +
     geom_line(mapping = aes(x = Year, y = Total_Sales, colour = Publisher))
@@ -81,7 +90,7 @@ We can see that when we call `geom_line()` the default value for the `stat` para
 There are many predefined stats that `{ggplot2}` provides that we can to plot the data in different ways. To change the stat transformation for a geom, we can change the `stat` parameter to one of a set of predefined character strings that represent certain stats. For example, if we set the `stat` parameter for our `geom_line()` to `'smooth'`, the values are transformed by a smoothing function (the smoothing method can be changed via the `method` parameter):
 
 ```{r}
-smmrsd_vg_sales %>%
+plot_vg_sales %>%
   dplyr::filter(Country == "Global") %>%
     ggplot(mapping = aes(x = Year, y = Total_Sales, colour = Publisher)) +
     geom_line(stat = "smooth")
@@ -96,7 +105,7 @@ Stats are particularly useful because they allow us to plot the same data at dif
 In our example, we've filtered the dataset down to just show the global sales, but instead we could also use faceting to show the data for each region in a different subplot. Faceting splits the original dataset, plots the data separately and then combines it into a single panel. To facet our plot, we use the `facet_wrap()` or `facet_grid()` functions:
 
 ```{r, fig.asp=1.5}
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales, colour = Publisher)) +
+ggplot(plot_vg_sales, mapping = aes(x = Year, y = Total_Sales, colour = Publisher)) +
   geom_line() +
   facet_wrap(~Country, scales = "free_y", ncol = 2)
 ```
@@ -110,7 +119,7 @@ Scales are the domains of our mappings. Each variable that we map via `aes` will
 `{ggplot2}` will create default scales for the variables in our mapping, but we can alter them manually. To do so, we just use the accompanying `scale_{aesthetic}_{type}` function. So for our x axis, we're scaling our x mapping and we want a continuous, numeric scale so we would use the `scale_x_continous()` function. Similarly, for our y axis we'd use `scale_y_continuous()`:
 
 ```{r, warning = FALSE, fig.asp=1.5, warning = FALSE}
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
+ggplot(plot_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   scale_x_continuous(name = "Year") +
   # Let's change the limits of our scale
@@ -122,7 +131,7 @@ To change the colour scale, we would use the `scale_colour_brewer/hue()` functio
 
 
 ```{r,warning=FALSE, fig.asp=1.2}
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
+ggplot(plot_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   scale_x_continuous(name = "Year") +
   scale_y_continuous(name = "Total Sales (Millions)") +
@@ -131,7 +140,7 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
 ```
 
 ```{r, warning=FALSE, fig.asp=1.5}
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
+ggplot(plot_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   scale_x_continuous(name = "Year") +
   scale_y_continuous(name = "Total Sales (Millions)") +
@@ -144,7 +153,7 @@ ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
 Together, the data, mapping, stat and geom components form a **layer**. A plot can be made up of multiple layers. For example, let's show the same data but overlay a regression line that uses the smooth stat and a different mapping:
 
 ```{r, fig.asp=1.5, warning=FALSE}
-ggplot(smmrsd_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
+ggplot(plot_vg_sales, mapping = aes(x = Year, y = Total_Sales)) +
   geom_line(mapping = aes(colour = Publisher)) +
   geom_smooth(method = "loess", formula = y ~ x) +
   scale_x_continuous(name = "Year") +
