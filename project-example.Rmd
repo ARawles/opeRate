@@ -1,16 +1,145 @@
 # Project Example
 
-* Creating GitHub repo
-* Creating project
-* Filling out description (including dependencies)
-* Importing data
-    + Store the file in the 'data-raw' folder, using the `usethis::use_data_raw()` function
-    + Write the script to load the csv file and save it with `usethis::use_data()`
-* File structure
-    + Separate files for each stage (e.g. clean, tidy, summarise, plot)
-    + analysis.R file that has the overarching analysis
-* Documentation
-    + README
-    + Function & dataset
-        + `{roxygen2}` and markdown
-    + Vignettes
+To demonstrate how to structure your analysis project as a package, let's create a brand new project using everything we've learnt.
+
+## GitHub Repository
+
+To start off, we need to create a GitHub repo that will store the project. I've called this project `operate.example.package`.
+
+## RStudio Project
+
+Now we've got our GitHub repo, let's create our RStudio package and initialise a local Git repository that we can then link to GitHub.
+
+## DESCRIPTION
+
+Now that RStudio has created a package skeleton for us, we can fill out the DESCRIPTION fill to describe our package.
+
+This is also where we'll store any dependencies that our package relies on. At this stage, it's unlikely that you'll know exactly which packages you're going to use. To add a package to the dependencies list at any time, just use `usethis::use_package("your-package-name")`.
+
+After filling our the appropriate fields, my DESCRIPTION file looks like this:
+
+```
+Package: operate.package.example
+Type: Package
+Title: Example Package for the opeRate Book
+Version: 0.1.0
+Authors@R: person("Adam", "Rawles", email = "adamrawles@hotmail.co.uk", role = c("aut", "cre")) 
+Description: This is an example package utilising the skills and concepts described in the opeRate book (<https://operate.arawles.co.uk/>).
+    It functions as an example of using the 'projects-as-packages' philosophy to improve the readability and replicability
+    of your code.
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    dplyr,
+    tidyr,
+    readr,
+    ggplot2,
+    tidyselect
+RoxygenNote: 7.1.1
+Depends: 
+    R (>= 2.10)
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+```
+
+## Data
+
+Our analysis revolves around one main data set - our video game sales dataset. We can include that dataset with the package. To do this, we'll want to store the raw data in the 'data-raw' folder, with a script on how we've loaded it and bundled it with the package.
+
+To create the 'data-raw' folder, we use the `usethis::use_data_raw()` function. That will create the folder and open up a file called 'DATASET.R' that we can use to load in our raw dataset. We need to put the raw CSV file in that folder to, and then update the DATASET.R file to load the CSV file in and then rename it to match the name of the dataset.
+
+When that's all done, we should have two files in our 'data-raw' folder:
+    * vgsales.csv
+    * vgsales.R
+ 
+ And the vgsales.R file should look like this:
+ 
+ ```{r, eval = FALSE}
+library(readr)
+vgsales <- readr::read_csv("data-raw/vgsales.csv", col_types = "dccdccddddd")
+
+usethis::use_data(vgsales, overwrite = TRUE)
+ ```
+ 
+ Finally, we need to document our dataset. We'll look at documentation later, so for now we'll just create a file in the R folder called 'data.R'.
+
+## Structure
+
+Now we've scaffolded our project, we can start actually writing some code. Because we've analysed our workflow and we know we're going to have distinct stages (e.g. cleaning, tidying, etc.), we should split our functions into separate files with appropriate names. I'm also going to add another file called 'analysis.R' which will contain the functions to perform the end-to-end analysis.
+
+With the files created, the R folder now contains these files:
+    * analysis.R
+    * clean.R
+    * data.R
+    * modelling.R
+    * plot.R
+    * summarise.R
+    * tidy.R
+    * utility.R
+            + This just houses any extra functions that don't fit in the other files
+            + I also put my `@import` statements in here
+
+## Documentation
+
+### Function
+
+Each function needs documentation so that we know what we're going. We use the `{roxygen2}` package for this.
+
+Because many of the functions are going to use similar parameters, we can utilise the `@eval` tag from `{roxygen2}` to cut down on duplication.
+
+The `@eval` tag will evaluate arbitrary R code and treat the return value as `{roxygen2}` documentation. Because many of our datasets will accept a parameter called `df` that will be the `vgsales` dataset, let's create a function that will return the `@param` tag that we'll use:
+
+```{r}
+doc_vgsales <- function() {
+  c("@param df tibble/df; the `vgsales` dataset",
+    "@return tibble")
+}
+```
+
+Now when we document a function that accepts a parameter called `df`, we can just use `#' @eval doc_vgsales()` to add the documentation.
+
+I store these documentation functions in a file called 'documentation.R' in the R folder.
+
+### Data
+
+Datasets should be documented like functions - this is what our 'data.R' file is for. Here we'll document the `vgsales` dataset, describing what data it folds and in what fields.
+
+```{r, eval = FALSE}
+#' Video game sales between 1980 and 2020
+#'
+#' A dataset of video game sales in different regions scraped from [vgchartz.com](vgchartz.com).
+#' @format  A tibble with 16598 rows and 11 variables:
+#' \itemize{
+#'    \item Rank All-time rank of the global sales
+#'    \item Name Name of the video game
+#'    \item Platform The platform/console the game was primarily released on
+#'    \item Year The year of release
+#'    \item Genre The type/genre of the game
+#'    \item Publisher The game's publisher
+#'    \item NA_Sales Sales (in millions) in North America
+#'    \item EU_Sales Sales (in millions) in Europe
+#'    \item JP_Sales Sales (in millions) in Japan
+#'    \item Other_Sales Sales (in millions) in other regions
+#'    \item Global_Sales Sales (in millions) globally
+#' }
+#' @keywords datasets
+#' @name vgsales
+#' @usage data(vgsales)
+"vgsales"
+```
+
+
+**Note**:
+Not how the name of the dataset is in quotation marks.
+
+
+### README & Vignettes
+
+Function documentation is useful for understanding exactly what a function is doing, but your audience will also need to understanding the overarching analysis.
+
+A README serves as a useful entrypoint to briefly describe the analysis and point the reader in the right direction. Often, this will be on the form of linking to vignettes that outline your analysis in greater detail. To create a README, use the `usethis::use_readme_md/rmd()` function.
+
+Vignettes in analysis projects are extremely important. They will be the main source of information for others wanting to understand the rationale of your analysis. Because we have two main stages to our analysis - a descriptive and an inferential stage - I've split the analysis into two separate vignettes that address each stage.
