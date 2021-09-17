@@ -9,7 +9,7 @@ output:
     split_by: chapter
     config:
       toc:
-        collapse: none
+        collapse: section
       download:
         - ["opeRate.mobi", "Kindle EBook"]
         - ["opeRate.epub", "EPUB EBook"]
