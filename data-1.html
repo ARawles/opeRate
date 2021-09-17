@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>14.1 Types of model | opeRate</title>
+  <title>21.4 Data | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="14.1 Types of model | opeRate" />
+  <meta property="og:title" content="21.4 Data | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="14.1 Types of model | opeRate" />
+  <meta name="twitter:title" content="21.4 Data | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="modelling.html"/>
-<link rel="next" href="coefficients.html"/>
+<link rel="prev" href="description-1.html"/>
+<link rel="next" href="structure-1.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -362,39 +362,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="types-of-model" class="section level2" number="14.1">
-<h2><span class="header-section-number">14.1</span> Types of model</h2>
-<p>Models types usually fall into “families”. These will be a set of models that are underpinned by some common statistics or philosophy. The most common type of model that is taught at beginner level is the linear model. A linear model assumes a relationship that can be represented in the form <code>y = a + a1x...</code>, where <code>a</code> and <code>a{n}</code> represent coefficients (values that will change between models depending on your data).</p>
-<p>In this chapter we’re going to look exclusively at linear models. In the next chapter though, we’ll take a different family of models; neural networks.</p>
-<div id="linear-models" class="section level3" number="14.1.1">
-<h3><span class="header-section-number">14.1.1</span> Linear models</h3>
-<p>A linear model with the formula <code>y = 8 + (2*x)</code> might look like this:</p>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-77-1.png" width="672" /></p>
-<p>A model with different coefficients (<code>y = 210 - (10*x)</code>) would look different:</p>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
-<p>Although the value of the coefficients will change, a linear model that uses that formula will always be a straight line.</p>
-</div>
-<div id="quadratic-exponential-models" class="section level3" number="14.1.2">
-<h3><span class="header-section-number">14.1.2</span> Quadratic &amp; Exponential Models</h3>
-<p>The linear model also extends to quadratic or exponential functions. This is because the ‘linear’ in linear model refers to the coefficients rather than our regression line being linear.</p>
-<p>Quadratic models are expressed by the formula <code>y = a + (a1*x) + (a2*x^2)</code>, and allow us to quantify non-linear relationships. For example, a quadratic model with the formula <code>y = 12000 - (2200*x) + (100*x^2)</code> might look like this:</p>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
-<p>Quadratic models allow us to capture relationships between variables that change with different values of x. Real-life examples of relationships like this include:</p>
-<ul>
-<li>population growth</li>
-<li>appreciation of certain commodities</li>
-<li>infection rates</li>
-</ul>
-<p>We’ll look at how to identify what type of model is more appropriate for your analysis a bit later.</p>
-</div>
+<div id="data-1" class="section level2" number="21.4">
+<h2><span class="header-section-number">21.4</span> Data</h2>
+<p>Our analysis revolves around one main data set - our video game sales dataset. We can include that dataset with the package. To do this, we’ll want to store the raw data in the ‘data-raw’ folder, with a script on how we’ve loaded it and bundled it with the package.</p>
+<p>To create the ‘data-raw’ folder, we use the <code>usethis::use_data_raw()</code> function. That will create the folder and open up a file called ‘DATASET.R’ that we can use to load in our raw dataset. We need to put the raw CSV file in that folder to, and then update the DATASET.R file to load the CSV file in and then rename it to match the name of the dataset.</p>
+<p>When that’s all done, we should have two files in our ‘data-raw’ folder:
+* vgsales.csv
+* vgsales.R</p>
+<p>And the vgsales.R file should look like this:</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="data-1.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb170-2"><a href="data-1.html#cb170-2" aria-hidden="true" tabindex="-1"></a>vgsales <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;data-raw/vgsales.csv&quot;</span>, <span class="at">col_types =</span> <span class="st">&quot;dccdccddddd&quot;</span>)</span>
+<span id="cb170-3"><a href="data-1.html#cb170-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb170-4"><a href="data-1.html#cb170-4" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_data</span>(vgsales, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Finally, we need to document our dataset. We’ll look at documentation later, so for now we’ll just create a file in the R folder called ‘data.R’.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="modelling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="coefficients.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="description-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="structure-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

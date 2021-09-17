@@ -31,7 +31,7 @@
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link rel="prev" href="git.html"/>
-<link rel="next" href="project-example.html"/>
+<link rel="next" href="git-github-rstudio.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -309,9 +309,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="20.1.3" data-path="git.html"><a href="git.html#pushing-pulling"><i class="fa fa-check"></i><b>20.1.3</b> Pushing &amp; Pulling</a></li>
 <li class="chapter" data-level="20.1.4" data-path="git.html"><a href="git.html#branches"><i class="fa fa-check"></i><b>20.1.4</b> Branches</a></li>
 </ul></li>
-<li class="chapter" data-level="20.2" data-path="github.html"><a href="github.html"><i class="fa fa-check"></i><b>20.2</b> GitHub</a></li>
+<li class="chapter" data-level="20.2" data-path="github.html"><a href="github.html"><i class="fa fa-check"></i><b>20.2</b> GitHub</a>
+<ul>
+<li class="chapter" data-level="20.2.1" data-path="github.html"><a href="github.html#forking"><i class="fa fa-check"></i><b>20.2.1</b> Forking</a></li>
+<li class="chapter" data-level="20.2.2" data-path="github.html"><a href="github.html#pull-requests"><i class="fa fa-check"></i><b>20.2.2</b> Pull Requests</a></li>
 </ul></li>
-<li class="chapter" data-level="21" data-path="project-example.html"><a href="project-example.html"><i class="fa fa-check"></i><b>21</b> Project Example</a></li>
+<li class="chapter" data-level="20.3" data-path="git-github-rstudio.html"><a href="git-github-rstudio.html"><i class="fa fa-check"></i><b>20.3</b> Git, GitHub &amp; RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="project-example.html"><a href="project-example.html"><i class="fa fa-check"></i><b>21</b> Project Example</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="github-repository.html"><a href="github-repository.html"><i class="fa fa-check"></i><b>21.1</b> GitHub Repository</a></li>
+<li class="chapter" data-level="21.2" data-path="rstudio-project.html"><a href="rstudio-project.html"><i class="fa fa-check"></i><b>21.2</b> RStudio Project</a></li>
+<li class="chapter" data-level="21.3" data-path="description-1.html"><a href="description-1.html"><i class="fa fa-check"></i><b>21.3</b> DESCRIPTION</a></li>
+<li class="chapter" data-level="21.4" data-path="data-1.html"><a href="data-1.html"><i class="fa fa-check"></i><b>21.4</b> Data</a></li>
+<li class="chapter" data-level="21.5" data-path="structure-1.html"><a href="structure-1.html"><i class="fa fa-check"></i><b>21.5</b> Structure</a></li>
+<li class="chapter" data-level="21.6" data-path="documentation-2.html"><a href="documentation-2.html"><i class="fa fa-check"></i><b>21.6</b> Documentation</a>
+<ul>
+<li class="chapter" data-level="21.6.1" data-path="documentation-2.html"><a href="documentation-2.html#function"><i class="fa fa-check"></i><b>21.6.1</b> Function</a></li>
+<li class="chapter" data-level="21.6.2" data-path="documentation-2.html"><a href="documentation-2.html#data-2"><i class="fa fa-check"></i><b>21.6.2</b> Data</a></li>
+<li class="chapter" data-level="21.6.3" data-path="documentation-2.html"><a href="documentation-2.html#readme-vignettes"><i class="fa fa-check"></i><b>21.6.3</b> README &amp; Vignettes</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>IV Question Answers</b></span></li>
 <li class="chapter" data-level="22" data-path="answers.html"><a href="answers.html"><i class="fa fa-check"></i><b>22</b> Answers</a>
 <ul>
@@ -346,18 +364,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="github" class="section level2" number="20.2">
 <h2><span class="header-section-number">20.2</span> GitHub</h2>
-<p>GitHub is a repository hosting service. You can use GitHub to store the remote versions of your repositories and perform things like Continuous Integration. GitHub is free for open-source projects, and you can have as many repositories as you like.</p>
+<p>GitHub is a repository hosting service. You can use GitHub to store the remote versions of your repositories and perform things like Continuous Integration. GitHub is free for open-source projects, and you can have as many repositories as you like. I host all of my projects (including this book series) on my <a href="https://github.com/arawles">GitHub account</a>.</p>
 <p>When working on R projects with Git, I would highly recommend using GitHub. It helps promote open-source development and some R tools have been specifically designed to install packages directly from GitHub (e.g. <code>remotes::install_github()</code>).</p>
-
+<p>There are a couple of extra terms that you’ll need to be aware of when using GitHub.</p>
+<div id="forking" class="section level3" number="20.2.1">
+<h3><span class="header-section-number">20.2.1</span> Forking</h3>
+<p>When you fork a repository, you make your own copy of the repo (a bit like a branch). You can then make changes independent of the original repository but then merge them later on.</p>
 </div>
-<!-- </div> -->
+<div id="pull-requests" class="section level3" number="20.2.2">
+<h3><span class="header-section-number">20.2.2</span> Pull Requests</h3>
+<p>When you do try and merge changes into a branch, you’ll create a pull request. This request will outline the changes that have been made since the branches split, and if there are any conflicts that mean they can’t be merged. Most often, someone will manually check that pull request and then accept or decline it.</p>
+</div>
+</div>
             </section>
 
           </div>
         </div>
       </div>
 <a href="git.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="project-example.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="git-github-rstudio.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

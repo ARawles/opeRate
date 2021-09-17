@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>14.1 Types of model | opeRate</title>
+  <title>21.6 Documentation | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="14.1 Types of model | opeRate" />
+  <meta property="og:title" content="21.6 Documentation | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="14.1 Types of model | opeRate" />
+  <meta name="twitter:title" content="21.6 Documentation | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="modelling.html"/>
-<link rel="next" href="coefficients.html"/>
+<link rel="prev" href="structure-1.html"/>
+<link rel="next" href="answers.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -362,39 +362,67 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="types-of-model" class="section level2" number="14.1">
-<h2><span class="header-section-number">14.1</span> Types of model</h2>
-<p>Models types usually fall into “families”. These will be a set of models that are underpinned by some common statistics or philosophy. The most common type of model that is taught at beginner level is the linear model. A linear model assumes a relationship that can be represented in the form <code>y = a + a1x...</code>, where <code>a</code> and <code>a{n}</code> represent coefficients (values that will change between models depending on your data).</p>
-<p>In this chapter we’re going to look exclusively at linear models. In the next chapter though, we’ll take a different family of models; neural networks.</p>
-<div id="linear-models" class="section level3" number="14.1.1">
-<h3><span class="header-section-number">14.1.1</span> Linear models</h3>
-<p>A linear model with the formula <code>y = 8 + (2*x)</code> might look like this:</p>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-77-1.png" width="672" /></p>
-<p>A model with different coefficients (<code>y = 210 - (10*x)</code>) would look different:</p>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
-<p>Although the value of the coefficients will change, a linear model that uses that formula will always be a straight line.</p>
+<div id="documentation-2" class="section level2" number="21.6">
+<h2><span class="header-section-number">21.6</span> Documentation</h2>
+<div id="function" class="section level3" number="21.6.1">
+<h3><span class="header-section-number">21.6.1</span> Function</h3>
+<p>Each function needs documentation so that we know what we’re going. We use the <code>{roxygen2}</code> package for this.</p>
+<p>Because many of the functions are going to use similar parameters, we can utilise the <code>@eval</code> tag from <code>{roxygen2}</code> to cut down on duplication.</p>
+<p>The <code>@eval</code> tag will evaluate arbitrary R code and treat the return value as <code>{roxygen2}</code> documentation. Because many of our datasets will accept a parameter called <code>df</code> that will be the <code>vgsales</code> dataset, let’s create a function that will return the <code>@param</code> tag that we’ll use:</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="documentation-2.html#cb171-1" aria-hidden="true" tabindex="-1"></a>doc_vgsales <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb171-2"><a href="documentation-2.html#cb171-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;@param df tibble/df; the `vgsales` dataset&quot;</span>,</span>
+<span id="cb171-3"><a href="documentation-2.html#cb171-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;@return tibble&quot;</span>)</span>
+<span id="cb171-4"><a href="documentation-2.html#cb171-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Now when we document a function that accepts a parameter called <code>df</code>, we can just use <code>#' @eval doc_vgsales()</code> to add the documentation.</p>
+<p>I store these documentation functions in a file called ‘documentation.R’ in the R folder.</p>
 </div>
-<div id="quadratic-exponential-models" class="section level3" number="14.1.2">
-<h3><span class="header-section-number">14.1.2</span> Quadratic &amp; Exponential Models</h3>
-<p>The linear model also extends to quadratic or exponential functions. This is because the ‘linear’ in linear model refers to the coefficients rather than our regression line being linear.</p>
-<p>Quadratic models are expressed by the formula <code>y = a + (a1*x) + (a2*x^2)</code>, and allow us to quantify non-linear relationships. For example, a quadratic model with the formula <code>y = 12000 - (2200*x) + (100*x^2)</code> might look like this:</p>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
-<p>Quadratic models allow us to capture relationships between variables that change with different values of x. Real-life examples of relationships like this include:</p>
-<ul>
-<li>population growth</li>
-<li>appreciation of certain commodities</li>
-<li>infection rates</li>
-</ul>
-<p>We’ll look at how to identify what type of model is more appropriate for your analysis a bit later.</p>
+<div id="data-2" class="section level3" number="21.6.2">
+<h3><span class="header-section-number">21.6.2</span> Data</h3>
+<p>Datasets should be documented like functions - this is what our ‘data.R’ file is for. Here we’ll document the <code>vgsales</code> dataset, describing what data it folds and in what fields.</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="documentation-2.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Video game sales between 1980 and 2020</span></span>
+<span id="cb172-2"><a href="documentation-2.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb172-3"><a href="documentation-2.html#cb172-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; A dataset of video game sales in different regions scraped from [vgchartz.com](vgchartz.com).</span></span>
+<span id="cb172-4"><a href="documentation-2.html#cb172-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @format  A tibble with 16598 rows and 11 variables:</span></span>
+<span id="cb172-5"><a href="documentation-2.html#cb172-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; \itemize{</span></span>
+<span id="cb172-6"><a href="documentation-2.html#cb172-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Rank All-time rank of the global sales</span></span>
+<span id="cb172-7"><a href="documentation-2.html#cb172-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Name Name of the video game</span></span>
+<span id="cb172-8"><a href="documentation-2.html#cb172-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Platform The platform/console the game was primarily released on</span></span>
+<span id="cb172-9"><a href="documentation-2.html#cb172-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Year The year of release</span></span>
+<span id="cb172-10"><a href="documentation-2.html#cb172-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Genre The type/genre of the game</span></span>
+<span id="cb172-11"><a href="documentation-2.html#cb172-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Publisher The game&#39;s publisher</span></span>
+<span id="cb172-12"><a href="documentation-2.html#cb172-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item NA_Sales Sales (in millions) in North America</span></span>
+<span id="cb172-13"><a href="documentation-2.html#cb172-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item EU_Sales Sales (in millions) in Europe</span></span>
+<span id="cb172-14"><a href="documentation-2.html#cb172-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item JP_Sales Sales (in millions) in Japan</span></span>
+<span id="cb172-15"><a href="documentation-2.html#cb172-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Other_Sales Sales (in millions) in other regions</span></span>
+<span id="cb172-16"><a href="documentation-2.html#cb172-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Global_Sales Sales (in millions) globally</span></span>
+<span id="cb172-17"><a href="documentation-2.html#cb172-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; }</span></span>
+<span id="cb172-18"><a href="documentation-2.html#cb172-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @keywords datasets</span></span>
+<span id="cb172-19"><a href="documentation-2.html#cb172-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @name vgsales</span></span>
+<span id="cb172-20"><a href="documentation-2.html#cb172-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @usage data(vgsales)</span></span>
+<span id="cb172-21"><a href="documentation-2.html#cb172-21" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;vgsales&quot;</span></span></code></pre></div>
+<p><strong>Note</strong>:
+Not how the name of the dataset is in quotation marks.</p>
 </div>
+<div id="readme-vignettes" class="section level3" number="21.6.3">
+<h3><span class="header-section-number">21.6.3</span> README &amp; Vignettes</h3>
+<p>Function documentation is useful for understanding exactly what a function is doing, but your audience will also need to understanding the overarching analysis.</p>
+<p>A README serves as a useful entrypoint to briefly describe the analysis and point the reader in the right direction. Often, this will be on the form of linking to vignettes that outline your analysis in greater detail. To create a README, use the <code>usethis::use_readme_md/rmd()</code> function.</p>
+<p>Vignettes in analysis projects are extremely important. They will be the main source of information for others wanting to understand the rationale of your analysis. Because we have two main stages to our analysis - a descriptive and an inferential stage - I’ve split the analysis into two separate vignettes that address each stage.</p>
+
+</div>
+</div>
+<!-- </div> -->
+
+
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="modelling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="coefficients.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="structure-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="answers.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

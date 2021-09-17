@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>14.1 Types of model | opeRate</title>
+  <title>21.5 Structure | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="14.1 Types of model | opeRate" />
+  <meta property="og:title" content="21.5 Structure | opeRate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="cover.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="14.1 Types of model | opeRate" />
+  <meta name="twitter:title" content="21.5 Structure | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="modelling.html"/>
-<link rel="next" href="coefficients.html"/>
+<link rel="prev" href="data-1.html"/>
+<link rel="next" href="documentation-2.html"/>
 <script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -362,39 +362,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="types-of-model" class="section level2" number="14.1">
-<h2><span class="header-section-number">14.1</span> Types of model</h2>
-<p>Models types usually fall into “families”. These will be a set of models that are underpinned by some common statistics or philosophy. The most common type of model that is taught at beginner level is the linear model. A linear model assumes a relationship that can be represented in the form <code>y = a + a1x...</code>, where <code>a</code> and <code>a{n}</code> represent coefficients (values that will change between models depending on your data).</p>
-<p>In this chapter we’re going to look exclusively at linear models. In the next chapter though, we’ll take a different family of models; neural networks.</p>
-<div id="linear-models" class="section level3" number="14.1.1">
-<h3><span class="header-section-number">14.1.1</span> Linear models</h3>
-<p>A linear model with the formula <code>y = 8 + (2*x)</code> might look like this:</p>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-77-1.png" width="672" /></p>
-<p>A model with different coefficients (<code>y = 210 - (10*x)</code>) would look different:</p>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
-<p>Although the value of the coefficients will change, a linear model that uses that formula will always be a straight line.</p>
-</div>
-<div id="quadratic-exponential-models" class="section level3" number="14.1.2">
-<h3><span class="header-section-number">14.1.2</span> Quadratic &amp; Exponential Models</h3>
-<p>The linear model also extends to quadratic or exponential functions. This is because the ‘linear’ in linear model refers to the coefficients rather than our regression line being linear.</p>
-<p>Quadratic models are expressed by the formula <code>y = a + (a1*x) + (a2*x^2)</code>, and allow us to quantify non-linear relationships. For example, a quadratic model with the formula <code>y = 12000 - (2200*x) + (100*x^2)</code> might look like this:</p>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
-<p>Quadratic models allow us to capture relationships between variables that change with different values of x. Real-life examples of relationships like this include:</p>
-<ul>
-<li>population growth</li>
-<li>appreciation of certain commodities</li>
-<li>infection rates</li>
-</ul>
-<p>We’ll look at how to identify what type of model is more appropriate for your analysis a bit later.</p>
-</div>
+<div id="structure-1" class="section level2" number="21.5">
+<h2><span class="header-section-number">21.5</span> Structure</h2>
+<p>Now we’ve scaffolded our project, we can start actually writing some code. Because we’ve analysed our workflow and we know we’re going to have distinct stages (e.g. cleaning, tidying, etc.), we should split our functions into separate files with appropriate names. I’m also going to add another file called ‘analysis.R’ which will contain the functions to perform the end-to-end analysis.</p>
+<p>With the files created, the R folder now contains these files:
+* analysis.R
+* clean.R
+* data.R
+* modelling.R
+* plot.R
+* summarise.R
+* tidy.R
+* utility.R
++ This just houses any extra functions that don’t fit in the other files
++ I also put my <code>@import</code> statements in here</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="modelling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="coefficients.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="documentation-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
