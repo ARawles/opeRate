@@ -1,3 +1,6 @@
+fig:nn-prototype
+fig:nn-positive
+fig:nn-negative
 operate
 overview
 about-me
@@ -111,6 +114,13 @@ description
 dependencies
 abstraction
 git-github
+git
+repositories
+commits
+pushing-pulling
+conflicts
+branches
+github
 project-example
 answers
 tidy-data-1

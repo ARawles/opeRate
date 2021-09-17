@@ -300,7 +300,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="19.4" data-path="abstraction.html"><a href="abstraction.html"><i class="fa fa-check"></i><b>19.4</b> Abstraction</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>20</b> Git &amp; GitHub</a></li>
+<li class="chapter" data-level="20" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>20</b> Git &amp; GitHub</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="git.html"><a href="git.html"><i class="fa fa-check"></i><b>20.1</b> Git</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="git.html"><a href="git.html#repositories"><i class="fa fa-check"></i><b>20.1.1</b> Repositories</a></li>
+<li class="chapter" data-level="20.1.2" data-path="git.html"><a href="git.html#commits"><i class="fa fa-check"></i><b>20.1.2</b> Commits</a></li>
+<li class="chapter" data-level="20.1.3" data-path="git.html"><a href="git.html#pushing-pulling"><i class="fa fa-check"></i><b>20.1.3</b> Pushing &amp; Pulling</a></li>
+<li class="chapter" data-level="20.1.4" data-path="git.html"><a href="git.html#branches"><i class="fa fa-check"></i><b>20.1.4</b> Branches</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="github.html"><a href="github.html"><i class="fa fa-check"></i><b>20.2</b> GitHub</a></li>
+</ul></li>
 <li class="chapter" data-level="21" data-path="project-example.html"><a href="project-example.html"><i class="fa fa-check"></i><b>21</b> Project Example</a></li>
 <li class="part"><span><b>IV Question Answers</b></span></li>
 <li class="chapter" data-level="22" data-path="answers.html"><a href="answers.html"><i class="fa fa-check"></i><b>22</b> Answers</a>
@@ -349,7 +359,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>As previously mentioned, to extract something from the API, you’ll be using the <code>GET</code> method. The <code>httr</code> package makes this super easy by providing a <code>GET</code> function. To this function, we’ll need to provide a URL. The <code>GET</code> function will then send a GET request to that address and return the response. A really simple GET request could be:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="web-based-apis.html#cb31-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;http://google.com&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [http://www.google.com/]
-##   Date: 2021-09-17 09:40
+##   Date: 2021-09-17 11:36
 ##   Status: 200
 ##   Content-Type: text/html; charset=ISO-8859-1
 ##   Size: 15.1 kB
@@ -394,7 +404,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The first step in accessing an API is to understand that commands the API is expecting. APIs will have what we call <strong>endpoints</strong>. These are paths that we can use to access a certain dataset. For instance, looking at the website, we can see that there are endpoints for lots of different types of data: posts, comments, albums, photos, todos and users. To access an endpoint, we just need to make sure we’re using the correct path. So let’s try getting a list of users:</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="web-based-apis.html#cb33-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [https://jsonplaceholder.typicode.com/users]
-##   Date: 2021-09-17 09:40
+##   Date: 2021-09-17 11:36
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 5.64 kB

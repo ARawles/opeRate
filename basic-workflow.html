@@ -300,7 +300,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="19.4" data-path="abstraction.html"><a href="abstraction.html"><i class="fa fa-check"></i><b>19.4</b> Abstraction</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>20</b> Git &amp; GitHub</a></li>
+<li class="chapter" data-level="20" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>20</b> Git &amp; GitHub</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="git.html"><a href="git.html"><i class="fa fa-check"></i><b>20.1</b> Git</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="git.html"><a href="git.html#repositories"><i class="fa fa-check"></i><b>20.1.1</b> Repositories</a></li>
+<li class="chapter" data-level="20.1.2" data-path="git.html"><a href="git.html#commits"><i class="fa fa-check"></i><b>20.1.2</b> Commits</a></li>
+<li class="chapter" data-level="20.1.3" data-path="git.html"><a href="git.html#pushing-pulling"><i class="fa fa-check"></i><b>20.1.3</b> Pushing &amp; Pulling</a></li>
+<li class="chapter" data-level="20.1.4" data-path="git.html"><a href="git.html#branches"><i class="fa fa-check"></i><b>20.1.4</b> Branches</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="github.html"><a href="github.html"><i class="fa fa-check"></i><b>20.2</b> GitHub</a></li>
+</ul></li>
 <li class="chapter" data-level="21" data-path="project-example.html"><a href="project-example.html"><i class="fa fa-check"></i><b>21</b> Project Example</a></li>
 <li class="part"><span><b>IV Question Answers</b></span></li>
 <li class="chapter" data-level="22" data-path="answers.html"><a href="answers.html"><i class="fa fa-check"></i><b>22</b> Answers</a>
@@ -352,15 +362,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">17.1.1</span> Example 1: Reporting</h3>
 <p>In this example, imagine someone has come to you and they want a bit more insight into the data they have. It’s currently in a messy spreadsheet, and they want you to load it into R and produce some nice looking graphics to help them understand trends and correlations in their data. They’re not bothered about any modelling for now, they just want some pretty graphs.</p>
 <p>If we mapped out an appropriate workflow for this project, it might look something like this:</p>
-<div id="htmlwidget-9cffaa3ff43835677c12" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9cffaa3ff43835677c12">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Import; Clean; Tidy; Summarise; Plot; Evaluate; \n\n  # several \"edge\" statements\n  Import->Clean Clean->Tidy Tidy->Summarise Summarise->Plot\n  Plot->Evaluate Evaluate->Summarise Evaluate->Plot\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b423a97c43bc96351dbf" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b423a97c43bc96351dbf">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Import; Clean; Tidy; Summarise; Plot; Evaluate; \n\n  # several \"edge\" statements\n  Import->Clean Clean->Tidy Tidy->Summarise Summarise->Plot\n  Plot->Evaluate Evaluate->Summarise Evaluate->Plot\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>We import the data and clean it and tidy it (more on that later), then we summarise it and create our plots. We can then use feedback from our colleague to change how we’re summarising or how we’re plotting the data to improve our plots until we’re happy.</p>
 </div>
 <div id="example-2-modelling" class="section level3" number="17.1.2">
 <h3><span class="header-section-number">17.1.2</span> Example 2: Modelling</h3>
 <p>For this example, imagine a colleague has come to you about a modelling project. They have a number of relatively clean datasets that they want to combine and use to produce a predictive model. They’re not too worried about plots or graphics, they’re more interested in the model itself. If we mapped out a workflow for this project, it might look a bit more like this:</p>
-<div id="htmlwidget-f2d3fa3664be263c8261" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f2d3fa3664be263c8261">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Load; Clean; Tidy; Collate; Model; Evaluate; \n\n  # several \"edge\" statements\n  Load->Clean Clean->Tidy Tidy->Collate Collate->Model\n  Model->Evaluate Evaluate->Model\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a98105dac51a8361304e" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a98105dac51a8361304e">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Load; Clean; Tidy; Collate; Model; Evaluate; \n\n  # several \"edge\" statements\n  Load->Clean Clean->Tidy Tidy->Collate Collate->Model\n  Model->Evaluate Evaluate->Model\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>As you can see, we still end with the loop of modelling and then evaluating our model and using the output to update the model, but the steps we take to get there are a bit different.</p>
 </div>
 </div>

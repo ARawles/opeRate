@@ -300,7 +300,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="19.4" data-path="abstraction.html"><a href="abstraction.html"><i class="fa fa-check"></i><b>19.4</b> Abstraction</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>20</b> Git &amp; GitHub</a></li>
+<li class="chapter" data-level="20" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>20</b> Git &amp; GitHub</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="git.html"><a href="git.html"><i class="fa fa-check"></i><b>20.1</b> Git</a>
+<ul>
+<li class="chapter" data-level="20.1.1" data-path="git.html"><a href="git.html#repositories"><i class="fa fa-check"></i><b>20.1.1</b> Repositories</a></li>
+<li class="chapter" data-level="20.1.2" data-path="git.html"><a href="git.html#commits"><i class="fa fa-check"></i><b>20.1.2</b> Commits</a></li>
+<li class="chapter" data-level="20.1.3" data-path="git.html"><a href="git.html#pushing-pulling"><i class="fa fa-check"></i><b>20.1.3</b> Pushing &amp; Pulling</a></li>
+<li class="chapter" data-level="20.1.4" data-path="git.html"><a href="git.html#branches"><i class="fa fa-check"></i><b>20.1.4</b> Branches</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="github.html"><a href="github.html"><i class="fa fa-check"></i><b>20.2</b> GitHub</a></li>
+</ul></li>
 <li class="chapter" data-level="21" data-path="project-example.html"><a href="project-example.html"><i class="fa fa-check"></i><b>21</b> Project Example</a></li>
 <li class="part"><span><b>IV Question Answers</b></span></li>
 <li class="chapter" data-level="22" data-path="answers.html"><a href="answers.html"><i class="fa fa-check"></i><b>22</b> Answers</a>
@@ -340,9 +350,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">15.1.1</span> Introduction</h3>
 <p>Neural networks were developed in an attempt to model how neurons in the brain may function. Neurons process inputs and then produce outputs by either firing or not firing. If the inputs to a neuron breach a threshold, then the neuron fires. If that threshold isn’t reached, then it doesn’t fire. That neuron will then become an input to a subsequent neuron. This network of interconnected nodes can then connect a certain input pattern with a corresponding output pattern.</p>
 <p>Importantly, the inputs have weights that can change due to feedback. So if an input erroneously results in a neuron firing, then the weights of the inputs can be adjusted to ensure that the neuron doesn’t fire again if it’s presented with the same information.</p>
-<p><img src="img/Template.png" /><!-- --></p>
-<p><img src="img/Positive.png" width="50%" /></p>
-<p><img src="img/Negative.png" width="50%" /></p>
+<div class="figure"><span id="fig:nn-prototype"></span>
+<img src="img/Template.png" alt="Example neural network"  />
+<p class="caption">
+Figure 15.1: Example neural network
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:nn-positive"></span>
+<img src="img/Positive.png" alt="Neural network firing" width="50%" />
+<p class="caption">
+Figure 15.2: Neural network firing
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:nn-negative"></span>
+<img src="img/Negative.png" alt="Neural network not firing" width="50%" />
+<p class="caption">
+Figure 15.3: Neural network not firing
+</p>
+</div>
 </div>
 <div id="example" class="section level3" number="15.1.2">
 <h3><span class="header-section-number">15.1.2</span> Example</h3>
@@ -380,11 +405,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb167-7"><a href="neural-networks.html#cb167-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <p>Now let’s create our model and then plot it using the <code>{neuralnet}</code> package.</p>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="neural-networks.html#cb168-1" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> neuralnet<span class="sc">::</span><span class="fu">neuralnet</span>(<span class="at">data =</span> nn_vgsales_train,</span>
-<span id="cb168-2"><a href="neural-networks.html#cb168-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">formula =</span> (Publisher <span class="sc">==</span> <span class="st">&quot;LucasArts&quot;</span>) <span class="sc">+</span> (Publisher <span class="sc">==</span> <span class="st">&quot;Sega&quot;</span>) <span class="sc">~</span> Platform <span class="sc">+</span> Genre <span class="sc">+</span> Sales,</span>
-<span id="cb168-3"><a href="neural-networks.html#cb168-3" aria-hidden="true" tabindex="-1"></a>                           <span class="co"># We&#39;re creating a classication model rather than a regression model</span></span>
-<span id="cb168-4"><a href="neural-networks.html#cb168-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">linear.output =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb168-5"><a href="neural-networks.html#cb168-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb168-6"><a href="neural-networks.html#cb168-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nn)</span></code></pre></div>
+<span id="cb168-2"><a href="neural-networks.html#cb168-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">formula =</span> (Publisher <span class="sc">==</span> <span class="st">&quot;LucasArts&quot;</span>) <span class="sc">+</span> (Publisher <span class="sc">==</span> <span class="st">&quot;Sega&quot;</span>) <span class="sc">~</span></span>
+<span id="cb168-3"><a href="neural-networks.html#cb168-3" aria-hidden="true" tabindex="-1"></a>                             Platform <span class="sc">+</span> Genre <span class="sc">+</span> Sales,</span>
+<span id="cb168-4"><a href="neural-networks.html#cb168-4" aria-hidden="true" tabindex="-1"></a>                           <span class="co"># We&#39;re creating a classication model rather than a regression model</span></span>
+<span id="cb168-5"><a href="neural-networks.html#cb168-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">linear.output =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb168-6"><a href="neural-networks.html#cb168-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-7"><a href="neural-networks.html#cb168-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nn)</span></code></pre></div>
 <p>Now let’s apply our model to our test set and have a look at how good the predictions are:</p>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="neural-networks.html#cb169-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(nn, nn_vgsales_test)</span>
 <span id="cb169-2"><a href="neural-networks.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nn_vgsales_test<span class="sc">$</span>Publisher, <span class="fu">apply</span>(pred, <span class="dv">1</span>, which.max))</span></code></pre></div>
@@ -393,18 +419,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   LucasArts 14  4
 ##   Sega       1 34</code></pre>
 <p>This matrix can help us understand how well the model is predicting. Three useful metrics we can easily calculate from this metric are the model’s <strong>accuracy</strong>, <strong>precision</strong> and <strong>recall</strong>.</p>
-<p><strong>Accuracy</strong>
-The accuracy is predicted at the model level, and is calculated as the number of correct guesses divided by the total number of cases. In our case that’s
+<p><strong>Accuracy</strong></p>
+<p>The accuracy is predicted at the model level, and is calculated as the number of correct guesses divided by the total number of cases. In our case that’s
 <code>(14+34)/(1+4+14+34)</code>, which is 0.91.</p>
-<p><strong>Precision</strong>
-The precision of a model tells us how many of the instances that were predicted to be in a certain group <strong>were actually</strong> in that group.
+<p><strong>Precision</strong></p>
+<p>The precision of a model tells us how many of the instances that were predicted to be in a certain group <em>were actually</em> in that group.
 Precision, therefore, is a per-group metric. So in our example, we will have a precision metric for both LucasArts and Sega.</p>
 <p>The precision is calculated as the number of true positives over the number of true positives plus false positives. For Sega, that’s
-<code>34/(34+4)</code>, which is 0.89. For LucasArts, that’s <code>14/(14+1)</code>, which is 0.93. This tells us that our model is more accurate in predicting LucasArts games.</p>
-<p><strong>Recall</strong>
-The recall of a model tells us how many instances of a particular group were correctly predicted to be in that group. This answers a different but related question to the one that the precision metric answers. Once again, the recall metric is calculated for each group/classifier.</p>
-<p>To calculate our recall metric, we need to divide the number of correctly predicted classifications over the total number of actual instances in that group. For Sega, that’s <code>34/(34+1)</code>, which is 0.97. For LucasArts, that’s <code>14/(14+4)</code>, which is 0.78.</p>
-<p>So what should you aim for - high precision or high recall? Well really it depends on what problem you’re trying to solve. If you imagine that you’ve got a model to detect cancer, then you won’t want to miss when someone actually does have cancer, even if you’ll end up predicting that a few people do have cancer when they don’t. To do this, you’ll want to prioritise <strong>recall</strong>. Alternatively, say you’re building a model to choose which funds to invest in. In that case, the cost of investing is high, so you want to make sure that when you go with a fund, it’s actually going to make money, even if you miss out on other funds that would have also made money. In this situation, the <strong>precision</strong> of your model would be more important.</p>
+<code>34/(34+4)</code>, which is 0.89. For LucasArts, that’s <code>14/(14+1)</code>, which is 0.93.</p>
+<p><strong>Recall</strong></p>
+<p>The recall of a model tells us how many instances of a particular group <em>were correctly predicted</em> to be in that group. This answers a different but related question to the one that the precision metric answers. Once again, the recall metric is calculated for each group/classifier.</p>
+<p>To calculate our recall metric, we need to divide the number of true positives over the total number of true instances in that group. For Sega, that’s <code>34/(34+1)</code>, which is 0.97. For LucasArts, that’s <code>14/(14+4)</code>, which is 0.78.</p>
+<p>So what should you aim for - high precision or high recall? Well really it depends on what problem you’re trying to solve. If you imagine that you’ve got a model to detect cancer, then you won’t want to miss when someone actually does have cancer, even if you’ll end up predicting that a few people do have cancer when they don’t. To do this, you’ll want to prioritise <strong>recall</strong>.
+Alternatively, say you’re building a model to choose which funds to invest in. In that case, the cost of investing is high, so you want to make sure that when you go with a fund, it’s actually going to make money, even if you miss out on other funds that would have also made money. In this situation, the <strong>precision</strong> of your model would be more important.</p>
 
 </div>
 </div>
