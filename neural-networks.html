@@ -302,6 +302,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="20" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>20</b> Git &amp; GitHub</a></li>
 <li class="chapter" data-level="21" data-path="project-example.html"><a href="project-example.html"><i class="fa fa-check"></i><b>21</b> Project Example</a></li>
+<li class="part"><span><b>IV Question Answers</b></span></li>
 <li class="chapter" data-level="22" data-path="answers.html"><a href="answers.html"><i class="fa fa-check"></i><b>22</b> Answers</a>
 <ul>
 <li class="chapter" data-level="22.1" data-path="tidy-data-1.html"><a href="tidy-data-1.html"><i class="fa fa-check"></i><b>22.1</b> “Tidy” data</a></li>
@@ -339,58 +340,71 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">15.1.1</span> Introduction</h3>
 <p>Neural networks were developed in an attempt to model how neurons in the brain may function. Neurons process inputs and then produce outputs by either firing or not firing. If the inputs to a neuron breach a threshold, then the neuron fires. If that threshold isn’t reached, then it doesn’t fire. That neuron will then become an input to a subsequent neuron. This network of interconnected nodes can then connect a certain input pattern with a corresponding output pattern.</p>
 <p>Importantly, the inputs have weights that can change due to feedback. So if an input erroneously results in a neuron firing, then the weights of the inputs can be adjusted to ensure that the neuron doesn’t fire again if it’s presented with the same information.</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="neural-networks.html#cb166-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;./img/Template.png&quot;</span>)</span></code></pre></div>
 <p><img src="img/Template.png" /><!-- --></p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="neural-networks.html#cb167-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;./img/Positive.png&quot;</span>)</span></code></pre></div>
 <p><img src="img/Positive.png" width="50%" /></p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="neural-networks.html#cb168-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;./img/Negative.png&quot;</span>)</span></code></pre></div>
 <p><img src="img/Negative.png" width="50%" /></p>
 </div>
 <div id="example" class="section level3" number="15.1.2">
 <h3><span class="header-section-number">15.1.2</span> Example</h3>
 <p>Let’s model how a neural network might learn to identify a lemon from a collection of fruits. When an object is presented, it’s broken down into its constituent features, which are then treated as the first set of inputs. For now, let’s imagine we have three features; ‘is yellow’, ‘is round’, ‘is sour’. The value of each of these is either going to be 1 (true) or 0 (false). These three inputs then feed into a second node. That node has a threshold that needs to be met before it will fire. When it fires, that means the model thinks that the fruit that’s been presented is a lemon.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="neural-networks.html#cb169-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;./img/Lemon example.png&quot;</span>)</span></code></pre></div>
 <p><img src="img/Lemon%20example.png" /><!-- --></p>
 <p>To start off, let’s set the weights for our inputs to all be 1, and the threshold for our second node to fire as 1. Let’s present our first object, which is an orange:</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="neural-networks.html#cb170-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;./img/Orange.png&quot;</span>)</span></code></pre></div>
 <p><img src="img/Orange.png" /><!-- --></p>
-<p>The neuron has fired, but it’s definitely not a lemon. The orange has triggered two of the three inputs to be 1, but because the threshold for the second node to fire is 1, these two inputs are enough to pass the threshold. We need to decrease our weights. For now, let’s drop them all down to 0.25.</p>
+<p>The neuron has fired, but it’s definitely not a lemon. The orange has triggered one of the three inputs to be 1, but because the threshold for the second node to fire is 1, that one input is enough to pass the threshold. We need to decrease our weights. For now, let’s drop them all down to 0.25.</p>
 <p>Now let’s present our next object, which is a lime:</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="neural-networks.html#cb171-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;./img/Lime.png&quot;</span>)</span></code></pre></div>
 <p><img src="img/Lime.png" /><!-- --></p>
-<p>In this case, we’ve triggered two of the three inputs again but this time the threshold hasn’t been met and so the second node hasn’t fired. The model is saying that this isn’t a lemon and it’s correct. For now, we don’t need to change the weights.</p>
+<p>In this case, we’ve triggered two of the three inputs but this time the threshold hasn’t been met and so the second node hasn’t fired. The model is saying that this isn’t a lemon and it’s correct. For now, we don’t need to change the weights.</p>
 <p>Next, we present it with a lemon:</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="neural-networks.html#cb172-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;./img/Lemon.png&quot;</span>)</span></code></pre></div>
 <p><img src="img/Lemon.png" /><!-- --></p>
-<p>Now all of the three inputs are triggered, but this isn’t enough to pass the threshold, so the second node doesn’t fire. This is a lemon though, so it should have fired. Now we need to increase our weights.</p>
+<p>Now all of the three inputs are triggered, but this isn’t enough to pass the threshold, so the second node doesn’t fire. This is a lemon though, so it should have fired. We need to change our weights again.</p>
 <p>We won’t go through the painstaking process of changing the weights until we get them right, but hopefully this has demonstrated the key process by which a neural network learns; by changing the weights of its input layers to match inputs with outputs.</p>
 <p>In this case, we’ve done an extremely simple example. In reality, no neural network is as simple as this because it would be pointless. Instead, neural networks usually have multiple layers and many many more inputs. If we consider models that can read through text documents and classify them (e.g. classify reviews as being positive or negative), these will often use every word in the text as an input. As you can imagine, this can lead to a lot of inputs!</p>
 </div>
 <div id="neural-networks-in-r" class="section level3" number="15.1.3">
 <h3><span class="header-section-number">15.1.3</span> Neural Networks in R</h3>
 <p>There are lots of different packages that have been developed to create neural networks in R. For larger projects, I use the <code>{keras}</code> package which used the TensorFlow library to create machine learning models with support for GPU-accelerated learning. <code>{keras}</code> requires Python to be installed however and can be tough to learn due to its scale and flexiblity. For now, we’re going to use the <code>{neuralnet}</code> package. It’s a little on the older side but it uses a similar syntax to the <code>lm()</code> function so we can use what we’ve learnt so far.</p>
-<p>For this example, let’s create a neural network that will predict what genre a game is based on how well it sold, the year and who the publisher was.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="neural-networks.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nn_vgsales &lt;- tidy_vg_sales %&gt;%</span></span>
-<span id="cb173-2"><a href="neural-networks.html#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dplyr::filter(Genre %in% c(&quot;Platform&quot;, &quot;Shooter&quot;, &quot;Action&quot;)) %&gt;%</span></span>
-<span id="cb173-3"><a href="neural-networks.html#cb173-3" aria-hidden="true" tabindex="-1"></a><span class="co"># dplyr::filter(Country == &quot;Global&quot;) %&gt;%</span></span>
-<span id="cb173-4"><a href="neural-networks.html#cb173-4" aria-hidden="true" tabindex="-1"></a><span class="co"># dplyr::mutate(dplyr::across(c(Publisher, Platform), ~as.numeric(as.factor(.x))))</span></span>
-<span id="cb173-5"><a href="neural-networks.html#cb173-5" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb173-6"><a href="neural-networks.html#cb173-6" aria-hidden="true" tabindex="-1"></a><span class="co"># training_indices &lt;- sample(nrow(nn_vgsales), 2/3 * nrow(nn_vgsales))</span></span>
-<span id="cb173-7"><a href="neural-networks.html#cb173-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb173-8"><a href="neural-networks.html#cb173-8" aria-hidden="true" tabindex="-1"></a><span class="co"># nn_vgsales_train &lt;- nn_vgsales[training_indices,]</span></span>
-<span id="cb173-9"><a href="neural-networks.html#cb173-9" aria-hidden="true" tabindex="-1"></a><span class="co"># nn_vgsales_test &lt;- nn_vgsales[-training_indices,]</span></span>
-<span id="cb173-10"><a href="neural-networks.html#cb173-10" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb173-11"><a href="neural-networks.html#cb173-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb173-12"><a href="neural-networks.html#cb173-12" aria-hidden="true" tabindex="-1"></a><span class="co"># nn &lt;- neuralnet::neuralnet(data = nn_vgsales_train, formula = (Genre == &quot;Platform&quot;) + (Genre == &quot;Shooter&quot;) + (Genre == &quot;Action&quot;) ~ Sales + Year + Publisher, linear.output = FALSE, rep = 10)</span></span>
-<span id="cb173-13"><a href="neural-networks.html#cb173-13" aria-hidden="true" tabindex="-1"></a><span class="co"># pred &lt;- predict(nn, nn_vgsales_test)</span></span>
-<span id="cb173-14"><a href="neural-networks.html#cb173-14" aria-hidden="true" tabindex="-1"></a><span class="co"># table(nn_vgsales_test$Genre, apply(pred, 1, which.max))</span></span>
-<span id="cb173-15"><a href="neural-networks.html#cb173-15" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb173-16"><a href="neural-networks.html#cb173-16" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb173-17"><a href="neural-networks.html#cb173-17" aria-hidden="true" tabindex="-1"></a><span class="co"># predictions &lt;- apply(predict(nn, nn_vgsales_test), 1, which.max)</span></span>
-<span id="cb173-18"><a href="neural-networks.html#cb173-18" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb173-19"><a href="neural-networks.html#cb173-19" aria-hidden="true" tabindex="-1"></a><span class="co"># tst &lt;- nn_vgsales_test %&gt;%</span></span>
-<span id="cb173-20"><a href="neural-networks.html#cb173-20" aria-hidden="true" tabindex="-1"></a><span class="co"># modelr::add_predictions(nn) %&gt;%</span></span>
-<span id="cb173-21"><a href="neural-networks.html#cb173-21" aria-hidden="true" tabindex="-1"></a><span class="co"># dplyr::mutate(correct = ifelse(pred == Genre, TRUE, FALSE))</span></span></code></pre></div>
+<p>For this example, let’s create a neural network that will predict whether the publisher was Take-Two or Sega based on what platform the game was released on, what the genre was and how well the game sold. Let’s start with our dataset:</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="neural-networks.html#cb166-1" aria-hidden="true" tabindex="-1"></a>nn_vgsales <span class="ot">&lt;-</span> tidy_vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb166-2"><a href="neural-networks.html#cb166-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Sales <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb166-3"><a href="neural-networks.html#cb166-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">&quot;Global&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb166-4"><a href="neural-networks.html#cb166-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Publisher <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;LucasArts&quot;</span>, <span class="st">&quot;Sega&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb166-5"><a href="neural-networks.html#cb166-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Need to convert these columns to numeric for the NN</span></span>
+<span id="cb166-6"><a href="neural-networks.html#cb166-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(<span class="fu">c</span>(Genre, Platform), <span class="sc">~</span><span class="fu">as.numeric</span>(<span class="fu">as.factor</span>(.x))))</span></code></pre></div>
+<p>Now let’s split the dataset into a training and test set. We’re going to use the <code>{withr}</code> package to set a random seed when selecting the test and training set so that it’s the same each time.</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="neural-networks.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The `with_seed()` just ensures we&#39;re using the same training set each time</span></span>
+<span id="cb167-2"><a href="neural-networks.html#cb167-2" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_seed</span>(<span class="dv">1234</span>, {</span>
+<span id="cb167-3"><a href="neural-networks.html#cb167-3" aria-hidden="true" tabindex="-1"></a>  training_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(nn_vgsales), <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">nrow</span>(nn_vgsales))</span>
+<span id="cb167-4"><a href="neural-networks.html#cb167-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb167-5"><a href="neural-networks.html#cb167-5" aria-hidden="true" tabindex="-1"></a>  nn_vgsales_train <span class="ot">&lt;-</span> nn_vgsales[training_indices,]</span>
+<span id="cb167-6"><a href="neural-networks.html#cb167-6" aria-hidden="true" tabindex="-1"></a>  nn_vgsales_test <span class="ot">&lt;-</span> nn_vgsales[<span class="sc">-</span>training_indices,]</span>
+<span id="cb167-7"><a href="neural-networks.html#cb167-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<p>Now let’s create our model and then plot it using the <code>{neuralnet}</code> package.</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="neural-networks.html#cb168-1" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> neuralnet<span class="sc">::</span><span class="fu">neuralnet</span>(<span class="at">data =</span> nn_vgsales_train,</span>
+<span id="cb168-2"><a href="neural-networks.html#cb168-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">formula =</span> (Publisher <span class="sc">==</span> <span class="st">&quot;LucasArts&quot;</span>) <span class="sc">+</span> (Publisher <span class="sc">==</span> <span class="st">&quot;Sega&quot;</span>) <span class="sc">~</span> Platform <span class="sc">+</span> Genre <span class="sc">+</span> Sales,</span>
+<span id="cb168-3"><a href="neural-networks.html#cb168-3" aria-hidden="true" tabindex="-1"></a>                           <span class="co"># We&#39;re creating a classication model rather than a regression model</span></span>
+<span id="cb168-4"><a href="neural-networks.html#cb168-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">linear.output =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb168-5"><a href="neural-networks.html#cb168-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb168-6"><a href="neural-networks.html#cb168-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nn)</span></code></pre></div>
+<p>Now let’s apply our model to our test set and have a look at how good the predictions are:</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="neural-networks.html#cb169-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(nn, nn_vgsales_test)</span>
+<span id="cb169-2"><a href="neural-networks.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nn_vgsales_test<span class="sc">$</span>Publisher, <span class="fu">apply</span>(pred, <span class="dv">1</span>, which.max))</span></code></pre></div>
+<pre><code>##            
+##              1  2
+##   LucasArts 14  4
+##   Sega       1 34</code></pre>
+<p>This matrix can help us understand how well the model is predicting. Three useful metrics we can easily calculate from this metric are the model’s <strong>accuracy</strong>, <strong>precision</strong> and <strong>recall</strong>.</p>
+<p><strong>Accuracy</strong>
+The accuracy is predicted at the model level, and is calculated as the number of correct guesses divided by the total number of cases. In our case that’s
+<code>(14+34)/(1+4+14+34)</code>, which is 0.91.</p>
+<p><strong>Precision</strong>
+The precision of a model tells us how many of the instances that were predicted to be in a certain group <strong>were actually</strong> in that group.
+Precision, therefore, is a per-group metric. So in our example, we will have a precision metric for both LucasArts and Sega.</p>
+<p>The precision is calculated as the number of true positives over the number of true positives plus false positives. For Sega, that’s
+<code>34/(34+4)</code>, which is 0.89. For LucasArts, that’s <code>14/(14+1)</code>, which is 0.93. This tells us that our model is more accurate in predicting LucasArts games.</p>
+<p><strong>Recall</strong>
+The recall of a model tells us how many instances of a particular group were correctly predicted to be in that group. This answers a different but related question to the one that the precision metric answers. Once again, the recall metric is calculated for each group/classifier.</p>
+<p>To calculate our recall metric, we need to divide the number of correctly predicted classifications over the total number of actual instances in that group. For Sega, that’s <code>34/(34+1)</code>, which is 0.97. For LucasArts, that’s <code>14/(14+4)</code>, which is 0.78.</p>
+<p>So what should you aim for - high precision or high recall? Well really it depends on what problem you’re trying to solve. If you imagine that you’ve got a model to detect cancer, then you won’t want to miss when someone actually does have cancer, even if you’ll end up predicting that a few people do have cancer when they don’t. To do this, you’ll want to prioritise <strong>recall</strong>. Alternatively, say you’re building a model to choose which funds to invest in. In that case, the cost of investing is high, so you want to make sure that when you go with a fund, it’s actually going to make money, even if you miss out on other funds that would have also made money. In this situation, the <strong>precision</strong> of your model would be more important.</p>
 
 </div>
 </div>

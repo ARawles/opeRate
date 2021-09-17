@@ -302,6 +302,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="20" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>20</b> Git &amp; GitHub</a></li>
 <li class="chapter" data-level="21" data-path="project-example.html"><a href="project-example.html"><i class="fa fa-check"></i><b>21</b> Project Example</a></li>
+<li class="part"><span><b>IV Question Answers</b></span></li>
 <li class="chapter" data-level="22" data-path="answers.html"><a href="answers.html"><i class="fa fa-check"></i><b>22</b> Answers</a>
 <ul>
 <li class="chapter" data-level="22.1" data-path="tidy-data-1.html"><a href="tidy-data-1.html"><i class="fa fa-check"></i><b>22.1</b> “Tidy” data</a></li>
@@ -369,9 +370,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb130-3"><a href="residuals.html#cb130-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">rmse =</span> <span class="fu">unlist</span>(purrr<span class="sc">::</span><span class="fu">map2</span>(a, a1, rmse, <span class="at">wt =</span> mtcars<span class="sc">$</span>wt, <span class="at">mpg =</span> mtcars<span class="sc">$</span>mpg))) <span class="sc">%&gt;%</span></span>
 <span id="cb130-4"><a href="residuals.html#cb130-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(rmse <span class="sc">==</span> <span class="fu">min</span>(rmse))</span>
 <span id="cb130-5"><a href="residuals.html#cb130-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(best_model)</span></code></pre></div>
-<pre><code>##   id        a        a1     rmse
-## 1  2 36.94469 -5.118538 2.982323</code></pre>
-<p>According to our analysis, model 2 has the lowest residual error. Let’s see what that model looks like:</p>
+<pre><code>##   id        a        a1    rmse
+## 1 10 38.17076 -5.518758 2.97175</code></pre>
+<p>According to our analysis, model 10 has the lowest residual error. Let’s see what that model looks like:</p>
 <div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="residuals.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
 <span id="cb132-2"><a href="residuals.html#cb132-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb132-3"><a href="residuals.html#cb132-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">data =</span> best_model, <span class="fu">aes</span>(<span class="at">intercept =</span> a, <span class="at">slope =</span> a1, <span class="at">colour =</span> <span class="fu">as.factor</span>(id)), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
