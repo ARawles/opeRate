@@ -382,6 +382,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2   172 Poke… GB        1999 Misc  Nintendo      3.02     1.12     1.01
 ## # … with 9 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
 ## #   Global_Sales &lt;dbl&gt;</code></pre>
+<p>Looking at our dataset, it looks as though the data past 2010 is a bit more spotty. Let’s filtered out the years beyong 2010 for our analysis:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="filtering.html#cb57-1" aria-hidden="true" tabindex="-1"></a>clean_vg_sales <span class="ot">&lt;-</span> vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="filtering.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Year <span class="sc">&lt;=</span> <span class="dv">2010</span>)</span></code></pre></div>
 </div>
             </section>
 

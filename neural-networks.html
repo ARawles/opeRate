@@ -416,20 +416,20 @@ Figure 15.3: Neural network not firing
 <span id="cb169-2"><a href="neural-networks.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nn_vgsales_test<span class="sc">$</span>Publisher, <span class="fu">apply</span>(pred, <span class="dv">1</span>, which.max))</span></code></pre></div>
 <pre><code>##            
 ##              1  2
-##   LucasArts 14  4
-##   Sega       1 34</code></pre>
+##   LucasArts  8  4
+##   Sega       3 32</code></pre>
 <p>This matrix can help us understand how well the model is predicting. Three useful metrics we can easily calculate from this metric are the model’s <strong>accuracy</strong>, <strong>precision</strong> and <strong>recall</strong>.</p>
 <p><strong>Accuracy</strong></p>
 <p>The accuracy is predicted at the model level, and is calculated as the number of correct guesses divided by the total number of cases. In our case that’s
-<code>(14+34)/(1+4+14+34)</code>, which is 0.91.</p>
+<code>(8+32)/(8+4+3+32)</code>, which is 0.85.</p>
 <p><strong>Precision</strong></p>
 <p>The precision of a model tells us how many of the instances that were predicted to be in a certain group <em>were actually</em> in that group.
 Precision, therefore, is a per-group metric. So in our example, we will have a precision metric for both LucasArts and Sega.</p>
 <p>The precision is calculated as the number of true positives over the number of true positives plus false positives. For Sega, that’s
-<code>34/(34+4)</code>, which is 0.89. For LucasArts, that’s <code>14/(14+1)</code>, which is 0.93.</p>
+<code>32/(32+4)</code>, which is 0.89. For LucasArts, that’s <code>8/(8+3)</code>, which is 0.93.</p>
 <p><strong>Recall</strong></p>
 <p>The recall of a model tells us how many instances of a particular group <em>were correctly predicted</em> to be in that group. This answers a different but related question to the one that the precision metric answers. Once again, the recall metric is calculated for each group/classifier.</p>
-<p>To calculate our recall metric, we need to divide the number of true positives over the total number of true instances in that group. For Sega, that’s <code>34/(34+1)</code>, which is 0.97. For LucasArts, that’s <code>14/(14+4)</code>, which is 0.78.</p>
+<p>To calculate our recall metric, we need to divide the number of true positives over the total number of true instances in that group. For Sega, that’s <code>32/(32+3)</code>, which is 0.91. For LucasArts, that’s <code>8/(8+4)</code>, which is 0.67.</p>
 <p>So what should you aim for - high precision or high recall? Well really it depends on what problem you’re trying to solve. If you imagine that you’ve got a model to detect cancer, then you won’t want to miss when someone actually does have cancer, even if you’ll end up predicting that a few people do have cancer when they don’t. To do this, you’ll want to prioritise <strong>recall</strong>.
 Alternatively, say you’re building a model to choose which funds to invest in. In that case, the cost of investing is high, so you want to make sure that when you go with a fund, it’s actually going to make money, even if you miss out on other funds that would have also made money. In this situation, the <strong>precision</strong> of your model would be more important.</p>
 

@@ -362,7 +362,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb156-12"><a href="video-game-sales-model.html#cb156-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Total_Sales)) <span class="sc">+</span></span>
 <span id="cb156-13"><a href="video-game-sales-model.html#cb156-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
 <span id="cb156-14"><a href="video-game-sales-model.html#cb156-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Genre)</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
 <p>There does seem to be a relationship - we’re seeing more sales as the years increase - but it might not be equal for the different genres. For this reason, let’s create a model that looks at the interaction effects between genre and year:</p>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="video-game-sales-model.html#cb157-1" aria-hidden="true" tabindex="-1"></a>vg_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> vg_sales_to_model, <span class="at">formula =</span> Total_Sales <span class="sc">~</span> Year <span class="sc">*</span> Genre)</span></code></pre></div>
 <p>Let’s plot a model for each genre model:</p>
@@ -373,7 +373,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb158-5"><a href="video-game-sales-model.html#cb158-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
 <span id="cb158-6"><a href="video-game-sales-model.html#cb158-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>)) <span class="sc">+</span></span>
 <span id="cb158-7"><a href="video-game-sales-model.html#cb158-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Genre)</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
 <p>From our plot, it looks as though we’re only seeing a different effect of year in a couple of the genres - the role-playing genre seems to have grown at a faster rate than the others, with shooters growing at a slower rate. Let’s compare this to our model summary:</p>
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="video-game-sales-model.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(vg_model)</span></code></pre></div>
 <pre><code>## 
@@ -416,7 +416,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb161-5"><a href="video-game-sales-model.html#cb161-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
 <span id="cb161-6"><a href="video-game-sales-model.html#cb161-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
 <span id="cb161-7"><a href="video-game-sales-model.html#cb161-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() </span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
 <p>Instead, we’re overestimating closer to the limits of our year range, and underestimating in the middle. This suggests to me that a quadratic model would be more appropriate. Let’s try that:</p>
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="video-game-sales-model.html#cb162-1" aria-hidden="true" tabindex="-1"></a>vg_quad_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> vg_sales_to_model, <span class="at">formula =</span> Total_Sales <span class="sc">~</span> Year <span class="sc">+</span> <span class="fu">I</span>(Year<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Genre <span class="sc">+</span> Genre<span class="sc">:</span>Year)</span>
 <span id="cb162-2"><a href="video-game-sales-model.html#cb162-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -428,7 +428,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb162-8"><a href="video-game-sales-model.html#cb162-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x <span class="sc">+</span> <span class="fu">I</span>(x<span class="sc">^</span><span class="dv">2</span>), <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
 <span id="cb162-9"><a href="video-game-sales-model.html#cb162-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>)) <span class="sc">+</span></span>
 <span id="cb162-10"><a href="video-game-sales-model.html#cb162-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Genre)</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="video-game-sales-model.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(vg_quad_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -471,7 +471,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb165-5"><a href="video-game-sales-model.html#cb165-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
 <span id="cb165-6"><a href="video-game-sales-model.html#cb165-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
 <span id="cb165-7"><a href="video-game-sales-model.html#cb165-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
 <p>That looks much more random to me!</p>
 </div>
             </section>

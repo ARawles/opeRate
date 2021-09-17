@@ -403,7 +403,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb143-3"><a href="evaluating-models.html#cb143-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb143-4"><a href="evaluating-models.html#cb143-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb143-5"><a href="evaluating-models.html#cb143-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>dataset)</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
 <p>Now that we’ve looked a little deeper, we can clearly see that these models are inappropriate for three of the four datasets (2, 3 and 4). The lesson here is that there are multiple tools at your disposal when analysing data, and overeliance on a particular tool without due care and attention can cause issues.</p>
 <p>With that in mind, let’s look at some ways of evaluating the strength of your model.</p>
 <div id="lm-output" class="section level3" number="14.6.1">
@@ -468,12 +468,12 @@ The typically accepted value for considering a relationship to not be the result
 <span id="cb148-4"><a href="evaluating-models.html#cb148-4" aria-hidden="true" tabindex="-1"></a>mt_residuals <span class="sc">%&gt;%</span></span>
 <span id="cb148-5"><a href="evaluating-models.html#cb148-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> resid)) <span class="sc">+</span></span>
 <span id="cb148-6"><a href="evaluating-models.html#cb148-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> <span class="fl">0.5</span>)</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
 <p>Things kind of look okay, but it’s tough to know for sure because have so few estimates. Let’s take a look at how our residuals change for different <code>mpg</code> values:</p>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="evaluating-models.html#cb149-1" aria-hidden="true" tabindex="-1"></a>mt_residuals <span class="sc">%&gt;%</span></span>
 <span id="cb149-2"><a href="evaluating-models.html#cb149-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mpg, <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
 <span id="cb149-3"><a href="evaluating-models.html#cb149-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
 <p>Here we can see what looks like random noise. This is good because it means that our model isn’t performing better for some values than for others. If it is, that means we have a systematic bias in our model.</p>
 <p>Alternatively, let’s compare this plot with a plot of one of the <code>anscombe</code> datasets:</p>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="evaluating-models.html#cb150-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe <span class="sc">%&gt;%</span></span>
@@ -481,7 +481,7 @@ The typically accepted value for considering a relationship to not be the result
 <span id="cb150-3"><a href="evaluating-models.html#cb150-3" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_residuals</span>(<span class="at">model =</span> models[[<span class="dv">2</span>]]) <span class="sc">%&gt;%</span></span>
 <span id="cb150-4"><a href="evaluating-models.html#cb150-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
 <span id="cb150-5"><a href="evaluating-models.html#cb150-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-96-1.png" width="672" /></p>
 <p>Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern for different values of x. If you see a residual plot like this, you’re likely not applying an appropriate model family or type.</p>
 </div>
 <div id="overfitting" class="section level3" number="14.6.3">
@@ -499,20 +499,20 @@ The typically accepted value for considering a relationship to not be the result
 <span id="cb152-6"><a href="evaluating-models.html#cb152-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> mpg, <span class="at">x =</span> wt)) <span class="sc">+</span></span>
 <span id="cb152-7"><a href="evaluating-models.html#cb152-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb152-8"><a href="evaluating-models.html#cb152-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> pred))</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-97-1.png" width="672" /></p>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
 <div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="evaluating-models.html#cb153-1" aria-hidden="true" tabindex="-1"></a>train_mtcars <span class="sc">%&gt;%</span></span>
 <span id="cb153-2"><a href="evaluating-models.html#cb153-2" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_residuals</span>(overfit_model) <span class="sc">%&gt;%</span></span>
 <span id="cb153-3"><a href="evaluating-models.html#cb153-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> resid)) <span class="sc">+</span></span>
 <span id="cb153-4"><a href="evaluating-models.html#cb153-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
 <span id="cb153-5"><a href="evaluating-models.html#cb153-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-97-2.png" width="672" /></p>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-98-2.png" width="672" /></p>
 <p>Things seem to look fine. Our residuals look pretty random and we seem to be representing the data we have well. When we then apply the model to our test dataset however…</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="evaluating-models.html#cb154-1" aria-hidden="true" tabindex="-1"></a>test_mtcars <span class="sc">%&gt;%</span></span>
 <span id="cb154-2"><a href="evaluating-models.html#cb154-2" aria-hidden="true" tabindex="-1"></a>  modelr<span class="sc">::</span><span class="fu">add_predictions</span>(overfit_model) <span class="sc">%&gt;%</span></span>
 <span id="cb154-3"><a href="evaluating-models.html#cb154-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> mpg, <span class="at">x =</span> wt)) <span class="sc">+</span></span>
 <span id="cb154-4"><a href="evaluating-models.html#cb154-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb154-5"><a href="evaluating-models.html#cb154-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> pred))</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
 <p>That’s clearly not right at all. We’ve got predictions that are nowhere near the actual values.</p>
 <p>What’s happened is our model has overfit the training data, representing noise and randomness as a true relationship between the variables. When we then apply the model to new data then, where that noise is different, it performs terribly.</p>
 <p>Let’s compare this with a simpler model that doesn’t overfit.</p>
@@ -522,7 +522,7 @@ The typically accepted value for considering a relationship to not be the result
 <span id="cb155-4"><a href="evaluating-models.html#cb155-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> mpg, <span class="at">x =</span> wt)) <span class="sc">+</span></span>
 <span id="cb155-5"><a href="evaluating-models.html#cb155-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb155-6"><a href="evaluating-models.html#cb155-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> pred))</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
+<p><img src="opeRate_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
 <p>Much better. The model still isn’t perfect - certainly not as good as if it was trained on all the data - but it’s much better than our previous example even though it’s much less complex.</p>
 <div id="avoiding-overfitting" class="section level4" number="14.6.3.1">
 <h4><span class="header-section-number">14.6.3.1</span> Avoiding overfitting</h4>

@@ -348,11 +348,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">8.2</span> Missing values</h2>
 <p>Missing values are common in data science - data collection is often imperfect and so you’ll end up with observations or data-points missing. Firstly, you need to decide what you’re going to do with those.</p>
 <p>The easiest approach to just to remove them, and we can do that with the <code>dplyr::filter()</code> and the <code>is.na()</code> functions. If you remember in the <a href="loading.html#loading">Loading</a> chapter, <code>{readr}</code> had trouble parsing some of the values in our Year column to numeric, and so gave us some NAs. Let’s remove those rows using this approach:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="missing-values.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To remove rows with NA in one column</span></span>
-<span id="cb57-2"><a href="missing-values.html#cb57-2" aria-hidden="true" tabindex="-1"></a>clean_vg_sales <span class="ot">&lt;-</span> vg_sales <span class="sc">%&gt;%</span> </span>
-<span id="cb57-3"><a href="missing-values.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Year))</span>
-<span id="cb57-4"><a href="missing-values.html#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(clean_vg_sales, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 16,327 x 11
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="missing-values.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To remove rows with NA in one column</span></span>
+<span id="cb58-2"><a href="missing-values.html#cb58-2" aria-hidden="true" tabindex="-1"></a>clean_vg_sales <span class="ot">&lt;-</span> clean_vg_sales <span class="sc">%&gt;%</span> </span>
+<span id="cb58-3"><a href="missing-values.html#cb58-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Year))</span>
+<span id="cb58-4"><a href="missing-values.html#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(clean_vg_sales, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 12,441 x 11
 ##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
 ##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1     1 Wii … Wii       2006 Spor… Nintendo      41.5    29.0      3.77
@@ -360,12 +360,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3     3 Mari… Wii       2008 Raci… Nintendo      15.8    12.9      3.79
 ## 4     4 Wii … Wii       2009 Spor… Nintendo      15.8    11.0      3.28
 ## 5     5 Poke… GB        1996 Role… Nintendo      11.3     8.89    10.2 
-## # … with 16,322 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
+## # … with 12,436 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
 ## #   Global_Sales &lt;dbl&gt;</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="missing-values.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To remove rows with NA in any column</span></span>
-<span id="cb59-2"><a href="missing-values.html#cb59-2" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span> </span>
-<span id="cb59-3"><a href="missing-values.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="sc">~!</span><span class="fu">is.na</span>(.x))) <span class="sc">%&gt;%</span></span>
-<span id="cb59-4"><a href="missing-values.html#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="missing-values.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To remove rows with NA in any column</span></span>
+<span id="cb60-2"><a href="missing-values.html#cb60-2" aria-hidden="true" tabindex="-1"></a>vg_sales <span class="sc">%&gt;%</span> </span>
+<span id="cb60-3"><a href="missing-values.html#cb60-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="sc">~!</span><span class="fu">is.na</span>(.x))) <span class="sc">%&gt;%</span></span>
+<span id="cb60-4"><a href="missing-values.html#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 16,327 x 11
 ##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
 ##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -378,27 +378,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   Global_Sales &lt;dbl&gt;</code></pre>
 <p>Another approach to replace them with either the average for that column or with the closest neighbour value (this works better with time series data).</p>
 <p>To replace with the nearest value, we can use the <code>tidyr::fill()</code> function. That approach wouldn’t be appropriate for our video games example so let’s use the <code>datasets::airquality</code> dataset instead:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="missing-values.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datasets<span class="sc">::</span>airquality, <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="missing-values.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datasets<span class="sc">::</span>airquality, <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##   Ozone Solar.R Wind Temp Month Day
 ## 1    41     190  7.4   67     5   1
 ## 2    36     118  8.0   72     5   2
 ## 3    12     149 12.6   74     5   3
 ## 4    18     313 11.5   62     5   4
 ## 5    NA      NA 14.3   56     5   5</code></pre>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="missing-values.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fill a single column</span></span>
-<span id="cb63-2"><a href="missing-values.html#cb63-2" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
-<span id="cb63-3"><a href="missing-values.html#cb63-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">fill</span>(Ozone, <span class="at">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb63-4"><a href="missing-values.html#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="missing-values.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fill a single column</span></span>
+<span id="cb64-2"><a href="missing-values.html#cb64-2" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb64-3"><a href="missing-values.html#cb64-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">fill</span>(Ozone, <span class="at">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb64-4"><a href="missing-values.html#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##   Ozone Solar.R Wind Temp Month Day
 ## 1    41     190  7.4   67     5   1
 ## 2    36     118  8.0   72     5   2
 ## 3    12     149 12.6   74     5   3
 ## 4    18     313 11.5   62     5   4
 ## 5    18      NA 14.3   56     5   5</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="missing-values.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fill all columns</span></span>
-<span id="cb65-2"><a href="missing-values.html#cb65-2" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
-<span id="cb65-3"><a href="missing-values.html#cb65-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">fill</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="at">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb65-4"><a href="missing-values.html#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="missing-values.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Fill all columns</span></span>
+<span id="cb66-2"><a href="missing-values.html#cb66-2" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb66-3"><a href="missing-values.html#cb66-3" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">fill</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), <span class="at">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb66-4"><a href="missing-values.html#cb66-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##   Ozone Solar.R Wind Temp Month Day
 ## 1    41     190  7.4   67     5   1
 ## 2    36     118  8.0   72     5   2
@@ -406,14 +406,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4    18     313 11.5   62     5   4
 ## 5    18     313 14.3   56     5   5</code></pre>
 <p>To replace them with the mean, we can either use a package like <code>zoo</code>, or we can use the <code>tidyverse</code> packages and our own function:</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="missing-values.html#cb67-1" aria-hidden="true" tabindex="-1"></a>replace_with_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb67-2"><a href="missing-values.html#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(x, <span class="fu">is.na</span>(x), <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb67-3"><a href="missing-values.html#cb67-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb67-4"><a href="missing-values.html#cb67-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-5"><a href="missing-values.html#cb67-5" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
-<span id="cb67-6"><a href="missing-values.html#cb67-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The mutate function creates new columns or overwrites existing ones</span></span>
-<span id="cb67-7"><a href="missing-values.html#cb67-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), replace_with_mean)) <span class="sc">%&gt;%</span></span>
-<span id="cb67-8"><a href="missing-values.html#cb67-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="missing-values.html#cb68-1" aria-hidden="true" tabindex="-1"></a>replace_with_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb68-2"><a href="missing-values.html#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(x, <span class="fu">is.na</span>(x), <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb68-3"><a href="missing-values.html#cb68-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb68-4"><a href="missing-values.html#cb68-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-5"><a href="missing-values.html#cb68-5" aria-hidden="true" tabindex="-1"></a>datasets<span class="sc">::</span>airquality <span class="sc">%&gt;%</span></span>
+<span id="cb68-6"><a href="missing-values.html#cb68-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The mutate function creates new columns or overwrites existing ones</span></span>
+<span id="cb68-7"><a href="missing-values.html#cb68-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(dplyr<span class="sc">::</span><span class="fu">everything</span>(), replace_with_mean)) <span class="sc">%&gt;%</span></span>
+<span id="cb68-8"><a href="missing-values.html#cb68-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##      Ozone  Solar.R Wind Temp Month Day
 ## 1 41.00000 190.0000  7.4   67     5   1
 ## 2 36.00000 118.0000  8.0   72     5   2

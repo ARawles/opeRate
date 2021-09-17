@@ -348,21 +348,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">8.3</span> Changing column types</h2>
 <p>When you import data into R, sometimes the type of the column doesn’t match what you want it to be. One way of tackling this is to define your column types when you import the data (as we looked at before), but it’s also perfectly acceptable to change the column type after the import.</p>
 <p>Probably the most common conversion is from a character string to a date. For this example, we’re just going to use some test data:</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="changing-column-types.html#cb69-1" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(<span class="sc">~</span>bad_date, <span class="sc">~</span>value,</span>
-<span id="cb69-2"><a href="changing-column-types.html#cb69-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2012/01/01&quot;</span>, <span class="dv">100</span>,</span>
-<span id="cb69-3"><a href="changing-column-types.html#cb69-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2014/06/01&quot;</span>, <span class="dv">200</span>)</span>
-<span id="cb69-4"><a href="changing-column-types.html#cb69-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-5"><a href="changing-column-types.html#cb69-5" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="sc">%&gt;%</span></span>
-<span id="cb69-6"><a href="changing-column-types.html#cb69-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">good_date =</span> <span class="fu">as.Date</span>(bad_date, <span class="at">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="changing-column-types.html#cb70-1" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(<span class="sc">~</span>bad_date, <span class="sc">~</span>value,</span>
+<span id="cb70-2"><a href="changing-column-types.html#cb70-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2012/01/01&quot;</span>, <span class="dv">100</span>,</span>
+<span id="cb70-3"><a href="changing-column-types.html#cb70-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;2014/06/01&quot;</span>, <span class="dv">200</span>)</span>
+<span id="cb70-4"><a href="changing-column-types.html#cb70-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-5"><a href="changing-column-types.html#cb70-5" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="sc">%&gt;%</span></span>
+<span id="cb70-6"><a href="changing-column-types.html#cb70-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">good_date =</span> <span class="fu">as.Date</span>(bad_date, <span class="at">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##   bad_date   value good_date 
 ##   &lt;chr&gt;      &lt;dbl&gt; &lt;date&gt;    
 ## 1 2012/01/01   100 2012-01-01
 ## 2 2014/06/01   200 2014-06-01</code></pre>
 <p>Essentially, all you need to do is wrap your conversion function (e.g. <code>as.Date()</code>, <code>as.character()</code>) in a <code>dplyr::mutate()</code> call and you should be able to change your columns to whatever you need. To replace the original column, make sure you give it the same name when using <code>dplyr::mutate()</code>:</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="changing-column-types.html#cb71-1" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="sc">%&gt;%</span></span>
-<span id="cb71-2"><a href="changing-column-types.html#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This will replace the bad_date column rather than creating a new column</span></span>
-<span id="cb71-3"><a href="changing-column-types.html#cb71-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">bad_date =</span> <span class="fu">as.Date</span>(bad_date, <span class="at">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="changing-column-types.html#cb72-1" aria-hidden="true" tabindex="-1"></a>bad_tibble <span class="sc">%&gt;%</span></span>
+<span id="cb72-2"><a href="changing-column-types.html#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This will replace the bad_date column rather than creating a new column</span></span>
+<span id="cb72-3"><a href="changing-column-types.html#cb72-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">bad_date =</span> <span class="fu">as.Date</span>(bad_date, <span class="at">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   bad_date   value
 ##   &lt;date&gt;     &lt;dbl&gt;

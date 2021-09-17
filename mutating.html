@@ -348,11 +348,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">11</span> Mutating</h1>
 <p>Sometimes you’ll want to add new columns to your data. Most of the time, these will be calculated columns that can be created based on one or more of the other columns in the dataset. To create new columns, we use the <code>dplyr::mutate()</code> function.</p>
 <p>First off, let’s add something simple; the Sales column in our dataset is in millions. Let’s convert that to normal units. All we need to do is provide the name of our new column to the <code>dplyr::mutate()</code> function and how our new column should be calculated:</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="mutating.html#cb103-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb103-2"><a href="mutating.html#cb103-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Sales_units =</span> Sales <span class="sc">*</span> <span class="dv">1000000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb103-3"><a href="mutating.html#cb103-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Rank, Name, Platform, Year, Genre, Publisher, Sales_units) <span class="sc">%&gt;%</span></span>
-<span id="cb103-4"><a href="mutating.html#cb103-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 81,635 x 7
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="mutating.html#cb104-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb104-2"><a href="mutating.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Sales_units =</span> Sales <span class="sc">*</span> <span class="dv">1000000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb104-3"><a href="mutating.html#cb104-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Rank, Name, Platform, Year, Genre, Publisher, Sales_units) <span class="sc">%&gt;%</span></span>
+<span id="cb104-4"><a href="mutating.html#cb104-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 62,205 x 7
 ##    Rank Name       Platform  Year Genre  Publisher Sales_units
 ##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;dbl&gt;
 ## 1     1 Wii Sports Wii       2006 Sports Nintendo     41490000
@@ -360,14 +360,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3     1 Wii Sports Wii       2006 Sports Nintendo      3770000
 ## 4     1 Wii Sports Wii       2006 Sports Nintendo      8460000
 ## 5     1 Wii Sports Wii       2006 Sports Nintendo     82740000
-## # … with 81,630 more rows</code></pre>
+## # … with 62,200 more rows</code></pre>
 <p>As you can see, we’ve created a new column called <code>EU_Proportion</code> and we’ve calculated by dividing the number of EU sales by the total number of sales.</p>
 <p>If we wanted to overwrite the Sales column, we do the same but give the new column the same name:</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="mutating.html#cb105-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb105-2"><a href="mutating.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Sales =</span> Sales <span class="sc">*</span> <span class="dv">1000000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb105-3"><a href="mutating.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Rank, Name, Platform, Year, Genre, Publisher, Sales) <span class="sc">%&gt;%</span></span>
-<span id="cb105-4"><a href="mutating.html#cb105-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 81,635 x 7
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="mutating.html#cb106-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb106-2"><a href="mutating.html#cb106-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Sales =</span> Sales <span class="sc">*</span> <span class="dv">1000000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb106-3"><a href="mutating.html#cb106-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Rank, Name, Platform, Year, Genre, Publisher, Sales) <span class="sc">%&gt;%</span></span>
+<span id="cb106-4"><a href="mutating.html#cb106-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 62,205 x 7
 ##    Rank Name       Platform  Year Genre  Publisher    Sales
 ##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt;
 ## 1     1 Wii Sports Wii       2006 Sports Nintendo  41490000
@@ -375,16 +375,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3     1 Wii Sports Wii       2006 Sports Nintendo   3770000
 ## 4     1 Wii Sports Wii       2006 Sports Nintendo   8460000
 ## 5     1 Wii Sports Wii       2006 Sports Nintendo  82740000
-## # … with 81,630 more rows</code></pre>
+## # … with 62,200 more rows</code></pre>
 <p>While this is certainly a powerful tool, we’re not really changing the world here. However, we can create more complicated columns by leveraging the concept of applying our function to <a href="grouping.html#grouping">groups</a>.</p>
 <p>When our dataset is grouped, our <code>mutate()</code> call will be evaluated for each permutation of the provided groups. Let’s look at an example of creating a cumulative sum for each Publisher and Country:</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="mutating.html#cb107-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb107-2"><a href="mutating.html#cb107-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Country) <span class="sc">%&gt;%</span></span>
-<span id="cb107-3"><a href="mutating.html#cb107-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(Year) <span class="sc">%&gt;%</span> <span class="co"># We need to order from earliest date to latest</span></span>
-<span id="cb107-4"><a href="mutating.html#cb107-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Cumulative_Sales =</span> <span class="fu">cumsum</span>(Sales)) <span class="sc">%&gt;%</span></span>
-<span id="cb107-5"><a href="mutating.html#cb107-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Publisher <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Atari&quot;</span>, <span class="st">&quot;Activision&quot;</span>)) <span class="sc">%&gt;%</span> <span class="co"># Let&#39;s just look at Atari &amp; Activision</span></span>
-<span id="cb107-6"><a href="mutating.html#cb107-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 6,565 x 9
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="mutating.html#cb108-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
+<span id="cb108-2"><a href="mutating.html#cb108-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Country) <span class="sc">%&gt;%</span></span>
+<span id="cb108-3"><a href="mutating.html#cb108-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(Year) <span class="sc">%&gt;%</span> <span class="co"># We need to order from earliest date to latest</span></span>
+<span id="cb108-4"><a href="mutating.html#cb108-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Cumulative_Sales =</span> <span class="fu">cumsum</span>(Sales)) <span class="sc">%&gt;%</span></span>
+<span id="cb108-5"><a href="mutating.html#cb108-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Publisher <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Atari&quot;</span>, <span class="st">&quot;Activision&quot;</span>)) <span class="sc">%&gt;%</span> <span class="co"># Let&#39;s just look at Atari &amp; Activision</span></span>
+<span id="cb108-6"><a href="mutating.html#cb108-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 5,280 x 9
 ## # Groups:   Publisher, Country [10]
 ##    Rank Name      Platform  Year Genre  Publisher Country Sales Cumulative_Sales
 ##   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt;            &lt;dbl&gt;
@@ -393,7 +393,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3   259 Asteroids 2600      1980 Shoot… Atari     JP       0                0   
 ## 4   259 Asteroids 2600      1980 Shoot… Atari     Other    0.05             0.05
 ## 5   259 Asteroids 2600      1980 Shoot… Atari     Global   4.31             4.31
-## # … with 6,560 more rows</code></pre>
+## # … with 5,275 more rows</code></pre>
 <p>Now we’ve got a new column showing the total number of sales for each Publisher up to each year. What <code>{dplyr}</code> has done is essentially filtered the data down a specific publisher and country, created a cumulative sum of the <code>Sales</code> column, and then done that for each publisher and country and stitched it back together.</p>
 
 </div>
