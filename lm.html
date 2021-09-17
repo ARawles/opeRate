@@ -347,10 +347,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="lm" class="section level2" number="14.4">
 <h2><span class="header-section-number">14.4</span> <code>lm()</code></h2>
 <p>Now that we’ve understood the basics behind a linear model, I can finally reveal that R has a function that will do all of this for us. The <code>lm()</code> function in R just needs the dataset and the formula for our model, and works out the coefficients for us, giving us back a model:</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="lm.html#cb133-1" aria-hidden="true" tabindex="-1"></a>lm_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> mtcars, mpg <span class="sc">~</span> wt)</span>
-<span id="cb133-2"><a href="lm.html#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This formula is equivalent to `y = a + (a1*x)`</span></span>
-<span id="cb133-3"><a href="lm.html#cb133-3" aria-hidden="true" tabindex="-1"></a><span class="co"># where y = mpg and x = wt</span></span>
-<span id="cb133-4"><a href="lm.html#cb133-4" aria-hidden="true" tabindex="-1"></a>lm_model</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="lm.html#cb130-1" aria-hidden="true" tabindex="-1"></a>lm_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> mtcars, mpg <span class="sc">~</span> wt)</span>
+<span id="cb130-2"><a href="lm.html#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This formula is equivalent to `y = a + (a1*x)`</span></span>
+<span id="cb130-3"><a href="lm.html#cb130-3" aria-hidden="true" tabindex="-1"></a><span class="co"># where y = mpg and x = wt</span></span>
+<span id="cb130-4"><a href="lm.html#cb130-4" aria-hidden="true" tabindex="-1"></a>lm_model</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ wt, data = mtcars)
@@ -358,10 +358,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Coefficients:
 ## (Intercept)           wt  
 ##      37.285       -5.344</code></pre>
-<p>We can see that the <code>lm()</code> function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren’t too far off with 36.7829653 and -5.316501!</p>
+<p>We can see that the <code>lm()</code> function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren’t too far off with 37.0370323 and -5.2751651!</p>
 <p>To model quadratic relationships with the <code>lm()</code> function, our syntax is a little different:</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="lm.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This formula is equivalent to `y = a + (a1*x) + (a2*x^2)</span></span>
-<span id="cb135-2"><a href="lm.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> mtcars, mpg <span class="sc">~</span> wt <span class="sc">+</span> <span class="fu">I</span>(wt<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="lm.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This formula is equivalent to `y = a + (a1*x) + (a2*x^2)</span></span>
+<span id="cb132-2"><a href="lm.html#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> mtcars, mpg <span class="sc">~</span> wt <span class="sc">+</span> <span class="fu">I</span>(wt<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ wt + I(wt^2), data = mtcars)

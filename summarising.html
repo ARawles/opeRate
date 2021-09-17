@@ -346,7 +346,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="summarising" class="section level1" number="12">
 <h1><span class="header-section-number">12</span> Summarising</h1>
-<p>As we saw previously, the base videa game sales dataset has nearly 17,000 entries! That’s a lot of data, and we’re not really going to able to extract or show any real insights from this data without summarising it to some degree. What we want to do is summarise the data to some degree. We lose some of the granularity of the data but it allows is to understand the data a bit better and identify patterns.</p>
+<p>As we saw previously, the base video game sales dataset has nearly 17,000 entries! That’s a lot of data, and we’re not really going to able to extract or show any real insights from this data without summarising it to some degree. We’ll lose some of the granularity of the data but it allows us to understand the data a bit better and identify patterns.</p>
 <p>Summarisation uses exactly the same <a href="grouping.html#grouping">grouping</a> concept as mutatation does; by grouping the data we change the scope of each application of the function to be limited to that group.</p>
 <p>Let’s go through an example. Let’s say that we want to get the global sales for each publisher in each year. For now, we don’t care about genre or platform. To do this, we’ll need to group by Publisher, Year and Country:</p>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="summarising.html#cb110-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
@@ -366,45 +366,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 10TACLE Studios  2006 NA             0.01
 ## 5 10TACLE Studios  2006 Other          0   
 ## # … with 8,990 more rows</code></pre>
-<p>Now we can see that the number of rows has reduced down to just under 2,000, and we’ve got the total global sales for each of our publishers, and for each year. <code>{dplyr}</code> has looked through each publisher and each year that publisher has at least 1 game, and added up the total number of sales, then moved onto the next Publisher/Year combination.</p>
-<p>While we’re here, let’s lump together some of the less popular publishers using the <code>forcats::fct_lump_n()</code> function:</p>
+<p>Now we can see that the number of rows has reduced down to just under 9,000, and we’ve got the total global sales for each of our publishers, countries, and for each year. <code>{dplyr}</code> has looked through each publisher, each country, and each year that publisher has at least 1 game, and added up the total number of sales, then moved onto the next Publisher/Country/Year combination.</p>
+<p>In this case we’ve used the <code>sum()</code> function, but any kind of summary function can be used:</p>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="summarising.html#cb113-1" aria-hidden="true" tabindex="-1"></a>smmrsd_vg_sales <span class="ot">&lt;-</span> tidy_vg_sales <span class="sc">%&gt;%</span></span>
 <span id="cb113-2"><a href="summarising.html#cb113-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year, Country) <span class="sc">%&gt;%</span></span>
-<span id="cb113-3"><a href="summarising.html#cb113-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb113-4"><a href="summarising.html#cb113-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Publisher =</span> forcats<span class="sc">::</span><span class="fu">fct_lump_n</span>(Publisher, <span class="at">n =</span> <span class="dv">5</span>, <span class="at">w =</span> Total_Sales)) <span class="sc">%&gt;%</span></span>
-<span id="cb113-5"><a href="summarising.html#cb113-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year, Country) <span class="sc">%&gt;%</span></span>
-<span id="cb113-6"><a href="summarising.html#cb113-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Total_Sales), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span>
-<span id="cb113-7"><a href="summarising.html#cb113-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The .groups = &#39;drop&#39; parameter will automatically remove the grouping from the dataset</span></span>
-<span id="cb113-8"><a href="summarising.html#cb113-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(smmrsd_vg_sales, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 675 x 4
-##   Publisher   Year Country Total_Sales
-## * &lt;fct&gt;      &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;
-## 1 Activision  1980 EU             0.18
-## 2 Activision  1980 Global         3.02
-## 3 Activision  1980 JP             0   
-## 4 Activision  1980 NA             2.82
-## 5 Activision  1980 Other          0.03
-## # … with 670 more rows</code></pre>
-<p>In this case we’ve used the <code>sum()</code> function, but any kind of summary function can be used:</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="summarising.html#cb115-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
-<span id="cb115-2"><a href="summarising.html#cb115-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Publisher, Year, Country) <span class="sc">%&gt;%</span></span>
-<span id="cb115-3"><a href="summarising.html#cb115-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Sales),</span>
-<span id="cb115-4"><a href="summarising.html#cb115-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Average_Sales =</span> <span class="fu">mean</span>(Sales),</span>
-<span id="cb115-5"><a href="summarising.html#cb115-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 8,995 x 5
-##    Publisher        Year Country Total_Sales Average_Sales
-##  * &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-##  1 10TACLE Studios  2006 EU             0.01         0.01 
-##  2 10TACLE Studios  2006 Global         0.02         0.02 
-##  3 10TACLE Studios  2006 JP             0            0    
-##  4 10TACLE Studios  2006 NA             0.01         0.01 
-##  5 10TACLE Studios  2006 Other          0            0    
-##  6 10TACLE Studios  2007 EU             0.03         0.015
-##  7 10TACLE Studios  2007 Global         0.09         0.045
-##  8 10TACLE Studios  2007 JP             0            0    
-##  9 10TACLE Studios  2007 NA             0.06         0.03 
-## 10 10TACLE Studios  2007 Other          0            0    
-## # … with 8,985 more rows</code></pre>
+<span id="cb113-3"><a href="summarising.html#cb113-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">Total_Sales =</span> <span class="fu">sum</span>(Sales),</span>
+<span id="cb113-4"><a href="summarising.html#cb113-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Average_Sales =</span> <span class="fu">mean</span>(Sales),</span>
+<span id="cb113-5"><a href="summarising.html#cb113-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
 <p>Because <code>dplyr::mutate()</code> and <code>dplyr::summarise()</code> both use a similar syntax and both function on grouped datasets, using the correct function when starting out can be tough. The best way to remember which one to use is to ask “How many rows am I expecting back from this?”. If the answer is fewer than you’ve got now, you’ll want the <code>summarise()</code> function. Otherwise you’re looking at <code>mutate()</code>.</p>
 
 </div>

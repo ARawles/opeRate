@@ -350,7 +350,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="simple-effects" class="section level3" number="14.5.1">
 <h3><span class="header-section-number">14.5.1</span> Simple effects</h3>
 <p>Simple effects are the additive effects of multiple variables when used to predict a dependent variable. For example, we might want to also introduce the effect of horsepower <code>hp</code> on the miles per gallon of the cars in the <code>mtcars</code> dataset. To do that, we would just add the <code>hp</code> variable to our model:</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="multiple-predictors.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> mtcars, mpg <span class="sc">~</span> wt <span class="sc">+</span> hp)</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="multiple-predictors.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> mtcars, mpg <span class="sc">~</span> wt <span class="sc">+</span> hp)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ wt + hp, data = mtcars)
@@ -364,7 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">14.5.2</span> Interaction effects</h3>
 <p>Often however, the variables you’re introducing into your model won’t influence your dependent variable in isolation. Instead, the variables will interact with each other. For example, let’s imagine we’re modelling the impact of the type of food and condiment its served with on customer satisfaction. Those two variables are going to related - it makes a big difference if you serve mustard with fish and chips compared to roast beef! It wouldn’t be appropriate therefore to just identify the relationship between the food and the condiments separately on customer satisfaction. Instead we would to understand how customer satisfaction changes as <em>both</em> the food and the condiment changes.</p>
 <p>To add interaction effects to our model, we use the <code>*</code> operator:</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="multiple-predictors.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> mtcars, <span class="at">formula =</span> mpg <span class="sc">~</span> wt <span class="sc">*</span> hp)</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="multiple-predictors.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> mtcars, <span class="at">formula =</span> mpg <span class="sc">~</span> wt <span class="sc">*</span> hp)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ wt * hp, data = mtcars)

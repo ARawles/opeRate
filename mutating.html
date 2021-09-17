@@ -361,7 +361,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4     1 Wii Sports Wii       2006 Sports Nintendo      8460000
 ## 5     1 Wii Sports Wii       2006 Sports Nintendo     82740000
 ## # … with 62,200 more rows</code></pre>
-<p>As you can see, we’ve created a new column called <code>EU_Proportion</code> and we’ve calculated by dividing the number of EU sales by the total number of sales.</p>
 <p>If we wanted to overwrite the Sales column, we do the same but give the new column the same name:</p>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="mutating.html#cb106-1" aria-hidden="true" tabindex="-1"></a>tidy_vg_sales <span class="sc">%&gt;%</span></span>
 <span id="cb106-2"><a href="mutating.html#cb106-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Sales =</span> Sales <span class="sc">*</span> <span class="dv">1000000</span>) <span class="sc">%&gt;%</span></span>
@@ -383,17 +382,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb108-3"><a href="mutating.html#cb108-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(Year) <span class="sc">%&gt;%</span> <span class="co"># We need to order from earliest date to latest</span></span>
 <span id="cb108-4"><a href="mutating.html#cb108-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Cumulative_Sales =</span> <span class="fu">cumsum</span>(Sales)) <span class="sc">%&gt;%</span></span>
 <span id="cb108-5"><a href="mutating.html#cb108-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Publisher <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Atari&quot;</span>, <span class="st">&quot;Activision&quot;</span>)) <span class="sc">%&gt;%</span> <span class="co"># Let&#39;s just look at Atari &amp; Activision</span></span>
-<span id="cb108-6"><a href="mutating.html#cb108-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<span id="cb108-6"><a href="mutating.html#cb108-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 5,280 x 9
 ## # Groups:   Publisher, Country [10]
-##    Rank Name      Platform  Year Genre  Publisher Country Sales Cumulative_Sales
-##   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt;            &lt;dbl&gt;
-## 1   259 Asteroids 2600      1980 Shoot… Atari     NA       4                4   
-## 2   259 Asteroids 2600      1980 Shoot… Atari     EU       0.26             0.26
-## 3   259 Asteroids 2600      1980 Shoot… Atari     JP       0                0   
-## 4   259 Asteroids 2600      1980 Shoot… Atari     Other    0.05             0.05
-## 5   259 Asteroids 2600      1980 Shoot… Atari     Global   4.31             4.31
-## # … with 5,275 more rows</code></pre>
+##     Rank Name      Platform  Year Genre Publisher Country Sales Cumulative_Sales
+##    &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt;            &lt;dbl&gt;
+##  1   259 Asteroids 2600      1980 Shoo… Atari     NA       4                4   
+##  2   259 Asteroids 2600      1980 Shoo… Atari     EU       0.26             0.26
+##  3   259 Asteroids 2600      1980 Shoo… Atari     JP       0                0   
+##  4   259 Asteroids 2600      1980 Shoo… Atari     Other    0.05             0.05
+##  5   259 Asteroids 2600      1980 Shoo… Atari     Global   4.31             4.31
+##  6   545 Missile … 2600      1980 Shoo… Atari     NA       2.56             6.56
+##  7   545 Missile … 2600      1980 Shoo… Atari     EU       0.17             0.43
+##  8   545 Missile … 2600      1980 Shoo… Atari     JP       0                0   
+##  9   545 Missile … 2600      1980 Shoo… Atari     Other    0.03             0.08
+## 10   545 Missile … 2600      1980 Shoo… Atari     Global   2.76             7.07
+## # … with 5,270 more rows</code></pre>
 <p>Now we’ve got a new column showing the total number of sales for each Publisher up to each year. What <code>{dplyr}</code> has done is essentially filtered the data down a specific publisher and country, created a cumulative sum of the <code>Sales</code> column, and then done that for each publisher and country and stitched it back together.</p>
 
 </div>
