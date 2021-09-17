@@ -120,7 +120,7 @@ This matrix can help us understand how well the model is predicting. Three usefu
 **Accuracy**
 
 The accuracy is predicted at the model level, and is calculated as the number of correct guesses divided by the total number of cases. In our case that's
-`(14+34)/(1+4+14+34)`, which is `r round((14+34)/(1+4+14+34), 2)`.
+`(8+32)/(8+4+3+32)`, which is `r round((8+32)/(8+4+3+32), 2)`.
 
 **Precision**
 
@@ -128,13 +128,13 @@ The precision of a model tells us how many of the instances that were predicted 
 Precision, therefore, is a per-group metric. So in our example, we will have a precision metric for both LucasArts and Sega.
 
 The precision is calculated as the number of true positives over the number of true positives plus false positives. For Sega, that's
-`34/(34+4)`, which is `r round(34/38, 2)`. For LucasArts, that's `14/(14+1)`, which is `r round(14/15, 2)`.
+`32/(32+4)`, which is `r round(32/36, 2)`. For LucasArts, that's `8/(8+3)`, which is `r round(14/15, 2)`.
 
 **Recall**
 
 The recall of a model tells us how many instances of a particular group *were correctly predicted* to be in that group. This answers a different but related question to the one that the precision metric answers. Once again, the recall metric is calculated for each group/classifier.
 
-To calculate our recall metric, we need to divide the number of true positives over the total number of true instances in that group. For Sega, that's `34/(34+1)`, which is `r round(34/(34+1), 2)`. For LucasArts, that's `14/(14+4)`, which is `r round(14/(14+4), 2)`.
+To calculate our recall metric, we need to divide the number of true positives over the total number of true instances in that group. For Sega, that's `32/(32+3)`, which is `r round(32/(32+3), 2)`. For LucasArts, that's `8/(8+4)`, which is `r round(8/(8+4), 2)`.
 
 
 So what should you aim for - high precision or high recall? Well really it depends on what problem you're trying to solve. If you imagine that you've got a model to detect cancer, then you won't want to miss when someone actually does have cancer, even if you'll end up predicting that a few people do have cancer when they don't. To do this, you'll want to prioritise **recall**.
