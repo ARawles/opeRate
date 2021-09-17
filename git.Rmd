@@ -1,4 +1,40 @@
 # Git & GitHub
 
-* Version control
-* Collaboration
+## Git
+
+Git is an open-source versioning system, designed to promote collaboration and efficiency. Git tracks repositories - folders containing files, often code - and any changes that are made. For now we're going to go through the basics of Git but we really will just scratch the surface of the power of Git.
+
+### Repositories
+
+A Git repository is a collection of files and folders that are tracked for changes. The files don't necessarily need to contain code, but they often do. You will work on a local copy of the repository, and the usually push your version of the repo to another version somewhere else (like a server). Git will then integrate the changes that you've made to your version of the repo with the central version. This allows multiple people to work on the same repository at once - they each have their own version.
+
+### Commits
+
+Once you've made a change to your local repository, you need to commit that change. Commits should be accompanied with a useful message that describes the changes that were made.
+
+Commits should be made regularly and for each distinct set of changes you make - you can always revert back to a previous version.
+
+### Pushing & Pulling
+
+When working on a local version of a repository, you will need to send your changes to the remote version of the repo once you've committed them. We call this 'pushing' the changes. When you push your changes, Git will check the commits you've made, and then integrate your changes into the remote version of the repo if there aren't any conflicts.
+
+Pulling is the process of updating your local version of the repository to match the server version changes. For example, you and a colleague from a different timezone may be working on the same project. When you start for the day you might want to pull all the changes from the remote version of the repo to make sure that you've got all the changes that your colleague has pushed while you were asleep.
+
+#### Conflicts
+
+If you try and push a change to the remote version of the repository, but that change can't be integrated (say someone has already edited that file before you pushed your changes), then Git will mark a conflict. Conflicts need to be resolved before the push can complete, either by accepting the current or incoming version of the file or by integrating the changes yourself.
+
+### Branches
+
+Each repo will have at least 1 branch. Historically this was called the 'master' branch but it's increasingly common to see it called the 'main' branch. When you create a new branch, the new branch is split from the original branch, meaning that any changes you make are now specific to the new branch. You can then choose to merge branches which will integrate all of the changes you've made to one branch into the other.
+
+You may want to use branches for a number of reasons. For example, say you want to try developing a new implementation of one of your functions. You don't know whether it's going to be any better than the original implementation though, and you don't want to have to revert back 20-odd commits if you find out that it wasn't worth the change. Instead, you can split into a new branch and make the changes there. Then, if you want to integrate the implementation into the main repository, you can just merge the branches.
+
+Alternatively, you might want to have a 'development' and a 'main' branch. You do work on the 'development' branch and then when you're sure things have been tested are stable, you can then merge the changes into the 'main' branch.
+
+
+## GitHub
+
+GitHub is a repository hosting service. You can use GitHub to store the remote versions of your repositories and perform things like Continuous Integration. GitHub is free for open-source projects, and you can have as many repositories as you like. 
+
+When working on R projects with Git, I would highly recommend using GitHub. It helps promote open-source development and some R tools have been specifically designed to install packages directly from GitHub (e.g. `remotes::install_github()`).
