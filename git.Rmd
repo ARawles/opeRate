@@ -1,12 +1,21 @@
 # Git & GitHub
 
+There are two common challenges when working on data analysis projects:
+
+1. Versioning
+    + How best should you keep track of each iteration of your analysis?
+2. Collaboration
+    + How can multiple people work on the same project together efficiently?
+    
+Git and GitHub are two tools to help with both of these issues. Git takes care of the versioning and tracking changes, and GitHub helps you share and collaborate on your code. Let's look at them both.
+
 ## Git
 
 Git is an open-source versioning system, designed to promote collaboration and efficiency. Git tracks repositories - folders containing files, often code - and any changes that are made. For now we're going to go through the basics of Git but we really will just scratch the surface of the power of Git.
 
 ### Repositories
 
-A Git repository is a collection of files and folders that are tracked for changes. The files don't necessarily need to contain code, but they often do. You will work on a local copy of the repository, and the usually push your version of the repo to another version somewhere else (like a server). Git will then integrate the changes that you've made to your version of the repo with the central version. This allows multiple people to work on the same repository at once - they each have their own version.
+A Git repository is a collection of files and folders that are tracked for changes. The files don't necessarily need to contain code, but they often do. You work on a local copy of the repository, with a master version of the repo help somewhere somewhere else (like a server). Git will then integrate the changes that you've made to your version of the repo with the central version. This allows multiple people to work on the same repository at once - they each have their own version.
 
 ### Commits
 
@@ -35,6 +44,24 @@ Alternatively, you might want to have a 'development' and a 'main' branch. You d
 
 ## GitHub
 
-GitHub is a repository hosting service. You can use GitHub to store the remote versions of your repositories and perform things like Continuous Integration. GitHub is free for open-source projects, and you can have as many repositories as you like. 
+GitHub is a repository hosting service. You can use GitHub to store the remote versions of your repositories and perform things like Continuous Integration. GitHub is free for open-source projects, and you can have as many repositories as you like. I host all of my projects (including this book series) on my [GitHub account](https://github.com/arawles).
 
 When working on R projects with Git, I would highly recommend using GitHub. It helps promote open-source development and some R tools have been specifically designed to install packages directly from GitHub (e.g. `remotes::install_github()`).
+
+There are a couple of extra terms that you'll need to be aware of when using GitHub.
+
+### Forking
+
+When you fork a repository, you make your own copy of the repo (a bit like a branch). You can then make changes independent of the original repository but then merge them later on.
+
+### Pull Requests
+
+When you do try and merge changes into a branch, you'll create a pull request. This request will outline the changes that have been made since the branches split, and if there are any conflicts that mean they can't be merged. Most often, someone will manually check that pull request and then accept or decline it.
+
+## Git, GitHub & RStudio
+
+Getting Git and GitHub working with RStudio is relatively straightforward, but there are lots of edge cases that make things tricky. I'll outline the general workflow here but the [Happy Git with R](https://happygitwithr.com/) book outlines how to install and set up Git and Git repositories in much greater detail.
+
+To use Git in RStudio, make sure you have Git installed. Once you do, when you create a new project, RStudio will have a checkbox to 'Initialise a Git repository'. Make sure that's ticked. This will create a local repository, but you'll still need to create the origin (the master version) on GitHub.
+
+Go to GitHub and create a new project. The name doesn't have to be the same as your project, but it makes things easier. Once you've created the GitHub repo, add that url as the origin for your local repository. Now when you push any changes, they'll be pushed to the GitHub origin.
