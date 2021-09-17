@@ -11,7 +11,7 @@ While you could easily fulfill all of these criteria with a standard RStudio pro
 
 While packages are primarily meant for collating and distributing new functionality, we can utilise the package structure and some of the tools that come along with package development in our projects.
 
-To better understand what a package is and how they are developed and maintained, I would recommend reading Hadley and Jenny Bryan's [R Packages book](https://r-pkgs.org/) book. Although that book is focused directly on developing packages for submission to CRAN, hopefully you'll be able to identify the parts that are going to be applicable to the way we're using packages.
+To better understand what a package is and how they are developed and maintained, I would recommend reading Hadley and Jenny Bryan's [R Packages](https://r-pkgs.org/) book. Although that book is focused directly on developing packages for submission to CRAN, hopefully you'll be able to identify the parts that are going to be applicable to the way we're using packages.
 
 ## Structure
 

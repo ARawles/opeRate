@@ -1,6 +1,11 @@
 # Machine Learning
 
-Machine learning (ML) and artificial intelligence (AI) are two buzzwords that are used constantly, sometimes appropriately and sometimes not. At its core however, ML is still just a subset of statistical modelling. Although computing power has increased exponentially over the last 20 years, allowing us to deal with more data and perform more calculations per second, many of the methods that underpin modern machine learning methods are not new, and in many cases aren't particularly complicated. So now we're going to try and understand some of the basics of a particular type of machine learning model - a neural network - and how we can create one with R.
+Machine learning (ML) and artificial intelligence (AI) are two buzzwords that are used constantly, sometimes appropriately and sometimes not. At its core however, ML is still just a subset of statistical modelling. Although computing power has increased exponentially over the last 20 years, allowing us to deal with more data and perform more calculations per second, many of the methods that underpin modern machine learning methods are not new, and in many cases aren't particularly complicated.
+
+
+Machine learning remains however an entire discipline in its own right. Trying to cover all the theoretical underpinnings of modern machine learning is unrealistic, so instead we're going to try and understand some of the basics of a particular type of machine learning model - a neural network - and how we can create one with R.
+
+If you want to gain a much deeper understanding of the history of machine learning, the different model types and how to create each one in R, I highly recommend [Hands-On Machine Learning With R](https://bradleyboehmke.github.io/HOML/) which is available online for free, or [Deep Learning with R](https://www.manning.com/books/deep-learning-with-r) by Francois Chollet with J. J. Allaire (founder and CEO of RStudio).
 
 ## Neural networks
 
@@ -10,15 +15,15 @@ Neural networks were developed in an attempt to model how neurons in the brain m
 
 Importantly, the inputs have weights that can change due to feedback. So if an input erroneously results in a neuron firing, then the weights of the inputs can be adjusted to ensure that the neuron doesn't fire again if it's presented with the same information.
 
-```{r, label = "nn-prototype", echo = FALSE}
+```{r, label = "nn-prototype", echo = FALSE, fig.cap = "Example neural network}
 knitr::include_graphics("./img/Template.png")
 ```
 
-```{r, label = "nn-positive", out.width='50%', echo = FALSE}
+```{r, label = "nn-positive", out.width='50%', echo = FALSE, fig.show='hold',fig.align='center', fig.cap='Neural network firing'}
 knitr::include_graphics("./img/Positive.png")
 ```
 
-```{r, label = "nn-negative", out.width='50%', echo = FALSE}
+```{r, label = "nn-negative", out.width='50%', echo = FALSE, fig.show='hold',fig.align='center', fig.cap='Neural network not firing'}
 knitr::include_graphics("./img/Negative.png")
 ```
 
@@ -92,7 +97,8 @@ withr::with_seed(1234, {
 Now let's create our model and then plot it using the `{neuralnet}` package.
 ```{r}
 nn <- neuralnet::neuralnet(data = nn_vgsales_train,
-                           formula = (Publisher == "LucasArts") + (Publisher == "Sega") ~ Platform + Genre + Sales,
+                           formula = (Publisher == "LucasArts") + (Publisher == "Sega") ~
+                             Platform + Genre + Sales,
                            # We're creating a classication model rather than a regression model
                            linear.output = FALSE)
 
@@ -109,21 +115,27 @@ table(nn_vgsales_test$Publisher, apply(pred, 1, which.max))
 
 This matrix can help us understand how well the model is predicting. Three useful metrics we can easily calculate from this metric are the model's **accuracy**, **precision** and **recall**.
 
+
+
 **Accuracy**
+
 The accuracy is predicted at the model level, and is calculated as the number of correct guesses divided by the total number of cases. In our case that's
 `(14+34)/(1+4+14+34)`, which is `r round((14+34)/(1+4+14+34), 2)`.
 
 **Precision**
-The precision of a model tells us how many of the instances that were predicted to be in a certain group **were actually** in that group.
+
+The precision of a model tells us how many of the instances that were predicted to be in a certain group *were actually* in that group.
 Precision, therefore, is a per-group metric. So in our example, we will have a precision metric for both LucasArts and Sega.
 
 The precision is calculated as the number of true positives over the number of true positives plus false positives. For Sega, that's
-`34/(34+4)`, which is `r round(34/38, 2)`. For LucasArts, that's `14/(14+1)`, which is `r round(14/15, 2)`. This tells us that our model is more accurate in predicting LucasArts games.
+`34/(34+4)`, which is `r round(34/38, 2)`. For LucasArts, that's `14/(14+1)`, which is `r round(14/15, 2)`.
 
 **Recall**
-The recall of a model tells us how many instances of a particular group were correctly predicted to be in that group. This answers a different but related question to the one that the precision metric answers. Once again, the recall metric is calculated for each group/classifier.
 
-To calculate our recall metric, we need to divide the number of correctly predicted classifications over the total number of actual instances in that group. For Sega, that's `34/(34+1)`, which is `r round(34/(34+1), 2)`. For LucasArts, that's `14/(14+4)`, which is `r round(14/(14+4), 2)`.
+The recall of a model tells us how many instances of a particular group *were correctly predicted* to be in that group. This answers a different but related question to the one that the precision metric answers. Once again, the recall metric is calculated for each group/classifier.
+
+To calculate our recall metric, we need to divide the number of true positives over the total number of true instances in that group. For Sega, that's `34/(34+1)`, which is `r round(34/(34+1), 2)`. For LucasArts, that's `14/(14+4)`, which is `r round(14/(14+4), 2)`.
 
 
-So what should you aim for - high precision or high recall? Well really it depends on what problem you're trying to solve. If you imagine that you've got a model to detect cancer, then you won't want to miss when someone actually does have cancer, even if you'll end up predicting that a few people do have cancer when they don't. To do this, you'll want to prioritise **recall**. Alternatively, say you're building a model to choose which funds to invest in. In that case, the cost of investing is high, so you want to make sure that when you go with a fund, it's actually going to make money, even if you miss out on other funds that would have also made money. In this situation, the **precision** of your model would be more important.
+So what should you aim for - high precision or high recall? Well really it depends on what problem you're trying to solve. If you imagine that you've got a model to detect cancer, then you won't want to miss when someone actually does have cancer, even if you'll end up predicting that a few people do have cancer when they don't. To do this, you'll want to prioritise **recall**.
+Alternatively, say you're building a model to choose which funds to invest in. In that case, the cost of investing is high, so you want to make sure that when you go with a fund, it's actually going to make money, even if you miss out on other funds that would have also made money. In this situation, the **precision** of your model would be more important.

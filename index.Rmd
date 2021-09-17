@@ -6,9 +6,10 @@ site: bookdown::bookdown_site
 documentclass: book
 output:
   bookdown::gitbook:
+    split_by: section
     config:
       toc:
-        collapse: section
+        collapse: none
       download:
         - ["opeRate.mobi", "Kindle EBook"]
         - ["opeRate.epub", "EPUB EBook"]
