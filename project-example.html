@@ -223,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.1" data-path="modelling.html"><a href="modelling.html#types-of-model"><i class="fa fa-check"></i><b>14.1</b> Types of model</a>
 <ul>
 <li class="chapter" data-level="14.1.1" data-path="modelling.html"><a href="modelling.html#linear-models"><i class="fa fa-check"></i><b>14.1.1</b> Linear models</a></li>
-<li class="chapter" data-level="14.1.2" data-path="modelling.html"><a href="modelling.html#quadratic-exponential-models"><i class="fa fa-check"></i><b>14.1.2</b> Quadratic &amp; Exponential Models</a></li>
+<li class="chapter" data-level="14.1.2" data-path="modelling.html"><a href="modelling.html#quadratic"><i class="fa fa-check"></i><b>14.1.2</b> Quadratic</a></li>
 </ul></li>
 <li class="chapter" data-level="14.2" data-path="modelling.html"><a href="modelling.html#coefficients"><i class="fa fa-check"></i><b>14.2</b> Coefficients</a></li>
 <li class="chapter" data-level="14.3" data-path="modelling.html"><a href="modelling.html#residuals"><i class="fa fa-check"></i><b>14.3</b> Residuals</a></li>
@@ -239,7 +239,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.6.2" data-path="modelling.html"><a href="modelling.html#residuals-1"><i class="fa fa-check"></i><b>14.6.2</b> Residuals</a></li>
 <li class="chapter" data-level="14.6.3" data-path="modelling.html"><a href="modelling.html#overfitting"><i class="fa fa-check"></i><b>14.6.3</b> Overfitting</a></li>
 </ul></li>
-<li class="chapter" data-level="14.7" data-path="modelling.html"><a href="modelling.html#video-game-sales-model"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a></li>
+<li class="chapter" data-level="14.7" data-path="modelling.html"><a href="modelling.html#video-game-sales-model"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a>
+<ul>
+<li class="chapter" data-level="14.7.1" data-path="modelling.html"><a href="modelling.html#predicting-the-future"><i class="fa fa-check"></i><b>14.7.1</b> Predicting the future</a></li>
+</ul></li>
 <li class="chapter" data-level="14.8" data-path="modelling.html"><a href="modelling.html#questions-3"><i class="fa fa-check"></i><b>14.8</b> Questions</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>15</b> Machine Learning</a>
@@ -411,26 +414,28 @@ VignetteBuilder: knitr</code></pre>
 * vgsales.csv
 * vgsales.R</p>
 <p>And the vgsales.R file should look like this:</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="project-example.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb170-2"><a href="project-example.html#cb170-2" aria-hidden="true" tabindex="-1"></a>vgsales <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;data-raw/vgsales.csv&quot;</span>, <span class="at">col_types =</span> <span class="st">&quot;dccdccddddd&quot;</span>)</span>
-<span id="cb170-3"><a href="project-example.html#cb170-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb170-4"><a href="project-example.html#cb170-4" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_data</span>(vgsales, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="project-example.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb171-2"><a href="project-example.html#cb171-2" aria-hidden="true" tabindex="-1"></a>vgsales <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;data-raw/vgsales.csv&quot;</span>, <span class="at">col_types =</span> <span class="st">&quot;dccdccddddd&quot;</span>)</span>
+<span id="cb171-3"><a href="project-example.html#cb171-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb171-4"><a href="project-example.html#cb171-4" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_data</span>(vgsales, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Finally, we need to document our dataset. We’ll look at documentation later, so for now we’ll just create a file in the R folder called ‘data.R’.</p>
 </div>
 <div id="structure-1" class="section level2" number="21.5">
 <h2><span class="header-section-number">21.5</span> Structure</h2>
 <p>Now we’ve scaffolded our project, we can start actually writing some code. Because we’ve analysed our workflow and we know we’re going to have distinct stages (e.g. cleaning, tidying, etc.), we should split our functions into separate files with appropriate names. I’m also going to add another file called ‘analysis.R’ which will contain the functions to perform the end-to-end analysis.</p>
-<p>With the files created, the R folder now contains these files:
-* analysis.R
-* clean.R
-* data.R
-* modelling.R
-* plot.R
-* summarise.R
-* tidy.R
-* utility.R
+<p>With the files created, the R folder now contains these files:</p>
+<ul>
+<li>analysis.R</li>
+<li>clean.R</li>
+<li>data.R</li>
+<li>modelling.R</li>
+<li>plot.R</li>
+<li>summarise.R</li>
+<li>tidy.R</li>
+<li>utility.R
 + This just houses any extra functions that don’t fit in the other files
-+ I also put my <code>@import</code> statements in here</p>
++ I also put my <code>@import</code> statements in here</li>
+</ul>
 </div>
 <div id="documentation-2" class="section level2" number="21.6">
 <h2><span class="header-section-number">21.6</span> Documentation</h2>
@@ -439,37 +444,37 @@ VignetteBuilder: knitr</code></pre>
 <p>Each function needs documentation so that we know what we’re going. We use the <code>{roxygen2}</code> package for this.</p>
 <p>Because many of the functions are going to use similar parameters, we can utilise the <code>@eval</code> tag from <code>{roxygen2}</code> to cut down on duplication.</p>
 <p>The <code>@eval</code> tag will evaluate arbitrary R code and treat the return value as <code>{roxygen2}</code> documentation. Because many of our datasets will accept a parameter called <code>df</code> that will be the <code>vgsales</code> dataset, let’s create a function that will return the <code>@param</code> tag that we’ll use:</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="project-example.html#cb171-1" aria-hidden="true" tabindex="-1"></a>doc_vgsales <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb171-2"><a href="project-example.html#cb171-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;@param df tibble/df; the `vgsales` dataset&quot;</span>,</span>
-<span id="cb171-3"><a href="project-example.html#cb171-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;@return tibble&quot;</span>)</span>
-<span id="cb171-4"><a href="project-example.html#cb171-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="project-example.html#cb172-1" aria-hidden="true" tabindex="-1"></a>doc_vgsales <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb172-2"><a href="project-example.html#cb172-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;@param df tibble/df; the `vgsales` dataset&quot;</span>,</span>
+<span id="cb172-3"><a href="project-example.html#cb172-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;@return tibble&quot;</span>)</span>
+<span id="cb172-4"><a href="project-example.html#cb172-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Now when we document a function that accepts a parameter called <code>df</code>, we can just use <code>#' @eval doc_vgsales()</code> to add the documentation.</p>
 <p>I store these documentation functions in a file called ‘documentation.R’ in the R folder.</p>
 </div>
 <div id="data-2" class="section level3" number="21.6.2">
 <h3><span class="header-section-number">21.6.2</span> Data</h3>
 <p>Datasets should be documented like functions - this is what our ‘data.R’ file is for. Here we’ll document the <code>vgsales</code> dataset, describing what data it folds and in what fields.</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="project-example.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Video game sales between 1980 and 2020</span></span>
-<span id="cb172-2"><a href="project-example.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb172-3"><a href="project-example.html#cb172-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; A dataset of video game sales in different regions scraped from [vgchartz.com](vgchartz.com).</span></span>
-<span id="cb172-4"><a href="project-example.html#cb172-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @format  A tibble with 16598 rows and 11 variables:</span></span>
-<span id="cb172-5"><a href="project-example.html#cb172-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; \itemize{</span></span>
-<span id="cb172-6"><a href="project-example.html#cb172-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Rank All-time rank of the global sales</span></span>
-<span id="cb172-7"><a href="project-example.html#cb172-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Name Name of the video game</span></span>
-<span id="cb172-8"><a href="project-example.html#cb172-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Platform The platform/console the game was primarily released on</span></span>
-<span id="cb172-9"><a href="project-example.html#cb172-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Year The year of release</span></span>
-<span id="cb172-10"><a href="project-example.html#cb172-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Genre The type/genre of the game</span></span>
-<span id="cb172-11"><a href="project-example.html#cb172-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Publisher The game&#39;s publisher</span></span>
-<span id="cb172-12"><a href="project-example.html#cb172-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item NA_Sales Sales (in millions) in North America</span></span>
-<span id="cb172-13"><a href="project-example.html#cb172-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item EU_Sales Sales (in millions) in Europe</span></span>
-<span id="cb172-14"><a href="project-example.html#cb172-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item JP_Sales Sales (in millions) in Japan</span></span>
-<span id="cb172-15"><a href="project-example.html#cb172-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Other_Sales Sales (in millions) in other regions</span></span>
-<span id="cb172-16"><a href="project-example.html#cb172-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Global_Sales Sales (in millions) globally</span></span>
-<span id="cb172-17"><a href="project-example.html#cb172-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; }</span></span>
-<span id="cb172-18"><a href="project-example.html#cb172-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @keywords datasets</span></span>
-<span id="cb172-19"><a href="project-example.html#cb172-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @name vgsales</span></span>
-<span id="cb172-20"><a href="project-example.html#cb172-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @usage data(vgsales)</span></span>
-<span id="cb172-21"><a href="project-example.html#cb172-21" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;vgsales&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="project-example.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Video game sales between 1980 and 2020</span></span>
+<span id="cb173-2"><a href="project-example.html#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb173-3"><a href="project-example.html#cb173-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; A dataset of video game sales in different regions scraped from [vgchartz.com](vgchartz.com).</span></span>
+<span id="cb173-4"><a href="project-example.html#cb173-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @format  A tibble with 16598 rows and 11 variables:</span></span>
+<span id="cb173-5"><a href="project-example.html#cb173-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; \itemize{</span></span>
+<span id="cb173-6"><a href="project-example.html#cb173-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Rank All-time rank of the global sales</span></span>
+<span id="cb173-7"><a href="project-example.html#cb173-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Name Name of the video game</span></span>
+<span id="cb173-8"><a href="project-example.html#cb173-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Platform The platform/console the game was primarily released on</span></span>
+<span id="cb173-9"><a href="project-example.html#cb173-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Year The year of release</span></span>
+<span id="cb173-10"><a href="project-example.html#cb173-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Genre The type/genre of the game</span></span>
+<span id="cb173-11"><a href="project-example.html#cb173-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Publisher The game&#39;s publisher</span></span>
+<span id="cb173-12"><a href="project-example.html#cb173-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item NA_Sales Sales (in millions) in North America</span></span>
+<span id="cb173-13"><a href="project-example.html#cb173-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item EU_Sales Sales (in millions) in Europe</span></span>
+<span id="cb173-14"><a href="project-example.html#cb173-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item JP_Sales Sales (in millions) in Japan</span></span>
+<span id="cb173-15"><a href="project-example.html#cb173-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Other_Sales Sales (in millions) in other regions</span></span>
+<span id="cb173-16"><a href="project-example.html#cb173-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;    \item Global_Sales Sales (in millions) globally</span></span>
+<span id="cb173-17"><a href="project-example.html#cb173-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; }</span></span>
+<span id="cb173-18"><a href="project-example.html#cb173-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @keywords datasets</span></span>
+<span id="cb173-19"><a href="project-example.html#cb173-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @name vgsales</span></span>
+<span id="cb173-20"><a href="project-example.html#cb173-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @usage data(vgsales)</span></span>
+<span id="cb173-21"><a href="project-example.html#cb173-21" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;vgsales&quot;</span></span></code></pre></div>
 <p><strong>Note</strong>:
 Not how the name of the dataset is in quotation marks.</p>
 </div>

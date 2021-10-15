@@ -223,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.1" data-path="modelling.html"><a href="modelling.html#types-of-model"><i class="fa fa-check"></i><b>14.1</b> Types of model</a>
 <ul>
 <li class="chapter" data-level="14.1.1" data-path="modelling.html"><a href="modelling.html#linear-models"><i class="fa fa-check"></i><b>14.1.1</b> Linear models</a></li>
-<li class="chapter" data-level="14.1.2" data-path="modelling.html"><a href="modelling.html#quadratic-exponential-models"><i class="fa fa-check"></i><b>14.1.2</b> Quadratic &amp; Exponential Models</a></li>
+<li class="chapter" data-level="14.1.2" data-path="modelling.html"><a href="modelling.html#quadratic"><i class="fa fa-check"></i><b>14.1.2</b> Quadratic</a></li>
 </ul></li>
 <li class="chapter" data-level="14.2" data-path="modelling.html"><a href="modelling.html#coefficients"><i class="fa fa-check"></i><b>14.2</b> Coefficients</a></li>
 <li class="chapter" data-level="14.3" data-path="modelling.html"><a href="modelling.html#residuals"><i class="fa fa-check"></i><b>14.3</b> Residuals</a></li>
@@ -239,7 +239,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.6.2" data-path="modelling.html"><a href="modelling.html#residuals-1"><i class="fa fa-check"></i><b>14.6.2</b> Residuals</a></li>
 <li class="chapter" data-level="14.6.3" data-path="modelling.html"><a href="modelling.html#overfitting"><i class="fa fa-check"></i><b>14.6.3</b> Overfitting</a></li>
 </ul></li>
-<li class="chapter" data-level="14.7" data-path="modelling.html"><a href="modelling.html#video-game-sales-model"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a></li>
+<li class="chapter" data-level="14.7" data-path="modelling.html"><a href="modelling.html#video-game-sales-model"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a>
+<ul>
+<li class="chapter" data-level="14.7.1" data-path="modelling.html"><a href="modelling.html#predicting-the-future"><i class="fa fa-check"></i><b>14.7.1</b> Predicting the future</a></li>
+</ul></li>
 <li class="chapter" data-level="14.8" data-path="modelling.html"><a href="modelling.html#questions-3"><i class="fa fa-check"></i><b>14.8</b> Questions</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>15</b> Machine Learning</a>
@@ -512,10 +515,10 @@ Patricia,75</code></pre>
 <p>As previously mentioned, to extract something from the API, you’ll be using the <code>GET</code> method. The <code>httr</code> package makes this super easy by providing a <code>GET</code> function. To this function, we’ll need to provide a URL. The <code>GET</code> function will then send a GET request to that address and return the response. A really simple GET request could be:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="loading.html#cb31-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;http://google.com&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [http://www.google.com/]
-##   Date: 2021-09-17 14:37
+##   Date: 2021-10-15 15:06
 ##   Status: 200
 ##   Content-Type: text/html; charset=ISO-8859-1
-##   Size: 15.1 kB
+##   Size: 14.1 kB
 ## &lt;!doctype html&gt;&lt;html itemscope=&quot;&quot; itemtype=&quot;http://schema.org/WebPage&quot; lang=&quot;...
 ## var f=this||self;var h,k=[];function l(a){for(var b;a&amp;&amp;(!a.getAttribute||!(b=...
 ## function n(a,b,c,d,g){var e=&quot;&quot;;c||-1!==b.search(&quot;&amp;ei=&quot;)||(e=&quot;&amp;ei=&quot;+l(d),-1===...
@@ -529,8 +532,10 @@ Patricia,75</code></pre>
 ## ...</code></pre>
 <p>That seems like a really complicated response at first, but when we look at each part, it’s quite simple.</p>
 <ul>
-<li>Response</li>
+<li>Response
+<ul>
 <li>This is telling us where we got our response from. In this case, we sent a request to Google, so we got a response from Google.</li>
+</ul></li>
 <li>Date
 <ul>
 <li>Fairly self-explanatory - the date and time of the response.</li>
@@ -557,7 +562,7 @@ Patricia,75</code></pre>
 <p>The first step in accessing an API is to understand that commands the API is expecting. APIs will have what we call <strong>endpoints</strong>. These are paths that we can use to access a certain dataset. For instance, looking at the website, we can see that there are endpoints for lots of different types of data: posts, comments, albums, photos, todos and users. To access an endpoint, we just need to make sure we’re using the correct path. So let’s try getting a list of users:</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="loading.html#cb33-1" aria-hidden="true" tabindex="-1"></a>httr<span class="sc">::</span><span class="fu">GET</span>(<span class="at">url =</span> <span class="st">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</span></code></pre></div>
 <pre><code>## Response [https://jsonplaceholder.typicode.com/users]
-##   Date: 2021-09-17 14:37
+##   Date: 2021-10-15 15:06
 ##   Status: 200
 ##   Content-Type: application/json; charset=utf-8
 ##   Size: 5.64 kB
@@ -653,7 +658,7 @@ Patricia,75</code></pre>
 <p>We’ll now go through a quick demo of the BMRSr package. If you’re not too bothered about this part, feel free to skip to the next section.</p>
 <p>If you’re interested, there are a couple of things you’ll need:</p>
 <ul>
-<li>The BMRSr package installed</li>
+<li>The <code>{BMRSr}</code> package installed</li>
 <li>A free BMRS API key that can be retrieved from the <a href="https://www.elexonportal.co.uk/">ELEXON portal</a>.</li>
 </ul>
 <p>Once you’ve got those two prerequisites, using BMRSr should be quite easy. The main function in the BMRSr package is the <code>full_request()</code> function, which will create your URL, send the request, and parse the response depending on your parameters. To do this however, the <code>full_request()</code> function needs some parameters:</p>
@@ -706,7 +711,7 @@ Patricia,75</code></pre>
 <div id="database-management-systems-and-odbc" class="section level3" number="7.5.1">
 <h3><span class="header-section-number">7.5.1</span> Database Management Systems and ODBC</h3>
 <p>There are lots of different types of database managements systems (DBMS) such as SQL Server, MySQL, MariaDB, and so on. These DBMSs allow us to create and maintain databases.</p>
-<p>When we connect to our database, we do so through our DBMS, but all of them have slightly different implementations. This means that if we developed a package to connect to one type of database (like MySQL), we’d have to create an entirely different package to do the same thing with a MariaDB database. This is where the Open Database Connectivity (ODBC) standard comes in. The ODBC standard allows is to interface with databases that use different DBMS systems using a common API. This means that we could swap out our SQL Server database with a MySQL one, and we wouldn’t need to make too many changes. The ODBC standard is implemented via a driver; this driver functions as an interface layer between our application (R) and the database.</p>
+<p>When we connect to our database, we do so through our DBMS, but all of them have slightly different implementations. This means that if we developed a package to connect to one type of database (like MySQL), we’d have to create an entirely different package to do the same thing with a MariaDB database. This is where the Open Database Connectivity (ODBC) standard comes in. The ODBC standard allows us to interface with databases that use different DBMS systems using a common API. This means that we could swap out our SQL Server database with a MySQL one, and we wouldn’t need to make too many changes. The ODBC standard is implemented via a driver; this driver functions as an interface layer between our application (R) and the database.</p>
 <p>So when we connect to a database with R we go in this order:</p>
 <p>R -&gt; ODBC Driver -&gt; DBMS</p>
 <p>R tells the ODBC driver to run a query, and then the ODBC driver converts that request to one that can be interpreted by the DBMS that it was built for. This means that as long as we’ve got the appropriate ODBC driver for our DBMS, we can use (basically) the same R code to interact with any kind of ODBC-compliant database.</p>

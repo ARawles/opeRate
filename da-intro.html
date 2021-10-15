@@ -223,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.1" data-path="modelling.html"><a href="modelling.html#types-of-model"><i class="fa fa-check"></i><b>14.1</b> Types of model</a>
 <ul>
 <li class="chapter" data-level="14.1.1" data-path="modelling.html"><a href="modelling.html#linear-models"><i class="fa fa-check"></i><b>14.1.1</b> Linear models</a></li>
-<li class="chapter" data-level="14.1.2" data-path="modelling.html"><a href="modelling.html#quadratic-exponential-models"><i class="fa fa-check"></i><b>14.1.2</b> Quadratic &amp; Exponential Models</a></li>
+<li class="chapter" data-level="14.1.2" data-path="modelling.html"><a href="modelling.html#quadratic"><i class="fa fa-check"></i><b>14.1.2</b> Quadratic</a></li>
 </ul></li>
 <li class="chapter" data-level="14.2" data-path="modelling.html"><a href="modelling.html#coefficients"><i class="fa fa-check"></i><b>14.2</b> Coefficients</a></li>
 <li class="chapter" data-level="14.3" data-path="modelling.html"><a href="modelling.html#residuals"><i class="fa fa-check"></i><b>14.3</b> Residuals</a></li>
@@ -239,7 +239,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.6.2" data-path="modelling.html"><a href="modelling.html#residuals-1"><i class="fa fa-check"></i><b>14.6.2</b> Residuals</a></li>
 <li class="chapter" data-level="14.6.3" data-path="modelling.html"><a href="modelling.html#overfitting"><i class="fa fa-check"></i><b>14.6.3</b> Overfitting</a></li>
 </ul></li>
-<li class="chapter" data-level="14.7" data-path="modelling.html"><a href="modelling.html#video-game-sales-model"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a></li>
+<li class="chapter" data-level="14.7" data-path="modelling.html"><a href="modelling.html#video-game-sales-model"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a>
+<ul>
+<li class="chapter" data-level="14.7.1" data-path="modelling.html"><a href="modelling.html#predicting-the-future"><i class="fa fa-check"></i><b>14.7.1</b> Predicting the future</a></li>
+</ul></li>
 <li class="chapter" data-level="14.8" data-path="modelling.html"><a href="modelling.html#questions-3"><i class="fa fa-check"></i><b>14.8</b> Questions</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>15</b> Machine Learning</a>
@@ -365,7 +368,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="da-intro" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Introduction</h1>
 <p>In this chapter, we’re going to go through some typical data science tasks and learn how to do them in R. Later on, we’ll look at how you should apply these skills in your projects, and some tips for making your project easier to read and share with others.</p>
-<p>For this chapter, we’re going to use a <a href="https://www.kaggle.com/gregorut/videogamesales">Kaggle dataset</a> that holds information on video game sales. The dataset contains sales in North America, Europe, Japan and globally for the top games each year going back to 1985. The games are broken down by platform, genre, and publisher:</p>
+<p>For this chapter, we’re going to use a <a href="https://www.kaggle.com/gregorut/videogamesales">Kaggle dataset</a> that holds information on video game sales. The dataset contains sales (in millions) in North America, Europe, Japan and globally for the top games each year going back to 1985. The games are broken down by platform, genre, and publisher:</p>
 <pre><code>## # A tibble: 16,598 x 11
 ##    Rank Name  Platform Year  Genre Publisher NA_Sales EU_Sales JP_Sales
 ##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;

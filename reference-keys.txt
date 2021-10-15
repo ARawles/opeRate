@@ -64,7 +64,7 @@ layers
 modelling
 types-of-model
 linear-models
-quadratic-exponential-models
+quadratic
 coefficients
 residuals
 lm
@@ -77,6 +77,7 @@ residuals-1
 overfitting
 avoiding-overfitting
 video-game-sales-model
+predicting-the-future
 questions-3
 machine-learning
 neural-networks
