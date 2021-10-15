@@ -3,7 +3,7 @@
 Machine learning (ML) and artificial intelligence (AI) are two buzzwords that are used constantly, sometimes appropriately and sometimes not. At its core however, ML is still just a subset of statistical modelling. Although computing power has increased exponentially over the last 20 years, allowing us to deal with more data and perform more calculations per second, many of the methods that underpin modern machine learning methods are not new, and in many cases aren't particularly complicated.
 
 
-Machine learning remains however an entire discipline in its own right. Trying to cover all the theoretical underpinnings of modern machine learning is unrealistic, so instead we're going to try and understand some of the basics of a particular type of machine learning model - a neural network - and how we can create one with R.
+However, machine learning remains an entire discipline in its own right. Trying to cover all the theoretical underpinnings of modern machine learning is unrealistic, so instead we're going to try and understand some of the basics of a particular type of machine learning model - a neural network - and how we can create one with R.
 
 If you want to gain a much deeper understanding of the history of machine learning, the different model types and how to create each one in R, I highly recommend [Hands-On Machine Learning With R](https://bradleyboehmke.github.io/HOML/) which is available online for free, or [Deep Learning with R](https://www.manning.com/books/deep-learning-with-r) by Francois Chollet with J. J. Allaire (founder and CEO of RStudio).
 
@@ -105,6 +105,11 @@ nn <- neuralnet::neuralnet(data = nn_vgsales_train,
 plot(nn)
 ```
 
+```{r, echo = FALSE}
+plot(nn, file = "/img/vg_nn.png")
+knitr::include_graphics("/img/vg_nn.png")
+```
+
 
 Now let's apply our model to our test set and have a look at how good the predictions are:
 
@@ -113,7 +118,7 @@ pred <- predict(nn, nn_vgsales_test)
 table(nn_vgsales_test$Publisher, apply(pred, 1, which.max))
 ```
 
-This matrix can help us understand how well the model is predicting. Three useful metrics we can easily calculate from this metric are the model's **accuracy**, **precision** and **recall**.
+This matrix can help us understand how well the model is predicting. The row names are the actual Publisher the the column names represent the predicted Publisher (1 = Lucasarts, 2 = Sega). Three useful metrics we can easily calculate from this metric are the model's **accuracy**, **precision** and **recall**.
 
 
 

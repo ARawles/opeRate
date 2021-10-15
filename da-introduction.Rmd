@@ -6,7 +6,7 @@ library(dplyr)
 
 In this chapter, we're going to go through some typical data science tasks and learn how to do them in R. Later on, we'll look at how you should apply these skills in your projects, and some tips for making your project easier to read and share with others.
 
-For this chapter, we're going to use a  [Kaggle dataset](https://www.kaggle.com/gregorut/videogamesales) that holds information on video game sales. The dataset contains sales in North America, Europe, Japan and globally for the top games each year going back to 1985. The games are broken down by platform, genre, and publisher:
+For this chapter, we're going to use a [Kaggle dataset](https://www.kaggle.com/gregorut/videogamesales) that holds information on video game sales. The dataset contains sales (in millions) in North America, Europe, Japan and globally for the top games each year going back to 1985. The games are broken down by platform, genre, and publisher:
 
 ```{r, echo = FALSE}
 print(readr::read_csv("./data/vgsales.csv", col_types = readr::cols()), n = 5)

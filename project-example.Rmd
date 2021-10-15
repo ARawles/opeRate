@@ -71,16 +71,17 @@ usethis::use_data(vgsales, overwrite = TRUE)
 Now we've scaffolded our project, we can start actually writing some code. Because we've analysed our workflow and we know we're going to have distinct stages (e.g. cleaning, tidying, etc.), we should split our functions into separate files with appropriate names. I'm also going to add another file called 'analysis.R' which will contain the functions to perform the end-to-end analysis.
 
 With the files created, the R folder now contains these files:
-    * analysis.R
-    * clean.R
-    * data.R
-    * modelling.R
-    * plot.R
-    * summarise.R
-    * tidy.R
-    * utility.R
-            + This just houses any extra functions that don't fit in the other files
-            + I also put my `@import` statements in here
+
+* analysis.R
+* clean.R
+* data.R
+* modelling.R
+* plot.R
+* summarise.R
+* tidy.R
+* utility.R
+        + This just houses any extra functions that don't fit in the other files
+        + I also put my `@import` statements in here
 
 ## Documentation
 

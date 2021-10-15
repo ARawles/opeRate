@@ -46,7 +46,7 @@ Alternatively, you might want to have a 'development' and a 'main' branch. You d
 
 GitHub is a repository hosting service. You can use GitHub to store the remote versions of your repositories and perform things like Continuous Integration. GitHub is free for open-source projects, and you can have as many repositories as you like. I host all of my projects (including this book series) on my [GitHub account](https://github.com/arawles).
 
-When working on R projects with Git, I would highly recommend using GitHub. It helps promote open-source development and some R tools have been specifically designed to install packages directly from GitHub (e.g. `remotes::install_github()`).
+When working on R projects with Git, I would highly recommend using GitHub. It helps promote open-source development and some R tools have been specifically designed to install packages directly from GitHub (e.g. `remotes::install_github()`). Also, you can use GitHub to do things like track issues, host your documentation, and testing.
 
 There are a couple of extra terms that you'll need to be aware of when using GitHub.
 

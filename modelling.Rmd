@@ -20,7 +20,7 @@ But that's not really the point. We will never get things spot on, but models ca
 
 ## Types of model
 
-Models types usually fall into "families". These will be a set of models that are underpinned by some common statistics or philosophy. The most common type of model that is taught at beginner level is the linear model. A linear model assumes a relationship that can be represented in the form `y = a + a1x...`, where `a` and `a{n}` represent coefficients (values that will change between models depending on your data).
+Models types usually fall into "families". These will be a set of models that are underpinned by some common statistics or philosophy. The most common type of model that is taught at beginner level is the linear model. A linear model assumes a relationship that can be represented in the form `y = a + a1x...`, where `a` and `a1` represent coefficients (values that will change between models depending on your data).
 
 In this chapter we're going to look exclusively at linear models. In the next chapter though, we'll take a different family of models; neural networks.
 
@@ -54,18 +54,18 @@ ggplot(lm_test_data, aes(x = x, y = y)) +
 
 ```
 
-Although the value of the coefficients will change, a linear model that uses that formula will always be a straight line.
+The first coefficient (`a`), determines where the line starts on the y value (when x is 0). The other coefficient (`a1`) determines how quickly the line will go up or down (its gradient) as the values of x increase. Although the value of the coefficients will change, a linear model that uses that formula will always be a straight line.
 
-### Quadratic & Exponential Models
+### Quadratic
 
-The linear model also extends to quadratic or exponential functions. This is because the 'linear' in linear model refers to the coefficients rather than our regression line being linear.
+The linear model also extends to quadratic functions. This is often a source of confusion as quadratic models don't look 'linear'. The 'linear' in linear model actually refers to the coefficients rather than our regression line being linear.
 
-Quadratic models are expressed by the formula `y = a + (a1*x) + (a2*x^2)`, and allow us to quantify non-linear relationships. For example, a quadratic model with the formula `y = 12000 - (2200*x) + (100*x^2)` might look like this:
+Quadratic models are expressed by the formula `y = a + (a1*x) + (a2*x^2)`. We have the same coefficients as our previous linear model, but now a new one (`a2`) as well. This extra coefficient allows us to quantify non-linear relationships.  For example, a quadratic model with the formula `y = 10 - (5) + (2*x^2)` might look like this:
 
 ```{r, echo = FALSE}
 lm_test_data <- data.frame(
   x = 11:20,
-  y = (seq(1, 100, by = 10)^2)
+  y = 10 - ((5)*(11:20)) + ((2)*((11:20)^2))
 )
 
 ggplot(lm_test_data, aes(x = x, y = y)) +
@@ -93,7 +93,7 @@ mtcars %>%
   geom_abline(intercept = 35, slope = -5, linetype = "dashed")
 ```
 
-Here we've created two models with different coefficient values; one where `a = 45` and `a1 = -6.5`, and other where `a = 35` and `a1 = -5`. Both seem to represent the data pretty well, but how can we know which of the pair of coefficients is the 'better' fit? Similarly, we've tried just two sets of values here, how can we compare different combinations of values to determine which model is better? 
+Here we've created two models with different coefficient values; one where `a = 45` and `a1 = -6.5`, and other where `a = 35` and `a1 = -5`. Both seem to represent the data pretty well, but how can we know which of the pair of coefficients is the 'better' fit? Similarly, we've tried just two sets of values here, how can we find the absolute best coefficient values to create the best model? 
 
 ## Residuals
 
@@ -118,7 +118,7 @@ predicted_dataset %>%
 # Here's where we plot our model
 ```
 
-To compare different models though, we need to boil down these residuals into a single metric. For this we use the **root-mean-square-error** or RMSE. The calculation for this metric is quite easy - calculate the difference between each data point and the model, square it, average them all and then take the root. Let's write some functions to produce some models and get some predictions, and then compare the RMSE:
+Just from looking at the graph, we can see that most of our predictions are pretty far off. However, we need to boil all of these differences between the predicted and actual values to a single value. This will allow us to easily compare different models. For this we use the **root-mean-square-error** or RMSE. The calculation for this metric is quite easy - calculate the difference between each data point and the model, square it, average them all and then take the root. Let's write some functions to produce some models and get some predictions, and then compare the RMSE:
 
 ```{r}
 # Create some models with different coefficients
@@ -132,10 +132,12 @@ coefficients <- data.frame(
 # Plot the models
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point() +
-  geom_abline(data = coefficients, aes(intercept = a, slope = a1, colour = as.factor(id)), alpha = 0.5) +
+  geom_abline(data = coefficients,
+              aes(intercept = a, slope = a1, colour = as.factor(id)), alpha = 0.5) +
   scale_colour_discrete(name = "Model")
 
-# Create a function to represent our model
+# Create a function to represent our model and give us predictions
+# a and a1 represent our coefficients
 model <- function(a, a1, wt) {
   a + (wt * a1)
 }
@@ -153,7 +155,8 @@ Now we know how to calculate our RMSE, let's calculate which of our models has t
 ```{r}
 best_model <- coefficients %>%
   # Here we calculate the rmse of each model
-  dplyr::mutate(rmse = unlist(purrr::map2(a, a1, rmse, wt = mtcars$wt, mpg = mtcars$mpg))) %>%
+  dplyr::mutate(rmse = unlist(purrr::map2(.x = a, .y = a1, .f = rmse,
+                                          wt = mtcars$wt, mpg = mtcars$mpg))) %>%
   dplyr::filter(rmse == min(rmse))
 print(best_model)
 ```
@@ -163,7 +166,8 @@ According to our analysis, model `r best_model$id` has the lowest residual error
 ```{r}
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point() +
-  geom_abline(data = best_model, aes(intercept = a, slope = a1, colour = as.factor(id)), alpha = 0.5) +
+  geom_abline(data = best_model,
+              aes(intercept = a, slope = a1, colour = as.factor(id)), alpha = 0.5) +
   scale_colour_discrete(name = "Model")
 ```
 
@@ -183,7 +187,7 @@ lm_model
 
 ```
 
-We can see that the `lm()` function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren't too far off with `r best_model$a` and `r best_model$a1`!
+We can see that the `lm()` function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren't too far off with `r round(best_model$a, 2)` and `r round(best_model$a1, 2)`!
 
 To model quadratic relationships with the `lm()` function, our syntax is a little different:
 
@@ -221,6 +225,7 @@ lm(data = mtcars, formula = mpg ~ wt * hp)
 ```
 
 Now we have 3 coefficients:
+
 * The impact of `wt` alone
 * The impact of `hp` alone
 * The impact of `wt:hp` together
@@ -236,15 +241,18 @@ Jumping straight into modelling a dataset you don't understand or creating a mod
 To demonstrate this, let's produce 4 models for the each of the sub-datasets in the `anscombe` dataset:
 
 ```{r}
+# Create tidy versions of the datasets
 tidy_anscombe <- anscombe %>%
   tidyr::pivot_longer(everything(),
                       names_to = c(".value", "dataset"),
                       names_pattern = "(.)(.)"
   )
 
+# Create a model and get the coefficients for each model
 models <- purrr::map(1:4, ~tidy_anscombe %>%
                        dplyr::filter(dataset == .x) %>%
-                       lm(data = ., formula = y ~ x)
+                       lm(data = ., formula = y ~ x) %>%
+                       .$coefficients
 )
 models
 ```
@@ -353,7 +361,7 @@ tidy_anscombe %>%
   geom_point()
 ```
 
-Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern for different values of x. If you see a residual plot like this, you're likely not applying an appropriate model family or type.
+Here we can see a very clear trend, meaning that our model is not representing the data very well. Instead, it is overestimating and underestimating in a predictable pattern for different values of x. If you see a residual plot like this, something's gone wrong.
 
 ### Overfitting
 
@@ -386,7 +394,7 @@ train_mtcars %>%
   geom_point()
 ```
 
-Things seem to look fine. Our residuals look pretty random and we seem to be representing the data we have well. When we then apply the model to our test dataset however...
+Things seem to look fine. Our residuals look pretty random and we seem to be representing the data we have well. When we then apply the model to our test dataset (data the model wasn't trained on) however...
 
 ```{r}
 test_mtcars %>%
@@ -411,7 +419,7 @@ test_mtcars %>%
   geom_line(aes(y = pred))
 ```
 
-Much better. The model still isn't perfect - certainly not as good as if it was trained on all the data - but it's much better than our previous example even though it's much less complex.
+Much better. The model still isn't perfect, but it's much better than our previous example even though it's much less complex.
 
 #### Avoiding overfitting
 
@@ -479,7 +487,8 @@ It's worth noting that when you use a character or factor variable like we have 
 Before we call it a day however, let's evaluate our model residuals. If we look at the residuals of the model specifically for the 'Action' genre, they don't look very random:
 
 ```{r}
-action_genre_model <- lm(data = vg_sales_to_model %>% dplyr::filter(Genre == "Action"), Total_Sales ~ Year)
+action_genre_model <- lm(data = vg_sales_to_model %>%
+                           dplyr::filter(Genre == "Action"), Total_Sales ~ Year)
 vg_sales_to_model %>%
   dplyr::filter(Genre == "Action") %>%
   modelr::add_residuals(action_genre_model) %>%
@@ -510,7 +519,8 @@ This seems to have improved things. We now have a higher t value for our Interce
 Let's check our residuals again to make sure we're not still predictably over or underestimating:
 
 ```{r}
-qd_action_genre_model <- lm(data = vg_sales_to_model %>% dplyr::filter(Genre == "Action"), Total_Sales ~ Year + I(Year^2))
+qd_action_genre_model <- lm(data = vg_sales_to_model %>%
+                              dplyr::filter(Genre == "Action"), Total_Sales ~ Year + I(Year^2))
 vg_sales_to_model %>%
   dplyr::filter(Genre == "Action") %>%
   modelr::add_residuals(qd_action_genre_model) %>%
@@ -521,6 +531,24 @@ vg_sales_to_model %>%
 
 
 That looks much more random to me!
+
+### Predicting the future
+
+This model isn't that useful alone; we need to do something with it. Let's use our model to predict what video game sales might look like for Role-Playing games in 20 years time...
+
+
+```{r}
+expand.grid(Year = 2000:2040, Genre = c("Action", "Shooter", "Role-Playing", "Fighting", "Platform", "Racing", "Sports")) %>%
+  modelr::add_predictions(model = vg_quad_model) %>%
+  ggplot(aes(x = Year, y = pred, colour = Genre)) +
+  geom_line() +
+  scale_y_continuous(name = "Predicted Sales (Millions)")
+
+```
+
+As expected, most of our genres are predicted to increase at basically the same rate, with Shooter games still selling more as the years go by, but just at a slower pace.
+
+Hopefully though, this highlights the benefits and drawbacks with using models to predict the future. Here we've created a model that can give us testable predictions that we can incorporate into our thoughts and decision-making. The model though, is overly simple, and we're missing some important but complex variables. For example, how has the rise of video game streaming platforms like Twitch and YouTube Gaming changed video game sales in recent years? And how will this continue to evolve> Modelling effects such as these can be difficult, so it's best to start off small, create a simple model, then look to improve.
 
 ## Questions
 
