@@ -251,10 +251,9 @@ tidy_anscombe <- anscombe %>%
 # Create a model and get the coefficients for each model
 models <- purrr::map(1:4, ~tidy_anscombe %>%
                        dplyr::filter(dataset == .x) %>%
-                       lm(data = ., formula = y ~ x) %>%
-                       .$coefficients
+                       lm(data = ., formula = y ~ x)
 )
-models
+purrr::map(models, ~.x$coefficients)
 ```
 
 
