@@ -106,8 +106,11 @@ plot(nn)
 ```
 
 ```{r, echo = FALSE}
-plot(nn, file = "/img/vg_nn.png")
-knitr::include_graphics("/img/vg_nn.png")
+# dev.new()
+# png(filename = "./img/vg_nn.png")
+# plot(nn)
+# tst <- dev.off()
+# knitr::include_graphics("./img/vg_nn.png")
 ```
 
 
