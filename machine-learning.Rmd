@@ -108,7 +108,7 @@ plot(nn)
 ```{r, echo = FALSE}
 # dev.new()
 # png(filename = "./img/vg_nn.png")
-# plot(nn)
+# plot(nn, file = "./img/vg_nn.png")
 # tst <- dev.off()
 # knitr::include_graphics("./img/vg_nn.png")
 ```

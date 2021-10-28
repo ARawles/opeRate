@@ -76,11 +76,45 @@ As you can see, we still end with the loop of modelling and then evaluating our 
 
 ## Separating Stages
 
+Now we've segmented our project into separate stages, this makes organising our code a little bit easier. We want to separate different and distinct actions into separate code chunks - this makes understanding, debugging and testing the code a lot easier, because we can test each bit separately.
+
 ### Functions
 
+Functions can provide two useful features in a data analysis project:
+
+1. They allow you to reuse code
+2. They can help you tell a story
+
+By this, I mean that by appropriately segmenting your code into separate functions and naming those functions appropriately, you can communicate what's going on to your audience more clearly. For example, say you want to load and clean your data, you could write some functions and use them like this:
+
+```{r, eval = FALSE}
+my_fun_1() %>% my_fun_2() %>% my_fun_3() %>% ...
+```
+
+Or like this:
+
+```{r, eval = FALSE}
+load_data() %>% clean_dates() %>% clean_factors() %>% ...
+```
+
+We're doing the same thing each time, but by appropriately naming our functions like in the latter example, we can clearly communicate what's happening at each step.
+
+If you have a more complicated workflow with more cleaning steps, you can utilise the concept of abstraction to keep your code clean:
+
+```{r, eval = FALSE}
+
+clean_data <- function(data) {
+  data %>% clean_dates() %>% clean_factors() %>% remove_nas()
+}
+
+load_data() %>% clean_data()
+```
+
+Here we've rolled up the three stages of our cleaning stage into a single function (`clean_data()`). When someone now reads our code, they know exactly what our function is doing - and if they then look at the source, then can clearly see that our `clean_data()` function is made up of three sub-stages.
 
 ### Files
 
+Once you've separated your stages into distinct functions, saving those functions in separate scripts can help keep things clean. For example, if you have a `clean_data()` function that calls 5 or 6 functions, then place all of those functions in the same script and call it `clean.R`. Bonus points if you put the functions in the order they are called in the `clean_data()` function. Then, if someone wants to know anything about how you cleaned your data, they're not going to struggle to find the code.
 
 ## Summary
 

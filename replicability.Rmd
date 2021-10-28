@@ -81,3 +81,64 @@ Vignettes are less defined that READMEs. Vignettes should be an in-depth form of
     + How are you assessing data quality? Here you would explain your different tests and standards.
 
 Whilst a README serves as a general introduction to the project, vignettes more often serve as in-depth descriptions of certain aspects of the project. Like READMEs, vignettes should be written in markdown (or more likely RMarkdown).
+
+
+## Testing
+
+One thing I rarely see in analysis projects are unit tests. Unit tests are test cases that help ensure that your functions are performing as you expect. For example, let's say you have a function like this:
+
+```{r}
+trim_hyphen <- function(txt) {
+  gsub("-", "", txt)
+}
+```
+
+This seems pretty straightforward - it strips hyphens out of text strings. But what happens if you pass this function a `NULL` value? Or a list? Writing test cases to cover these events can help you limit the number of unexpected behaviours and bugs that can often ruin an analysis. I've fallen victim to thinking my analysis was valid before discovering that there was an aggregation or modelling error due to edge cases more than I care to admit.
+
+### `{testthat}`
+
+`{testthat}` is a package designed primarily for testing packages, and when we look in the next chapter at laying out your project like a package, that will make a lot more sense. But your analysis doesn't have to be a package. You just need to write test cases, put them in a script and a folder and run `testthat::test_local("path/to/your/test/director")`.
+
+We won't go into the intricacies of the `{testthat}` package here, but essentially `{testthat}` relies on expectations. That is, the is an expected behaviour, and the test should pass if that expectation is met. If not, the test should fail. Let's test our `trim_hyphen` function:
+
+```{r}
+library(testthat)
+
+test_that("trimming hyphens errors on NULL",
+                    {
+                      expect_error(trim_hyphen(NULL))
+                      
+                    })
+```
+
+Here we setup our test context - that we're checking that when we trim hyphens, we get an error if we provide a NULL value. Then we provide our expectation - we expect an error when we call the function with a NULL value. But our expectation isn't met - there isn't an error. So we need to either change the test case, or the function. In this example, let's say that we do want the function to fail when there's a NULL value, so we'd change the function:
+
+```{r}
+trim_hyphen <- function(txt) {
+  if (!is.null(tst)) {
+    gsub("-", "", txt)
+  } else {
+    stop ("txt cannot be NULL")
+  }
+}
+```
+
+Now when we run the test case:
+
+```{r}
+test_that("trimming hyphens errors on NULL",
+                    {
+                      expect_error(trim_hyphen(NULL))
+                      
+                    })
+```
+
+The test passes!
+
+### Defensive programming
+
+Defensive programming is a type of design whereby you prioritise safe or continued use of a piece of software in variable and unforeseen circumstances. Many people who practice this type of programming will first define the test cases for their function - how it should operate in any given circumstance. Only after considering all the possibilities would the developer actually then write the definition of the function.
+
+Personally, I don't often advocate this approach to programming in interactive data analysis projects, but it can sometimes be a very interesting and useful approach. By first defining how the function or function(s) should behave in many different circumstances, you can better understand how your analysis or system is going to function outside of the 'happy path'.
+
+So while I wouldn't adapt this practice for all your projects, keep the principles of defensive programming in mind when you're writing a particularly complex or temperamental function.
