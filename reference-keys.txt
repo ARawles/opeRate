@@ -104,6 +104,9 @@ function-documentation
 long-form-documentation
 readmes
 vignettes
+testing
+testthat
+defensive-programming
 projects-as-packages
 structure
 r-code

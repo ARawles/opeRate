@@ -284,6 +284,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="18.2.1" data-path="replicability.html"><a href="replicability.html#function-documentation"><i class="fa fa-check"></i><b>18.2.1</b> Function documentation</a></li>
 <li class="chapter" data-level="18.2.2" data-path="replicability.html"><a href="replicability.html#long-form-documentation"><i class="fa fa-check"></i><b>18.2.2</b> Long-form documentation</a></li>
 </ul></li>
+<li class="chapter" data-level="18.3" data-path="replicability.html"><a href="replicability.html#testing"><i class="fa fa-check"></i><b>18.3</b> Testing</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="replicability.html"><a href="replicability.html#testthat"><i class="fa fa-check"></i><b>18.3.1</b> <code>{testthat}</code></a></li>
+<li class="chapter" data-level="18.3.2" data-path="replicability.html"><a href="replicability.html#defensive-programming"><i class="fa fa-check"></i><b>18.3.2</b> Defensive programming</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="19" data-path="projects-as-packages.html"><a href="projects-as-packages.html"><i class="fa fa-check"></i><b>19</b> Projects as Packages</a>
 <ul>
@@ -393,8 +398,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="state-your-dependencies" class="section level3" number="18.1.4">
 <h3><span class="header-section-number">18.1.4</span> State your dependencies</h3>
 <p>One of the great things about R is the number of packages that are available that let you do all sorts of weird and wonderful things. Unfortunately, because there are so many great packages, it’s unlikely that the person you’re sharing your code with will have them all installed. If you’re sending someone a script, then best practice is to include all the packages you use at the top of your script like this:</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="replicability.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb169-2"><a href="replicability.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="replicability.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb172-2"><a href="replicability.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
 <p>An extra step which few people do but can be very helpful is to still prepend your functions with which package they came from like this <code>dplyr::mutate()</code>. Not only does this avoid any namespace conflicts where two packages might have functions with the same name and you don’t end up using the one you think you are because of the order of your <code>library()</code> calls, but it also makes it infinitely easier for anyone reading your code to find the package that a function comes from.
 Admittedly, this is overkill in a sense because we’ve already told R which packages we’re using with our <code>library()</code> calls and R has loaded in the objects from that package, but this practice can really improve the readability of your code.</p>
 <p>Later we’ll look at designing our project as a package and packages have a different way of stating dependencies for the user, so this is primarily for the case where you’re just sending a script or two to someone.</p>
@@ -437,8 +442,56 @@ Admittedly, this is overkill in a sense because we’ve already told R which pac
 </ul></li>
 </ol>
 <p>Whilst a README serves as a general introduction to the project, vignettes more often serve as in-depth descriptions of certain aspects of the project. Like READMEs, vignettes should be written in markdown (or more likely RMarkdown).</p>
-
 </div>
+</div>
+</div>
+<div id="testing" class="section level2" number="18.3">
+<h2><span class="header-section-number">18.3</span> Testing</h2>
+<p>One thing I rarely see in analysis projects are unit tests. Unit tests are test cases that help ensure that your functions are performing as you expect. For example, let’s say you have a function like this:</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="replicability.html#cb173-1" aria-hidden="true" tabindex="-1"></a>trim_hyphen <span class="ot">&lt;-</span> <span class="cf">function</span>(txt) {</span>
+<span id="cb173-2"><a href="replicability.html#cb173-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gsub</span>(<span class="st">&quot;-&quot;</span>, <span class="st">&quot;&quot;</span>, txt)</span>
+<span id="cb173-3"><a href="replicability.html#cb173-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This seems pretty straightforward - it strips hyphens out of text strings. But what happens if you pass this function a <code>NULL</code> value? Or a list? Writing test cases to cover these events can help you limit the number of unexpected behaviours and bugs that can often ruin an analysis. I’ve fallen victim to thinking my analysis was valid before discovering that there was an aggregation or modelling error due to edge cases more than I care to admit.</p>
+<div id="testthat" class="section level3" number="18.3.1">
+<h3><span class="header-section-number">18.3.1</span> <code>{testthat}</code></h3>
+<p><code>{testthat}</code> is a package designed primarily for testing packages, and when we look in the next chapter at laying out your project like a package, that will make a lot more sense. But your analysis doesn’t have to be a package. You just need to write test cases, put them in a script and a folder and run <code>testthat::test_local("path/to/your/test/director")</code>.</p>
+<p>We won’t go into the intricacies of the <code>{testthat}</code> package here, but essentially <code>{testthat}</code> relies on expectations. That is, the is an expected behaviour, and the test should pass if that expectation is met. If not, the test should fail. Let’s test our <code>trim_hyphen</code> function:</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="replicability.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(testthat)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;testthat&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     matches</code></pre>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="replicability.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&quot;trimming hyphens errors on NULL&quot;</span>,</span>
+<span id="cb177-2"><a href="replicability.html#cb177-2" aria-hidden="true" tabindex="-1"></a>                    {</span>
+<span id="cb177-3"><a href="replicability.html#cb177-3" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">expect_error</span>(<span class="fu">trim_hyphen</span>(<span class="cn">NULL</span>))</span>
+<span id="cb177-4"><a href="replicability.html#cb177-4" aria-hidden="true" tabindex="-1"></a>                      </span>
+<span id="cb177-5"><a href="replicability.html#cb177-5" aria-hidden="true" tabindex="-1"></a>                    })</span></code></pre></div>
+<pre><code>## ── Failure (&lt;text&gt;:5:23): trimming hyphens errors on NULL ──────────────────────
+## `trim_hyphen(NULL)` did not throw an error.</code></pre>
+<p>Here we setup our test context - that we’re checking that when we trim hyphens, we get an error if we provide a NULL value. Then we provide our expectation - we expect an error when we call the function with a NULL value. But our expectation isn’t met - there isn’t an error. So we need to either change the test case, or the function. In this example, let’s say that we do want the function to fail when there’s a NULL value, so we’d change the function:</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="replicability.html#cb179-1" aria-hidden="true" tabindex="-1"></a>trim_hyphen <span class="ot">&lt;-</span> <span class="cf">function</span>(txt) {</span>
+<span id="cb179-2"><a href="replicability.html#cb179-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(tst)) {</span>
+<span id="cb179-3"><a href="replicability.html#cb179-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gsub</span>(<span class="st">&quot;-&quot;</span>, <span class="st">&quot;&quot;</span>, txt)</span>
+<span id="cb179-4"><a href="replicability.html#cb179-4" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb179-5"><a href="replicability.html#cb179-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span> (<span class="st">&quot;txt cannot be NULL&quot;</span>)</span>
+<span id="cb179-6"><a href="replicability.html#cb179-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb179-7"><a href="replicability.html#cb179-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Now when we run the test case:</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="replicability.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&quot;trimming hyphens errors on NULL&quot;</span>,</span>
+<span id="cb180-2"><a href="replicability.html#cb180-2" aria-hidden="true" tabindex="-1"></a>                    {</span>
+<span id="cb180-3"><a href="replicability.html#cb180-3" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">expect_error</span>(<span class="fu">trim_hyphen</span>(<span class="cn">NULL</span>))</span>
+<span id="cb180-4"><a href="replicability.html#cb180-4" aria-hidden="true" tabindex="-1"></a>                      </span>
+<span id="cb180-5"><a href="replicability.html#cb180-5" aria-hidden="true" tabindex="-1"></a>                    })</span></code></pre></div>
+<pre><code>## Test passed 🥳</code></pre>
+<p>The test passes!</p>
+</div>
+<div id="defensive-programming" class="section level3" number="18.3.2">
+<h3><span class="header-section-number">18.3.2</span> Defensive programming</h3>
+<p>Defensive programming is a type of design whereby you prioritise safe or continued use of a piece of software in variable and unforeseen circumstances. Many people who practice this type of programming will first define the test cases for their function - how it should operate in any given circumstance. Only after considering all the possibilities would the developer actually then write the definition of the function.</p>
+<p>Personally, I don’t often advocate this approach to programming in interactive data analysis projects, but it can sometimes be a very interesting and useful approach. By first defining how the function or function(s) should behave in many different circumstances, you can better understand how your analysis or system is going to function outside of the ‘happy path’.</p>
+<p>So while I wouldn’t adapt this practice for all your projects, keep the principles of defensive programming in mind when you’re writing a particularly complex or temperamental function.</p>
+
 </div>
 </div>
 </div>

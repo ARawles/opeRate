@@ -284,6 +284,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="18.2.1" data-path="replicability.html"><a href="replicability.html#function-documentation"><i class="fa fa-check"></i><b>18.2.1</b> Function documentation</a></li>
 <li class="chapter" data-level="18.2.2" data-path="replicability.html"><a href="replicability.html#long-form-documentation"><i class="fa fa-check"></i><b>18.2.2</b> Long-form documentation</a></li>
 </ul></li>
+<li class="chapter" data-level="18.3" data-path="replicability.html"><a href="replicability.html#testing"><i class="fa fa-check"></i><b>18.3</b> Testing</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="replicability.html"><a href="replicability.html#testthat"><i class="fa fa-check"></i><b>18.3.1</b> <code>{testthat}</code></a></li>
+<li class="chapter" data-level="18.3.2" data-path="replicability.html"><a href="replicability.html#defensive-programming"><i class="fa fa-check"></i><b>18.3.2</b> Defensive programming</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="19" data-path="projects-as-packages.html"><a href="projects-as-packages.html"><i class="fa fa-check"></i><b>19</b> Projects as Packages</a>
 <ul>
@@ -458,8 +463,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb127-5"><a href="modelling.html#cb127-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(rmse <span class="sc">==</span> <span class="fu">min</span>(rmse))</span>
 <span id="cb127-6"><a href="modelling.html#cb127-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(best_model)</span></code></pre></div>
 <pre><code>##   id        a        a1     rmse
-## 1  8 38.70758 -5.816291 2.985489</code></pre>
-<p>According to our analysis, model 8 has the lowest residual error. Let’s see what that model looks like:</p>
+## 1  2 38.49469 -5.641042 2.973949</code></pre>
+<p>According to our analysis, model 2 has the lowest residual error. Let’s see what that model looks like:</p>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="modelling.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
 <span id="cb129-2"><a href="modelling.html#cb129-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb129-3"><a href="modelling.html#cb129-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">data =</span> best_model,</span>
@@ -483,7 +488,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Coefficients:
 ## (Intercept)           wt  
 ##      37.285       -5.344</code></pre>
-<p>We can see that the <code>lm()</code> function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren’t too far off with 38.71 and -5.82!</p>
+<p>We can see that the <code>lm()</code> function has calculated coefficient values of 37.285 for the intercept, and -5.344 for the slope. We weren’t too far off with 38.49 and -5.64!</p>
 <p>To model quadratic relationships with the <code>lm()</code> function, our syntax is a little different:</p>
 <div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="modelling.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This formula is equivalent to `y = a + (a1*x) + (a2*x^2)</span></span>
 <span id="cb132-2"><a href="modelling.html#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> mtcars, mpg <span class="sc">~</span> wt <span class="sc">+</span> <span class="fu">I</span>(wt<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>

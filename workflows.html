@@ -284,6 +284,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="18.2.1" data-path="replicability.html"><a href="replicability.html#function-documentation"><i class="fa fa-check"></i><b>18.2.1</b> Function documentation</a></li>
 <li class="chapter" data-level="18.2.2" data-path="replicability.html"><a href="replicability.html#long-form-documentation"><i class="fa fa-check"></i><b>18.2.2</b> Long-form documentation</a></li>
 </ul></li>
+<li class="chapter" data-level="18.3" data-path="replicability.html"><a href="replicability.html#testing"><i class="fa fa-check"></i><b>18.3</b> Testing</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="replicability.html"><a href="replicability.html#testthat"><i class="fa fa-check"></i><b>18.3.1</b> <code>{testthat}</code></a></li>
+<li class="chapter" data-level="18.3.2" data-path="replicability.html"><a href="replicability.html#defensive-programming"><i class="fa fa-check"></i><b>18.3.2</b> Defensive programming</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="19" data-path="projects-as-packages.html"><a href="projects-as-packages.html"><i class="fa fa-check"></i><b>19</b> Projects as Packages</a>
 <ul>
@@ -388,25 +393,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">17.1.1</span> Example 1: Reporting</h3>
 <p>In this example, imagine someone has come to you and they want a bit more insight into the data they have. It’s currently in a messy spreadsheet, and they want you to load it into R and produce some nice looking graphics to help them understand trends and correlations in their data. They’re not bothered about any modelling for now, they just want some pretty graphs.</p>
 <p>If we mapped out an appropriate workflow for this project, it might look something like this:</p>
-<div id="htmlwidget-1559746ea84bd6792117" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1559746ea84bd6792117">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Import; Clean; Tidy; Summarise; Plot; Evaluate; \n\n  # several \"edge\" statements\n  Import->Clean Clean->Tidy Tidy->Summarise Summarise->Plot\n  Plot->Evaluate Evaluate->Summarise Evaluate->Plot\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-59e97d517a272f82b16a" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-59e97d517a272f82b16a">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Import; Clean; Tidy; Summarise; Plot; Evaluate; \n\n  # several \"edge\" statements\n  Import->Clean Clean->Tidy Tidy->Summarise Summarise->Plot\n  Plot->Evaluate Evaluate->Summarise Evaluate->Plot\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>We import the data and clean it and tidy it (more on that later), then we summarise it and create our plots. We can then use feedback from our colleague to change how we’re summarising or how we’re plotting the data to improve our plots until we’re happy.</p>
 </div>
 <div id="example-2-modelling" class="section level3" number="17.1.2">
 <h3><span class="header-section-number">17.1.2</span> Example 2: Modelling</h3>
 <p>For this example, imagine a colleague has come to you about a modelling project. They have a number of relatively clean datasets that they want to combine and use to produce a predictive model. They’re not too worried about plots or graphics, they’re more interested in the model itself. If we mapped out a workflow for this project, it might look a bit more like this:</p>
-<div id="htmlwidget-4fb2ff835fbd81ca1ea5" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4fb2ff835fbd81ca1ea5">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Load; Clean; Tidy; Collate; Model; Evaluate; \n\n  # several \"edge\" statements\n  Load->Clean Clean->Tidy Tidy->Collate Collate->Model\n  Model->Evaluate Evaluate->Model\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c09e984bd3dd8c0fc0ac" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c09e984bd3dd8c0fc0ac">{"x":{"diagram":"\n  digraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  Load; Clean; Tidy; Collate; Model; Evaluate; \n\n  # several \"edge\" statements\n  Load->Clean Clean->Tidy Tidy->Collate Collate->Model\n  Model->Evaluate Evaluate->Model\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>As you can see, we still end with the loop of modelling and then evaluating our model and using the output to update the model, but the steps we take to get there are a bit different.</p>
 </div>
 </div>
 <div id="separating-stages" class="section level2" number="17.2">
 <h2><span class="header-section-number">17.2</span> Separating Stages</h2>
+<p>Now we’ve segmented our project into separate stages, this makes organising our code a little bit easier. We want to separate different and distinct actions into separate code chunks - this makes understanding, debugging and testing the code a lot easier, because we can test each bit separately.</p>
 <div id="functions" class="section level3" number="17.2.1">
 <h3><span class="header-section-number">17.2.1</span> Functions</h3>
+<p>Functions can provide two useful features in a data analysis project:</p>
+<ol style="list-style-type: decimal">
+<li>They allow you to reuse code</li>
+<li>They can help you tell a story</li>
+</ol>
+<p>By this, I mean that by appropriately segmenting your code into separate functions and naming those functions appropriately, you can communicate what’s going on to your audience more clearly. For example, say you want to load and clean your data, you could write some functions and use them like this:</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="workflows.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">my_fun_1</span>() <span class="sc">%&gt;%</span> <span class="fu">my_fun_2</span>() <span class="sc">%&gt;%</span> <span class="fu">my_fun_3</span>() <span class="sc">%&gt;%</span> ...</span></code></pre></div>
+<p>Or like this:</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="workflows.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load_data</span>() <span class="sc">%&gt;%</span> <span class="fu">clean_dates</span>() <span class="sc">%&gt;%</span> <span class="fu">clean_factors</span>() <span class="sc">%&gt;%</span> ...</span></code></pre></div>
+<p>We’re doing the same thing each time, but by appropriately naming our functions like in the latter example, we can clearly communicate what’s happening at each step.</p>
+<p>If you have a more complicated workflow with more cleaning steps, you can utilise the concept of abstraction to keep your code clean:</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="workflows.html#cb171-1" aria-hidden="true" tabindex="-1"></a>clean_data <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb171-2"><a href="workflows.html#cb171-2" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span> <span class="fu">clean_dates</span>() <span class="sc">%&gt;%</span> <span class="fu">clean_factors</span>() <span class="sc">%&gt;%</span> <span class="fu">remove_nas</span>()</span>
+<span id="cb171-3"><a href="workflows.html#cb171-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb171-4"><a href="workflows.html#cb171-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb171-5"><a href="workflows.html#cb171-5" aria-hidden="true" tabindex="-1"></a><span class="fu">load_data</span>() <span class="sc">%&gt;%</span> <span class="fu">clean_data</span>()</span></code></pre></div>
+<p>Here we’ve rolled up the three stages of our cleaning stage into a single function (<code>clean_data()</code>). When someone now reads our code, they know exactly what our function is doing - and if they then look at the source, then can clearly see that our <code>clean_data()</code> function is made up of three sub-stages.</p>
 </div>
 <div id="files" class="section level3" number="17.2.2">
 <h3><span class="header-section-number">17.2.2</span> Files</h3>
+<p>Once you’ve separated your stages into distinct functions, saving those functions in separate scripts can help keep things clean. For example, if you have a <code>clean_data()</code> function that calls 5 or 6 functions, then place all of those functions in the same script and call it <code>clean.R</code>. Bonus points if you put the functions in the order they are called in the <code>clean_data()</code> function. Then, if someone wants to know anything about how you cleaned your data, they’re not going to struggle to find the code.</p>
 </div>
 </div>
 <div id="summary" class="section level2" number="17.3">
