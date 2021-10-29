@@ -28,6 +28,13 @@
       "Repository": "CRAN",
       "Hash": "fb7cb5e4bce4968998be28ebd3007c7c"
     },
+    "Deriv": {
+      "Package": "Deriv",
+      "Version": "4.1.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "bc727aba82bcda74db0bbe188ec6757c"
+    },
     "DiagrammeR": {
       "Package": "DiagrammeR",
       "Version": "1.0.6.1",
@@ -419,6 +426,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "6dfe8bf774944bd5595785e3229d8771"
+    },
+    "neuralnet": {
+      "Package": "neuralnet",
+      "Version": "1.44.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "645dfddf82e231bd334f916ede114128"
     },
     "nlme": {
       "Package": "nlme",
