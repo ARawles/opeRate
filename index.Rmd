@@ -11,7 +11,7 @@ output:
       toc:
         collapse: section
       download:
-        - ["teacheR.pdf", "PDF"]
+        - ["opeRate.pdf", "PDF"]
         - ["opeRate.mobi", "Kindle EBook"]
         - ["opeRate.epub", "EPUB EBook"]
   bookdown::epub_book:
