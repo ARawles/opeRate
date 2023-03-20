@@ -59,9 +59,9 @@ knitr::include_graphics("./img/Lemon.png")
 
 Now all of the three inputs are triggered, but this isn't enough to pass the threshold, so the second node doesn't fire. This is a lemon though, so it should have fired. We need to change our weights again.
 
-We won't go through the painstaking process of changing the weights until we get them right, but hopefully this has demonstrated the key process by which a neural network learns; by changing the weights of its input layers to match inputs with outputs.
+This is called **backpropogation** and is the process of changing the weights of the network to match inputs with outputs. There are lots of different types of backpropogation algorithms, which we won't go into now. Importantly though, this backpropogation process is how neural network models _learn_.
 
-In this case, we've done an extremely simple example. In reality, no neural network is as simple as this because it would be pointless. Instead, neural networks usually have multiple layers and many many more inputs. If we consider models that can read through text documents and classify them (e.g. classify reviews as being positive or negative), these will often use every word in the text as an input. As you can imagine, this can lead to a lot of inputs!
+In this case, we've done an extremely simple example of a neural network. In reality, no neural network is as simple as this because it would be pointless. Instead, neural networks usually have multiple intermediate or hidden layers and many more inputs. If we consider models that can read through text documents and classify them (e.g. classify reviews as being positive or negative), these will often use every word in the text as an input. As you can imagine, this can lead to a lot of inputs!
 
 ### Neural Networks in R
 
