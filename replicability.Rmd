@@ -101,7 +101,7 @@ This seems pretty straightforward - it strips hyphens out of text strings. But w
 
 We won't go into the intricacies of the `{testthat}` package here, but essentially `{testthat}` relies on expectations. That is, the is an expected behaviour, and the test should pass if that expectation is met. If not, the test should fail. Let's test our `trim_hyphen` function:
 
-```{r}
+```{r, error=TRUE}
 library(testthat)
 
 test_that("trimming hyphens errors on NULL",
@@ -115,11 +115,10 @@ Here we setup our test context - that we're checking that when we trim hyphens, 
 
 ```{r}
 trim_hyphen <- function(txt) {
-  if (!is.null(tst)) {
-    gsub("-", "", txt)
-  } else {
+  if (is.null(tst)) {
     stop ("txt cannot be NULL")
   }
+  gsub("-", "", txt)
 }
 ```
 
