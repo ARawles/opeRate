@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>13 Plotting | opeRate</title>
+  <title>Page not found | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="13 Plotting | opeRate" />
+  <meta property="og:title" content="Page not found | opeRate" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/cover.png" />
   <meta property="og:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="github-repo" content="ARawles/opeRate" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="13 Plotting | opeRate" />
+  <meta name="twitter:title" content="Page not found | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="twitter:image" content="/cover.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="summarising.html"/>
-<link rel="next" href="modelling.html"/>
+
+
 <script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -372,149 +372,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="plotting" class="section level1 hasAnchor" number="13">
-<h1><span class="header-section-number">13</span> Plotting<a href="plotting.html#plotting" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Now that you’ve got your data summarised to a suitable level, you might want to create some graphics to help gain insight into the trends and patterns in the data. For this section, we’re going to rely on the <code>{ggplot2}</code> package from the tidyverse. This is arguably the most advanced plotting package available for R. R does provide plotting functions without the use of packages, but we’re going to focus on <code>{ggplot2}</code> here.</p>
-<div id="ggplot2" class="section level2 hasAnchor" number="13.1">
-<h2><span class="header-section-number">13.1</span> ggplot2<a href="plotting.html#ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><code>{ggplot2}</code> is based on the concept of a <a href="https://www.springer.com/in/book/9780387245447">Grammar of Graphics</a>. This is the concept that, like language, graphics have a grammar that allow us to describe their components.</p>
-<p>This concept was originally proposed by Leland Wilkinson, but has been adopted heavily in the <code>{ggplot2}</code> philosophy, with Hadley Wickham publishing a paper titled <a href="http://vita.had.co.nz/papers/layered-grammar.html">‘A Layered Grammer of Graphics’</a> that outlines his proposal for a layered grammar and how it’s implemented in <code>{ggplot2}</code>. We’ll cover the real basics of <code>{ggplot2}</code> here but I’d recommend reading the paper and reading the <code>{ggplot2}</code> <a href="https://ggplot2.tidyverse.org/">documentation</a> if you’re interested in gaining a deeper understanding.</p>
-<div id="components" class="section level3 hasAnchor" number="13.1.1">
-<h3><span class="header-section-number">13.1.1</span> Components<a href="plotting.html#components" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>At the core of the Grammar of Graphics philosophy is the idea that plots are defined by their components. For example, two scatterplots could be extremely different, even though we’d both call them scatterplots. Instead, the two graphics are better defined by the components that make them up.</p>
-<p>When we create a plot using <code>{ggplot2}</code> we build it up by creating and combining these components.</p>
-<p>The main components that make up a plot are:</p>
-<ul>
-<li>Data and aesthetics mappings</li>
-<li>Geometrics objects (or geoms)</li>
-<li>Statistical transformations (or stats)</li>
-<li>Scales</li>
-<li>Facets</li>
-</ul>
-<p>These sound really scary, but they’re actually super simple. Let’s look at each one.</p>
-<div id="data-and-aesthetic-mappings" class="section level4 hasAnchor" number="13.1.1.1">
-<h4><span class="header-section-number">13.1.1.1</span> Data and aesthetic mappings<a href="plotting.html#data-and-aesthetic-mappings" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Every plot is a representation of some data. Therefore, to have a graphic, you need some data. That’s simple enough.</p>
-<p>But which parts of the data should be shown on the plot and where? This is what our aesthetic mappings represent. We might have a dataset with two variables, <code>z</code> and <code>w</code>. Our mapping may be then that we want the <code>z</code> variable on the x axis of the plot, and the <code>w</code> variable on the y axis. We can also utilise other mappings like colour and size.</p>
-<p>To define our dataset and our aesthetic mappings using <code>{ggplot2}</code>, we use the <code>ggplot()</code> and <code>aes()</code> functions. Let’s see an example using our video game sales experiment from the previous chapters:</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="plotting.html#cb115-1" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb115-2"><a href="plotting.html#cb115-2" aria-hidden="true"></a></span>
-<span id="cb115-3"><a href="plotting.html#cb115-3" aria-hidden="true"></a><span class="co"># Here we lump together any publisher not in the top 5 by total sales</span></span>
-<span id="cb115-4"><a href="plotting.html#cb115-4" aria-hidden="true"></a><span class="co"># otherwise we&#39;ll have too many publishers</span></span>
-<span id="cb115-5"><a href="plotting.html#cb115-5" aria-hidden="true"></a>plot_vg_sales &lt;-<span class="st"> </span>tidy_vg_sales <span class="op">%&gt;%</span></span>
-<span id="cb115-6"><a href="plotting.html#cb115-6" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(Publisher, Year, Country) <span class="op">%&gt;%</span></span>
-<span id="cb115-7"><a href="plotting.html#cb115-7" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">Total_Sales =</span> <span class="kw">sum</span>(Sales), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb115-8"><a href="plotting.html#cb115-8" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">Publisher =</span> forcats<span class="op">::</span><span class="kw">fct_lump_n</span>(Publisher, <span class="dt">n =</span> <span class="dv">5</span>, <span class="dt">w =</span> Total_Sales)) <span class="op">%&gt;%</span></span>
-<span id="cb115-9"><a href="plotting.html#cb115-9" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(Publisher, Year, Country) <span class="op">%&gt;%</span></span>
-<span id="cb115-10"><a href="plotting.html#cb115-10" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">Total_Sales =</span> <span class="kw">sum</span>(Total_Sales), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span>
-<span id="cb115-11"><a href="plotting.html#cb115-11" aria-hidden="true"></a></span>
-<span id="cb115-12"><a href="plotting.html#cb115-12" aria-hidden="true"></a>plot_vg_sales <span class="op">%&gt;%</span></span>
-<span id="cb115-13"><a href="plotting.html#cb115-13" aria-hidden="true"></a><span class="st">  </span><span class="co"># Just plot global sales for now</span></span>
-<span id="cb115-14"><a href="plotting.html#cb115-14" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Country <span class="op">==</span><span class="st"> &quot;Global&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb115-15"><a href="plotting.html#cb115-15" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> Total_Sales, <span class="dt">colour =</span> Publisher))</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
-<p>Here we’ve defined that we want to show the <code>Year</code> on the X axis, the <code>Total_Sales</code> on the Y, and we want to map the <code>Publisher</code> to the colour of whatever we show on the plot.</p>
-<p>As part of our mapping, we can see that <code>{ggplot2}</code> has also provided appropriate scales for our variables. It’s provided a numeric scale with an appropriate range for the X and Y axis. We can’t see it yet, but it’s also assigned a scale to our colour aesthetic, mapping colours to values in the Publisher column. We’ll look at manually specifying and customising the scales later.</p>
-<p>Although we’ve got our scales, and we can see that <code>{ggplot2}</code> clearly knows which variable we want on each axis, but there’s nothing on the graph at the moment… This is because we now need to define our geoms.</p>
-</div>
-<div id="geometric-objects-geoms" class="section level4 hasAnchor" number="13.1.1.2">
-<h4><span class="header-section-number">13.1.1.2</span> Geometric objects (geoms)<a href="plotting.html#geometric-objects-geoms" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Our geometric objects will be the object that’s actually shown on the plot (e.g. bars, points, lines, and so on). To add our geometric object, we use the <code>geom_...</code> functions. Our geom will then inherit the mapping from our <code>ggplot()</code> call. If we wanted to add additional mappings, the <code>geom_...</code> functions also allow for a <code>mapping</code> parameter where additional mappings can be provided.</p>
-<p>We want lines for our example, so we use the <code>geom_line()</code> function. To add our geom component, we just need to add it to our plot so far using the <code>+</code> operator:</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="plotting.html#cb116-1" aria-hidden="true"></a>plot_vg_sales <span class="op">%&gt;%</span></span>
-<span id="cb116-2"><a href="plotting.html#cb116-2" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Country <span class="op">==</span><span class="st"> &quot;Global&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb116-3"><a href="plotting.html#cb116-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> Total_Sales, <span class="dt">colour =</span> Publisher)) <span class="op">+</span></span>
-<span id="cb116-4"><a href="plotting.html#cb116-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
-<p>This is equivalent to:</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="plotting.html#cb117-1" aria-hidden="true"></a>plot_vg_sales <span class="op">%&gt;%</span></span>
-<span id="cb117-2"><a href="plotting.html#cb117-2" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Country <span class="op">==</span><span class="st"> &quot;Global&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb117-3"><a href="plotting.html#cb117-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">ggplot</span>() <span class="op">+</span></span>
-<span id="cb117-4"><a href="plotting.html#cb117-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> Total_Sales, <span class="dt">colour =</span> Publisher))</span></code></pre></div>
-<p>Different geoms also allow for different mappings. For example, the line geom allows you to specify the <code>linetype</code> aesthetic that changes the way the line is drawn (solid, dashed, etc.) depending on the value of your variable. This aesthetic would mean nothing for the point geom however, which instead has an aesthetic called <code>shape</code>. To see which aesthetics are supported by which geoms, look at the documentation for the geom function you want to use (e.g <code>?geom_line</code>).</p>
-</div>
-<div id="statistical-transformations-stats" class="section level4 hasAnchor" number="13.1.1.3">
-<h4><span class="header-section-number">13.1.1.3</span> Statistical transformations (stats)<a href="plotting.html#statistical-transformations-stats" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Before the data is plotted, it can go through a statistical transformation or ‘stat’. This will take the value or values from the dataset and transform them. For example, we might want to plot the sum of all of the values in a group rather than each value individually. We could use a statistical transformation that sums up all the values to do this for us. That way, we can plot the data in different ways with the same base dataset.</p>
-<p>We can see that when we call <code>geom_line()</code> the default value for the <code>stat</code> parameter is ‘identity’. This means that <code>{ggplot2}</code> performs no stat transformation on the data before it plots it - if the value of the variable on the x axis is 10, then the value that’s plotted will be 10.</p>
-<p>There are many predefined stats that <code>{ggplot2}</code> provides that we can to plot the data in different ways. To change the stat transformation for a geom, we can change the <code>stat</code> parameter to one of a set of predefined character strings that represent certain stats. For example, if we set the <code>stat</code> parameter for our <code>geom_line()</code> to <code>'smooth'</code>, the values are transformed by a smoothing function (the smoothing method can be changed via the <code>method</code> parameter):</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="plotting.html#cb118-1" aria-hidden="true"></a>plot_vg_sales <span class="op">%&gt;%</span></span>
-<span id="cb118-2"><a href="plotting.html#cb118-2" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Country <span class="op">==</span><span class="st"> &quot;Global&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb118-3"><a href="plotting.html#cb118-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> Total_Sales, <span class="dt">colour =</span> Publisher)) <span class="op">+</span></span>
-<span id="cb118-4"><a href="plotting.html#cb118-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">stat =</span> <span class="st">&quot;smooth&quot;</span>)</span></code></pre></div>
-<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
-<p>Some geoms use a stat different to ‘identity’ by default. For example, using <code>geom_smooth()</code> uses the ‘smooth’ stat to essentially do the same as we just did with <code>geom_line()</code>. Similary, <code>geom_boxplot()</code> will automatically calculate the median and the whiskers and hinges from your data via the <code>"boxplot"</code> stat.</p>
-<p>Stats are particularly useful because they allow us to plot the same data at different levels of summary. If we didn’t utilise stats, we would have to transform the dataset before we started plotting. When we look at <a href="plotting.html#layers">layers</a> in one of the coming sections, this should help demonstrate the power of stat transformations in building meaningful graphics.</p>
-</div>
-<div id="facets" class="section level4 hasAnchor" number="13.1.1.4">
-<h4><span class="header-section-number">13.1.1.4</span> Facets<a href="plotting.html#facets" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>In our example, we’ve filtered the dataset down to just show the global sales, but instead we could also use faceting to show the data for each region in a different subplot. Faceting splits the original dataset, plots the data separately and then combines it into a single panel. To facet our plot, we use the <code>facet_wrap()</code> or <code>facet_grid()</code> functions:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="plotting.html#cb120-1" aria-hidden="true"></a><span class="kw">ggplot</span>(plot_vg_sales, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> Total_Sales, <span class="dt">colour =</span> Publisher)) <span class="op">+</span></span>
-<span id="cb120-2"><a href="plotting.html#cb120-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb120-3"><a href="plotting.html#cb120-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Country, <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
-<p>We use the <code>~</code> shorthand to say that we want to use the Publisher variable. We could also use the <code>dplyr::vars()</code> function (i.e. <code>facet_wrap(dplyr::vars(Publisher))</code>). Then we specify that we want each subplot to have a free Y axis (rather than all using the same scale range) with <code>scales = "free_y"</code>, and that we want to have 2 columns of subplots with <code>ncol = 2</code>.</p>
-</div>
-<div id="scales" class="section level4 hasAnchor" number="13.1.1.5">
-<h4><span class="header-section-number">13.1.1.5</span> Scales<a href="plotting.html#scales" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Scales are the domains of our mappings. Each variable that we map via <code>aes</code> will have a scale associated with it. For example, when we map our Year variable to the x axis, <code>{ggplot2}</code> creates an automatic numeric scale, with values between 1980 and 2020 (the minimum and maximum values in our range). Similarly, when we map the Publisher to the colour aesthetic, <code>{ggplot2}</code> automatically creates a colour scale, mapping colours to specific Publishers.</p>
-<p><code>{ggplot2}</code> will create default scales for the variables in our mapping, but we can alter them manually. To do so, we just use the accompanying <code>scale_{aesthetic}_{type}</code> function. So for our x axis, we’re scaling our x mapping and we want a continuous, numeric scale so we would use the <code>scale_x_continous()</code> function. Similarly, for our y axis we’d use <code>scale_y_continuous()</code>:</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="plotting.html#cb121-1" aria-hidden="true"></a><span class="kw">ggplot</span>(plot_vg_sales, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> Total_Sales)) <span class="op">+</span></span>
-<span id="cb121-2"><a href="plotting.html#cb121-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Publisher)) <span class="op">+</span></span>
-<span id="cb121-3"><a href="plotting.html#cb121-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="op">+</span></span>
-<span id="cb121-4"><a href="plotting.html#cb121-4" aria-hidden="true"></a><span class="st">  </span><span class="co"># Let&#39;s change the limits of our scale</span></span>
-<span id="cb121-5"><a href="plotting.html#cb121-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Total Sales (Millions)&quot;</span>, <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">50</span>)) <span class="op">+</span></span>
-<span id="cb121-6"><a href="plotting.html#cb121-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Country, <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
-<p>To change the colour scale, we would use the <code>scale_colour_brewer/hue()</code> function. These two functions take a slightly different approach in how they assign colours to the levels of the variable.</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="plotting.html#cb122-1" aria-hidden="true"></a><span class="kw">ggplot</span>(plot_vg_sales, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> Total_Sales)) <span class="op">+</span></span>
-<span id="cb122-2"><a href="plotting.html#cb122-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Publisher)) <span class="op">+</span></span>
-<span id="cb122-3"><a href="plotting.html#cb122-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="op">+</span></span>
-<span id="cb122-4"><a href="plotting.html#cb122-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Total Sales (Millions)&quot;</span>) <span class="op">+</span></span>
-<span id="cb122-5"><a href="plotting.html#cb122-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_colour_brewer</span>(<span class="dt">name =</span> <span class="st">&quot;Publisher&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;BrBG&quot;</span>) <span class="op">+</span></span>
-<span id="cb122-6"><a href="plotting.html#cb122-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Country, <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="plotting.html#cb123-1" aria-hidden="true"></a><span class="kw">ggplot</span>(plot_vg_sales, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> Total_Sales)) <span class="op">+</span></span>
-<span id="cb123-2"><a href="plotting.html#cb123-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Publisher)) <span class="op">+</span></span>
-<span id="cb123-3"><a href="plotting.html#cb123-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="op">+</span></span>
-<span id="cb123-4"><a href="plotting.html#cb123-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Total Sales (Millions)&quot;</span>) <span class="op">+</span></span>
-<span id="cb123-5"><a href="plotting.html#cb123-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_colour_hue</span>(<span class="dt">name =</span> <span class="st">&quot;Publisher&quot;</span>, <span class="dt">l =</span> <span class="dv">40</span>, <span class="dt">c =</span> <span class="dv">30</span>) <span class="op">+</span></span>
-<span id="cb123-6"><a href="plotting.html#cb123-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Country, <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
-</div>
-</div>
-<div id="layers" class="section level3 hasAnchor" number="13.1.2">
-<h3><span class="header-section-number">13.1.2</span> Layers<a href="plotting.html#layers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Together, the data, mapping, stat and geom components form a <strong>layer</strong>. A plot can be made up of multiple layers. For example, let’s show the same data but overlay a regression line that uses the smooth stat and a different mapping:</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="plotting.html#cb124-1" aria-hidden="true"></a><span class="kw">ggplot</span>(plot_vg_sales, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> Total_Sales)) <span class="op">+</span></span>
-<span id="cb124-2"><a href="plotting.html#cb124-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">colour =</span> Publisher)) <span class="op">+</span></span>
-<span id="cb124-3"><a href="plotting.html#cb124-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x) <span class="op">+</span></span>
-<span id="cb124-4"><a href="plotting.html#cb124-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Year&quot;</span>) <span class="op">+</span></span>
-<span id="cb124-5"><a href="plotting.html#cb124-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;Total Sales (Millions)&quot;</span>, <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="ot">NA</span>)) <span class="op">+</span></span>
-<span id="cb124-6"><a href="plotting.html#cb124-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_colour_hue</span>(<span class="dt">name =</span> <span class="st">&quot;Publisher&quot;</span>, <span class="dt">l =</span> <span class="dv">40</span>, <span class="dt">c =</span> <span class="dv">30</span>) <span class="op">+</span></span>
-<span id="cb124-7"><a href="plotting.html#cb124-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Country, <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="opeRate_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
-<p>We’ve now got two layers to this plot, with slightly different mappings and stats. The coloured lines are split by Publisher, but the regression line does not use that colour mapping, meaning that we have a single line for all the Publishers. The coloured lines also use the ‘identity’ stat transformation (essentially no stat), where the regression line uses the ‘smooth’ stat transformation - it calculates a smooth conditional mean of y given x (<code>y ~ x</code>).</p>
-<p>In summary, a layer is made up of:</p>
-<ul>
-<li>A dataset and aesthetic mapping (aes)</li>
-<li>A statistical transformation (stat)</li>
-<li>A geometric object (geom)</li>
-</ul>
-<p>And plots can be made of up one or more layers.</p>
-<p>Facets and scales are not components of layers - they are universal to the plot. You couldn’t have one layer that used a completely different scale (e.g. one showing numbers on the x axis and the other showing groups on the same axis) because you wouldn’t be able to plot them on the same graph!</p>
-
-</div>
-</div>
+<div id="page-not-found" class="section level1">
+<h1>Page not found</h1>
+<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
+<p>You may want to try searching to find the page's new location, or use
+the table of contents to find the page you are looking for.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="summarising.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="modelling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

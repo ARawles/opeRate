@@ -6,12 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>21 Project Example | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="21 Project Example | opeRate" />
   <meta property="og:type" content="book" />
-  
-  <meta property="og:image" content="cover.png" />
+  <meta property="og:image" content="/cover.png" />
   <meta property="og:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="github-repo" content="ARawles/opeRate" />
 
@@ -19,7 +18,7 @@
   <meta name="twitter:title" content="21 Project Example | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
-  <meta name="twitter:image" content="cover.png" />
+  <meta name="twitter:image" content="/cover.png" />
 
 <meta name="author" content="Adam Rawles" />
 
@@ -32,7 +31,8 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link rel="prev" href="git-github.html"/>
 <link rel="next" href="answers.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -48,33 +48,37 @@
 
 
 
-
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
 <script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
+<script src="libs/grViz-binding-1.0.9/grViz.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -83,9 +87,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -118,6 +122,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -130,62 +135,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> opeRate</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> opeRate</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#overview"><i class="fa fa-check"></i><b>1.1</b> Overview</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#about-me"><i class="fa fa-check"></i><b>1.2</b> About Me</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#using-r"><i class="fa fa-check"></i><b>1.3</b> Using R</a></li>
 </ul></li>
 <li class="part"><span><b>I tidyverse</b></span></li>
 <li class="chapter" data-level="2" data-path="tidyverse-introduction.html"><a href="tidyverse-introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>3</b> “Tidy” data</a><ul>
+<li class="chapter" data-level="3" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>3</b> “Tidy” data</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="tidy-data.html"><a href="tidy-data.html#questions"><i class="fa fa-check"></i><b>3.1</b> Questions</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>4</b> The pipe (<code>%&gt;%</code>)</a><ul>
+<li class="chapter" data-level="4" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>4</b> The pipe (<code>%&gt;%</code>)</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="the-pipe.html"><a href="the-pipe.html#questions-1"><i class="fa fa-check"></i><b>4.1</b> Questions</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>5</b> Quasiquotation</a><ul>
+<li class="chapter" data-level="5" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>5</b> Quasiquotation</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="quasiquotation.html"><a href="quasiquotation.html#tidyselect"><i class="fa fa-check"></i><b>5.1</b> tidyselect</a></li>
 <li class="chapter" data-level="5.2" data-path="quasiquotation.html"><a href="quasiquotation.html#questions-2"><i class="fa fa-check"></i><b>5.2</b> Questions</a></li>
 </ul></li>
 <li class="part"><span><b>II Data Analysis</b></span></li>
 <li class="chapter" data-level="6" data-path="da-intro.html"><a href="da-intro.html"><i class="fa fa-check"></i><b>6</b> Introduction</a></li>
-<li class="chapter" data-level="7" data-path="loading.html"><a href="loading.html"><i class="fa fa-check"></i><b>7</b> Loading</a><ul>
-<li class="chapter" data-level="7.1" data-path="loading.html"><a href="loading.html#rds"><i class="fa fa-check"></i><b>7.1</b> RDS</a><ul>
+<li class="chapter" data-level="7" data-path="loading.html"><a href="loading.html"><i class="fa fa-check"></i><b>7</b> Loading</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="loading.html"><a href="loading.html#rds"><i class="fa fa-check"></i><b>7.1</b> RDS</a>
+<ul>
 <li class="chapter" data-level="7.1.1" data-path="loading.html"><a href="loading.html#advantages"><i class="fa fa-check"></i><b>7.1.1</b> Advantages</a></li>
 <li class="chapter" data-level="7.1.2" data-path="loading.html"><a href="loading.html#disadvantages"><i class="fa fa-check"></i><b>7.1.2</b> Disadvantages</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="loading.html"><a href="loading.html#csv"><i class="fa fa-check"></i><b>7.2</b> CSV</a><ul>
+<li class="chapter" data-level="7.2" data-path="loading.html"><a href="loading.html#csv"><i class="fa fa-check"></i><b>7.2</b> CSV</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="loading.html"><a href="loading.html#loading-csv-files"><i class="fa fa-check"></i><b>7.2.1</b> Loading CSV files</a></li>
 <li class="chapter" data-level="7.2.2" data-path="loading.html"><a href="loading.html#advantages-1"><i class="fa fa-check"></i><b>7.2.2</b> Advantages</a></li>
 <li class="chapter" data-level="7.2.3" data-path="loading.html"><a href="loading.html#disadvantages-1"><i class="fa fa-check"></i><b>7.2.3</b> Disadvantages</a></li>
 <li class="chapter" data-level="7.2.4" data-path="loading.html"><a href="loading.html#other-delimited-files"><i class="fa fa-check"></i><b>7.2.4</b> Other delimited files</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="loading.html"><a href="loading.html#excel-files"><i class="fa fa-check"></i><b>7.3</b> Excel files</a><ul>
+<li class="chapter" data-level="7.3" data-path="loading.html"><a href="loading.html#excel-files"><i class="fa fa-check"></i><b>7.3</b> Excel files</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="loading.html"><a href="loading.html#advantages-2"><i class="fa fa-check"></i><b>7.3.1</b> Advantages</a></li>
 <li class="chapter" data-level="7.3.2" data-path="loading.html"><a href="loading.html#disadvantages-2"><i class="fa fa-check"></i><b>7.3.2</b> Disadvantages</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="loading.html"><a href="loading.html#web-based-apis"><i class="fa fa-check"></i><b>7.4</b> Web-based APIs</a><ul>
+<li class="chapter" data-level="7.4" data-path="loading.html"><a href="loading.html#web-based-apis"><i class="fa fa-check"></i><b>7.4</b> Web-based APIs</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="loading.html"><a href="loading.html#what-are-apis"><i class="fa fa-check"></i><b>7.4.1</b> What are APIs?</a></li>
 <li class="chapter" data-level="7.4.2" data-path="loading.html"><a href="loading.html#accessing-apis-in-r"><i class="fa fa-check"></i><b>7.4.2</b> Accessing APIs in R</a></li>
 <li class="chapter" data-level="7.4.3" data-path="loading.html"><a href="loading.html#bmrsr"><i class="fa fa-check"></i><b>7.4.3</b> BMRSr</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="loading.html"><a href="loading.html#databases"><i class="fa fa-check"></i><b>7.5</b> Databases</a><ul>
+<li class="chapter" data-level="7.5" data-path="loading.html"><a href="loading.html#databases"><i class="fa fa-check"></i><b>7.5</b> Databases</a>
+<ul>
 <li class="chapter" data-level="7.5.1" data-path="loading.html"><a href="loading.html#database-management-systems-and-odbc"><i class="fa fa-check"></i><b>7.5.1</b> Database Management Systems and ODBC</a></li>
 <li class="chapter" data-level="7.5.2" data-path="loading.html"><a href="loading.html#connecting-with-the-odbc-package"><i class="fa fa-check"></i><b>7.5.2</b> Connecting with the <code>odbc</code> package</a></li>
 <li class="chapter" data-level="7.5.3" data-path="loading.html"><a href="loading.html#querying-the-database"><i class="fa fa-check"></i><b>7.5.3</b> Querying the database</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="cleaning.html"><a href="cleaning.html"><i class="fa fa-check"></i><b>8</b> Cleaning</a><ul>
+<li class="chapter" data-level="8" data-path="cleaning.html"><a href="cleaning.html"><i class="fa fa-check"></i><b>8</b> Cleaning</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="cleaning.html"><a href="cleaning.html#filtering"><i class="fa fa-check"></i><b>8.1</b> Filtering</a></li>
 <li class="chapter" data-level="8.2" data-path="cleaning.html"><a href="cleaning.html#missing-values"><i class="fa fa-check"></i><b>8.2</b> Missing values</a></li>
 <li class="chapter" data-level="8.3" data-path="cleaning.html"><a href="cleaning.html#changing-column-types"><i class="fa fa-check"></i><b>8.3</b> Changing column types</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>9</b> Tidying</a><ul>
-<li class="chapter" data-level="9.1" data-path="tidying.html"><a href="tidying.html#pivoting"><i class="fa fa-check"></i><b>9.1</b> Pivoting</a><ul>
+<li class="chapter" data-level="9" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>9</b> Tidying</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="tidying.html"><a href="tidying.html#pivoting"><i class="fa fa-check"></i><b>9.1</b> Pivoting</a>
+<ul>
 <li class="chapter" data-level="9.1.1" data-path="tidying.html"><a href="tidying.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>9.1.1</b> Pivoting columns to rows (longer)</a></li>
 <li class="chapter" data-level="9.1.2" data-path="tidying.html"><a href="tidying.html#pivoting-rows-to-columns-wider"><i class="fa fa-check"></i><b>9.1.2</b> Pivoting rows to columns (wider)</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="tidying.html"><a href="tidying.html#separating-uniting"><i class="fa fa-check"></i><b>9.2</b> Separating &amp; Uniting</a><ul>
+<li class="chapter" data-level="9.2" data-path="tidying.html"><a href="tidying.html#separating-uniting"><i class="fa fa-check"></i><b>9.2</b> Separating &amp; Uniting</a>
+<ul>
 <li class="chapter" data-level="9.2.1" data-path="tidying.html"><a href="tidying.html#separating"><i class="fa fa-check"></i><b>9.2.1</b> Separating</a></li>
 <li class="chapter" data-level="9.2.2" data-path="tidying.html"><a href="tidying.html#uniting"><i class="fa fa-check"></i><b>9.2.2</b> Uniting</a></li>
 </ul></li>
@@ -193,36 +212,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10" data-path="grouping.html"><a href="grouping.html"><i class="fa fa-check"></i><b>10</b> Grouping</a></li>
 <li class="chapter" data-level="11" data-path="mutating.html"><a href="mutating.html"><i class="fa fa-check"></i><b>11</b> Mutating</a></li>
 <li class="chapter" data-level="12" data-path="summarising.html"><a href="summarising.html"><i class="fa fa-check"></i><b>12</b> Summarising</a></li>
-<li class="chapter" data-level="13" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>13</b> Plotting</a><ul>
-<li class="chapter" data-level="13.1" data-path="plotting.html"><a href="plotting.html#ggplot2"><i class="fa fa-check"></i><b>13.1</b> ggplot2</a><ul>
+<li class="chapter" data-level="13" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>13</b> Plotting</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="plotting.html"><a href="plotting.html#ggplot2"><i class="fa fa-check"></i><b>13.1</b> ggplot2</a>
+<ul>
 <li class="chapter" data-level="13.1.1" data-path="plotting.html"><a href="plotting.html#components"><i class="fa fa-check"></i><b>13.1.1</b> Components</a></li>
 <li class="chapter" data-level="13.1.2" data-path="plotting.html"><a href="plotting.html#layers"><i class="fa fa-check"></i><b>13.1.2</b> Layers</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a><ul>
-<li class="chapter" data-level="14.1" data-path="modelling.html"><a href="modelling.html#types-of-model"><i class="fa fa-check"></i><b>14.1</b> Types of model</a><ul>
+<li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="modelling.html"><a href="modelling.html#types-of-model"><i class="fa fa-check"></i><b>14.1</b> Types of model</a>
+<ul>
 <li class="chapter" data-level="14.1.1" data-path="modelling.html"><a href="modelling.html#linear-models"><i class="fa fa-check"></i><b>14.1.1</b> Linear models</a></li>
 <li class="chapter" data-level="14.1.2" data-path="modelling.html"><a href="modelling.html#quadratic"><i class="fa fa-check"></i><b>14.1.2</b> Quadratic</a></li>
 </ul></li>
 <li class="chapter" data-level="14.2" data-path="modelling.html"><a href="modelling.html#coefficients"><i class="fa fa-check"></i><b>14.2</b> Coefficients</a></li>
 <li class="chapter" data-level="14.3" data-path="modelling.html"><a href="modelling.html#residuals"><i class="fa fa-check"></i><b>14.3</b> Residuals</a></li>
 <li class="chapter" data-level="14.4" data-path="modelling.html"><a href="modelling.html#lm"><i class="fa fa-check"></i><b>14.4</b> <code>lm()</code></a></li>
-<li class="chapter" data-level="14.5" data-path="modelling.html"><a href="modelling.html#multiple-predictors"><i class="fa fa-check"></i><b>14.5</b> Multiple Predictors</a><ul>
+<li class="chapter" data-level="14.5" data-path="modelling.html"><a href="modelling.html#multiple-predictors"><i class="fa fa-check"></i><b>14.5</b> Multiple Predictors</a>
+<ul>
 <li class="chapter" data-level="14.5.1" data-path="modelling.html"><a href="modelling.html#simple-effects"><i class="fa fa-check"></i><b>14.5.1</b> Simple effects</a></li>
 <li class="chapter" data-level="14.5.2" data-path="modelling.html"><a href="modelling.html#interaction-effects"><i class="fa fa-check"></i><b>14.5.2</b> Interaction effects</a></li>
 </ul></li>
-<li class="chapter" data-level="14.6" data-path="modelling.html"><a href="modelling.html#evaluating-models"><i class="fa fa-check"></i><b>14.6</b> Evaluating Models</a><ul>
+<li class="chapter" data-level="14.6" data-path="modelling.html"><a href="modelling.html#evaluating-models"><i class="fa fa-check"></i><b>14.6</b> Evaluating Models</a>
+<ul>
 <li class="chapter" data-level="14.6.1" data-path="modelling.html"><a href="modelling.html#lm-output"><i class="fa fa-check"></i><b>14.6.1</b> <code>lm()</code> Output</a></li>
 <li class="chapter" data-level="14.6.2" data-path="modelling.html"><a href="modelling.html#residuals-1"><i class="fa fa-check"></i><b>14.6.2</b> Residuals</a></li>
 <li class="chapter" data-level="14.6.3" data-path="modelling.html"><a href="modelling.html#overfitting"><i class="fa fa-check"></i><b>14.6.3</b> Overfitting</a></li>
 </ul></li>
-<li class="chapter" data-level="14.7" data-path="modelling.html"><a href="modelling.html#video-game-sales-model"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a><ul>
+<li class="chapter" data-level="14.7" data-path="modelling.html"><a href="modelling.html#video-game-sales-model"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a>
+<ul>
 <li class="chapter" data-level="14.7.1" data-path="modelling.html"><a href="modelling.html#predicting-the-future"><i class="fa fa-check"></i><b>14.7.1</b> Predicting the future</a></li>
 </ul></li>
 <li class="chapter" data-level="14.8" data-path="modelling.html"><a href="modelling.html#questions-3"><i class="fa fa-check"></i><b>14.8</b> Questions</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>15</b> Machine Learning</a><ul>
-<li class="chapter" data-level="15.1" data-path="machine-learning.html"><a href="machine-learning.html#neural-networks"><i class="fa fa-check"></i><b>15.1</b> Neural networks</a><ul>
+<li class="chapter" data-level="15" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>15</b> Machine Learning</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="machine-learning.html"><a href="machine-learning.html#neural-networks"><i class="fa fa-check"></i><b>15.1</b> Neural networks</a>
+<ul>
 <li class="chapter" data-level="15.1.1" data-path="machine-learning.html"><a href="machine-learning.html#introduction"><i class="fa fa-check"></i><b>15.1.1</b> Introduction</a></li>
 <li class="chapter" data-level="15.1.2" data-path="machine-learning.html"><a href="machine-learning.html#example"><i class="fa fa-check"></i><b>15.1.2</b> Example</a></li>
 <li class="chapter" data-level="15.1.3" data-path="machine-learning.html"><a href="machine-learning.html#neural-networks-in-r"><i class="fa fa-check"></i><b>15.1.3</b> Neural Networks in R</a></li>
@@ -230,74 +258,91 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>III Projects</b></span></li>
 <li class="chapter" data-level="16" data-path="projects-introduction.html"><a href="projects-introduction.html"><i class="fa fa-check"></i><b>16</b> Introduction</a></li>
-<li class="chapter" data-level="17" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>17</b> Workflows</a><ul>
-<li class="chapter" data-level="17.1" data-path="workflows.html"><a href="workflows.html#basic-workflow"><i class="fa fa-check"></i><b>17.1</b> Basic Workflow</a><ul>
+<li class="chapter" data-level="17" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>17</b> Workflows</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="workflows.html"><a href="workflows.html#basic-workflow"><i class="fa fa-check"></i><b>17.1</b> Basic Workflow</a>
+<ul>
 <li class="chapter" data-level="17.1.1" data-path="workflows.html"><a href="workflows.html#example-1-reporting"><i class="fa fa-check"></i><b>17.1.1</b> Example 1: Reporting</a></li>
 <li class="chapter" data-level="17.1.2" data-path="workflows.html"><a href="workflows.html#example-2-modelling"><i class="fa fa-check"></i><b>17.1.2</b> Example 2: Modelling</a></li>
 </ul></li>
-<li class="chapter" data-level="17.2" data-path="workflows.html"><a href="workflows.html#separating-stages"><i class="fa fa-check"></i><b>17.2</b> Separating Stages</a><ul>
+<li class="chapter" data-level="17.2" data-path="workflows.html"><a href="workflows.html#separating-stages"><i class="fa fa-check"></i><b>17.2</b> Separating Stages</a>
+<ul>
 <li class="chapter" data-level="17.2.1" data-path="workflows.html"><a href="workflows.html#functions"><i class="fa fa-check"></i><b>17.2.1</b> Functions</a></li>
 <li class="chapter" data-level="17.2.2" data-path="workflows.html"><a href="workflows.html#files"><i class="fa fa-check"></i><b>17.2.2</b> Files</a></li>
 </ul></li>
 <li class="chapter" data-level="17.3" data-path="workflows.html"><a href="workflows.html#summary"><i class="fa fa-check"></i><b>17.3</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>18</b> Replicability</a><ul>
-<li class="chapter" data-level="18.1" data-path="replicability.html"><a href="replicability.html#good-practice"><i class="fa fa-check"></i><b>18.1</b> Good practice</a><ul>
+<li class="chapter" data-level="18" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>18</b> Replicability</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="replicability.html"><a href="replicability.html#good-practice"><i class="fa fa-check"></i><b>18.1</b> Good practice</a>
+<ul>
 <li class="chapter" data-level="18.1.1" data-path="replicability.html"><a href="replicability.html#use-a-consistent-naming-convention"><i class="fa fa-check"></i><b>18.1.1</b> Use a consistent naming convention</a></li>
 <li class="chapter" data-level="18.1.2" data-path="replicability.html"><a href="replicability.html#name-your-variables-as-nouns-and-your-functions-as-verbs"><i class="fa fa-check"></i><b>18.1.2</b> Name your variables as nouns and your functions as verbs</a></li>
 <li class="chapter" data-level="18.1.3" data-path="replicability.html"><a href="replicability.html#use-functions-where-you-can"><i class="fa fa-check"></i><b>18.1.3</b> Use functions where you can</a></li>
 <li class="chapter" data-level="18.1.4" data-path="replicability.html"><a href="replicability.html#state-your-dependencies"><i class="fa fa-check"></i><b>18.1.4</b> State your dependencies</a></li>
 </ul></li>
-<li class="chapter" data-level="18.2" data-path="replicability.html"><a href="replicability.html#documentation"><i class="fa fa-check"></i><b>18.2</b> Documentation</a><ul>
+<li class="chapter" data-level="18.2" data-path="replicability.html"><a href="replicability.html#documentation"><i class="fa fa-check"></i><b>18.2</b> Documentation</a>
+<ul>
 <li class="chapter" data-level="18.2.1" data-path="replicability.html"><a href="replicability.html#function-documentation"><i class="fa fa-check"></i><b>18.2.1</b> Function documentation</a></li>
 <li class="chapter" data-level="18.2.2" data-path="replicability.html"><a href="replicability.html#long-form-documentation"><i class="fa fa-check"></i><b>18.2.2</b> Long-form documentation</a></li>
 </ul></li>
-<li class="chapter" data-level="18.3" data-path="replicability.html"><a href="replicability.html#testing"><i class="fa fa-check"></i><b>18.3</b> Testing</a><ul>
+<li class="chapter" data-level="18.3" data-path="replicability.html"><a href="replicability.html#testing"><i class="fa fa-check"></i><b>18.3</b> Testing</a>
+<ul>
 <li class="chapter" data-level="18.3.1" data-path="replicability.html"><a href="replicability.html#testthat"><i class="fa fa-check"></i><b>18.3.1</b> <code>{testthat}</code></a></li>
 <li class="chapter" data-level="18.3.2" data-path="replicability.html"><a href="replicability.html#defensive-programming"><i class="fa fa-check"></i><b>18.3.2</b> Defensive programming</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="projects-as-packages.html"><a href="projects-as-packages.html"><i class="fa fa-check"></i><b>19</b> Projects as Packages</a><ul>
-<li class="chapter" data-level="19.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#structure"><i class="fa fa-check"></i><b>19.1</b> Structure</a><ul>
+<li class="chapter" data-level="19" data-path="projects-as-packages.html"><a href="projects-as-packages.html"><i class="fa fa-check"></i><b>19</b> Projects as Packages</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#structure"><i class="fa fa-check"></i><b>19.1</b> Structure</a>
+<ul>
 <li class="chapter" data-level="19.1.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#r-code"><i class="fa fa-check"></i><b>19.1.1</b> R code</a></li>
 <li class="chapter" data-level="19.1.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#data"><i class="fa fa-check"></i><b>19.1.2</b> Data</a></li>
 </ul></li>
-<li class="chapter" data-level="19.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#documentation-1"><i class="fa fa-check"></i><b>19.2</b> Documentation</a><ul>
+<li class="chapter" data-level="19.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#documentation-1"><i class="fa fa-check"></i><b>19.2</b> Documentation</a>
+<ul>
 <li class="chapter" data-level="19.2.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#functional"><i class="fa fa-check"></i><b>19.2.1</b> Functional</a></li>
 <li class="chapter" data-level="19.2.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#long-form"><i class="fa fa-check"></i><b>19.2.2</b> Long-form</a></li>
 </ul></li>
-<li class="chapter" data-level="19.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html#description"><i class="fa fa-check"></i><b>19.3</b> DESCRIPTION</a><ul>
+<li class="chapter" data-level="19.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html#description"><i class="fa fa-check"></i><b>19.3</b> DESCRIPTION</a>
+<ul>
 <li class="chapter" data-level="19.3.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#dependencies"><i class="fa fa-check"></i><b>19.3.1</b> Dependencies</a></li>
 </ul></li>
 <li class="chapter" data-level="19.4" data-path="projects-as-packages.html"><a href="projects-as-packages.html#abstraction"><i class="fa fa-check"></i><b>19.4</b> Abstraction</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>20</b> Git &amp; GitHub</a><ul>
-<li class="chapter" data-level="20.1" data-path="git-github.html"><a href="git-github.html#git"><i class="fa fa-check"></i><b>20.1</b> Git</a><ul>
+<li class="chapter" data-level="20" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>20</b> Git &amp; GitHub</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="git-github.html"><a href="git-github.html#git"><i class="fa fa-check"></i><b>20.1</b> Git</a>
+<ul>
 <li class="chapter" data-level="20.1.1" data-path="git-github.html"><a href="git-github.html#repositories"><i class="fa fa-check"></i><b>20.1.1</b> Repositories</a></li>
 <li class="chapter" data-level="20.1.2" data-path="git-github.html"><a href="git-github.html#commits"><i class="fa fa-check"></i><b>20.1.2</b> Commits</a></li>
 <li class="chapter" data-level="20.1.3" data-path="git-github.html"><a href="git-github.html#pushing-pulling"><i class="fa fa-check"></i><b>20.1.3</b> Pushing &amp; Pulling</a></li>
 <li class="chapter" data-level="20.1.4" data-path="git-github.html"><a href="git-github.html#branches"><i class="fa fa-check"></i><b>20.1.4</b> Branches</a></li>
 </ul></li>
-<li class="chapter" data-level="20.2" data-path="git-github.html"><a href="git-github.html#github"><i class="fa fa-check"></i><b>20.2</b> GitHub</a><ul>
+<li class="chapter" data-level="20.2" data-path="git-github.html"><a href="git-github.html#github"><i class="fa fa-check"></i><b>20.2</b> GitHub</a>
+<ul>
 <li class="chapter" data-level="20.2.1" data-path="git-github.html"><a href="git-github.html#forking"><i class="fa fa-check"></i><b>20.2.1</b> Forking</a></li>
 <li class="chapter" data-level="20.2.2" data-path="git-github.html"><a href="git-github.html#pull-requests"><i class="fa fa-check"></i><b>20.2.2</b> Pull Requests</a></li>
 </ul></li>
 <li class="chapter" data-level="20.3" data-path="git-github.html"><a href="git-github.html#git-github-rstudio"><i class="fa fa-check"></i><b>20.3</b> Git, GitHub &amp; RStudio</a></li>
 </ul></li>
-<li class="chapter" data-level="21" data-path="project-example.html"><a href="project-example.html"><i class="fa fa-check"></i><b>21</b> Project Example</a><ul>
+<li class="chapter" data-level="21" data-path="project-example.html"><a href="project-example.html"><i class="fa fa-check"></i><b>21</b> Project Example</a>
+<ul>
 <li class="chapter" data-level="21.1" data-path="project-example.html"><a href="project-example.html#github-repository"><i class="fa fa-check"></i><b>21.1</b> GitHub Repository</a></li>
 <li class="chapter" data-level="21.2" data-path="project-example.html"><a href="project-example.html#rstudio-project"><i class="fa fa-check"></i><b>21.2</b> RStudio Project</a></li>
 <li class="chapter" data-level="21.3" data-path="project-example.html"><a href="project-example.html#description-1"><i class="fa fa-check"></i><b>21.3</b> DESCRIPTION</a></li>
 <li class="chapter" data-level="21.4" data-path="project-example.html"><a href="project-example.html#data-1"><i class="fa fa-check"></i><b>21.4</b> Data</a></li>
 <li class="chapter" data-level="21.5" data-path="project-example.html"><a href="project-example.html#structure-1"><i class="fa fa-check"></i><b>21.5</b> Structure</a></li>
-<li class="chapter" data-level="21.6" data-path="project-example.html"><a href="project-example.html#documentation-2"><i class="fa fa-check"></i><b>21.6</b> Documentation</a><ul>
+<li class="chapter" data-level="21.6" data-path="project-example.html"><a href="project-example.html#documentation-2"><i class="fa fa-check"></i><b>21.6</b> Documentation</a>
+<ul>
 <li class="chapter" data-level="21.6.1" data-path="project-example.html"><a href="project-example.html#function"><i class="fa fa-check"></i><b>21.6.1</b> Function</a></li>
 <li class="chapter" data-level="21.6.2" data-path="project-example.html"><a href="project-example.html#data-2"><i class="fa fa-check"></i><b>21.6.2</b> Data</a></li>
 <li class="chapter" data-level="21.6.3" data-path="project-example.html"><a href="project-example.html#readme-vignettes"><i class="fa fa-check"></i><b>21.6.3</b> README &amp; Vignettes</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>IV Question Answers</b></span></li>
-<li class="chapter" data-level="22" data-path="answers.html"><a href="answers.html"><i class="fa fa-check"></i><b>22</b> Answers</a><ul>
+<li class="chapter" data-level="22" data-path="answers.html"><a href="answers.html"><i class="fa fa-check"></i><b>22</b> Answers</a>
+<ul>
 <li class="chapter" data-level="22.1" data-path="answers.html"><a href="answers.html#tidy-data-1"><i class="fa fa-check"></i><b>22.1</b> “Tidy” data</a></li>
 <li class="chapter" data-level="22.2" data-path="answers.html"><a href="answers.html#the-pipe-1"><i class="fa fa-check"></i><b>22.2</b> The pipe (%&gt;%)</a></li>
 <li class="chapter" data-level="22.3" data-path="answers.html"><a href="answers.html#quasiquotation-1"><i class="fa fa-check"></i><b>22.3</b> Quasiquotation</a></li>
@@ -327,19 +372,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="project-example" class="section level1">
-<h1><span class="header-section-number">21</span> Project Example</h1>
+<div id="project-example" class="section level1 hasAnchor" number="21">
+<h1><span class="header-section-number">21</span> Project Example<a href="project-example.html#project-example" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>To demonstrate how to structure your analysis project as a package, let’s create a brand new project using everything we’ve learnt.</p>
-<div id="github-repository" class="section level2">
-<h2><span class="header-section-number">21.1</span> GitHub Repository</h2>
+<div id="github-repository" class="section level2 hasAnchor" number="21.1">
+<h2><span class="header-section-number">21.1</span> GitHub Repository<a href="project-example.html#github-repository" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To start off, we need to create a GitHub repo that will store the project. I’ve called this project <code>operate.example.package</code>.</p>
 </div>
-<div id="rstudio-project" class="section level2">
-<h2><span class="header-section-number">21.2</span> RStudio Project</h2>
+<div id="rstudio-project" class="section level2 hasAnchor" number="21.2">
+<h2><span class="header-section-number">21.2</span> RStudio Project<a href="project-example.html#rstudio-project" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now we’ve got our GitHub repo, let’s create our RStudio package and initialise a local Git repository that we can then link to GitHub.</p>
 </div>
-<div id="description-1" class="section level2">
-<h2><span class="header-section-number">21.3</span> DESCRIPTION</h2>
+<div id="description-1" class="section level2 hasAnchor" number="21.3">
+<h2><span class="header-section-number">21.3</span> DESCRIPTION<a href="project-example.html#description-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now that RStudio has created a package skeleton for us, we can fill out the DESCRIPTION fill to describe our package.</p>
 <p>This is also where we’ll store any dependencies that our package relies on. At this stage, it’s unlikely that you’ll know exactly which packages you’re going to use. To add a package to the dependencies list at any time, just use <code>usethis::use_package("your-package-name")</code>.</p>
 <p>After filling our the appropriate fields, my DESCRIPTION file looks like this:</p>
@@ -368,22 +413,22 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr</code></pre>
 </div>
-<div id="data-1" class="section level2">
-<h2><span class="header-section-number">21.4</span> Data</h2>
+<div id="data-1" class="section level2 hasAnchor" number="21.4">
+<h2><span class="header-section-number">21.4</span> Data<a href="project-example.html#data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Our analysis revolves around one main data set - our video game sales dataset. We can include that dataset with the package. To do this, we’ll want to store the raw data in the ‘data-raw’ folder, with a script on how we’ve loaded it and bundled it with the package.</p>
 <p>To create the ‘data-raw’ folder, we use the <code>usethis::use_data_raw()</code> function. That will create the folder and open up a file called ‘DATASET.R’ that we can use to load in our raw dataset. We need to put the raw CSV file in that folder to, and then update the DATASET.R file to load the CSV file in and then rename it to match the name of the dataset.</p>
 <p>When that’s all done, we should have two files in our ‘data-raw’ folder:
 * vgsales.csv
 * vgsales.R</p>
 <p>And the vgsales.R file should look like this:</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" title="1"><span class="kw">library</span>(readr)</a>
-<a class="sourceLine" id="cb183-2" title="2">vgsales &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;data-raw/vgsales.csv&quot;</span>, <span class="dt">col_types =</span> <span class="st">&quot;dccdccddddd&quot;</span>)</a>
-<a class="sourceLine" id="cb183-3" title="3"></a>
-<a class="sourceLine" id="cb183-4" title="4">usethis<span class="op">::</span><span class="kw">use_data</span>(vgsales, <span class="dt">overwrite =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="project-example.html#cb185-1" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
+<span id="cb185-2"><a href="project-example.html#cb185-2" aria-hidden="true"></a>vgsales &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;data-raw/vgsales.csv&quot;</span>, <span class="dt">col_types =</span> <span class="st">&quot;dccdccddddd&quot;</span>)</span>
+<span id="cb185-3"><a href="project-example.html#cb185-3" aria-hidden="true"></a></span>
+<span id="cb185-4"><a href="project-example.html#cb185-4" aria-hidden="true"></a>usethis<span class="op">::</span><span class="kw">use_data</span>(vgsales, <span class="dt">overwrite =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p>Finally, we need to document our dataset. We’ll look at documentation later, so for now we’ll just create a file in the R folder called ‘data.R’.</p>
 </div>
-<div id="structure-1" class="section level2">
-<h2><span class="header-section-number">21.5</span> Structure</h2>
+<div id="structure-1" class="section level2 hasAnchor" number="21.5">
+<h2><span class="header-section-number">21.5</span> Structure<a href="project-example.html#structure-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now we’ve scaffolded our project, we can start actually writing some code. Because we’ve analysed our workflow and we know we’re going to have distinct stages (e.g. cleaning, tidying, etc.), we should split our functions into separate files with appropriate names. I’m also going to add another file called ‘analysis.R’ which will contain the functions to perform the end-to-end analysis.</p>
 <p>With the files created, the R folder now contains these files:</p>
 <ul>
@@ -399,49 +444,49 @@ VignetteBuilder: knitr</code></pre>
 + I also put my <code>@import</code> statements in here</li>
 </ul>
 </div>
-<div id="documentation-2" class="section level2">
-<h2><span class="header-section-number">21.6</span> Documentation</h2>
-<div id="function" class="section level3">
-<h3><span class="header-section-number">21.6.1</span> Function</h3>
+<div id="documentation-2" class="section level2 hasAnchor" number="21.6">
+<h2><span class="header-section-number">21.6</span> Documentation<a href="project-example.html#documentation-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="function" class="section level3 hasAnchor" number="21.6.1">
+<h3><span class="header-section-number">21.6.1</span> Function<a href="project-example.html#function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Each function needs documentation so that we know what we’re going. We use the <code>{roxygen2}</code> package for this.</p>
 <p>Because many of the functions are going to use similar parameters, we can utilise the <code>@eval</code> tag from <code>{roxygen2}</code> to cut down on duplication.</p>
 <p>The <code>@eval</code> tag will evaluate arbitrary R code and treat the return value as <code>{roxygen2}</code> documentation. Because many of our datasets will accept a parameter called <code>df</code> that will be the <code>vgsales</code> dataset, let’s create a function that will return the <code>@param</code> tag that we’ll use:</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" title="1">doc_vgsales &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb184-2" title="2">  <span class="kw">c</span>(<span class="st">&quot;@param df tibble/df; the `vgsales` dataset&quot;</span>,</a>
-<a class="sourceLine" id="cb184-3" title="3">    <span class="st">&quot;@return tibble&quot;</span>)</a>
-<a class="sourceLine" id="cb184-4" title="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="project-example.html#cb186-1" aria-hidden="true"></a>doc_vgsales &lt;-<span class="st"> </span><span class="cf">function</span>() {</span>
+<span id="cb186-2"><a href="project-example.html#cb186-2" aria-hidden="true"></a>  <span class="kw">c</span>(<span class="st">&quot;@param df tibble/df; the `vgsales` dataset&quot;</span>,</span>
+<span id="cb186-3"><a href="project-example.html#cb186-3" aria-hidden="true"></a>    <span class="st">&quot;@return tibble&quot;</span>)</span>
+<span id="cb186-4"><a href="project-example.html#cb186-4" aria-hidden="true"></a>}</span></code></pre></div>
 <p>Now when we document a function that accepts a parameter called <code>df</code>, we can just use <code>#' @eval doc_vgsales()</code> to add the documentation.</p>
 <p>I store these documentation functions in a file called ‘documentation.R’ in the R folder.</p>
 </div>
-<div id="data-2" class="section level3">
-<h3><span class="header-section-number">21.6.2</span> Data</h3>
+<div id="data-2" class="section level3 hasAnchor" number="21.6.2">
+<h3><span class="header-section-number">21.6.2</span> Data<a href="project-example.html#data-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Datasets should be documented like functions - this is what our ‘data.R’ file is for. Here we’ll document the <code>vgsales</code> dataset, describing what data it folds and in what fields.</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" title="1"><span class="co">#&#39; Video game sales between 1980 and 2020</span></a>
-<a class="sourceLine" id="cb185-2" title="2"><span class="co">#&#39;</span></a>
-<a class="sourceLine" id="cb185-3" title="3"><span class="co">#&#39; A dataset of video game sales in different regions scraped from [vgchartz.com](vgchartz.com).</span></a>
-<a class="sourceLine" id="cb185-4" title="4"><span class="co">#&#39; @format  A tibble with 16598 rows and 11 variables:</span></a>
-<a class="sourceLine" id="cb185-5" title="5"><span class="co">#&#39; \itemize{</span></a>
-<a class="sourceLine" id="cb185-6" title="6"><span class="co">#&#39;    \item Rank All-time rank of the global sales</span></a>
-<a class="sourceLine" id="cb185-7" title="7"><span class="co">#&#39;    \item Name Name of the video game</span></a>
-<a class="sourceLine" id="cb185-8" title="8"><span class="co">#&#39;    \item Platform The platform/console the game was primarily released on</span></a>
-<a class="sourceLine" id="cb185-9" title="9"><span class="co">#&#39;    \item Year The year of release</span></a>
-<a class="sourceLine" id="cb185-10" title="10"><span class="co">#&#39;    \item Genre The type/genre of the game</span></a>
-<a class="sourceLine" id="cb185-11" title="11"><span class="co">#&#39;    \item Publisher The game&#39;s publisher</span></a>
-<a class="sourceLine" id="cb185-12" title="12"><span class="co">#&#39;    \item NA_Sales Sales (in millions) in North America</span></a>
-<a class="sourceLine" id="cb185-13" title="13"><span class="co">#&#39;    \item EU_Sales Sales (in millions) in Europe</span></a>
-<a class="sourceLine" id="cb185-14" title="14"><span class="co">#&#39;    \item JP_Sales Sales (in millions) in Japan</span></a>
-<a class="sourceLine" id="cb185-15" title="15"><span class="co">#&#39;    \item Other_Sales Sales (in millions) in other regions</span></a>
-<a class="sourceLine" id="cb185-16" title="16"><span class="co">#&#39;    \item Global_Sales Sales (in millions) globally</span></a>
-<a class="sourceLine" id="cb185-17" title="17"><span class="co">#&#39; }</span></a>
-<a class="sourceLine" id="cb185-18" title="18"><span class="co">#&#39; @keywords datasets</span></a>
-<a class="sourceLine" id="cb185-19" title="19"><span class="co">#&#39; @name vgsales</span></a>
-<a class="sourceLine" id="cb185-20" title="20"><span class="co">#&#39; @usage data(vgsales)</span></a>
-<a class="sourceLine" id="cb185-21" title="21"><span class="st">&quot;vgsales&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="project-example.html#cb187-1" aria-hidden="true"></a><span class="co">#&#39; Video game sales between 1980 and 2020</span></span>
+<span id="cb187-2"><a href="project-example.html#cb187-2" aria-hidden="true"></a><span class="co">#&#39;</span></span>
+<span id="cb187-3"><a href="project-example.html#cb187-3" aria-hidden="true"></a><span class="co">#&#39; A dataset of video game sales in different regions scraped from [vgchartz.com](vgchartz.com).</span></span>
+<span id="cb187-4"><a href="project-example.html#cb187-4" aria-hidden="true"></a><span class="co">#&#39; @format  A tibble with 16598 rows and 11 variables:</span></span>
+<span id="cb187-5"><a href="project-example.html#cb187-5" aria-hidden="true"></a><span class="co">#&#39; \itemize{</span></span>
+<span id="cb187-6"><a href="project-example.html#cb187-6" aria-hidden="true"></a><span class="co">#&#39;    \item Rank All-time rank of the global sales</span></span>
+<span id="cb187-7"><a href="project-example.html#cb187-7" aria-hidden="true"></a><span class="co">#&#39;    \item Name Name of the video game</span></span>
+<span id="cb187-8"><a href="project-example.html#cb187-8" aria-hidden="true"></a><span class="co">#&#39;    \item Platform The platform/console the game was primarily released on</span></span>
+<span id="cb187-9"><a href="project-example.html#cb187-9" aria-hidden="true"></a><span class="co">#&#39;    \item Year The year of release</span></span>
+<span id="cb187-10"><a href="project-example.html#cb187-10" aria-hidden="true"></a><span class="co">#&#39;    \item Genre The type/genre of the game</span></span>
+<span id="cb187-11"><a href="project-example.html#cb187-11" aria-hidden="true"></a><span class="co">#&#39;    \item Publisher The game&#39;s publisher</span></span>
+<span id="cb187-12"><a href="project-example.html#cb187-12" aria-hidden="true"></a><span class="co">#&#39;    \item NA_Sales Sales (in millions) in North America</span></span>
+<span id="cb187-13"><a href="project-example.html#cb187-13" aria-hidden="true"></a><span class="co">#&#39;    \item EU_Sales Sales (in millions) in Europe</span></span>
+<span id="cb187-14"><a href="project-example.html#cb187-14" aria-hidden="true"></a><span class="co">#&#39;    \item JP_Sales Sales (in millions) in Japan</span></span>
+<span id="cb187-15"><a href="project-example.html#cb187-15" aria-hidden="true"></a><span class="co">#&#39;    \item Other_Sales Sales (in millions) in other regions</span></span>
+<span id="cb187-16"><a href="project-example.html#cb187-16" aria-hidden="true"></a><span class="co">#&#39;    \item Global_Sales Sales (in millions) globally</span></span>
+<span id="cb187-17"><a href="project-example.html#cb187-17" aria-hidden="true"></a><span class="co">#&#39; }</span></span>
+<span id="cb187-18"><a href="project-example.html#cb187-18" aria-hidden="true"></a><span class="co">#&#39; @keywords datasets</span></span>
+<span id="cb187-19"><a href="project-example.html#cb187-19" aria-hidden="true"></a><span class="co">#&#39; @name vgsales</span></span>
+<span id="cb187-20"><a href="project-example.html#cb187-20" aria-hidden="true"></a><span class="co">#&#39; @usage data(vgsales)</span></span>
+<span id="cb187-21"><a href="project-example.html#cb187-21" aria-hidden="true"></a><span class="st">&quot;vgsales&quot;</span></span></code></pre></div>
 <p><strong>Note</strong>:
 Not how the name of the dataset is in quotation marks.</p>
 </div>
-<div id="readme-vignettes" class="section level3">
-<h3><span class="header-section-number">21.6.3</span> README &amp; Vignettes</h3>
+<div id="readme-vignettes" class="section level3 hasAnchor" number="21.6.3">
+<h3><span class="header-section-number">21.6.3</span> README &amp; Vignettes<a href="project-example.html#readme-vignettes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Function documentation is useful for understanding exactly what a function is doing, but your audience will also need to understanding the overarching analysis.</p>
 <p>A README serves as a useful entrypoint to briefly describe the analysis and point the reader in the right direction. Often, this will be on the form of linking to vignettes that outline your analysis in greater detail. To create a README, use the <code>usethis::use_readme_md/rmd()</code> function.</p>
 <p>Vignettes in analysis projects are extremely important. They will be the main source of information for others wanting to understand the rationale of your analysis. Because we have two main stages to our analysis - a descriptive and an inferential stage - I’ve split the analysis into two separate vignettes that address each stage.</p>
@@ -463,7 +508,6 @@ Not how the name of the dataset is in quotation marks.</p>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -482,6 +526,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -502,6 +547,10 @@ gitbook.start({
 "text": null
 },
 "download": [["opeRate.pdf", "PDF"], ["opeRate.mobi", "Kindle EBook"], ["opeRate.epub", "EPUB EBook"]],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }

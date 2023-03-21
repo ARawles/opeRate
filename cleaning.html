@@ -6,12 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>8 Cleaning | opeRate</title>
   <meta name="description" content="Apply your knowledge of the R programming language to real problems and tasks." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="8 Cleaning | opeRate" />
   <meta property="og:type" content="book" />
-  
-  <meta property="og:image" content="cover.png" />
+  <meta property="og:image" content="/cover.png" />
   <meta property="og:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
   <meta name="github-repo" content="ARawles/opeRate" />
 
@@ -19,7 +18,7 @@
   <meta name="twitter:title" content="8 Cleaning | opeRate" />
   
   <meta name="twitter:description" content="Apply your knowledge of the R programming language to real problems and tasks." />
-  <meta name="twitter:image" content="cover.png" />
+  <meta name="twitter:image" content="/cover.png" />
 
 <meta name="author" content="Adam Rawles" />
 
@@ -32,7 +31,8 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link rel="prev" href="loading.html"/>
 <link rel="next" href="tidying.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -48,33 +48,37 @@
 
 
 
-
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
 <script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
+<script src="libs/grViz-binding-1.0.9/grViz.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -83,9 +87,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -118,6 +122,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -130,62 +135,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> opeRate</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> opeRate</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#overview"><i class="fa fa-check"></i><b>1.1</b> Overview</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#about-me"><i class="fa fa-check"></i><b>1.2</b> About Me</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#using-r"><i class="fa fa-check"></i><b>1.3</b> Using R</a></li>
 </ul></li>
 <li class="part"><span><b>I tidyverse</b></span></li>
 <li class="chapter" data-level="2" data-path="tidyverse-introduction.html"><a href="tidyverse-introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>3</b> “Tidy” data</a><ul>
+<li class="chapter" data-level="3" data-path="tidy-data.html"><a href="tidy-data.html"><i class="fa fa-check"></i><b>3</b> “Tidy” data</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="tidy-data.html"><a href="tidy-data.html#questions"><i class="fa fa-check"></i><b>3.1</b> Questions</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>4</b> The pipe (<code>%&gt;%</code>)</a><ul>
+<li class="chapter" data-level="4" data-path="the-pipe.html"><a href="the-pipe.html"><i class="fa fa-check"></i><b>4</b> The pipe (<code>%&gt;%</code>)</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="the-pipe.html"><a href="the-pipe.html#questions-1"><i class="fa fa-check"></i><b>4.1</b> Questions</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>5</b> Quasiquotation</a><ul>
+<li class="chapter" data-level="5" data-path="quasiquotation.html"><a href="quasiquotation.html"><i class="fa fa-check"></i><b>5</b> Quasiquotation</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="quasiquotation.html"><a href="quasiquotation.html#tidyselect"><i class="fa fa-check"></i><b>5.1</b> tidyselect</a></li>
 <li class="chapter" data-level="5.2" data-path="quasiquotation.html"><a href="quasiquotation.html#questions-2"><i class="fa fa-check"></i><b>5.2</b> Questions</a></li>
 </ul></li>
 <li class="part"><span><b>II Data Analysis</b></span></li>
 <li class="chapter" data-level="6" data-path="da-intro.html"><a href="da-intro.html"><i class="fa fa-check"></i><b>6</b> Introduction</a></li>
-<li class="chapter" data-level="7" data-path="loading.html"><a href="loading.html"><i class="fa fa-check"></i><b>7</b> Loading</a><ul>
-<li class="chapter" data-level="7.1" data-path="loading.html"><a href="loading.html#rds"><i class="fa fa-check"></i><b>7.1</b> RDS</a><ul>
+<li class="chapter" data-level="7" data-path="loading.html"><a href="loading.html"><i class="fa fa-check"></i><b>7</b> Loading</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="loading.html"><a href="loading.html#rds"><i class="fa fa-check"></i><b>7.1</b> RDS</a>
+<ul>
 <li class="chapter" data-level="7.1.1" data-path="loading.html"><a href="loading.html#advantages"><i class="fa fa-check"></i><b>7.1.1</b> Advantages</a></li>
 <li class="chapter" data-level="7.1.2" data-path="loading.html"><a href="loading.html#disadvantages"><i class="fa fa-check"></i><b>7.1.2</b> Disadvantages</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="loading.html"><a href="loading.html#csv"><i class="fa fa-check"></i><b>7.2</b> CSV</a><ul>
+<li class="chapter" data-level="7.2" data-path="loading.html"><a href="loading.html#csv"><i class="fa fa-check"></i><b>7.2</b> CSV</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="loading.html"><a href="loading.html#loading-csv-files"><i class="fa fa-check"></i><b>7.2.1</b> Loading CSV files</a></li>
 <li class="chapter" data-level="7.2.2" data-path="loading.html"><a href="loading.html#advantages-1"><i class="fa fa-check"></i><b>7.2.2</b> Advantages</a></li>
 <li class="chapter" data-level="7.2.3" data-path="loading.html"><a href="loading.html#disadvantages-1"><i class="fa fa-check"></i><b>7.2.3</b> Disadvantages</a></li>
 <li class="chapter" data-level="7.2.4" data-path="loading.html"><a href="loading.html#other-delimited-files"><i class="fa fa-check"></i><b>7.2.4</b> Other delimited files</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="loading.html"><a href="loading.html#excel-files"><i class="fa fa-check"></i><b>7.3</b> Excel files</a><ul>
+<li class="chapter" data-level="7.3" data-path="loading.html"><a href="loading.html#excel-files"><i class="fa fa-check"></i><b>7.3</b> Excel files</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="loading.html"><a href="loading.html#advantages-2"><i class="fa fa-check"></i><b>7.3.1</b> Advantages</a></li>
 <li class="chapter" data-level="7.3.2" data-path="loading.html"><a href="loading.html#disadvantages-2"><i class="fa fa-check"></i><b>7.3.2</b> Disadvantages</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="loading.html"><a href="loading.html#web-based-apis"><i class="fa fa-check"></i><b>7.4</b> Web-based APIs</a><ul>
+<li class="chapter" data-level="7.4" data-path="loading.html"><a href="loading.html#web-based-apis"><i class="fa fa-check"></i><b>7.4</b> Web-based APIs</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="loading.html"><a href="loading.html#what-are-apis"><i class="fa fa-check"></i><b>7.4.1</b> What are APIs?</a></li>
 <li class="chapter" data-level="7.4.2" data-path="loading.html"><a href="loading.html#accessing-apis-in-r"><i class="fa fa-check"></i><b>7.4.2</b> Accessing APIs in R</a></li>
 <li class="chapter" data-level="7.4.3" data-path="loading.html"><a href="loading.html#bmrsr"><i class="fa fa-check"></i><b>7.4.3</b> BMRSr</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="loading.html"><a href="loading.html#databases"><i class="fa fa-check"></i><b>7.5</b> Databases</a><ul>
+<li class="chapter" data-level="7.5" data-path="loading.html"><a href="loading.html#databases"><i class="fa fa-check"></i><b>7.5</b> Databases</a>
+<ul>
 <li class="chapter" data-level="7.5.1" data-path="loading.html"><a href="loading.html#database-management-systems-and-odbc"><i class="fa fa-check"></i><b>7.5.1</b> Database Management Systems and ODBC</a></li>
 <li class="chapter" data-level="7.5.2" data-path="loading.html"><a href="loading.html#connecting-with-the-odbc-package"><i class="fa fa-check"></i><b>7.5.2</b> Connecting with the <code>odbc</code> package</a></li>
 <li class="chapter" data-level="7.5.3" data-path="loading.html"><a href="loading.html#querying-the-database"><i class="fa fa-check"></i><b>7.5.3</b> Querying the database</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="cleaning.html"><a href="cleaning.html"><i class="fa fa-check"></i><b>8</b> Cleaning</a><ul>
+<li class="chapter" data-level="8" data-path="cleaning.html"><a href="cleaning.html"><i class="fa fa-check"></i><b>8</b> Cleaning</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="cleaning.html"><a href="cleaning.html#filtering"><i class="fa fa-check"></i><b>8.1</b> Filtering</a></li>
 <li class="chapter" data-level="8.2" data-path="cleaning.html"><a href="cleaning.html#missing-values"><i class="fa fa-check"></i><b>8.2</b> Missing values</a></li>
 <li class="chapter" data-level="8.3" data-path="cleaning.html"><a href="cleaning.html#changing-column-types"><i class="fa fa-check"></i><b>8.3</b> Changing column types</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>9</b> Tidying</a><ul>
-<li class="chapter" data-level="9.1" data-path="tidying.html"><a href="tidying.html#pivoting"><i class="fa fa-check"></i><b>9.1</b> Pivoting</a><ul>
+<li class="chapter" data-level="9" data-path="tidying.html"><a href="tidying.html"><i class="fa fa-check"></i><b>9</b> Tidying</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="tidying.html"><a href="tidying.html#pivoting"><i class="fa fa-check"></i><b>9.1</b> Pivoting</a>
+<ul>
 <li class="chapter" data-level="9.1.1" data-path="tidying.html"><a href="tidying.html#pivoting-columns-to-rows-longer"><i class="fa fa-check"></i><b>9.1.1</b> Pivoting columns to rows (longer)</a></li>
 <li class="chapter" data-level="9.1.2" data-path="tidying.html"><a href="tidying.html#pivoting-rows-to-columns-wider"><i class="fa fa-check"></i><b>9.1.2</b> Pivoting rows to columns (wider)</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="tidying.html"><a href="tidying.html#separating-uniting"><i class="fa fa-check"></i><b>9.2</b> Separating &amp; Uniting</a><ul>
+<li class="chapter" data-level="9.2" data-path="tidying.html"><a href="tidying.html#separating-uniting"><i class="fa fa-check"></i><b>9.2</b> Separating &amp; Uniting</a>
+<ul>
 <li class="chapter" data-level="9.2.1" data-path="tidying.html"><a href="tidying.html#separating"><i class="fa fa-check"></i><b>9.2.1</b> Separating</a></li>
 <li class="chapter" data-level="9.2.2" data-path="tidying.html"><a href="tidying.html#uniting"><i class="fa fa-check"></i><b>9.2.2</b> Uniting</a></li>
 </ul></li>
@@ -193,36 +212,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10" data-path="grouping.html"><a href="grouping.html"><i class="fa fa-check"></i><b>10</b> Grouping</a></li>
 <li class="chapter" data-level="11" data-path="mutating.html"><a href="mutating.html"><i class="fa fa-check"></i><b>11</b> Mutating</a></li>
 <li class="chapter" data-level="12" data-path="summarising.html"><a href="summarising.html"><i class="fa fa-check"></i><b>12</b> Summarising</a></li>
-<li class="chapter" data-level="13" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>13</b> Plotting</a><ul>
-<li class="chapter" data-level="13.1" data-path="plotting.html"><a href="plotting.html#ggplot2"><i class="fa fa-check"></i><b>13.1</b> ggplot2</a><ul>
+<li class="chapter" data-level="13" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>13</b> Plotting</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="plotting.html"><a href="plotting.html#ggplot2"><i class="fa fa-check"></i><b>13.1</b> ggplot2</a>
+<ul>
 <li class="chapter" data-level="13.1.1" data-path="plotting.html"><a href="plotting.html#components"><i class="fa fa-check"></i><b>13.1.1</b> Components</a></li>
 <li class="chapter" data-level="13.1.2" data-path="plotting.html"><a href="plotting.html#layers"><i class="fa fa-check"></i><b>13.1.2</b> Layers</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a><ul>
-<li class="chapter" data-level="14.1" data-path="modelling.html"><a href="modelling.html#types-of-model"><i class="fa fa-check"></i><b>14.1</b> Types of model</a><ul>
+<li class="chapter" data-level="14" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>14</b> Modelling</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="modelling.html"><a href="modelling.html#types-of-model"><i class="fa fa-check"></i><b>14.1</b> Types of model</a>
+<ul>
 <li class="chapter" data-level="14.1.1" data-path="modelling.html"><a href="modelling.html#linear-models"><i class="fa fa-check"></i><b>14.1.1</b> Linear models</a></li>
 <li class="chapter" data-level="14.1.2" data-path="modelling.html"><a href="modelling.html#quadratic"><i class="fa fa-check"></i><b>14.1.2</b> Quadratic</a></li>
 </ul></li>
 <li class="chapter" data-level="14.2" data-path="modelling.html"><a href="modelling.html#coefficients"><i class="fa fa-check"></i><b>14.2</b> Coefficients</a></li>
 <li class="chapter" data-level="14.3" data-path="modelling.html"><a href="modelling.html#residuals"><i class="fa fa-check"></i><b>14.3</b> Residuals</a></li>
 <li class="chapter" data-level="14.4" data-path="modelling.html"><a href="modelling.html#lm"><i class="fa fa-check"></i><b>14.4</b> <code>lm()</code></a></li>
-<li class="chapter" data-level="14.5" data-path="modelling.html"><a href="modelling.html#multiple-predictors"><i class="fa fa-check"></i><b>14.5</b> Multiple Predictors</a><ul>
+<li class="chapter" data-level="14.5" data-path="modelling.html"><a href="modelling.html#multiple-predictors"><i class="fa fa-check"></i><b>14.5</b> Multiple Predictors</a>
+<ul>
 <li class="chapter" data-level="14.5.1" data-path="modelling.html"><a href="modelling.html#simple-effects"><i class="fa fa-check"></i><b>14.5.1</b> Simple effects</a></li>
 <li class="chapter" data-level="14.5.2" data-path="modelling.html"><a href="modelling.html#interaction-effects"><i class="fa fa-check"></i><b>14.5.2</b> Interaction effects</a></li>
 </ul></li>
-<li class="chapter" data-level="14.6" data-path="modelling.html"><a href="modelling.html#evaluating-models"><i class="fa fa-check"></i><b>14.6</b> Evaluating Models</a><ul>
+<li class="chapter" data-level="14.6" data-path="modelling.html"><a href="modelling.html#evaluating-models"><i class="fa fa-check"></i><b>14.6</b> Evaluating Models</a>
+<ul>
 <li class="chapter" data-level="14.6.1" data-path="modelling.html"><a href="modelling.html#lm-output"><i class="fa fa-check"></i><b>14.6.1</b> <code>lm()</code> Output</a></li>
 <li class="chapter" data-level="14.6.2" data-path="modelling.html"><a href="modelling.html#residuals-1"><i class="fa fa-check"></i><b>14.6.2</b> Residuals</a></li>
 <li class="chapter" data-level="14.6.3" data-path="modelling.html"><a href="modelling.html#overfitting"><i class="fa fa-check"></i><b>14.6.3</b> Overfitting</a></li>
 </ul></li>
-<li class="chapter" data-level="14.7" data-path="modelling.html"><a href="modelling.html#video-game-sales-model"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a><ul>
+<li class="chapter" data-level="14.7" data-path="modelling.html"><a href="modelling.html#video-game-sales-model"><i class="fa fa-check"></i><b>14.7</b> Video Game Sales Model</a>
+<ul>
 <li class="chapter" data-level="14.7.1" data-path="modelling.html"><a href="modelling.html#predicting-the-future"><i class="fa fa-check"></i><b>14.7.1</b> Predicting the future</a></li>
 </ul></li>
 <li class="chapter" data-level="14.8" data-path="modelling.html"><a href="modelling.html#questions-3"><i class="fa fa-check"></i><b>14.8</b> Questions</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>15</b> Machine Learning</a><ul>
-<li class="chapter" data-level="15.1" data-path="machine-learning.html"><a href="machine-learning.html#neural-networks"><i class="fa fa-check"></i><b>15.1</b> Neural networks</a><ul>
+<li class="chapter" data-level="15" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>15</b> Machine Learning</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="machine-learning.html"><a href="machine-learning.html#neural-networks"><i class="fa fa-check"></i><b>15.1</b> Neural networks</a>
+<ul>
 <li class="chapter" data-level="15.1.1" data-path="machine-learning.html"><a href="machine-learning.html#introduction"><i class="fa fa-check"></i><b>15.1.1</b> Introduction</a></li>
 <li class="chapter" data-level="15.1.2" data-path="machine-learning.html"><a href="machine-learning.html#example"><i class="fa fa-check"></i><b>15.1.2</b> Example</a></li>
 <li class="chapter" data-level="15.1.3" data-path="machine-learning.html"><a href="machine-learning.html#neural-networks-in-r"><i class="fa fa-check"></i><b>15.1.3</b> Neural Networks in R</a></li>
@@ -230,74 +258,91 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>III Projects</b></span></li>
 <li class="chapter" data-level="16" data-path="projects-introduction.html"><a href="projects-introduction.html"><i class="fa fa-check"></i><b>16</b> Introduction</a></li>
-<li class="chapter" data-level="17" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>17</b> Workflows</a><ul>
-<li class="chapter" data-level="17.1" data-path="workflows.html"><a href="workflows.html#basic-workflow"><i class="fa fa-check"></i><b>17.1</b> Basic Workflow</a><ul>
+<li class="chapter" data-level="17" data-path="workflows.html"><a href="workflows.html"><i class="fa fa-check"></i><b>17</b> Workflows</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="workflows.html"><a href="workflows.html#basic-workflow"><i class="fa fa-check"></i><b>17.1</b> Basic Workflow</a>
+<ul>
 <li class="chapter" data-level="17.1.1" data-path="workflows.html"><a href="workflows.html#example-1-reporting"><i class="fa fa-check"></i><b>17.1.1</b> Example 1: Reporting</a></li>
 <li class="chapter" data-level="17.1.2" data-path="workflows.html"><a href="workflows.html#example-2-modelling"><i class="fa fa-check"></i><b>17.1.2</b> Example 2: Modelling</a></li>
 </ul></li>
-<li class="chapter" data-level="17.2" data-path="workflows.html"><a href="workflows.html#separating-stages"><i class="fa fa-check"></i><b>17.2</b> Separating Stages</a><ul>
+<li class="chapter" data-level="17.2" data-path="workflows.html"><a href="workflows.html#separating-stages"><i class="fa fa-check"></i><b>17.2</b> Separating Stages</a>
+<ul>
 <li class="chapter" data-level="17.2.1" data-path="workflows.html"><a href="workflows.html#functions"><i class="fa fa-check"></i><b>17.2.1</b> Functions</a></li>
 <li class="chapter" data-level="17.2.2" data-path="workflows.html"><a href="workflows.html#files"><i class="fa fa-check"></i><b>17.2.2</b> Files</a></li>
 </ul></li>
 <li class="chapter" data-level="17.3" data-path="workflows.html"><a href="workflows.html#summary"><i class="fa fa-check"></i><b>17.3</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>18</b> Replicability</a><ul>
-<li class="chapter" data-level="18.1" data-path="replicability.html"><a href="replicability.html#good-practice"><i class="fa fa-check"></i><b>18.1</b> Good practice</a><ul>
+<li class="chapter" data-level="18" data-path="replicability.html"><a href="replicability.html"><i class="fa fa-check"></i><b>18</b> Replicability</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="replicability.html"><a href="replicability.html#good-practice"><i class="fa fa-check"></i><b>18.1</b> Good practice</a>
+<ul>
 <li class="chapter" data-level="18.1.1" data-path="replicability.html"><a href="replicability.html#use-a-consistent-naming-convention"><i class="fa fa-check"></i><b>18.1.1</b> Use a consistent naming convention</a></li>
 <li class="chapter" data-level="18.1.2" data-path="replicability.html"><a href="replicability.html#name-your-variables-as-nouns-and-your-functions-as-verbs"><i class="fa fa-check"></i><b>18.1.2</b> Name your variables as nouns and your functions as verbs</a></li>
 <li class="chapter" data-level="18.1.3" data-path="replicability.html"><a href="replicability.html#use-functions-where-you-can"><i class="fa fa-check"></i><b>18.1.3</b> Use functions where you can</a></li>
 <li class="chapter" data-level="18.1.4" data-path="replicability.html"><a href="replicability.html#state-your-dependencies"><i class="fa fa-check"></i><b>18.1.4</b> State your dependencies</a></li>
 </ul></li>
-<li class="chapter" data-level="18.2" data-path="replicability.html"><a href="replicability.html#documentation"><i class="fa fa-check"></i><b>18.2</b> Documentation</a><ul>
+<li class="chapter" data-level="18.2" data-path="replicability.html"><a href="replicability.html#documentation"><i class="fa fa-check"></i><b>18.2</b> Documentation</a>
+<ul>
 <li class="chapter" data-level="18.2.1" data-path="replicability.html"><a href="replicability.html#function-documentation"><i class="fa fa-check"></i><b>18.2.1</b> Function documentation</a></li>
 <li class="chapter" data-level="18.2.2" data-path="replicability.html"><a href="replicability.html#long-form-documentation"><i class="fa fa-check"></i><b>18.2.2</b> Long-form documentation</a></li>
 </ul></li>
-<li class="chapter" data-level="18.3" data-path="replicability.html"><a href="replicability.html#testing"><i class="fa fa-check"></i><b>18.3</b> Testing</a><ul>
+<li class="chapter" data-level="18.3" data-path="replicability.html"><a href="replicability.html#testing"><i class="fa fa-check"></i><b>18.3</b> Testing</a>
+<ul>
 <li class="chapter" data-level="18.3.1" data-path="replicability.html"><a href="replicability.html#testthat"><i class="fa fa-check"></i><b>18.3.1</b> <code>{testthat}</code></a></li>
 <li class="chapter" data-level="18.3.2" data-path="replicability.html"><a href="replicability.html#defensive-programming"><i class="fa fa-check"></i><b>18.3.2</b> Defensive programming</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="projects-as-packages.html"><a href="projects-as-packages.html"><i class="fa fa-check"></i><b>19</b> Projects as Packages</a><ul>
-<li class="chapter" data-level="19.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#structure"><i class="fa fa-check"></i><b>19.1</b> Structure</a><ul>
+<li class="chapter" data-level="19" data-path="projects-as-packages.html"><a href="projects-as-packages.html"><i class="fa fa-check"></i><b>19</b> Projects as Packages</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#structure"><i class="fa fa-check"></i><b>19.1</b> Structure</a>
+<ul>
 <li class="chapter" data-level="19.1.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#r-code"><i class="fa fa-check"></i><b>19.1.1</b> R code</a></li>
 <li class="chapter" data-level="19.1.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#data"><i class="fa fa-check"></i><b>19.1.2</b> Data</a></li>
 </ul></li>
-<li class="chapter" data-level="19.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#documentation-1"><i class="fa fa-check"></i><b>19.2</b> Documentation</a><ul>
+<li class="chapter" data-level="19.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#documentation-1"><i class="fa fa-check"></i><b>19.2</b> Documentation</a>
+<ul>
 <li class="chapter" data-level="19.2.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#functional"><i class="fa fa-check"></i><b>19.2.1</b> Functional</a></li>
 <li class="chapter" data-level="19.2.2" data-path="projects-as-packages.html"><a href="projects-as-packages.html#long-form"><i class="fa fa-check"></i><b>19.2.2</b> Long-form</a></li>
 </ul></li>
-<li class="chapter" data-level="19.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html#description"><i class="fa fa-check"></i><b>19.3</b> DESCRIPTION</a><ul>
+<li class="chapter" data-level="19.3" data-path="projects-as-packages.html"><a href="projects-as-packages.html#description"><i class="fa fa-check"></i><b>19.3</b> DESCRIPTION</a>
+<ul>
 <li class="chapter" data-level="19.3.1" data-path="projects-as-packages.html"><a href="projects-as-packages.html#dependencies"><i class="fa fa-check"></i><b>19.3.1</b> Dependencies</a></li>
 </ul></li>
 <li class="chapter" data-level="19.4" data-path="projects-as-packages.html"><a href="projects-as-packages.html#abstraction"><i class="fa fa-check"></i><b>19.4</b> Abstraction</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>20</b> Git &amp; GitHub</a><ul>
-<li class="chapter" data-level="20.1" data-path="git-github.html"><a href="git-github.html#git"><i class="fa fa-check"></i><b>20.1</b> Git</a><ul>
+<li class="chapter" data-level="20" data-path="git-github.html"><a href="git-github.html"><i class="fa fa-check"></i><b>20</b> Git &amp; GitHub</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="git-github.html"><a href="git-github.html#git"><i class="fa fa-check"></i><b>20.1</b> Git</a>
+<ul>
 <li class="chapter" data-level="20.1.1" data-path="git-github.html"><a href="git-github.html#repositories"><i class="fa fa-check"></i><b>20.1.1</b> Repositories</a></li>
 <li class="chapter" data-level="20.1.2" data-path="git-github.html"><a href="git-github.html#commits"><i class="fa fa-check"></i><b>20.1.2</b> Commits</a></li>
 <li class="chapter" data-level="20.1.3" data-path="git-github.html"><a href="git-github.html#pushing-pulling"><i class="fa fa-check"></i><b>20.1.3</b> Pushing &amp; Pulling</a></li>
 <li class="chapter" data-level="20.1.4" data-path="git-github.html"><a href="git-github.html#branches"><i class="fa fa-check"></i><b>20.1.4</b> Branches</a></li>
 </ul></li>
-<li class="chapter" data-level="20.2" data-path="git-github.html"><a href="git-github.html#github"><i class="fa fa-check"></i><b>20.2</b> GitHub</a><ul>
+<li class="chapter" data-level="20.2" data-path="git-github.html"><a href="git-github.html#github"><i class="fa fa-check"></i><b>20.2</b> GitHub</a>
+<ul>
 <li class="chapter" data-level="20.2.1" data-path="git-github.html"><a href="git-github.html#forking"><i class="fa fa-check"></i><b>20.2.1</b> Forking</a></li>
 <li class="chapter" data-level="20.2.2" data-path="git-github.html"><a href="git-github.html#pull-requests"><i class="fa fa-check"></i><b>20.2.2</b> Pull Requests</a></li>
 </ul></li>
 <li class="chapter" data-level="20.3" data-path="git-github.html"><a href="git-github.html#git-github-rstudio"><i class="fa fa-check"></i><b>20.3</b> Git, GitHub &amp; RStudio</a></li>
 </ul></li>
-<li class="chapter" data-level="21" data-path="project-example.html"><a href="project-example.html"><i class="fa fa-check"></i><b>21</b> Project Example</a><ul>
+<li class="chapter" data-level="21" data-path="project-example.html"><a href="project-example.html"><i class="fa fa-check"></i><b>21</b> Project Example</a>
+<ul>
 <li class="chapter" data-level="21.1" data-path="project-example.html"><a href="project-example.html#github-repository"><i class="fa fa-check"></i><b>21.1</b> GitHub Repository</a></li>
 <li class="chapter" data-level="21.2" data-path="project-example.html"><a href="project-example.html#rstudio-project"><i class="fa fa-check"></i><b>21.2</b> RStudio Project</a></li>
 <li class="chapter" data-level="21.3" data-path="project-example.html"><a href="project-example.html#description-1"><i class="fa fa-check"></i><b>21.3</b> DESCRIPTION</a></li>
 <li class="chapter" data-level="21.4" data-path="project-example.html"><a href="project-example.html#data-1"><i class="fa fa-check"></i><b>21.4</b> Data</a></li>
 <li class="chapter" data-level="21.5" data-path="project-example.html"><a href="project-example.html#structure-1"><i class="fa fa-check"></i><b>21.5</b> Structure</a></li>
-<li class="chapter" data-level="21.6" data-path="project-example.html"><a href="project-example.html#documentation-2"><i class="fa fa-check"></i><b>21.6</b> Documentation</a><ul>
+<li class="chapter" data-level="21.6" data-path="project-example.html"><a href="project-example.html#documentation-2"><i class="fa fa-check"></i><b>21.6</b> Documentation</a>
+<ul>
 <li class="chapter" data-level="21.6.1" data-path="project-example.html"><a href="project-example.html#function"><i class="fa fa-check"></i><b>21.6.1</b> Function</a></li>
 <li class="chapter" data-level="21.6.2" data-path="project-example.html"><a href="project-example.html#data-2"><i class="fa fa-check"></i><b>21.6.2</b> Data</a></li>
 <li class="chapter" data-level="21.6.3" data-path="project-example.html"><a href="project-example.html#readme-vignettes"><i class="fa fa-check"></i><b>21.6.3</b> README &amp; Vignettes</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>IV Question Answers</b></span></li>
-<li class="chapter" data-level="22" data-path="answers.html"><a href="answers.html"><i class="fa fa-check"></i><b>22</b> Answers</a><ul>
+<li class="chapter" data-level="22" data-path="answers.html"><a href="answers.html"><i class="fa fa-check"></i><b>22</b> Answers</a>
+<ul>
 <li class="chapter" data-level="22.1" data-path="answers.html"><a href="answers.html#tidy-data-1"><i class="fa fa-check"></i><b>22.1</b> “Tidy” data</a></li>
 <li class="chapter" data-level="22.2" data-path="answers.html"><a href="answers.html#the-pipe-1"><i class="fa fa-check"></i><b>22.2</b> The pipe (%&gt;%)</a></li>
 <li class="chapter" data-level="22.3" data-path="answers.html"><a href="answers.html#quasiquotation-1"><i class="fa fa-check"></i><b>22.3</b> Quasiquotation</a></li>
@@ -327,8 +372,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="cleaning" class="section level1">
-<h1><span class="header-section-number">8</span> Cleaning</h1>
+<div id="cleaning" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">8</span> Cleaning<a href="cleaning.html#cleaning" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Once you’ve got your data into R, you’ll likely need to clean it up a bit. Here are some of the more common operations that you’ll be doing when it comes to data cleaning:</p>
 <ul>
 <li>Filtering</li>
@@ -336,103 +381,105 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Changing column types</li>
 </ul>
 <p>Let’s look at how we might do these tasks in R using our Kaggle dataset as an example.</p>
-<div id="filtering" class="section level2">
-<h2><span class="header-section-number">8.1</span> Filtering</h2>
+<div id="filtering" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Filtering<a href="cleaning.html#filtering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In some cases, you’ll only want a subset of the data that’s been provided to you. To filter the dataset down, use the <code>dplyr::filter()</code> function and provide your criteria:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">vg_sales <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb51-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Year <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb51-3" title="3"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">5</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 16,327 x 11
-##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
-##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1     1 Wii … Wii       2006 Spor… Nintendo      41.5    29.0      3.77
-## 2     2 Supe… NES       1985 Plat… Nintendo      29.1     3.58     6.81
-## 3     3 Mari… Wii       2008 Raci… Nintendo      15.8    12.9      3.79
-## 4     4 Wii … Wii       2009 Spor… Nintendo      15.8    11.0      3.28
-## 5     5 Poke… GB        1996 Role… Nintendo      11.3     8.89    10.2 
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="cleaning.html#cb51-1" aria-hidden="true"></a>vg_sales <span class="op">%&gt;%</span></span>
+<span id="cb51-2"><a href="cleaning.html#cb51-2" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Year <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span>) <span class="op">%&gt;%</span></span>
+<span id="cb51-3"><a href="cleaning.html#cb51-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 16,327 × 11
+##    Rank Name         Platform  Year Genre   Publisher NA_Sales EU_Sales JP_Sales
+##   &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1     1 Wii Sports   Wii       2006 Sports  Nintendo      41.5    29.0      3.77
+## 2     2 Super Mario… NES       1985 Platfo… Nintendo      29.1     3.58     6.81
+## 3     3 Mario Kart … Wii       2008 Racing  Nintendo      15.8    12.9      3.79
+## 4     4 Wii Sports … Wii       2009 Sports  Nintendo      15.8    11.0      3.28
+## 5     5 Pokemon Red… GB        1996 Role-P… Nintendo      11.3     8.89    10.2 
 ## # … with 16,322 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
 ## #   Global_Sales &lt;dbl&gt;</code></pre>
 <p>You can utilise the <code>&amp;</code> and <code>|</code> operators (<code>and</code> and <code>or</code> respectively) to create more complicated criteria. You can also separate your expressions with commas, which is equivalent to <code>&amp;</code>:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">vg_sales <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Year <span class="op">==</span><span class="st"> </span><span class="dv">1999</span> <span class="op">|</span><span class="st"> </span>Year <span class="op">==</span><span class="st"> </span><span class="dv">2000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-3" title="3"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">2</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 687 x 11
-##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
-##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1    13 Poke… GB        1999 Role… Nintendo      9        6.18     7.2 
-## 2    70 Gran… PS        1999 Raci… Sony Com…     3.88     3.42     1.69
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="cleaning.html#cb53-1" aria-hidden="true"></a>vg_sales <span class="op">%&gt;%</span></span>
+<span id="cb53-2"><a href="cleaning.html#cb53-2" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Year <span class="op">==</span><span class="st"> </span><span class="dv">1999</span> <span class="op">|</span><span class="st"> </span>Year <span class="op">==</span><span class="st"> </span><span class="dv">2000</span>) <span class="op">%&gt;%</span></span>
+<span id="cb53-3"><a href="cleaning.html#cb53-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 687 × 11
+##    Rank Name       Platform  Year Genre  Publisher    NA_Sales EU_Sales JP_Sales
+##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1    13 Pokemon G… GB        1999 Role-… Nintendo         9        6.18     7.2 
+## 2    70 Gran Turi… PS        1999 Racing Sony Comput…     3.88     3.42     1.69
 ## # … with 685 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
 ## #   Global_Sales &lt;dbl&gt;</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1">vg_sales <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb55-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Year <span class="op">==</span><span class="st"> </span><span class="dv">1999</span>, Platform <span class="op">==</span><span class="st"> &quot;GB&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb55-3" title="3"><span class="st">  </span><span class="co"># equivalent to dplyr::filter(Year == 1999 &amp; Platform == &quot;GB&quot;)</span></a>
-<a class="sourceLine" id="cb55-4" title="4"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">2</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 11 x 11
-##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
-##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1    13 Poke… GB        1999 Role… Nintendo      9        6.18     7.2 
-## 2   172 Poke… GB        1999 Misc  Nintendo      3.02     1.12     1.01
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="cleaning.html#cb55-1" aria-hidden="true"></a>vg_sales <span class="op">%&gt;%</span></span>
+<span id="cb55-2"><a href="cleaning.html#cb55-2" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Year <span class="op">==</span><span class="st"> </span><span class="dv">1999</span>, Platform <span class="op">==</span><span class="st"> &quot;GB&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb55-3"><a href="cleaning.html#cb55-3" aria-hidden="true"></a><span class="st">  </span><span class="co"># equivalent to dplyr::filter(Year == 1999 &amp; Platform == &quot;GB&quot;)</span></span>
+<span id="cb55-4"><a href="cleaning.html#cb55-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 11 × 11
+##    Rank Name         Platform  Year Genre   Publisher NA_Sales EU_Sales JP_Sales
+##   &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1    13 Pokemon Gol… GB        1999 Role-P… Nintendo      9        6.18     7.2 
+## 2   172 Pokemon Pin… GB        1999 Misc    Nintendo      3.02     1.12     1.01
 ## # … with 9 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
 ## #   Global_Sales &lt;dbl&gt;</code></pre>
 <p>Looking at our dataset, it looks as though the data past 2010 is a bit more spotty. Let’s filtered out the years beyong 2010 for our analysis:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1">clean_vg_sales &lt;-<span class="st"> </span>vg_sales <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb57-2" title="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Year <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2010</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="cleaning.html#cb57-1" aria-hidden="true"></a>clean_vg_sales &lt;-<span class="st"> </span>vg_sales <span class="op">%&gt;%</span></span>
+<span id="cb57-2"><a href="cleaning.html#cb57-2" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(Year <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2010</span>)</span></code></pre></div>
 </div>
-<div id="missing-values" class="section level2">
-<h2><span class="header-section-number">8.2</span> Missing values</h2>
+<div id="missing-values" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Missing values<a href="cleaning.html#missing-values" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Missing values are common in data science - data collection is often imperfect and so you’ll end up with observations or data-points missing. Firstly, you need to decide what you’re going to do with those.</p>
 <p>The easiest approach to just to remove them, and we can do that with the <code>dplyr::filter()</code> and the <code>is.na()</code> functions. If you remember in the <a href="loading.html#loading">Loading</a> chapter, <code>{readr}</code> had trouble parsing some of the values in our Year column to numeric, and so gave us some NAs. Let’s remove those rows using this approach:</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="co">## To remove rows with NA in one column</span></a>
-<a class="sourceLine" id="cb58-2" title="2">clean_vg_sales &lt;-<span class="st"> </span>clean_vg_sales <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb58-3" title="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Year))</a>
-<a class="sourceLine" id="cb58-4" title="4"><span class="kw">print</span>(clean_vg_sales, <span class="dt">n =</span> <span class="dv">5</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 12,441 x 11
-##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
-##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1     1 Wii … Wii       2006 Spor… Nintendo      41.5    29.0      3.77
-## 2     2 Supe… NES       1985 Plat… Nintendo      29.1     3.58     6.81
-## 3     3 Mari… Wii       2008 Raci… Nintendo      15.8    12.9      3.79
-## 4     4 Wii … Wii       2009 Spor… Nintendo      15.8    11.0      3.28
-## 5     5 Poke… GB        1996 Role… Nintendo      11.3     8.89    10.2 
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="cleaning.html#cb58-1" aria-hidden="true"></a><span class="co">## To remove rows with NA in one column</span></span>
+<span id="cb58-2"><a href="cleaning.html#cb58-2" aria-hidden="true"></a>clean_vg_sales &lt;-<span class="st"> </span>clean_vg_sales <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb58-3"><a href="cleaning.html#cb58-3" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Year))</span>
+<span id="cb58-4"><a href="cleaning.html#cb58-4" aria-hidden="true"></a><span class="kw">print</span>(clean_vg_sales, <span class="dt">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 12,441 × 11
+##    Rank Name         Platform  Year Genre   Publisher NA_Sales EU_Sales JP_Sales
+##   &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1     1 Wii Sports   Wii       2006 Sports  Nintendo      41.5    29.0      3.77
+## 2     2 Super Mario… NES       1985 Platfo… Nintendo      29.1     3.58     6.81
+## 3     3 Mario Kart … Wii       2008 Racing  Nintendo      15.8    12.9      3.79
+## 4     4 Wii Sports … Wii       2009 Sports  Nintendo      15.8    11.0      3.28
+## 5     5 Pokemon Red… GB        1996 Role-P… Nintendo      11.3     8.89    10.2 
 ## # … with 12,436 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
 ## #   Global_Sales &lt;dbl&gt;</code></pre>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="co">## To remove rows with NA in any column</span></a>
-<a class="sourceLine" id="cb60-2" title="2">vg_sales <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb60-3" title="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(dplyr<span class="op">::</span><span class="kw">across</span>(dplyr<span class="op">::</span><span class="kw">everything</span>(), <span class="op">~!</span><span class="kw">is.na</span>(.x))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb60-4" title="4"><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">5</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 16,327 x 11
-##    Rank Name  Platform  Year Genre Publisher NA_Sales EU_Sales JP_Sales
-##   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1     1 Wii … Wii       2006 Spor… Nintendo      41.5    29.0      3.77
-## 2     2 Supe… NES       1985 Plat… Nintendo      29.1     3.58     6.81
-## 3     3 Mari… Wii       2008 Raci… Nintendo      15.8    12.9      3.79
-## 4     4 Wii … Wii       2009 Spor… Nintendo      15.8    11.0      3.28
-## 5     5 Poke… GB        1996 Role… Nintendo      11.3     8.89    10.2 
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="cleaning.html#cb60-1" aria-hidden="true"></a><span class="co">## To remove rows with NA in any column</span></span>
+<span id="cb60-2"><a href="cleaning.html#cb60-2" aria-hidden="true"></a>vg_sales <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb60-3"><a href="cleaning.html#cb60-3" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(dplyr<span class="op">::</span><span class="kw">across</span>(dplyr<span class="op">::</span><span class="kw">everything</span>(), <span class="op">~!</span><span class="kw">is.na</span>(.x))) <span class="op">%&gt;%</span></span>
+<span id="cb60-4"><a href="cleaning.html#cb60-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">print</span>(<span class="dt">n =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## Warning: data frame results in `filter()` are deprecated, use `if_any()` or
+## `if_all()`.</code></pre>
+<pre><code>## # A tibble: 16,327 × 11
+##    Rank Name         Platform  Year Genre   Publisher NA_Sales EU_Sales JP_Sales
+##   &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1     1 Wii Sports   Wii       2006 Sports  Nintendo      41.5    29.0      3.77
+## 2     2 Super Mario… NES       1985 Platfo… Nintendo      29.1     3.58     6.81
+## 3     3 Mario Kart … Wii       2008 Racing  Nintendo      15.8    12.9      3.79
+## 4     4 Wii Sports … Wii       2009 Sports  Nintendo      15.8    11.0      3.28
+## 5     5 Pokemon Red… GB        1996 Role-P… Nintendo      11.3     8.89    10.2 
 ## # … with 16,322 more rows, and 2 more variables: Other_Sales &lt;dbl&gt;,
 ## #   Global_Sales &lt;dbl&gt;</code></pre>
 <p>Another approach to replace them with either the average for that column or with the closest neighbour value (this works better with time series data).</p>
 <p>To replace with the nearest value, we can use the <code>tidyr::fill()</code> function. That approach wouldn’t be appropriate for our video games example so let’s use the <code>datasets::airquality</code> dataset instead:</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="kw">head</span>(datasets<span class="op">::</span>airquality, <span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="cleaning.html#cb63-1" aria-hidden="true"></a><span class="kw">head</span>(datasets<span class="op">::</span>airquality, <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##   Ozone Solar.R Wind Temp Month Day
 ## 1    41     190  7.4   67     5   1
 ## 2    36     118  8.0   72     5   2
 ## 3    12     149 12.6   74     5   3
 ## 4    18     313 11.5   62     5   4
 ## 5    NA      NA 14.3   56     5   5</code></pre>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"><span class="co">## Fill a single column</span></a>
-<a class="sourceLine" id="cb64-2" title="2">datasets<span class="op">::</span>airquality <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb64-3" title="3"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">fill</span>(Ozone, <span class="dt">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb64-4" title="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="cleaning.html#cb65-1" aria-hidden="true"></a><span class="co">## Fill a single column</span></span>
+<span id="cb65-2"><a href="cleaning.html#cb65-2" aria-hidden="true"></a>datasets<span class="op">::</span>airquality <span class="op">%&gt;%</span></span>
+<span id="cb65-3"><a href="cleaning.html#cb65-3" aria-hidden="true"></a><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">fill</span>(Ozone, <span class="dt">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb65-4"><a href="cleaning.html#cb65-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##   Ozone Solar.R Wind Temp Month Day
 ## 1    41     190  7.4   67     5   1
 ## 2    36     118  8.0   72     5   2
 ## 3    12     149 12.6   74     5   3
 ## 4    18     313 11.5   62     5   4
 ## 5    18      NA 14.3   56     5   5</code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="co">## Fill all columns</span></a>
-<a class="sourceLine" id="cb66-2" title="2">datasets<span class="op">::</span>airquality <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb66-3" title="3"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">fill</span>(dplyr<span class="op">::</span><span class="kw">everything</span>(), <span class="dt">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb66-4" title="4"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="cleaning.html#cb67-1" aria-hidden="true"></a><span class="co">## Fill all columns</span></span>
+<span id="cb67-2"><a href="cleaning.html#cb67-2" aria-hidden="true"></a>datasets<span class="op">::</span>airquality <span class="op">%&gt;%</span></span>
+<span id="cb67-3"><a href="cleaning.html#cb67-3" aria-hidden="true"></a><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">fill</span>(dplyr<span class="op">::</span><span class="kw">everything</span>(), <span class="dt">.direction =</span> <span class="st">&quot;downup&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb67-4"><a href="cleaning.html#cb67-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##   Ozone Solar.R Wind Temp Month Day
 ## 1    41     190  7.4   67     5   1
 ## 2    36     118  8.0   72     5   2
@@ -440,14 +487,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4    18     313 11.5   62     5   4
 ## 5    18     313 14.3   56     5   5</code></pre>
 <p>To replace them with the mean, we can either use a package like <code>zoo</code>, or we can use the <code>tidyverse</code> packages and our own function:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">replace_with_mean &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb68-2" title="2">  <span class="kw">replace</span>(x, <span class="kw">is.na</span>(x), <span class="kw">mean</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb68-3" title="3">}</a>
-<a class="sourceLine" id="cb68-4" title="4"></a>
-<a class="sourceLine" id="cb68-5" title="5">datasets<span class="op">::</span>airquality <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb68-6" title="6"><span class="st">  </span><span class="co"># The mutate function creates new columns or overwrites existing ones</span></a>
-<a class="sourceLine" id="cb68-7" title="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(dplyr<span class="op">::</span><span class="kw">across</span>(dplyr<span class="op">::</span><span class="kw">everything</span>(), replace_with_mean)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb68-8" title="8"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="cleaning.html#cb69-1" aria-hidden="true"></a>replace_with_mean &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</span>
+<span id="cb69-2"><a href="cleaning.html#cb69-2" aria-hidden="true"></a>  <span class="kw">replace</span>(x, <span class="kw">is.na</span>(x), <span class="kw">mean</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb69-3"><a href="cleaning.html#cb69-3" aria-hidden="true"></a>}</span>
+<span id="cb69-4"><a href="cleaning.html#cb69-4" aria-hidden="true"></a></span>
+<span id="cb69-5"><a href="cleaning.html#cb69-5" aria-hidden="true"></a>datasets<span class="op">::</span>airquality <span class="op">%&gt;%</span></span>
+<span id="cb69-6"><a href="cleaning.html#cb69-6" aria-hidden="true"></a><span class="st">  </span><span class="co"># The mutate function creates new columns or overwrites existing ones</span></span>
+<span id="cb69-7"><a href="cleaning.html#cb69-7" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(dplyr<span class="op">::</span><span class="kw">across</span>(dplyr<span class="op">::</span><span class="kw">everything</span>(), replace_with_mean)) <span class="op">%&gt;%</span></span>
+<span id="cb69-8"><a href="cleaning.html#cb69-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##      Ozone  Solar.R Wind Temp Month Day
 ## 1 41.00000 190.0000  7.4   67     5   1
 ## 2 36.00000 118.0000  8.0   72     5   2
@@ -456,26 +503,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 42.12931 185.9315 14.3   56     5   5</code></pre>
 <p>A word of warning here, however. If you’re doing complex modelling or very sensitive analyses, filling values like this can be misleading at best. Always think about the best approach for your specific project and what the repercussions of filling empty values might be.</p>
 </div>
-<div id="changing-column-types" class="section level2">
-<h2><span class="header-section-number">8.3</span> Changing column types</h2>
+<div id="changing-column-types" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Changing column types<a href="cleaning.html#changing-column-types" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When you import data into R, sometimes the type of the column doesn’t match what you want it to be. One way of tackling this is to define your column types when you import the data (as we looked at before), but it’s also perfectly acceptable to change the column type after the import.</p>
 <p>Probably the most common conversion is from a character string to a date. For this example, we’re just going to use some test data:</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">bad_tibble &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw">tribble</span>(<span class="op">~</span>bad_date, <span class="op">~</span>value,</a>
-<a class="sourceLine" id="cb70-2" title="2">                              <span class="st">&quot;2012/01/01&quot;</span>, <span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb70-3" title="3">                              <span class="st">&quot;2014/06/01&quot;</span>, <span class="dv">200</span>)</a>
-<a class="sourceLine" id="cb70-4" title="4"></a>
-<a class="sourceLine" id="cb70-5" title="5">bad_tibble <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb70-6" title="6"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">good_date =</span> <span class="kw">as.Date</span>(bad_date, <span class="dt">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</a></code></pre></div>
-<pre><code>## # A tibble: 2 x 3
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="cleaning.html#cb71-1" aria-hidden="true"></a>bad_tibble &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw">tribble</span>(<span class="op">~</span>bad_date, <span class="op">~</span>value,</span>
+<span id="cb71-2"><a href="cleaning.html#cb71-2" aria-hidden="true"></a>                              <span class="st">&quot;2012/01/01&quot;</span>, <span class="dv">100</span>,</span>
+<span id="cb71-3"><a href="cleaning.html#cb71-3" aria-hidden="true"></a>                              <span class="st">&quot;2014/06/01&quot;</span>, <span class="dv">200</span>)</span>
+<span id="cb71-4"><a href="cleaning.html#cb71-4" aria-hidden="true"></a></span>
+<span id="cb71-5"><a href="cleaning.html#cb71-5" aria-hidden="true"></a>bad_tibble <span class="op">%&gt;%</span></span>
+<span id="cb71-6"><a href="cleaning.html#cb71-6" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">good_date =</span> <span class="kw">as.Date</span>(bad_date, <span class="dt">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 3
 ##   bad_date   value good_date 
 ##   &lt;chr&gt;      &lt;dbl&gt; &lt;date&gt;    
 ## 1 2012/01/01   100 2012-01-01
 ## 2 2014/06/01   200 2014-06-01</code></pre>
 <p>Essentially, all you need to do is wrap your conversion function (e.g. <code>as.Date()</code>, <code>as.character()</code>) in a <code>dplyr::mutate()</code> call and you should be able to change your columns to whatever you need. To replace the original column, make sure you give it the same name when using <code>dplyr::mutate()</code>:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">bad_tibble <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb72-2" title="2"><span class="st">  </span><span class="co"># This will replace the bad_date column rather than creating a new column</span></a>
-<a class="sourceLine" id="cb72-3" title="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">bad_date =</span> <span class="kw">as.Date</span>(bad_date, <span class="dt">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</a></code></pre></div>
-<pre><code>## # A tibble: 2 x 2
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="cleaning.html#cb73-1" aria-hidden="true"></a>bad_tibble <span class="op">%&gt;%</span></span>
+<span id="cb73-2"><a href="cleaning.html#cb73-2" aria-hidden="true"></a><span class="st">  </span><span class="co"># This will replace the bad_date column rather than creating a new column</span></span>
+<span id="cb73-3"><a href="cleaning.html#cb73-3" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">bad_date =</span> <span class="kw">as.Date</span>(bad_date, <span class="dt">format =</span> <span class="st">&quot;%Y/%m/%d&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
 ##   bad_date   value
 ##   &lt;date&gt;     &lt;dbl&gt;
 ## 1 2012-01-01   100
@@ -493,7 +540,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -512,6 +558,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -532,6 +579,10 @@ gitbook.start({
 "text": null
 },
 "download": [["opeRate.pdf", "PDF"], ["opeRate.mobi", "Kindle EBook"], ["opeRate.epub", "EPUB EBook"]],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 }
